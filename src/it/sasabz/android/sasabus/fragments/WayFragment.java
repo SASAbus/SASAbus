@@ -25,7 +25,6 @@
 
 package it.sasabz.android.sasabus.fragments;
 
-import java.util.Date;
 import java.util.Locale;
 import java.util.Vector;
 import java.text.ParseException;
@@ -34,52 +33,32 @@ import java.util.Calendar;
 
 import it.sasabz.android.sasabus.MapViewActivity;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.SASAbus;
-import it.sasabz.android.sasabus.R.id;
-import it.sasabz.android.sasabus.R.layout;
-import it.sasabz.android.sasabus.R.menu;
-import it.sasabz.android.sasabus.R.string;
-import it.sasabz.android.sasabus.classes.adapter.MyListAdapter;
-import it.sasabz.android.sasabus.classes.adapter.MyPassaggioListAdapter;
 import it.sasabz.android.sasabus.classes.adapter.MyWayListAdapter;
 import it.sasabz.android.sasabus.classes.dbobjects.Bacino;
 import it.sasabz.android.sasabus.classes.dbobjects.BacinoList;
-import it.sasabz.android.sasabus.classes.dbobjects.DBObject;
 import it.sasabz.android.sasabus.classes.dbobjects.Linea;
 import it.sasabz.android.sasabus.classes.dbobjects.LineaList;
 import it.sasabz.android.sasabus.classes.dbobjects.Palina;
 import it.sasabz.android.sasabus.classes.dbobjects.PalinaList;
 import it.sasabz.android.sasabus.classes.dbobjects.Passaggio;
 import it.sasabz.android.sasabus.classes.dbobjects.PassaggioList;
-import it.sasabz.android.sasabus.classes.dialogs.About;
-import it.sasabz.android.sasabus.classes.dialogs.Credits;
-
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.database.Cursor;
-import android.graphics.Color;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.format.Time;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class WayFragment extends Fragment {
 
@@ -105,9 +84,6 @@ public class WayFragment extends Fragment {
 	private Palina arrival = null;
 	
 	private Palina departure = null;
-	
-	//test map activity
-	private final int MAP = 11;
 
 	private WayFragment() {
 	}

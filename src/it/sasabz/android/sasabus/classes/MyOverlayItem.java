@@ -23,8 +23,6 @@
  */
 package it.sasabz.android.sasabus.classes;
 
-import it.sasabz.android.sasabus.R;
-
 import org.mapsforge.android.maps.overlay.OverlayItem;
 import org.mapsforge.core.GeoPoint;
 

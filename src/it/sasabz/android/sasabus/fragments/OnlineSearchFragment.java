@@ -29,30 +29,20 @@ package it.sasabz.android.sasabus.fragments;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Vector;
 
 import it.sasabz.android.sasabus.CheckDatabaseActivity;
 import it.sasabz.android.sasabus.InfoActivity;
 import it.sasabz.android.sasabus.MapSelectActivity;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.R.drawable;
-import it.sasabz.android.sasabus.R.id;
-import it.sasabz.android.sasabus.R.layout;
-import it.sasabz.android.sasabus.R.menu;
-import it.sasabz.android.sasabus.R.string;
 import it.sasabz.android.sasabus.classes.DateTimePicker;
 import it.sasabz.android.sasabus.classes.adapter.MyAutocompleteAdapter;
 import it.sasabz.android.sasabus.classes.adapter.MySQLiteDBAdapter;
 import it.sasabz.android.sasabus.classes.dbobjects.DBObject;
 import it.sasabz.android.sasabus.classes.dbobjects.Palina;
 import it.sasabz.android.sasabus.classes.dbobjects.PalinaList;
-import it.sasabz.android.sasabus.classes.dialogs.About;
-import it.sasabz.android.sasabus.classes.dialogs.Credits;
 import it.sasabz.android.sasabus.classes.dialogs.SelectFavoritenDialog;
 import it.sasabz.android.sasabus.classes.services.CheckUpdate;
-import it.sasabz.android.sasabus.classes.services.FileRetriever;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -63,18 +53,12 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -82,12 +66,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class OnlineSearchFragment extends Fragment {
 
@@ -227,6 +208,7 @@ public class OnlineSearchFragment extends Fragment {
 				
 				
 				((Button) mDateTimeDialogView.findViewById(R.id.SetDateTime)).setOnClickListener(new View.OnClickListener() {
+					@Override
 					public void onClick(View v) {
 							mDateTimePicker.clearFocus();
 							String datetimestring = "";
@@ -291,6 +273,7 @@ public class OnlineSearchFragment extends Fragment {
 				((Button) mDateTimeDialogView.findViewById(R.id.CancelDialog))
 						.setOnClickListener(new View.OnClickListener() {
 
+							@Override
 							public void onClick(View v) {
 								// TODO Auto-generated method stub
 								mDateTimeDialog.cancel();
@@ -302,6 +285,7 @@ public class OnlineSearchFragment extends Fragment {
 				((Button) mDateTimeDialogView.findViewById(R.id.ResetDateTime))
 						.setOnClickListener(new View.OnClickListener() {
 
+							@Override
 							public void onClick(View v) {
 								// TODO Auto-generated method stub
 								mDateTimePicker.reset();
@@ -358,6 +342,7 @@ public class OnlineSearchFragment extends Fragment {
 
 				// Update demo TextViews when the "OK" button is clicked
 				((Button) mDateTimeDialogView.findViewById(R.id.SetDateTime)).setOnClickListener(new View.OnClickListener() {
+					@Override
 					public void onClick(View v) {
 							mDateTimePicker.clearFocus();
 							String datetimestring = "";
@@ -422,6 +407,7 @@ public class OnlineSearchFragment extends Fragment {
 				((Button) mDateTimeDialogView.findViewById(R.id.CancelDialog))
 						.setOnClickListener(new View.OnClickListener() {
 
+							@Override
 							public void onClick(View v) {
 								// TODO Auto-generated method stub
 								mDateTimeDialog.cancel();
@@ -433,6 +419,7 @@ public class OnlineSearchFragment extends Fragment {
 				((Button) mDateTimeDialogView.findViewById(R.id.ResetDateTime))
 						.setOnClickListener(new View.OnClickListener() {
 
+							@Override
 							public void onClick(View v) {
 								// TODO Auto-generated method stub
 								mDateTimePicker.reset();
@@ -694,7 +681,8 @@ public class OnlineSearchFragment extends Fragment {
 		return builder.create();
 	}
     
-    public void onActivityResult(int requestCode, int resultCode, Intent data) 
+    @Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) 
     {
     	if (requestCode == REQUESTCODE_ACTIVITY)
     	{

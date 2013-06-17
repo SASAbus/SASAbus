@@ -20,27 +20,21 @@
  * You should have received a copy of the GNU General Public License
  * along with SasaBus.  If not, see <http://www.gnu.org/licenses/>.
  * 
+ * This activity shows the informations retrieved from the webseite of sasabz.it.
+ * 
  */
 package it.sasabz.android.sasabus;
 
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.R.id;
-import it.sasabz.android.sasabus.R.layout;
-import it.sasabz.android.sasabus.R.menu;
-import it.sasabz.android.sasabus.R.string;
 import it.sasabz.android.sasabus.classes.Information;
-import it.sasabz.android.sasabus.classes.Modus;
 import it.sasabz.android.sasabus.classes.adapter.MyListAdapter;
-import it.sasabz.android.sasabus.classes.dbobjects.BacinoList;
 import it.sasabz.android.sasabus.classes.dbobjects.DBObject;
 import it.sasabz.android.sasabus.classes.dialogs.About;
 import it.sasabz.android.sasabus.classes.dialogs.Credits;
 import it.sasabz.android.sasabus.classes.services.InformationList;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Vector;
-
-import org.apache.http.client.ClientProtocolException;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -48,7 +42,6 @@ import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -61,11 +54,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class InfoActivity extends ListActivity {
 
-	private Vector<DBObject> list = null;
+	//The List to store the retrieved informations (de/it) from the server
+	private ArrayList<DBObject> list = null;
+	
+	//Is the progressbar to show during retrieving the information
 	private ProgressDialog progdial = null;
 
 	public InfoActivity() {
@@ -82,12 +77,17 @@ public class InfoActivity extends ListActivity {
 		titel.setText(R.string.menu_infos);
 	}
 
+	
 	/**
 	 * Called when the activity is about to start interacting with the user.
 	 */
 	@Override
 	protected void onResume() {
 		super.onResume();
+		/*
+		 * If the phone has an internet connectivity, then the data is retrieved, 
+		 * otherwise a dialog informs the user of the "powered off connection"
+		 */
 		if(haveNetworkConnection())
 			fillData();
 		else
@@ -108,6 +108,10 @@ public class InfoActivity extends ListActivity {
 		}
 	}
 
+	/**
+	 * This Method is reacting on an interaction from the user. If the user taps on a list element, so 
+	 * a dialog is showing the entire message of this information.
+	 */
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -126,7 +130,8 @@ public class InfoActivity extends ListActivity {
 	}
 
 	/**
-	 * fills the list_view with the modes which are offered to the user
+	 * this method calls the information-retriever which retrieves the information from the 
+	 * server of SASA SpA-AG. The progress dialog willbe created and will be shown
 	 */
 	public void fillData() {
 		SharedPreferences shared = PreferenceManager
@@ -144,7 +149,11 @@ public class InfoActivity extends ListActivity {
 		info.execute(Integer.valueOf(infocity));
 	}
 
-	public void fillList(Vector<DBObject> list)
+	/**
+	 * this is the method which fills the information containing list
+	 * @param list is an array list of informations
+	 */
+	public void fillList(ArrayList<DBObject> list)
 	{
 		this.list = list;
 		MyListAdapter infos = new MyListAdapter(SASAbus.getContext(),

@@ -28,15 +28,10 @@ import it.sasabz.android.sasabus.classes.dbobjects.PalinaList;
 import it.sasabz.android.sasabus.classes.network.SASAbusXML;
 
 import java.util.Locale;
-import java.util.Vector;
-
-
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import android.util.Log;
 
 public class XMLStation {
 	
@@ -175,6 +170,7 @@ public class XMLStation {
 	}
 
 
+	@Override
 	public String toString()
 	{
 		return this.name;

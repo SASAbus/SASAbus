@@ -25,29 +25,10 @@
 package it.sasabz.android.sasabus.classes.hafas;
 
 
-import it.sasabz.android.sasabus.CheckDatabaseActivity;
-
 import it.sasabz.android.sasabus.SASAbus;
 
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.classes.Config;
-import it.sasabz.android.sasabus.classes.Decompress;
-import it.sasabz.android.sasabus.classes.MD5Utils;
-import it.sasabz.android.sasabus.classes.network.SasabusFTP;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-
-import java.io.OutputStream;
-import java.net.MalformedURLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
-
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -62,24 +43,11 @@ import org.apache.http.util.EntityUtils;
 
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.res.Resources;
-
-
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.os.Environment;
-import android.os.Looper;
-import android.os.PowerManager;
-import android.os.PowerManager.WakeLock;
-import android.util.AndroidRuntimeException;
-import android.util.Log;
-import android.widget.SlidingDrawer;
 
 
 

@@ -21,6 +21,12 @@
  * You should have received a copy of the GNU General Public License
  * along with SasaBus. If not, see <http://www.gnu.org/licenses/>.
  *
+<<<<<<< HEAD
+ * This activity provides a map an the possibility to show a list of
+ * bus stops which were contained in a "journey" (from - to)
+ *
+=======
+>>>>>>> 9953b151ccb50fe6b852c8ea73cf2811caaf01a1
  */
 
 package it.sasabz.android.sasabus;
@@ -31,17 +37,10 @@ import java.util.Vector;
 
 import org.mapsforge.android.maps.MapActivity;
 import org.mapsforge.android.maps.MapView;
-import org.mapsforge.android.maps.overlay.ArrayItemizedOverlay;
-import org.mapsforge.android.maps.overlay.OverlayItem;
 import org.mapsforge.android.maps.rendertheme.InternalRenderTheme;
 import org.mapsforge.core.GeoPoint;
 
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.R.drawable;
-import it.sasabz.android.sasabus.R.id;
-import it.sasabz.android.sasabus.R.layout;
-import it.sasabz.android.sasabus.R.menu;
-import it.sasabz.android.sasabus.R.string;
 import it.sasabz.android.sasabus.classes.MyArrayItemizedOverlay;
 import it.sasabz.android.sasabus.classes.MyOverlayItem;
 import it.sasabz.android.sasabus.classes.dbobjects.Bacino;
@@ -64,7 +63,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,8 +82,6 @@ public class MapViewActivity extends MapActivity {
 	// provides the orarioId for this object
 	private int orarioId = -1;
 	
-	//is the actual position of the bus
-	private int position = -1;
 
 	/** Called with the activity is first created. */
 	@Override
@@ -102,7 +98,6 @@ public class MapViewActivity extends MapActivity {
 			linea = extras.getInt("line");
 			orarioId = extras.getInt("orarioId");
 			bacinonr = extras.getInt("bacino");
-			this.position = extras.getInt("position");
 		}
 		else
 		{
@@ -156,6 +151,10 @@ public class MapViewActivity extends MapActivity {
 		from.setText(res.getString(R.string.from) + " " + part.toString());
 		to.setText(res.getString(R.string.to) + " " + dest.toString());
 
+		
+		/*
+		 * Creating the MapView an the overlays to show the journay on the map.
+		 */
 		MapView mapView = (MapView) findViewById(R.id.mapView);
 		mapView.setClickable(true);
 		mapView.setBuiltInZoomControls(true);

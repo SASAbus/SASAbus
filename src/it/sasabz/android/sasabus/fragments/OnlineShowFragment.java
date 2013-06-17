@@ -26,58 +26,35 @@ package it.sasabz.android.sasabus.fragments;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Vector;
 
-import it.sasabz.android.sasabus.InfoActivity;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.R.id;
-import it.sasabz.android.sasabus.R.layout;
-import it.sasabz.android.sasabus.R.menu;
-import it.sasabz.android.sasabus.R.string;
 import it.sasabz.android.sasabus.classes.Favorit;
 import it.sasabz.android.sasabus.classes.FavoritenDB;
 import it.sasabz.android.sasabus.classes.adapter.MyXMLConnectionRequestAdapter;
-import it.sasabz.android.sasabus.classes.dbobjects.Palina;
-import it.sasabz.android.sasabus.classes.dialogs.About;
 import it.sasabz.android.sasabus.classes.dialogs.ConnectionDialog;
-import it.sasabz.android.sasabus.classes.dialogs.Credits;
-import it.sasabz.android.sasabus.classes.hafas.XMLAttributVariante;
-import it.sasabz.android.sasabus.classes.hafas.XMLConnection;
 import it.sasabz.android.sasabus.classes.hafas.XMLConnectionRequest;
-import it.sasabz.android.sasabus.classes.hafas.XMLJourney;
 import it.sasabz.android.sasabus.classes.hafas.XMLRequest;
 import it.sasabz.android.sasabus.classes.hafas.XMLStation;
-import it.sasabz.android.sasabus.classes.hafas.XMLWalk;
 import it.sasabz.android.sasabus.classes.hafas.services.XMLBackwardScroll;
 import it.sasabz.android.sasabus.classes.hafas.services.XMLConnectionRequestList;
 import it.sasabz.android.sasabus.classes.hafas.services.XMLForwardScroll;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class OnlineShowFragment extends Fragment implements OnItemClickListener{
@@ -129,6 +106,7 @@ public class OnlineShowFragment extends Fragment implements OnItemClickListener{
 	}
 
 	
+	@Override
 	public void onResume()
 	{
 		super.onResume();

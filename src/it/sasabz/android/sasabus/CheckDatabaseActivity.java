@@ -21,6 +21,9 @@
  * You should have received a copy of the GNU General Public License
  * along with SasaBus. If not, see <http://www.gnu.org/licenses/>.
  *
+ * This activity checks the actually loaded database if it's the newest one. The database is 
+ * connecting to a FTP-server and checks the hashsum (md5-sum of the database). If an update is available,
+ * a background service is loaded and the files were retrieved.
  */
 
 package it.sasabz.android.sasabus;
@@ -28,28 +31,24 @@ package it.sasabz.android.sasabus;
 
 
 
-
-
-
-
-import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.classes.services.FileRetriever;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class CheckDatabaseActivity extends Activity {
 
+	
+	/*
+	 * Definition of the constants and the FileRetriever results to test if the file was 
+	 * downloaded or an error occoured
+	 */
 	public final static int DOWNLOAD_SUCCESS_DIALOG = 0;
 	public final static int DOWNLOAD_ERROR_DIALOG = 1;
 	public final static int MD5_ERROR_DIALOG = 2;
@@ -59,7 +58,12 @@ public class CheckDatabaseActivity extends Activity {
 	public final static int DB_OK = 6;
 	public final static int DOWNLOAD_RETRY = 7;
 	
+	/*
+	 * Here for every file to retrieve a variable is defined
+	 */
+	//Variable for the OpenStreetMap-Mapfile
 	public final static int FR_OSM = 0;
+	//Variable of the database with the static data from SASA SpA-AG
 	public final static int FR_DB = 1;
 	
 
@@ -73,6 +77,9 @@ public class CheckDatabaseActivity extends Activity {
 		check_db();
 	}
 	
+	/**
+	 * in this method the database is been checked via a background service if it's the newest one or not.
+	 */
 	public void check_db()
 	{
 		Resources res = this.getResources();
@@ -86,6 +93,10 @@ public class CheckDatabaseActivity extends Activity {
 		}
 	}
 	
+	
+	/**
+	 * in this method the openstreepmap-mapfile is been checked via a background service
+	 */
 	public void check_osm()
 	{
 		Resources res = this.getResources();
@@ -99,12 +110,26 @@ public class CheckDatabaseActivity extends Activity {
 		}
 	}
 	
+	/**
+	 * This method a dialog have been sowed with a given id as title and a given res as message. 
+	 * @param id is the returnvalue of the background service
+	 * @param res is the id of the file (database or osm-mapfile)
+	 */
 	public void showDialog(int id, int res)
 	{
 		Dialog dia = onCreateDialog(id, res);
 		dia.show();
 	}
 
+	
+	/**
+	 * This method creates an alert dialog to inform the user about what is ongoing, if 
+	 * there occoured an error or if the file was retrieved successfully
+	 * @param msg is the message to show in the dialog
+	 * @param placeholder is the parameter for some string that contains an 
+	 * @param res is the id of the threatened file
+	 * @return
+	 */
 	public final Dialog createAlertDialog(int msg, String placeholder, final int res) 
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -114,6 +139,11 @@ public class CheckDatabaseActivity extends Activity {
 		builder.setMessage(String.format(getString(msg),placeholder));
 		builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
 
+			/**
+			 * If the first file was checked/updated the the next file will be checked/updated.
+			 * Otherwise a new activity is started via startActivity();
+			 */
+			@Override
 			public void onClick(DialogInterface dialog, int id) {
 				if(res == FR_DB)
 				{
@@ -179,7 +209,6 @@ public class CheckDatabaseActivity extends Activity {
 		return builder.create();
 	}
 
-	
 	private Context getContext()
 	{
 		return super.getApplicationContext();
@@ -194,6 +223,14 @@ public class CheckDatabaseActivity extends Activity {
 		finish();
 	}
 
+	
+	/**
+	 * This method creates a dialog, depending on the id (returnvalue of the background-service)
+	 * and the file for which the fileretriever as called
+	 * @param id is the returnvalue of the background service
+	 * @param res is the type of the checked/updated file
+	 * @return a Dialog, not allready shown, but created and ready to show
+	 */
 	protected Dialog onCreateDialog(int id, int res) {
 		switch (id) {
 		case NO_NETWORK_CONNECTION:

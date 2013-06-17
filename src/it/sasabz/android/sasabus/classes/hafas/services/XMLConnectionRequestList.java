@@ -32,7 +32,6 @@ import it.sasabz.android.sasabus.classes.hafas.XMLRequest;
 import it.sasabz.android.sasabus.classes.hafas.XMLStation;
 import it.sasabz.android.sasabus.classes.hafas.XMLWalk;
 import it.sasabz.android.sasabus.classes.network.SASAbusXML;
-import it.sasabz.android.sasabus.fragments.OnlineSelectFragment;
 import it.sasabz.android.sasabus.fragments.OnlineShowFragment;
 
 import java.text.SimpleDateFormat;

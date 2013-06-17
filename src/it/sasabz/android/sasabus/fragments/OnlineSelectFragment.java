@@ -26,65 +26,30 @@ package it.sasabz.android.sasabus.fragments;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Locale;
 import java.util.Vector;
 
-import it.sasabz.android.sasabus.InfoActivity;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.R.id;
-import it.sasabz.android.sasabus.R.layout;
-import it.sasabz.android.sasabus.R.menu;
-import it.sasabz.android.sasabus.R.string;
-import it.sasabz.android.sasabus.classes.Modus;
-import it.sasabz.android.sasabus.classes.adapter.MyListAdapter;
-import it.sasabz.android.sasabus.classes.adapter.MyXMLConnectionRequestAdapter;
 import it.sasabz.android.sasabus.classes.adapter.MyXMLStationListAdapter;
-import it.sasabz.android.sasabus.classes.dbobjects.Bacino;
-import it.sasabz.android.sasabus.classes.dbobjects.BacinoList;
-import it.sasabz.android.sasabus.classes.dbobjects.DBObject;
-import it.sasabz.android.sasabus.classes.dbobjects.LineaList;
 import it.sasabz.android.sasabus.classes.dbobjects.Palina;
 import it.sasabz.android.sasabus.classes.dbobjects.PalinaList;
-import it.sasabz.android.sasabus.classes.dialogs.About;
-import it.sasabz.android.sasabus.classes.dialogs.ConnectionDialog;
-import it.sasabz.android.sasabus.classes.dialogs.Credits;
-import it.sasabz.android.sasabus.classes.hafas.XMLConnectionRequest;
 import it.sasabz.android.sasabus.classes.hafas.XMLRequest;
 import it.sasabz.android.sasabus.classes.hafas.XMLStation;
-import it.sasabz.android.sasabus.classes.hafas.services.XMLConnectionRequestList;
 import it.sasabz.android.sasabus.classes.hafas.services.XMLStationList;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.InputFilter.LengthFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.MultiAutoCompleteTextView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -126,7 +91,8 @@ public class OnlineSelectFragment extends Fragment{
     }
     
     
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    @Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
     	if(!XMLRequest.haveNetworkConnection())
         {

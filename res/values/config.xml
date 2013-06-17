@@ -28,7 +28,11 @@ along with SasaBus.  If not, see <http://www.gnu.org/licenses/>.
     <string name="app_name_db">SASAbus_v2</string>
     <string name="app_name_osm">SASAbus_osm</string>
     <string name="copyright_first_year">2011</string>
+<<<<<<< HEAD
+    <string name="version">v0.3.00beta</string>   
+=======
     <string name="version">v0.3.01</string>   
+>>>>>>> 9953b151ccb50fe6b852c8ea73cf2811caaf01a1
     <!-- Temporary solution to call version in splash.xml-->
     <string name="db_dir">Android/data/it.sasabz.android.sasabus/db</string>
     <string name="conf_dir">Android/data/it.sasabz.android.sasabus/conf</string>

@@ -29,7 +29,6 @@ package it.sasabz.android.sasabus.classes.dbobjects;
 import java.util.Locale;
 
 import android.database.Cursor;
-import android.util.Log;
 
 public class Bacino extends DBObject {
 	

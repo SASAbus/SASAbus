@@ -51,6 +51,7 @@ public class MyArrayItemizedSelectOverlay extends ArrayItemizedOverlay {
 		overlays.add(item);
 	}
 	
+	@Override
 	public boolean onTap(GeoPoint point, MapView view)
 	{
 		Iterator<MyOverlaySelectItem> iter = overlays.iterator();

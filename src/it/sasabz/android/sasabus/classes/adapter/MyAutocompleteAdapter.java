@@ -23,15 +23,12 @@
  */
 package it.sasabz.android.sasabus.classes.adapter;
 
-
-
 import it.sasabz.android.sasabus.classes.dbobjects.DBObject;
 
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Vector;
 
-
-import android.R;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,23 +41,29 @@ import android.widget.TextView;
 
 /**
  * @author Markus Windegger (markus@mowiso.com)
- *
+ * 
  */
-public class MyAutocompleteAdapter extends BaseAdapter implements Filterable{
+public class MyAutocompleteAdapter extends BaseAdapter implements Filterable {
 	private final Context context;
 	private final Vector<DBObject> origlist;
 	private Vector<DBObject> datalist = new Vector<DBObject>();
 	private final int layoutId;
 
-	
 	/**
 	 * This constructor creates an object with the following parameters
-	 * @param context is the context to work with
-	 * @param whereId is the resource id where to place the string
-	 * @param layoutId is the layout id of the list_view
-	 * @param list is the list of dbobject's which are to putting in the list_view
+	 * 
+	 * @param context
+	 *            is the context to work with
+	 * @param whereId
+	 *            is the resource id where to place the string
+	 * @param layoutId
+	 *            is the layout id of the list_view
+	 * @param list
+	 *            is the list of dbobject's which are to putting in the
+	 *            list_view
 	 */
-	public MyAutocompleteAdapter(Context context, int layoutId, Vector<DBObject> list) {
+	public MyAutocompleteAdapter(Context context, int layoutId,
+			Vector<DBObject> list) {
 		this.context = context;
 		this.origlist = list;
 		this.layoutId = layoutId;
@@ -68,17 +71,18 @@ public class MyAutocompleteAdapter extends BaseAdapter implements Filterable{
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View v = convertView;  
-		if (v == null) {
-              LayoutInflater vi = LayoutInflater.from(context);
-              v = vi.inflate(layoutId, null);
-          }
-		TextView textView = (TextView) v.findViewById(R.id.text1);
-		textView.setTextColor(context.getResources().getColor(R.color.black));
+		View v = convertView;
+		if (v == null)
+		{
+			LayoutInflater vi = LayoutInflater.from(context);
+			v = vi.inflate(layoutId, null);
+		}
+		TextView textView = (TextView) v.findViewById(android.R.id.text1);
+		textView.setTextColor(context.getResources().getColor(android.R.color.black));
 		if (datalist != null)
 		{
 			DBObject listItem = datalist.get(position);
-			if(listItem != null)
+			if (listItem != null)
 			{
 				textView.setText(datalist.get(position).toString());
 			}
@@ -88,18 +92,18 @@ public class MyAutocompleteAdapter extends BaseAdapter implements Filterable{
 
 	@Override
 	public int getCount() {
-		if(datalist == null)
+		if (datalist == null)
 			return 0;
 		return datalist.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		if(datalist == null || position >= datalist.size())
+		if (datalist == null || position >= datalist.size())
 			return null;
 		return datalist.get(position);
 	}
-	
+
 	@Override
 	public long getItemId(int position) {
 		if (datalist == null)
@@ -107,9 +111,8 @@ public class MyAutocompleteAdapter extends BaseAdapter implements Filterable{
 		return datalist.get(position).getId();
 	}
 
-	 @Override
-	 public Filter getFilter() 
-	 {
+	@Override
+	public Filter getFilter() {
 		Filter myFilter = null;
 		myFilter = new Filter() {
 			@Override
@@ -128,20 +131,18 @@ public class MyAutocompleteAdapter extends BaseAdapter implements Filterable{
 						for (int i = 0; i < constraints.length
 								&& (match || i == 0); ++i)
 						{
-							if (s.toLowerCase()
+							match = s
+									.toLowerCase(Locale.getDefault())
 									.contains(
-											constraints[i].toString()
-													.toLowerCase()))
-							{
-								match = true;
-							} else
-							{
-								match = false;
-							}
+											constraints[i]
+													.toString()
+													.toLowerCase(
+															Locale.getDefault()));
 						}
 						if (match)
 						{
-							temp_datalist.add(object);							}
+							temp_datalist.add(object);
+						}
 					}
 				}
 				filterResults.values = temp_datalist;
@@ -154,10 +155,11 @@ public class MyAutocompleteAdapter extends BaseAdapter implements Filterable{
 					FilterResults results) {
 				try
 				{
-					if(results.values instanceof Vector<?>)
-						datalist = (Vector<DBObject>)results.values;
+					if (results.values instanceof Vector<?>)
+						datalist = (Vector<DBObject>) results.values;
 					notifyDataSetChanged();
-				} catch (Exception e)
+				} 
+				catch (Exception e)
 				{
 					Log.v("MyAutocompleteAdapter", "Error", e);
 				}

@@ -23,14 +23,15 @@
  * You should have received a copy of the GNU General Public License
  * along with SasaBus.  If not, see <http://www.gnu.org/licenses/>.
  * 
+ * This class gets some special data from the databases used for some operations
+ * in the application like the validationcheck etc...
+ * 
  */
 package it.sasabz.android.sasabus.classes;
 
 import it.sasabz.android.sasabus.SASAbus;
 import it.sasabz.android.sasabus.classes.adapter.MySQLiteDBAdapter;
 import android.database.Cursor;
-import android.database.SQLException;
-import android.util.Log;
 
 
 public class Config {

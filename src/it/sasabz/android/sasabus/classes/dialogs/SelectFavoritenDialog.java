@@ -29,51 +29,29 @@ import java.util.Vector;
 
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.SASAbus;
-import it.sasabz.android.sasabus.R.id;
-import it.sasabz.android.sasabus.R.layout;
-import it.sasabz.android.sasabus.R.menu;
-import it.sasabz.android.sasabus.R.string;
 import it.sasabz.android.sasabus.classes.Favorit;
 import it.sasabz.android.sasabus.classes.FavoritenDB;
 import it.sasabz.android.sasabus.classes.FavoritenList;
-import it.sasabz.android.sasabus.classes.Modus;
 import it.sasabz.android.sasabus.classes.adapter.MyFavoritenListAdapter;
-import it.sasabz.android.sasabus.classes.adapter.MyListAdapter;
-import it.sasabz.android.sasabus.classes.dbobjects.Bacino;
-import it.sasabz.android.sasabus.classes.dbobjects.BacinoList;
-import it.sasabz.android.sasabus.classes.dbobjects.DBObject;
-import it.sasabz.android.sasabus.classes.dbobjects.LineaList;
 import it.sasabz.android.sasabus.classes.dbobjects.Palina;
 import it.sasabz.android.sasabus.classes.dbobjects.PalinaList;
 import it.sasabz.android.sasabus.fragments.OnlineSearchFragment;
-import it.sasabz.android.sasabus.fragments.OrarioFragment;
-
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ListActivity;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.res.Resources;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Display;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class SelectFavoritenDialog extends Dialog implements OnItemClickListener {
 
@@ -97,8 +75,8 @@ public class SelectFavoritenDialog extends Dialog implements OnItemClickListener
         this.setTitle(R.string.mode_favoriten);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
     	lp.copyFrom(getWindow().getAttributes());
-    	lp.width = WindowManager.LayoutParams.FILL_PARENT;
-    	lp.height = WindowManager.LayoutParams.FILL_PARENT;
+    	lp.width = LayoutParams.FILL_PARENT;
+    	lp.height = LayoutParams.FILL_PARENT;
     	getWindow().setAttributes(lp);
     	Display dm = getWindow().getWindowManager().getDefaultDisplay();
         int width = dm.getWidth();

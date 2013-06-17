@@ -26,19 +26,12 @@
 
 package it.sasabz.android.sasabus.classes.adapter;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.classes.DBFileManager;
-import it.sasabz.android.sasabus.fragments.OnlineSearchFragment;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Environment;
-import android.util.Log;
 
 
 /**

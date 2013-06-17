@@ -26,7 +26,6 @@
  */
 package it.sasabz.android.sasabus.classes.dbobjects;
 
-import java.text.NumberFormat;
 import java.util.Locale;
 
 import android.database.Cursor;

@@ -183,6 +183,7 @@ public class Passaggio extends DBObject {
 		return true;
 	}
 	
+	@Override
 	public String toString()
 	{
 		return (this.getOrario().format("%H:%M")).trim();

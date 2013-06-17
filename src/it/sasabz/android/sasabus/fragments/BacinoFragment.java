@@ -25,40 +25,23 @@
 
 package it.sasabz.android.sasabus.fragments;
 
-import java.util.Locale;
 import java.util.Vector;
 
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.SASAbus;
-import it.sasabz.android.sasabus.R.id;
-import it.sasabz.android.sasabus.R.layout;
-import it.sasabz.android.sasabus.R.menu;
-import it.sasabz.android.sasabus.R.string;
 import it.sasabz.android.sasabus.classes.adapter.MyListAdapter;
-import it.sasabz.android.sasabus.classes.dbobjects.Bacino;
 import it.sasabz.android.sasabus.classes.dbobjects.BacinoList;
 import it.sasabz.android.sasabus.classes.dbobjects.DBObject;
-import it.sasabz.android.sasabus.classes.dialogs.About;
-import it.sasabz.android.sasabus.classes.dialogs.Credits;
-
-import android.app.ListActivity;
-import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 public class BacinoFragment extends Fragment implements OnItemClickListener{

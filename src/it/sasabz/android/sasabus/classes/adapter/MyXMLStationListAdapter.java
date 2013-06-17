@@ -24,18 +24,15 @@
 package it.sasabz.android.sasabus.classes.adapter;
 
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.SASAbus;
 import it.sasabz.android.sasabus.classes.hafas.XMLStation;
 
 import java.util.Vector;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 /**

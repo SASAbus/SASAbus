@@ -25,6 +25,12 @@ package it.sasabz.android.sasabus.classes.dialogs;
 
 import it.sasabz.android.sasabus.MapSelectActivity;
 import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.classes.dbobjects.Palina;
+import android.app.Dialog;
+import android.content.Context;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import it.sasabz.android.sasabus.R.string;
 import it.sasabz.android.sasabus.classes.adapter.MyXMLConnectionAdapter;
 import it.sasabz.android.sasabus.classes.dbobjects.Palina;
@@ -74,6 +80,7 @@ public class SelectDialog extends Dialog{
 		this.palina = palina;
 	}
 	
+	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		setContentView(R.layout.select_dialog_layout);

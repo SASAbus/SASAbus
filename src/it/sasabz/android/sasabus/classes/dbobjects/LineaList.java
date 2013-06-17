@@ -33,7 +33,6 @@ import it.sasabz.android.sasabus.classes.adapter.MySQLiteDBAdapter;
 import java.util.Vector;
 
 import android.database.Cursor;
-import android.util.Log;
 
 /**
  * @author Markus Windegger (markus@mowiso.com)

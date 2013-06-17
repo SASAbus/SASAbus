@@ -1,6 +1,10 @@
 /**
  *
+<<<<<<< HEAD
+ * MapSelectActivity.java
+=======
  * MapViewActivity.java
+>>>>>>> 9953b151ccb50fe6b852c8ea73cf2811caaf01a1
  *
  * Created: Mar 15, 2012 22:40:06 PM
  *
@@ -21,6 +25,11 @@
  * You should have received a copy of the GNU General Public License
  * along with SasaBus. If not, see <http://www.gnu.org/licenses/>.
  *
+<<<<<<< HEAD
+ * This activity provides a map to select one of the various bus stops
+ *
+=======
+>>>>>>> 9953b151ccb50fe6b852c8ea73cf2811caaf01a1
  */
 
 package it.sasabz.android.sasabus;
@@ -37,6 +46,12 @@ import org.mapsforge.android.maps.rendertheme.InternalRenderTheme;
 import org.mapsforge.core.GeoPoint;
 
 import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.classes.MyArrayItemizedSelectOverlay;
+import it.sasabz.android.sasabus.classes.MyOverlaySelectItem;
+import it.sasabz.android.sasabus.classes.adapter.MySQLiteDBAdapter;
+import it.sasabz.android.sasabus.classes.dbobjects.DBObject;
+import it.sasabz.android.sasabus.classes.dbobjects.Palina;
+import it.sasabz.android.sasabus.classes.dbobjects.PalinaList;
 import it.sasabz.android.sasabus.R.drawable;
 import it.sasabz.android.sasabus.R.id;
 import it.sasabz.android.sasabus.R.layout;
@@ -73,6 +88,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -191,6 +207,7 @@ public class MapSelectActivity extends MapActivity {
 		super.onResume();
 	}
 
+	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
         	setResult();

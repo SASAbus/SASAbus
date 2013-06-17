@@ -26,26 +26,18 @@ package it.sasabz.android.sasabus.classes.adapter;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.SASAbus;
 import it.sasabz.android.sasabus.classes.hafas.XMLConnection;
-import it.sasabz.android.sasabus.classes.hafas.XMLConnectionRequest;
 import it.sasabz.android.sasabus.classes.hafas.XMLJourney;
 import it.sasabz.android.sasabus.classes.hafas.XMLWalk;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Vector;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.text.Html;
-import android.text.format.Time;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -74,50 +66,56 @@ public class MyXMLConnectionAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
-	
-	    LayoutInflater vi = (LayoutInflater)SASAbus.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		if (position == 0) 
+		if (list != null)
 		{
-			if (list != null && list.size() == 1) 
+		    LayoutInflater vi = (LayoutInflater)SASAbus.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			if (position == 0) 
 			{
-				v = vi.inflate(R.layout.con_transfer_row_one, null);
+				if (list.size() == 1) 
+				{
+					v = vi.inflate(R.layout.con_transfer_row_one, null);
+				} 
+				else 
+				{
+					v = vi.inflate(R.layout.con_transfer_row_first, null);
+				}
 			} 
 			else 
 			{
-				v = vi.inflate(R.layout.con_transfer_row_first, null);
+				if (position == list.size() - 1) 
+				{
+					v = vi.inflate(R.layout.con_transfer_row_last, null);
+				}
+				else 
+				{
+					v = vi.inflate(R.layout.con_transfer_row_follower, null);
+				}
 			}
-		} 
-		else 
-		{
-			if (position == list.size() - 1) 
-			{
-				v = vi.inflate(R.layout.con_transfer_row_last, null);
-			}
-			else 
-			{
-				v = vi.inflate(R.layout.con_transfer_row_follower, null);
-			}
-		}
-		if (list != null)
-		{
 			XMLConnection conreq = list.get(position);
 			if(conreq != null)
 			{
 				SimpleDateFormat simple = new SimpleDateFormat("HH:mm");
-				if(position == 0)
+				if (position == 0)
 				{
-					TextView departure = (TextView) v.findViewById(R.id.departure);
-					departure.setText(Html.fromHtml("<b>" + simple.format(conreq.getDeparture().getArrtime()) + " " + conreq.getDeparture().getStation().getHaltestelle() + "</b> "));
+					TextView departure = (TextView) v
+							.findViewById(R.id.departure);
+					departure.setText(Html.fromHtml("<b>"
+							+ simple.format(conreq.getDeparture().getArrtime())
+							+ " "
+							+ conreq.getDeparture().getStation()
+									.getHaltestelle() + "</b> "));
 				}
-				
+
 				TextView arrival = (TextView) v.findViewById(R.id.arrival);
-				arrival.setText(Html.fromHtml("<b>" + simple.format(conreq.getArrival().getArrtime()) + " " + conreq.getArrival().getStation().getHaltestelle() + "</b> "));
-				
-				
+				arrival.setText(Html.fromHtml("<b>"
+						+ simple.format(conreq.getArrival().getArrtime()) + " "
+						+ conreq.getArrival().getStation().getHaltestelle()
+						+ "</b> "));
+
 				TextView info = (TextView) v.findViewById(R.id.info);
-				ImageView image = (ImageView)v.findViewById(R.id.image);
-				String infotext = ""; 
-				if(conreq instanceof XMLWalk)
+				ImageView image = (ImageView) v.findViewById(R.id.image);
+				String infotext = "";
+				if (conreq instanceof XMLWalk)
 				{
 					int random = (int)(Math.random() * 10) % 2;
 					if(random == 1)
@@ -136,8 +134,10 @@ public class MyXMLConnectionAdapter extends BaseAdapter {
 					
 					infotext = simple.format(conreq.getDuration());
 					Resources res = SASAbus.getContext().getResources();
-					infotext += (" -&gt; <font color=\"" + res.getColor(R.color.sasa_orange) + "\">" + res.getString(R.string.line) + 
-							" " + ((XMLJourney)conreq).getAttribut("NUMBER") + "</font>");
+					infotext += (" -&gt; <font color=\""
+							+ res.getColor(R.color.sasa_orange) + "\">"
+							+ res.getString(R.string.line) + " "
+							+ ((XMLJourney)conreq).getAttribut("NUMBER") + "</font>");
 				}
 				info.setText(Html.fromHtml(infotext));
 				

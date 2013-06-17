@@ -1,10 +1,39 @@
+/**
+ *
+ * OnlineActivity.java
+ *
+ * Created: Mar 15, 2012 22:40:06 PM
+ *
+ * Copyright (C) 2012 Paolo Dongilli and Markus Windegger
+ *
+ * This file is part of SasaBus.
+
+ * SasaBus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * SasaBus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with SasaBus. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * This activity provides a map an the possibility to show a list of
+ * bus stops which were contained in a "journey" (from - to)
+ *
+ * This activity is responsable for all the operations allowed during online-mode.
+ * It's the space for all fragments related to it.
+ *
+ */
 package it.sasabz.android.sasabus;
 
 import it.sasabz.android.sasabus.classes.dialogs.About;
 import it.sasabz.android.sasabus.classes.dialogs.Credits;
 import it.sasabz.android.sasabus.fragments.OnlineSearchFragment;
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -42,6 +71,7 @@ public class OnlineActivity extends FragmentActivity{
 		fragmentManager.executePendingTransactions();
 	}
 	
+	@Override
 	protected void onResume()
 	{
 		super.onResume();
@@ -104,28 +134,5 @@ public class OnlineActivity extends FragmentActivity{
 		return false;
 	}
 	
-	/**
-	 * this method checks if a networkconnection is active or not
-	 * @return boolean if the network is reachable or not
-	 */
-	private boolean haveNetworkConnection() 
-	{
-		boolean haveConnectedWifi = false;
-		boolean haveConnectedMobile = false;
-
-		ConnectivityManager cm = (ConnectivityManager) (this.getSystemService(Context.CONNECTIVITY_SERVICE));
-		NetworkInfo[] netInfo = cm.getAllNetworkInfo();
-		for (NetworkInfo ni : netInfo) {
-			//testing WIFI connection
-			if (ni.getTypeName().equalsIgnoreCase("WIFI"))
-				if (ni.isConnected())
-					haveConnectedWifi = true;
-			//testing GPRS/EDGE/UMTS/HDSPA/HUSPA/LTE connection
-			if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
-				if (ni.isConnected())
-					haveConnectedMobile = true;
-		}
-		return haveConnectedWifi || haveConnectedMobile;
-	}
 	
 }

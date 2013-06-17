@@ -25,9 +25,7 @@ package it.sasabz.android.sasabus.classes;
 
 import it.sasabz.android.sasabus.R;
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class FavoritenDB extends SQLiteOpenHelper{

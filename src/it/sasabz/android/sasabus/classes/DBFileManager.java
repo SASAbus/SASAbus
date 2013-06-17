@@ -77,9 +77,9 @@ public abstract class DBFileManager {
 	}
 
 	/**
-	 * this synchronized method closes the database
+	 * this closes the database
 	 */
-	public synchronized void close() {
+	public void close() {
 		if (database != null) {
 			database.close();
 			database = null;

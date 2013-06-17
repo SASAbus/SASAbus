@@ -1,6 +1,35 @@
+/**
+ *
+ * TabHostActivity.java
+ *
+ * Created: Mar 15, 2012 22:40:06 PM
+ *
+ * Copyright (C) 2012 Paolo Dongilli and Markus Windegger
+ *
+ * This file is part of SasaBus.
+
+ * SasaBus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * SasaBus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with SasaBus. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * This activity provides a map an the possibility to show a list of
+ * bus stops which were contained in a "journey" (from - to)
+ *
+ * This activity is the "main" activity of this application. It holds the tabhostwidget, which
+ * controls the activities added to the tabs (like online-offlineActivity etc 
+ *
+ */
 package it.sasabz.android.sasabus;
 
-import it.sasabz.android.sasabus.classes.hafas.services.XMLConnectionRequestList;
 import android.app.AlertDialog;
 import android.app.TabActivity;
 import android.content.Context;
@@ -16,6 +45,7 @@ import android.widget.TabHost.TabSpec;
 
 public class TabHostActivity extends TabActivity implements OnTabChangeListener{
 	 
+	@Override
 	public void onCreate(Bundle savedInstanceState) 
 	{
         super.onCreate(savedInstanceState);

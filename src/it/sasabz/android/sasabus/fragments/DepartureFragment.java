@@ -29,11 +29,6 @@ import java.util.Vector;
 
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.SASAbus;
-import it.sasabz.android.sasabus.R.id;
-import it.sasabz.android.sasabus.R.layout;
-import it.sasabz.android.sasabus.R.menu;
-import it.sasabz.android.sasabus.R.string;
-import it.sasabz.android.sasabus.classes.*;
 import it.sasabz.android.sasabus.classes.adapter.MyListAdapter;
 import it.sasabz.android.sasabus.classes.dbobjects.Bacino;
 import it.sasabz.android.sasabus.classes.dbobjects.DBObject;
@@ -41,8 +36,6 @@ import it.sasabz.android.sasabus.classes.dbobjects.Linea;
 import it.sasabz.android.sasabus.classes.dbobjects.Palina;
 import it.sasabz.android.sasabus.classes.dbobjects.PalinaList;
 
-import android.app.ListActivity;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -53,7 +46,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class DepartureFragment extends Fragment implements OnItemClickListener{
 

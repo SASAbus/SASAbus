@@ -33,7 +33,6 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import android.database.Cursor;
-import android.util.Log;
 
 public class BacinoList {
 	

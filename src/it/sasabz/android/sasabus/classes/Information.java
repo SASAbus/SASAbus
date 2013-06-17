@@ -121,6 +121,7 @@ public class Information extends DBObject{
 		return this.getTitel_it().trim();
 	}
 	
+	@Override
 	public String toString()
 	{
 		try {
