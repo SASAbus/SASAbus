@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="changelog_css" tools:ignore="TypographyQuotes" translatable="false">
+        html {
+        background-color: #FFFFFF;
+        }
+        p {
+        margin-left: 4px;
+        margin-top: 2px;
+        margin-bottom: 0px;
+        font-size: 1.0em;
+        color: #FF9800;
+        font-weight: bold;
+        }
+        li {
+        margin-left: 0px;
+        font-size: 14px;
+        }
+        ul {
+        padding: 0px;
+        margin-top: 4px;
+        padding-left: 2em;
+        }
+    </string>
+
+</resources>

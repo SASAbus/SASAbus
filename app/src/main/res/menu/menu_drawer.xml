@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/ic_map_white_48dp"
+            android:title="@string/map"/>
+
+        <item
+            android:id="@+id/nav_lines"
+            android:icon="@drawable/ic_bus"
+            android:title="@string/bus_lines"/>
+
+        <item
+            android:id="@+id/nav_stations"
+            android:icon="@drawable/ic_station"
+            android:title="@string/stations"/>
+
+        <item
+            android:id="@+id/nav_route"
+            android:icon="@drawable/ic_route"
+            android:title="@string/route"/>
+
+        <item
+            android:id="@+id/nav_trips"
+            android:icon="@drawable/ic_timeline"
+            android:title="@string/trips"/>
+
+        <item
+            android:id="@+id/nav_planned_trips"
+            android:icon="@drawable/ic_event_white_48dp"
+            android:title="@string/planned_trips"/>
+
+        <item
+            android:id="@+id/nav_news"
+            android:icon="@drawable/ic_event_note_white_48dp"
+            android:title="@string/news"/>
+
+        <item
+            android:id="@+id/nav_timetables"
+            android:icon="@drawable/ic_list"
+            android:title="@string/timetables"/>
+
+        <item
+            android:id="@+id/nav_parking"
+            android:icon="@drawable/ic_parking"
+            android:title="@string/parking"/>
+    </group>
+
+</menu>

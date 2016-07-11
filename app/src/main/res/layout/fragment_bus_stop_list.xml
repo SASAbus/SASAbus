@@ -1,0 +1,19 @@
+<it.sasabz.android.sasabus.ui.widget.NestedSwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/refresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/list_padding"
+        android:paddingBottom="@dimen/list_padding"
+        android:paddingStart="@dimen/recycler_padding"
+        android:paddingEnd="@dimen/recycler_padding"
+        android:paddingLeft="@dimen/recycler_padding"
+        android:paddingRight="@dimen/recycler_padding"
+        android:clipToPadding="false"/>
+
+</it.sasabz.android.sasabus.ui.widget.NestedSwipeRefreshLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <PreferenceCategory android:title="@string/settings_map_refresh">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="pref_auto_update"
+            android:summary="@string/settings_map_auto_sub"
+            android:title="@string/settings_map_auto_title"/>
+
+        <ListPreference
+            android:defaultValue="5000"
+            android:dependency="pref_auto_update"
+            android:entries="@array/settings_map_interval_readable"
+            android:entryValues="@array/settings_map_interval_values"
+            android:key="pref_auto_update_interval"
+            android:summary="@string/settings_map_auto_interval_sub"
+            android:title="@string/settings_map_auto_interval_title"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

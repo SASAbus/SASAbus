@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <!-- on 21+ we animate in the scrim so make it transparent to begin -->
+    <item name="search_scrim_alpha" format="float" type="fraction">0</item>
+</resources>

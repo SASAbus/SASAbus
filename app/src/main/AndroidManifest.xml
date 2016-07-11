@@ -1,147 +1,394 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="it.sasabz.android.sasabus">
+<manifest
+    package="it.sasabz.android.sasabus"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="18"
-        tools:overrideLibrary="com.google.android.gms" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- GCM SUPPORT -->
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-    <!-- BEACON SUPPORT -->
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
-    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
-        android:name="it.sasabz.sasabus.SasaApplication"
+        android:name=".AppApplication"
         android:allowBackup="true"
-        android:icon="@drawable/icon"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Sasabus">
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
-        <!--
-             Optionally, register AnalyticsReceiver and AnalyticsService to support background
-            dispatching on non-Google Play devices
-        -->
-        <receiver
-            android:name="com.google.android.gms.analytics.AnalyticsReceiver"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name="com.google.android.gms.analytics.AnalyticsService"
-            android:enabled="true"
-            android:exported="false" />
-
-        <!--
-             Optionally, register CampaignTrackingReceiver and CampaignTrackingService to enable
-            installation campaign reporting
-        -->
-        <receiver
-            android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
-
-        <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
 
         <activity
-            android:name="it.sasabz.sasabus.ui.MainActivity"
+            android:name="it.sasabz.android.sasabus.ui.MapActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:launchMode="singleTop">
 
-                <category android:name="android.intent.category.LAUNCHER" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+        </activity>
+
+
+        <!-- Survey -->
+
+        <activity
+            android:name="it.sasabz.android.sasabus.beacon.survey.SurveyActivity"
+            android:label="@string/survey"
+            android:theme="@style/AppTheme.Teal" />
+
+        <activity
+            android:name="it.sasabz.android.sasabus.beacon.survey.SurveyExitActivity"
+            android:theme="@android:style/Theme.NoDisplay"
+            android:autoRemoveFromRecents="true"/>
+
+
+        <!-- Nav drawer activities -->
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.line.LinesActivity"
+            android:label="@string/lines"
+            android:launchMode="singleTop"/>
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.busstop.BusStopActivity"
+            android:label="@string/stations"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.BusStop"/>
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.route.RouteActivity"
+            android:label="@string/route"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustNothing"/>
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.trips.TripsActivity"
+            android:label="@string/trips"
+            android:launchMode="singleTop"/>
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.TimetableActivity"
+            android:label="@string/timetables"
+            android:launchMode="singleTop"/>
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.NewsActivity"
+            android:label="@string/news"
+            android:launchMode="singleTop"/>
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.parking.ParkingActivity"
+            android:label="@string/parking"
+            android:launchMode="singleTop"/>
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.plannedtrip.PlannedTripsActivity"
+            android:label="@string/planned_trips"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.BusStop"/>
+
+
+        <!-- Intro activity -->
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.intro.Intro"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.Intro">
+
+            <!-- Handle terms/privacy clicks -->
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <data android:scheme="terms"/>
+                <data android:scheme="privacy"/>
             </intent-filter>
         </activity>
+
         <activity
-            android:name="it.sasabz.sasabus.ui.survey.SurveyActivity"
-            android:label="@string/survey"
-            android:screenOrientation="portrait" />
+            android:name="it.sasabz.android.sasabus.ui.intro.data.IntroData"
+            android:theme="@style/AppTheme.Intro"/>
+
+
+        <!-- Credits/Settings/Changelog -->
+
         <activity
-            android:name="it.sasabz.sasabus.ui.survey.SurveyContactActivity"
-            android:label="@string/survey"
-            android:screenOrientation="portrait" />
+            android:name="it.sasabz.android.sasabus.ui.AboutActivity"
+            android:label="@string/about"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.About"/>
 
-        <receiver android:name="it.sasabz.sasabus.beacon.survey.SurveyBroadcastReceiver">
-            <intent-filter>
-                <action android:name="it.sasabz.sasabus.beacon.surveybroadcast" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name="it.sasabz.sasabus.beacon.survey.SurveyBroadcastReceiver">
-            <intent-filter>
-                <action android:name="it.sasabz.sasabus.beacon.surveybroadcast" />
-            </intent-filter>
-        </receiver>
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.CreditsActivity"
+            android:label="@string/activity_credits"
+            android:parentActivityName="it.sasabz.android.sasabus.ui.AboutActivity"
+            android:theme="@style/AppTheme.Normal"/>
 
-        <service android:name="it.sasabz.sasabus.beacon.BeaconScannerService" />
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.ChangelogActivity"
+            android:label="@string/changelog"
+            android:parentActivityName="it.sasabz.android.sasabus.ui.AboutActivity"
+            android:theme="@style/AppTheme.Normal"/>
 
-        <receiver android:name="it.sasabz.sasabus.beacon.BluetoothStateChangeReceiver">
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.PreferenceActivity"
+            android:label="@string/settings"
+            android:theme="@style/AppTheme.Settings"/>
+
+
+        <!-- Route -->
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.route.RouteMapPickerActivity"
+            android:label="@string/pick_stations"
+            android:parentActivityName="it.sasabz.android.sasabus.ui.route.RouteActivity"
+            android:theme="@style/AppTheme.Normal"/>
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.route.RouteResultActivity"
+            android:label="@string/route_results"
+            android:launchMode="singleTop"
+            android:parentActivityName="it.sasabz.android.sasabus.ui.route.RouteActivity"
+            android:theme="@style/AppTheme.Green"/>
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.route.SearchActivity"
+            android:exported="false"
+            android:label="@string/title_search"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.Search">
             <intent-filter>
-                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
+                <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
-        </receiver>
-        <receiver android:name="org.altbeacon.beacon.startup.StartupBroadcastReceiver">
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
+
+
+        <!-- Lines -->
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.line.LineDetailActivity"
+            android:label="@string/lines_detail"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.Indigo"/>
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.line.LineCourseActivity"
+            android:label="@string/course_details"
+            android:theme="@style/AppTheme.Teal"/>
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.line.LinePathActivity"
+            android:label="@string/lines_path"
+            android:parentActivityName="it.sasabz.android.sasabus.ui.line.LineDetailActivity"
+            android:theme="@style/AppTheme.Indigo"/>
+
+
+        <!-- Bus stop -->
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.busstop.BusStopDetailActivity"
+            android:label="@string/station_details"
+            android:theme="@style/AppTheme.Red"/>
+
+
+        <!-- Parking -->
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.parking.ParkingDetailActivity"
+            android:parentActivityName="it.sasabz.android.sasabus.ui.parking.ParkingActivity"
+            android:theme="@style/AppTheme.Parking"/>
+
+
+        <!-- Bus -->
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.bus.BusDetailActivity"
+            android:theme="@style/AppTheme.Bus"/>
+
+
+        <!-- Trips -->
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.plannedtrip.PlannedTripsAddActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.PlannedTrips"/>
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.plannedtrip.PlannedTripsViewActivity"
+            android:parentActivityName="it.sasabz.android.sasabus.ui.plannedtrip.PlannedTripsActivity"
+            android:theme="@style/AppTheme.PlannedTrips"/>
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.trips.TripDetailActivity"
+            android:label="@string/trip_details"
+            android:theme="@style/AppTheme.Trips"/>
+
+
+        <!-- Widget -->
+
+        <activity
+            android:name="it.sasabz.android.sasabus.appwidget.WidgetConfigureActivity"
+            android:theme="@style/Theme.WidgetActivity">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
-        </receiver>
+        </activity>
+
+        <activity
+            android:name="it.sasabz.android.sasabus.ui.parking.ParkingConfigureActivity"
+            android:theme="@style/Theme.WidgetActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+
+
+        <!-- Metadata -->
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="43bd23092db55b7c1f303c7f6e5bd3091649f644"/>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
+
+
+        <!-- Services -->
+
+        <service android:name="it.sasabz.android.sasabus.beacon.BeaconService"/>
+
+        <service android:name="com.google.android.gms.analytics.CampaignTrackingService"/>
 
         <service
             android:name="org.altbeacon.beacon.service.BeaconService"
             android:enabled="true"
             android:exported="false"
             android:isolatedProcess="false"
-            android:label="beacon" />
+            android:label="beacon"/>
+
         <service
             android:name="org.altbeacon.beacon.BeaconIntentProcessor"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="false"/>
+
+        <service
+            android:name="com.google.android.gms.analytics.AnalyticsService"
+            android:enabled="true"
+            android:exported="false"/>
+
+        <service android:name="it.sasabz.android.sasabus.sync.SyncService"/>
+
+        <service
+            android:name="it.sasabz.android.sasabus.sync.SyncJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
+
+
+        <!-- GCM Services -->
+
+        <service android:name="it.sasabz.android.sasabus.fcm.FcmService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service android:name="it.sasabz.android.sasabus.fcm.InstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+
+        <!-- Receivers -->
+
+        <receiver android:name="org.altbeacon.beacon.startup.StartupBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="it.sasabz.android.sasabus.receiver.NotificationReceiver"/>
+
+        <receiver android:name="it.sasabz.android.sasabus.receiver.BluetoothReceiver">
+            <intent-filter>
+                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED"/>
+            </intent-filter>
+        </receiver>
 
         <receiver
-            android:name="it.sasabz.sasabus.beacon.LocationServicesStateChangeReceiver"
+            android:name="it.sasabz.android.sasabus.receiver.BootReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.google.android.gms.analytics.AnalyticsReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="it.sasabz.android.sasabus.receiver.LocationReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.location.PROVIDERS_CHANGED" />
+                <action android:name="android.location.PROVIDERS_CHANGED"/>
             </intent-filter>
         </receiver>
 
-        <receiver
-            android:name="it.sasabz.sasabus.gcm.GCMBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
+        <receiver android:name="it.sasabz.android.sasabus.appwidget.NewsWidgetProvider">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <category android:name="it.sasabz.android.sasabus" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_provider_news"/>
         </receiver>
 
-        <service android:name="it.sasabz.sasabus.gcm.GCMIntentService" />
+        <receiver android:name="it.sasabz.android.sasabus.appwidget.ParkingWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_provider_parking"/>
+        </receiver>
+
+        <receiver android:name="it.sasabz.android.sasabus.appwidget.WidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget"/>
+        </receiver>
+
     </application>
 
 </manifest>

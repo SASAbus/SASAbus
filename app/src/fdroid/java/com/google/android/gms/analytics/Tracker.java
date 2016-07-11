@@ -3,139 +3,55 @@ package com.google.android.gms.analytics;
 import android.content.Context;
 
 public class Tracker {
-	public static final String PRODUCT = "GoogleAnalytics";
-	public static final String VERSION = "1.4.2";
-	public static final String WIRE_VERSION = "4.8.1ma";
-	public static final String LOG_TAG = "GoogleAnalyticsTracker";
-	private static Tracker instance = new Tracker();
-	private boolean dryRun = true;
-	private boolean debug = false;
-	private boolean anonymizeIp = false;
-	private int sampleRate = 100;
 
-	public static Tracker getInstance() {
-		return instance;
-	}
+    public static final String VERSION = "1.4.2";
 
-	public void start(String s, int i, Context context) {
-		// NOTHING
-	}
+    private static Tracker instance = new Tracker();
 
-	public void startNewSession(String s, int i, Context context) {
-		// NOTHING
-	}
+    private boolean debug = false;
 
-	public void start(String s, Context context) {
-		// NOTHING
-	}
+    public static Tracker getInstance() {
+        return instance;
+    }
 
-	public void startNewSession(String s, Context context) {
-		// NOTHING
-	}
+    public void start(String s, int i, Context context) {
+    }
 
-	public void setProductVersion(String userAgentProduct,
-			String userAgentVersion) {
-	}
+    public void start(String s, Context context) {
+    }
 
-	public void trackEvent(String category, String action, String s2, int i) {
-		// NOTHING
-	}
+    public void stop() {
+    }
 
-	public void trackPageView(String s) {
-		// NOTHING
-	}
+    public void setDebug(boolean flag) {
+        debug = flag;
+    }
 
-	public void setDispatchPeriod(int i) {
-		// NOTHING
-	}
+    public boolean getDebug() {
+        return debug;
+    }
 
-	public void stopSession() {
-		// NOTHING
-	}
+    public void setScreenName(String s) {
+    }
 
-	public void stop() {
-		// NOTHING
-	}
+    public void send(HitBuilders.HitBuilder hb) {
+    }
 
-	public boolean setCustomVar(int i, String s, String s1, int j) {
-		return true;
-	}
+    public void enableAdvertisingIdCollection(boolean value) {
+    }
 
-	public boolean setCustomVar(int i, String s, String s1) {
-		return true;
-	}
+    public void enableAutoActivityTracking(boolean value) {
+    }
 
-	public String getVisitorCustomVar(int i) {
-		return null;
-	}
+    public void enableExceptionReporting(boolean value) {
+    }
 
-	public boolean dispatch() {
-		return false;
-	}
+    public void setAppName(String name) {
+    }
 
-	public void addTransaction(Transaction transaction) {
-		// NOTHING
-	}
+    public void setAppVersion(String version) {
+    }
 
-	public void addItem(Item item) {
-		// NOTHING
-	}
-
-	public void trackTransactions() {
-		// NOTHING
-	}
-
-	public void clearTransactions() {
-		// NOTHING
-	}
-
-	public void setAnonymizeIp(boolean flag) {
-		anonymizeIp = flag;
-	}
-
-	public boolean getAnonymizeIp() {
-		return anonymizeIp;
-	}
-
-	public void setUseServerTime(boolean flag) {
-	}
-
-	public void setSampleRate(int i) {
-		sampleRate = i;
-	}
-
-	public int getSampleRate() {
-		return sampleRate;
-	}
-
-	public boolean setReferrer(String s) {
-		return true;
-	}
-
-	public void setDebug(boolean flag) {
-		debug = flag;
-	}
-
-	public boolean getDebug() {
-		return debug;
-	}
-
-	public void setDryRun(boolean flag) {
-		dryRun = flag;
-	}
-
-	public boolean isDryRun() {
-		return dryRun;
-	}
-
-	public boolean setDispatcher(Dispatcher dispatcher) {
-		return true;
-	}
-
-	public void setScreenName(String s) {
-		//NOTHING
-	}
-	public void send(HitBuilders.HitBuilder hb) {
-		//NOTHING
-	}
+    public void setSessionTimeout(int timeout) {
+    }
 }

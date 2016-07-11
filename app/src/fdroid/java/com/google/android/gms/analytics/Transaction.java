@@ -2,25 +2,13 @@ package com.google.android.gms.analytics;
 
 public class Transaction {
 
-	public static class Builder {
-		public Builder(String orderId, double totalCost) {
-		}
+    public static class Builder {
 
-		public Builder setStoreName(String s) {
-			return this;
-		}
+        public Builder(String orderId, double totalCost) {
+        }
 
-		public Builder setTotalTax(double d) {
-			return this;
-		}
-
-		public Builder setShippingCost(double d) {
-			return this;
-		}
-
-		public Transaction build() {
-			return new Transaction();
-		}
-	}
-
+        public Transaction build() {
+            return new Transaction();
+        }
+    }
 }

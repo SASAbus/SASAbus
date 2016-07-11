@@ -1,0 +1,56 @@
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rating_popup"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/card_margin"
+    android:layout_marginLeft="@dimen/card_margin"
+    android:layout_marginStart="@dimen/card_margin"
+    android:layout_marginRight="88dp"
+    android:layout_marginEnd="88dp"
+    android:layout_marginBottom="@dimen/card_margin"
+    android:layout_gravity="bottom"
+    android:visibility="gone"
+    card_view:cardBackgroundColor="@color/white">
+
+    <TextView
+        android:id="@+id/rating_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:text="@string/rating_title1"
+        android:textColor="@color/primary_red"
+        android:textSize="14sp"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="34dp"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/rating_negative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/rating_negative1"
+            android:textAllCaps="false"
+            android:textColor="@color/primary_red"
+            style="?android:attr/borderlessButtonStyle"/>
+
+        <Button
+            android:id="@+id/rating_positive"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/rating_positive1"
+            android:textAllCaps="false"
+            android:textColor="@color/primary_red"/>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

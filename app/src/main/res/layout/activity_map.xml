@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/appbarHeight"
+            android:background="@color/primary_dark"
+            android:fitsSystemWindows="true"
+            app:elevation="4dp">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="@dimen/statusBarHeight"
+                android:background="?attr/colorPrimary"
+                android:theme="@style/ToolbarOverlay"
+                app:popupTheme="@style/MenuOverlay"/>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <it.sasabz.android.sasabus.ui.widget.OffsetNestedSwipeRefreshLayout
+            android:id="@+id/refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:fitsSystemWindows="true">
+
+            <WebView
+                android:id="@+id/webview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </it.sasabz.android.sasabus.ui.widget.OffsetNestedSwipeRefreshLayout>
+
+        <include layout="@layout/include_rating_popup"/>
+
+        <RelativeLayout
+            android:id="@+id/filter_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#CCFFFFFF"
+            android:visibility="gone"/>
+
+        <ScrollView
+            android:id="@+id/filter_scroll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="76dp"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:overScrollMode="never"
+            android:paddingBottom="10dp"
+            android:paddingTop="16dp"
+            android:scrollbars="none"
+            android:visibility="gone"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/map_filter_fab_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            app:backgroundTint="?attr/colorAccent"
+            app:elevation="8dp"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/map_filter_fab_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_filter_list_white_48dp"
+            app:backgroundTint="?attr/colorAccent"
+            app:elevation="8dp"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/map_filter_fab_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_clear_white_48dp"
+            android:visibility="gone"
+            app:backgroundTint="?attr/colorAccent"
+            app:elevation="8dp"/>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <!-- Nav drawer -->
+    <include layout="@layout/include_nav_drawer"/>
+
+</android.support.v4.widget.DrawerLayout>

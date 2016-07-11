@@ -1,15 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_padding">10dp</dimen>
-    
-    <dimen name="search_input_fields_margin">10dp</dimen>
-    
-    <dimen name="listitem_height">33dp</dimen>
-    
-    <dimen name="textsize_big">20sp</dimen>
-    
-    <dimen name="textsize_standard">18sp</dimen>
-    
-    <dimen name="title_underline_height">2dp</dimen>
+
+    <dimen name="dimen_10">10dp</dimen>
+    <dimen name="dimen_12">12dp</dimen>
+    <dimen name="dimen_24">24dp</dimen>
+
+    <dimen name="widget_margin">8dp</dimen>
+
+    <dimen name="fab_margin_bottom">16dp</dimen>
+
+    <dimen name="card_margin">8dp</dimen>
+    <dimen name="card_margin_small">4dp</dimen>
+    <dimen name="card_margin_full_width">-3dp</dimen>
+
+    <dimen name="recycler_padding">4dp</dimen>
+
+    <dimen name="list_padding">4dp</dimen>
+
+    <dimen name="filter_margin_28">28dp</dimen>
+    <dimen name="filter_margin_20">20dp</dimen>
+
+    <dimen name="spacing_normal">8dp</dimen>
+    <dimen name="padding_normal">16dp</dimen>
+
+    <item name="body_1_spacing" format="float" type="dimen">1.22448979592</item>
+
+    <dimen name="peek_height">84dp</dimen>
+    <dimen name="max_height">400dp</dimen>
+
+    <dimen name="appbarHeight">56dp</dimen>
+    <dimen name="statusBarHeight">0dp</dimen>
+
+    <!-- Elevation when button is pressed -->
+    <!-- Z translation to apply when button is pressed -->
+    <!-- Default insets (outer padding) around buttons -->
+    <!-- Default inner padding within buttons -->
+
+    <!-- Default insets (outer padding) around controls -->
+    <!-- Default inner padding within controls -->
+    <!-- Default rounded corner for controls -->
+
+    <dimen name="dialog_corners">4dp</dimen>
+
+    <dimen name="intro_bottom_bar_height">64dp</dimen>
+
+    <dimen name="intro_data_download_indicator_margin_bottom">72dp</dimen>
+
+    <dimen name="empty_state_margin">16dp</dimen>
+
+    <dimen name="empty_state_negative_margin_top">-56dp</dimen>
+
 </resources>

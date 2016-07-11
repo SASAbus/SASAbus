@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="2dp">
+
+    <View
+        android:id="@+id/list_route_legend_color_stripe"
+        android:layout_width="20dp"
+        android:layout_height="3dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"/>
+
+    <ImageView
+        android:src="@drawable/ic_bus"
+        android:id="@+id/list_route_legend_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:tint="@color/black_400"/>
+
+    <TextView
+        android:id="@+id/list_route_legend_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_default"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"/>
+
+</LinearLayout>

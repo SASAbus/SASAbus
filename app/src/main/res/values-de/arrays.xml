@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string-array name="settings_language_readable">
+        <item>Systemsprache</item>
+        <item>English</item>
+        <item>Deutsch</item>
+        <item>Italiano</item>
+    </string-array>
+
+    <string-array name="settings_map_interval_readable">
+        <item>3 Sekunden</item>
+        <item>10 Sekunden</item>
+        <item>15 Sekunden</item>
+    </string-array>
+
+    <string-array name="settings_fetch_images_readable">
+        <item>Immer</item>
+        <item>Nur über WLAN</item>
+        <item>Nie</item>
+    </string-array>
+
+    <string-array name="settings_night_mode_readable">
+        <item>System folgen</item>
+        <item>Automatisch</item>
+        <item>Nie</item>
+        <item>Immer</item>
+    </string-array>
+
+    <string-array name="settings_survey_interval_readable">
+        <item>Jedes Mal</item>
+        <item>Einmal pro Tag</item>
+        <item>Einmal pro Woche</item>
+        <item>Einmal pro Monat</item>
+    </string-array>
+
+</resources>

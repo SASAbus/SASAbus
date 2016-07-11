@@ -1,383 +1,507 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
- * SASAbus - Android app for SASA bus open data
- *
- * strings.xml
- *
- * Created: Jan 3, 2014 11:29:26 AM
- *
- * Copyright (C) 2011-2015 Paolo Dongilli, Markus Windegger, Davide Montesin,
- *   Matthias Dieter Wallnöfer
- *
- * This file is part of SASAbus.
- *
- * SASAbus is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * SASAbus is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with SASAbus.  If not, see <http://www.gnu.org/licenses/>.
--->
-<resources>
+
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="app_name">SASAbus</string>
-    <string name="bus_station_name_language">it</string>
-    <!-- first time dialogs -->
-    <string name="first_time_opendata_dialog_title">First time</string>
-    <string name="first_time_opendata_dialog_message">The first time the app needs to download open data onto the smartphone. Would you like to do it now?</string>
-    <string name="update_opendata_dialog_title">Update available</string>
-    <string name="update_opendata_dialog_message">In the meantime the timetable has been updated. Would you like to download it now?</string>
-    <string name="first_time_opendata_dialog_yes">Yes</string>
-    <string name="first_time_opendata_dialog_no">Later</string>
-    <string name="first_time_map_dialog_title">Map download</string>
-    <string name="first_time_map_dialog_message">The app needs to download the OpenStreetMap map tiles, which are about 60MByte of data. If you don\'t have a flat data plan, we suggest you to use a wi-fi network to avoid expensive costs. Would you like to do it now?</string>
-    <string name="first_time_map_dialog_yes">Yes</string>
-    <string name="first_time_map_dialog_no">Later</string>
-    <string name="download_opendata_map_progress_dialog_title">Downloading ...</string>
-    <!-- update notification -->
-    <string name="update_opendata_notification_message">Click to download timetables updates</string>
-    <!-- menu/title labels -->
-    <string name="bus_lines">Bus lines</string>
-    <string name="bus_line">Bus line</string>
-    <string name="bus_stops">Bus stops</string>
-    <string name="bus_stop">Bus stop</string>
-    <string name="search_route">Search route</string>
-    <string name="parking_spots">Parking spots</string>
-    <string name="news">News</string>
-    <string name="menu_map">Map</string>
-    <string name="menu_park">Parking</string>
-    <string name="menu_settings">Settings</string>
-    <string name="menu_about">About</string>
-    <!-- ActionBarDrawer -->
-    <string name="drawer_open_close">NotUsed</string>
-    <!-- BusStationAdvancedInputText -->
-    <string name="NearbyDialog_title">Bus stops near you</string>
-    <string name="NearbyDialog_searching">Localising your gps position</string>
-    <string name="SelectFromMap_title">Select stop on map</string>
-    <string name="SelectFromMap_select_stop">Select this stop</string>
-    <string name="more">More</string>
-    <string name="nearby_button">Bus stops nearby</string>
-    <string name="map_button">Select bus stop from map</string>
-    <string name="favorites_button">Favourite bus stops</string>
-    <string name="FavouriteDialog_title">Favourites</string>
-    <string name="FavouriteDialog_add_favourite">Add "%s" to favourites</string>
-    <string name="FavouriteDialog_delete_toast">Keep pressed a favourite to delete it</string>
-    <string name="FavouriteDialog_delete_confirm_title">Confirm deletion?</string>
-    <string name="FavouriteDialog_delete_confirm_message">Would you like to delete favourite "%s"?</string>
-    <string name="FavouriteDialog_delete_favourite_yes">Yes</string>
-    <string name="FavouriteDialog_delete_favourite_cancel">Cancel</string>
+    <string name="about">About</string>
+    <string name="settings">Settings</string>
     <string name="delete">Delete</string>
-    <string name="nearest_bus_stations">Nearest bus stops</string>
-    <string name="deselect_all">Deselect all</string>
-    <!-- route -->
-    <string name="date">Date:</string>
-    <string name="time">Time:</string>
-    <!-- route -->
-    <string name="departure_bus_stop">Departure bus stop</string>
-    <string name="arrival_bus_stop">Arrival bus stop</string>
-    <string name="route_missing_bus_stops">Please insert departure and arrival bus stop</string>
-    <string name="search_connection">Search connection</string>
-    <string name="searching_connection">Searching ...</string>
-    <!-- route detail -->
-    <string name="departure">Departure:</string>
-    <string name="arrival">Arrival:</string>
-    <string name="route_walk">Walk</string>
-    <!-- bus lines -->
-    <string name="BusSchedulesFragment_area_all">All lines</string>
-    <string name="BusSchedulesFragment_area_bz">Bolzano/Bozen area</string>
-    <string name="BusSchedulesFragment_area_me">Meran(o) area</string>
-    <string name="BusSchedulesFragment_area_other">Other lines</string>
-    <string name="BusSchedulesFragment_select_line">Select ...</string>
-    <string name="BusSchedulesFragment_refresh">Refresh</string>
-    <string name="BusSchedulesFragment_searching">Searching ...</string>
-    <string name="departures">Departures</string>
-    <!-- bus lines detail -->
-    <string name="line_txt">Line</string>
-    <string name="course">Run</string>
-    <!-- bus station departures -->
-    <string name="NextBusFragment_destination">Destination</string>
-    <string name="NextBusFragment_searching">Searching ...</string>
-    <!-- menu news -->
+    <string name="changelog">Changelog</string>
+    <string name="stations">Bus stops</string>
+    <string name="pick_stations">Pick a bus stop</string>
     <string name="refresh">Refresh</string>
+    <string name="map">Map</string>
+    <string name="bus_lines">Bus lines</string>
     <string name="lines">Lines</string>
-
-    <!-- String for the delay to display -->
-    <string name="delay">min. delayed</string>
-    <string name="advance">min. in advance</string>
-    <string name="in_time">in time</string>
-    <string name="no_realtime">no realtime data</string>
-
-    <!-- String with parameters for the departurelist -->
-
-    <string name="laststop">direction: %1$s</string>
-    <string name="next_departures">Next departures</string>
-    <string name="show_next_departures">Show next departures</string>
-    <string name="txt_delay">delayed</string>
-    <string name="txt_advance">earlier</string>
-
-    <!-- Strings for the aboutfragment in html (attention, <ul> and <li> are not processed properly) -->
-
-    <string name="about_text">
-        &lt;b&gt;SASAbus&lt;/b&gt; - Android app for SASA bus open data
-		&lt;p&gt;
-		Version: %1$s
-		&lt;/p&gt;
-		&lt;p&gt;
-		Copyright (C) 2011-2015 Paolo Dongilli, Markus Windegger, Davide Montesin, Thomas Nocker, Matthias Dieter Wallnöfer, Raiffeisen Online GmbH (Norman Marmsoler, Jürgen Sprenger, Aaron Falk)
-		&lt;/p&gt;
-		&lt;p&gt;
-		License: GPLv3
-		&lt;/p&gt;
-		&lt;p&gt;
-		Third part libraries:
-		&lt;/p&gt;
-		&lt;p&gt;
-		 - ActionBarSherlock (&lt;a href="http://www.apache.org/licenses/LICENSE-2.0.txt"&gt;Apache v2.0&lt;/a&gt;)&lt;br /&gt;
-		 - Viewpager (&lt;a href="http://www.apache.org/licenses/LICENSE-2.0.txt"&gt;Apache v2.0&lt;/a&gt;)&lt;br /&gt;
-		 - &lt;a href="http://leafletjs.com"&gt;Leaflet&lt;/a&gt; (&lt;a href="http://github.com/Leaflet/Leaflet/blob/master/LICENSE"&gt;BSD&lt;/a&gt;)&lt;br /&gt;
-		 - &lt;a href="http://sasabus.org/wiki"&gt;SASAbus HTML5 backend&lt;/a&gt; (AGPLv3)&lt;br /&gt;
-		 - &lt;a href="http://www.davide.bz/en/dmxj"&gt;DM-xml-json&lt;/a&gt; (&lt;a href="http://en.wikipedia.org/wiki/GNU_Lesser_General_Public_License"&gt;LGPLv3&lt;/a&gt;)&lt;br /&gt;
-		 - &lt;a href="http://www.davide.bz/en/dmweb"&gt;DM-web&lt;/a&gt; (&lt;a href="http://en.wikipedia.org/wiki/GNU_Lesser_General_Public_License"&gt;LGPLv3&lt;/a&gt;)&lt;br /&gt;
-		 - Gson (&lt;a href="http://www.apache.org/licenses/LICENSE-2.0.txt"&gt;Apache v2.0&lt;/a&gt;)&lt;br /&gt;
-		 - AltBeacon (&lt;a href="http://www.apache.org/licenses/LICENSE-2.0.txt"&gt;Apache v2.0&lt;/a&gt;)&lt;br /&gt;
-		&lt;/p&gt;
-		&lt;p&gt;
-		Other contributions:
-		 - Parking Icon: by &lt;a href="http://www.flaticon.com/authors/freepik"&gt;flaticon&lt;/a&gt; &lt;br /&gt;
-		 &lt;/p&gt;
-		&lt;p&gt;
-			For suggestions or help please mail to &lt;a href="mailto:open@sasabz.it"&gt;open@sasabz.it&lt;/a&gt;.
-		&lt;/p&gt;
-		&lt;p&gt;
-			Privacy: ...
-		&lt;/p&gt;
-    </string>
-    <!-- Survey Texts -->
-    <string name="settings_survey_recurring_title">Survey cycle</string>
-    <string name="settings_survey_daily">Daily</string>
-    <string name="settings_survey_weekly">Weekly</string>
-    <string name="settings_survey_monthly">Monthly</string>
-    <string name="settings_survey_always">Always</string>
-    <string name="settings_busstop_iBeacon_guessing_title">iBeacon station detection</string>
-
-
+    <string name="route">Route</string>
+    <string name="lines_detail">Line details</string>
+    <string name="lines_path">Line path</string>
+    <string name="news">News</string>
+    <string name="activity_credits">Credits</string>
+    <string name="support">Support</string>
+    <string name="help_feedback">Help and feedback</string>
+    <string name="parking">Parking</string>
+    <string name="search">Search</string>
+    <string name="course_details">Course details</string>
+    <string name="trips">Trips</string>
+    <string name="trip_details">Trip details</string>
+    <string name="bus_details">Bus details</string>
+    <string name="timetables">Timetables</string>
+    <string name="route_results">Route results</string>
+    <string name="route_details">Route details</string>
     <string name="survey">Survey</string>
-    <string name="survey_title">Short survey</string>
-    <string name="survey_answer_yes">Yes</string>
-    <string name="survey_answer_no">No</string>
-    <string name="survey_contact_information_send">Send</string>
-    <string name="survey_contact_information_cancel">Cancel</string>
-    <string name="survey_contact_email_address">E-Mail Address</string>
-    <string name="survey_contact_phone">Phonenumber</string>
-    <string name="survey_required_fields">Please fill one of these fields</string>
-    <string name="email_invalid">Invalid E-Mail Address</string>
-    <string name="phone_invalid">Invalid Phonenumber</string>
-
-    <string name="beacon_bus">Beacon Bus</string>
-    <string name="visible_buses">Buses near you</string>
-
-    <string name="location_service_required">Location Services required</string>
-    <string name="for_beacon_background_scan">for Beacon-detection in background</string>
-    <!--
-Previous version
-
-<string name="no_values">No values found.</string>
-<string name="check_database">Checking Database</string>
-
-<string name="select_bacino">Select the area:</string>
-<string name="select_linea">Select bus number:</string>
-<string name="select_destination">Select destination:</string>
-<string name="select_palina">Select bus stop:</string>
-<string name="show_orari">schedule</string>
-<string name="select_mode">Select mode:</string>
-<string name="select_from_to">Select from or to</string>
-
-<string name="md5_error">Calculated MD5 of database file is different from downloaded MD5.</string>
-<string name="db_download_error">Error while downloading the SASAbus database.</string>
-<string name="db_ok">File %1$s is ready.</string>
-<string name="menu_about">About</string>
-<string name="updates">... updates ...</string>
-<string name="license">SASAbus is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nThe Google Maps Icons are relaesed under the cc contributed by Maps Icons Collection http://mapicons.nicolasmollet.com</string>
-<string name="copyright">Software: Copyright (C) %1$s SASAbus Team\n\nData: CC-SA-NC by http://open.sasabz.it</string>
-<string name="supp_email">For support and contact with the developers send a mail to: android@sasabz.it</string>
-<string name="disclaimer">SASAbus is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</string>
-<string name="gpl">You should have received a copy of the GNU General Public License along with SASAbus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</string>
-<string name="sd_card_not_mounted">External storage (SD-Card) not mounted.</string>
-<string name="no_network_connection">No network connection available.</string>
-<string name="downloading_db">Downloading SASAbus Database Update ...</string>
-<string name="downloading_md5">Downloading MD5 Checksum ...</string>
-<string name="unzipping_db">Unzipping SASAbus Database ...</string>
-<string name="no_db_update_available">Timetable update is not available. Please try again later.</string>
-<string name="gps_disabled_title">GPS disabled</string>
-<string name="gps_disabled">The GPS-data on your mobile phone is not available, please turn your GPS on or try again later.</string>
-<string name="gps_wait">Waiting while getting GPS coordinates</string>
-<string name="error_title">Error</string>
-<string name="error_text">An error occurred during the download. Try again later or contact the maintainer of the application</string>
-<string name="error_application">An error occurred while fetching objects from the database ... please try again or contact the maintainer of the application</string>
-<string name="menu_credits">Credits</string>
-<string name="credits_text">SASAbus was brought to you by the members of the SASAbus Team:\n\nPaolo Dongilli\n&lt;paolo.dongilli@gmail.com&gt;\n\nMarkus Windegger\n&lt;markus@mowiso.com&gt;\n\nThe icons where taken from www.glyphicons.com and they are released under the cc-3.0-sha-nc licence!</string>
-
-<string name="mode_gps">GPS Mode</string>
-<string name="mode_normal">Normal Mode</string>
-<string name="mode_qr_code">QR Code Mode</string>
-
-<string name="show_way">Show Route:</string>
-<string name="weiter">Go!</string>
-<string name="menu_settings">Settings</string>
-<string name="menu_map">Map</string>
-<string name="menu_test">this is a test</string>
-<string name="menu_more">More</string>
-<string name="menu_infos">News</string>
-<string name="menu_old_mode">Offline</string>
 
 
-<string name="gps_prefs">GPS Preferences</string>
-<string name="general_prefs">General preferences</string>
-
-<string name="rad_gps">Radius</string>
-<string name="gps_descr">This is the search radius for the nearest bus stops when in GPS-Mode</string>
-<string name="mode">Default mode</string>
-<string name="mode_descr">Default mode when starting the Application</string>
-<string name="line_infos">City</string>
-<string name="line_infos_descr">This sets the city for displaying the news of lines</string>
-
-<string name="theme">Theme</string>
-<string name="theme_descr">Select your preferred theme</string>
-
-<string name="sensor_off">Sensor disabled, please enable!</string>
-<string name="pointing">Pointing to Bus Stop</string>
-<string name="pointer_info">Attention! For a higher accuracy when pointing to a bus stop, you have to hold the mobile phone steady</string>
-
-<string name="line">Line: </string>
-<string name="from">From: </string>
-<string name="to">To: </string>
-<string name="from_txt">From</string>
-<string name="to_txt">To</string>
-<string name="line_txt">Line</string>
-
-<string name="download_available">Schedule update available. Download?</string>
-
-<string name="intermediate">Intermediate Stop</string>
-<string name="bus_stop">Stop: </string>
-
-<string name="no_map_update_available">OpenStreetMap data update is not available. Please try again later.</string>
-<string name="downloading_map">Downloading OpenStreetMap data update ...</string>
-<string name="map_download_error">Error while downloading the OpenStreetMap data.</string>
-<string name="check_osm">Checking OpenStreetMap data</string>
-<string name="unzipping_map">Unzipping OpenStreetMap data ...</string>
-<string name="retry_download">Canno connect to the downloadserver.\nRetry Download?</string>
-
-<string name="yes">Yes</string>
-<string name="no">No</string>
-
-<string name="error_scan_text">An error occurred during scanning a code: Its not a valid QR-Code for SASAbus</string>
-<string name="scan_text_not_implemented">This feature is coming soon!</string>
-
-<string name="scan">Scanning</string>
-
-<string name="delete">Delete</string>
-<string name="refresh">Refresh</string>
-<string name="save">Save</string>
-
-<string name="map">Map</string>
-<string name="map_pick">From map</string>
-<string name="map_show">Show on Map</string>
-<string name="favorit">Add to favourites</string>
-<string name="favorit_add">Successfully added to favourites</string>
-<string name="favorit_pick">From favourites</string>
+    <!-- ==================== GENERAL ==================== -->
+    <string name="merano">Merano</string>
+    <string name="bolzano">Bolzano</string>
+    <string name="line">Line</string>
+    <string name="line_format">Line %s</string>
+    <string name="info" translatable="false">Info</string>
+    <string name="additional_info">Additional information:</string>
+    <string name="lines_driving">Driving Lines</string>
+    <string name="lines_all">All Lines</string>
+    <string name="unknown">unknown</string>
+    <string name="all">All</string>
+    <string name="general">General</string>
+    <string name="none">None</string>
+    <string name="changelog_version">Version</string>
+    <string name="favorites">Favorites</string>
+    <string name="search_label">Bus stops</string>
+    <string name="title_search">Search</string>
+    <string name="search_hint">Search bus stops</string>
+    <string name="done_button">Done</string>
+    <string name="save_button">Save</string>
+    <string name="retry">Retry</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
 
-<string name="mode_favoriten">Favourites</string>
-<string name="mode_online">Online Mode</string>
-<string name="mode_home">Home</string>
-<string name="select_stop">Select busstop</string>
-
-<string name="online_connection_error">The entered pattern matches no busstop</string>
-<string name="search_connection">Search connection</string>
-
-<string name="date_and_time">Date and time:</string>
-<string name="time_txt">dd/mm/yyyy</string>
-
-<string name="reset">Reset</string>
-
-<string name="waiting">Please wait...</string>
-<string name="transfers">Trasferimenti</string>
-
-<string name="set_date">Date</string>
-<string name="set_time">Time</string>
-
-<string name="error_station">One of the referred Station was not found</string>
-<string name="error">Error</string>
-<string name="error_connection">Failure during Connectionquery, please try again or modify request!</string>
-
-<string name="connection">Connections</string>
-<string name="connection_details">Connection details</string>
-
-<string name="information">Information</string>
-<string name="offline_info">You have no internet connectivity. Please turn on your internet connection.</string>
-
-<string name="start">Start</string>
-<string name="zwischenstop">Intermediate stop</string>
-<string name="ziel">Arrival</string>
-
-<string name="am">AM</string>
-<string name="pm">PM</string>
-
-<string name="earlier">earlier</string>
-<string name="later">later</string>
-
-<string name="offline">Offline</string>
-<string name="online">Online</string>
-<string name="info">Info</string>
-
-<string name="bus_stops_nearby">Bus stops nearby</string>
-<string name="bus_stop_from_map">Bus stop from map</string>
-
-<string name="departure">Departure:</string>
-<string name="arrival">Arrival:</string>
-
-<string name="departure_bus_stop">Departure bus stop</string>
-<string name="arrival_bus_stop">Arrival bus stop</string>
-
-<string name="more">More</string>
-<string name="nearby_button">Bus stops nearby</string>
-<string name="map_button">Select bus stop from map</string>
-<string name="favorites_button">Favorite bus stops</string>
-
-<string name="date">Date:</string>
-<string name="time">Time:</string>
-<string name="date_pattern">dd/mm/yyyy</string>
-<string name="time_pattern">hh/mm</string>
-
-<string name="preferences">Preferences</string>
-<string name="preference_notifications_title">Notifications</string>
-<string name="preference_notifications_summary">Receive notifications if short-term changes occur to your favored bus lines.</string>
-
-<string name="activity_label_results">Connections found</string>
-
-<string name="departures">Departures</string>
-<string name="departure_times">Departure times</string>
-<string name="course">Course</string>
-
-<string name="lines">Lines</string>
-
-<string name="bus_lines">Bus lines</string>
-<string name="bus_stops">Bus stops</string>
-<string name="search_route">Search route</string>
-<string name="parking_spots">Parking spots</string>
-<string name="news">News</string>
-<string name="menu_map">Map</string>
-
-<string name="drawer_open">Open navigation drawer</string>
-<string name="drawer_close">Close navigation drawer</string>
-    -->
+    <!-- ==================== ABOUT ==================== -->
+    <string name="about_changelog_title">Changelog</string>
+    <string name="about_changelog_subtitle">Version</string>
+    <string name="about_feedback_title" translatable="false">Feedback</string>
+    <string name="about_feedback_subtitle">Send us a bug report or a suggestion</string>
+    <string name="about_credits_title" translatable="false">Credits</string>
+    <string name="about_credits_subtitle">Developers and libraries</string>
+    <string name="about_policy_title">Privacy Policy</string>
+    <string name="about_policy_subtitle">Open in browser</string>
 
 
+    <!-- ==================== CREDITS ==================== -->
+    <string name="credits_developers">Developers</string>
+    <string name="credits_copyright" translatable="false">Copyright</string>
+    <string name="credits_copyright_sub">
+        <![CDATA[© 2015–2016 David Dejori & Alex Lardschneider\nAll rights reserved. No part of this publication may be reproduced, distributed, or transmitted in any form or by any means, without the prior written permission of the publishers.]]></string>
+    <string name="credits_community">Beta tester</string>
+    <string name="credits_email" translatable="false">android@sasabz.it</string>
+    <string name="credits_alex_title" translatable="false">Alex Lardschneider</string>
+    <string name="credits_alex_sub">App developer</string>
+    <string name="credits_david_title" translatable="false">David Dejori</string>
+    <string name="credits_david_sub">Server developer</string>
+    <string name="credits_appcompat_title" translatable="false">AppCompat</string>
+    <string name="credits_appcompat_sub" translatable="false">Google Inc.</string>
+    <string name="credits_okhttp_title" translatable="false">OkHttp</string>
+    <string name="credits_okhttp_sub" translatable="false">Square</string>
+    <string name="credits_crashlytics_title" translatable="false">Crashlytics</string>
+    <string name="credits_crashlytics_sub" translatable="false">Fabric</string>
+    <string name="credits_altbeacon_title" translatable="false">Altbeacon for Android</string>
+    <string name="credits_altbeacon_sub" translatable="false">Altbeacon</string>
+    <string name="credits_retrofit_title" translatable="false">Retrofit</string>
+    <string name="credits_retrofit_sub" translatable="false">Square</string>
+    <string name="credits_license_apache" translatable="false">Apache License, Version 2.0</string>
+    <string name="credits_license_title">Open source licenses</string>
+
+
+    <!-- =============================== SETTINGS =============================== -->
+    <string name="settings_general">Language</string>
+    <string name="settings_data">Data and Internet</string>
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_advanced">Identification</string>
+
+    <string name="preferences_menu_appearance_title">Language and appearance</string>
+    <string name="preferences_menu_map_title">Map</string>
+    <string name="preferences_menu_advanced_title">Advanced</string>
+    <string name="preferences_menu_beacons_title" translatable="false">Beacons</string>
+    <string name="preferences_menu_notifications_title">Notifications</string>
+
+    <string name="settings_night_mode_title">Night mode</string>
+    <string name="settings_night_mode_sub">Choose when to enable night mode</string>
+
+    <string name="settings_language_title">Language</string>
+    <string name="settings_language_sub">Change language</string>
+
+    <string name="settings_maptype_title">Map type</string>
+    <string name="settings_maptype_sub">Change map type</string>
+    <string name="settings_map_refresh">Marker refresh</string>
+    <string name="settings_map_auto_title">Auto refresh</string>
+    <string name="settings_map_auto_sub">Automatically refresh bus positions on map</string>
+    <string name="settings_map_auto_interval_title">Update interval</string>
+    <string name="settings_map_auto_interval_sub">Change marker update interval</string>
+
+    <string name="settings_beacons_enable_title">Enable beacons</string>
+    <string name="settings_beacons_enable_sub">Get information about buses and bus stops</string>
+    <string name="settings_beacons_help_sub">Bluetooth is required to search for beacons</string>
+
+    <string name="settings_beacons_bus_enabled_title">Buses</string>
+    <string name="settings_beacons_bus_enabled_sub">Notifications of nearby buses</string>
+
+    <string name="settings_beacons_station_enabled_title">Bus stops</string>
+    <string name="settings_beacons_station_enabled_sub">Notifications of nearby bus stops</string>
+    <string name="settings_beacons_station_vibration_sub">Vibrate when a bus stop is nearby</string>
+
+    <string name="settings_trips_enabled_title">Trips</string>
+    <string name="settings_trips_enabled_sub">Notifications of completed trips</string>
+
+    <string name="settings_fetch_images_title">Download bus stop photos</string>
+    <string name="settings_fetch_images_sub">Select when to download photos</string>
+
+    <string name="settings_station_ids_title">Display the numerical ID of a bus stop</string>
+    <string name="settings_station_ids_sub">Show bus stop IDs</string>
+
+    <string name="settings_news_push_sub">Notifications of timetable changes</string>
+
+    <string name="settings_notifications_vibrations">Vibration</string>
+
+    <string name="settings_survey_category">Surveys</string>
+
+    <string name="settings_survey_enable_title">Enable surveys</string>
+    <string name="settings_survey_enable_summary">You will get a notification when completing a
+        trip. You then can give feedback and vote the service.
+    </string>
+
+    <string name="settings_survey_interval_title">Survey interval</string>
+    <string name="settings_survey_interval_summary">The survey will appear only once during the
+        selected interval.
+    </string>
+
+
+    <!-- =============================== ROUTE =============================== -->
+    <string name="route_departure">Departure</string>
+    <string name="route_arrival">Arrival</string>
+    <string name="route_recent">Recent searches</string>
+    <string name="route_result_default">5 results</string>
+    <string name="route_walk_default">5’ walk</string>
+
+
+    <!-- =============================== STATIONS =============================== -->
+    <string name="station_details">Bus stop details</string>
+    <string name="station_select">Select</string>
+    <string name="station_no_lines">No lines</string>
+    <string name="station_tab_list">List</string>
+    <string name="station_nearby_action">Details</string>
+    <string name="station_menu_cancel">Cancel</string>
+    <string name="station_menu_line">Line</string>
+    <string name="station_menu_course">Route</string>
+    <string name="station_nearby_text">Nearby bus stops</string>
+    <string name="station_heading">Heading to %s</string>
+
+
+    <!-- =============================== LINES =============================== -->
+    <string name="list_lines_station">Bus stop</string>
+    <string name="list_lines_delay">Delay</string>
+    <string name="line_current_stop">Now at %s</string>
+    <string name="line_heading">Heading to %s</string>
+
+
+    <!-- =============================== BUS =============================== -->
+    <string name="bus_not_in_service_short">Not in service</string>
+    <string name="bus_depot">Depot</string>
+    <string name="hydrogen_buses">H₂ buses</string>
+    <string name="bus_id">#%d</string>
+    <string name="bus_specifications">Specifications</string>
+    <string name="bus_report">Report a problem in this bus</string>
+
+
+    <!-- =============================== BOTTOM SHEET =============================== -->
+    <string name="bottom_sheet_heading">Heading to %s</string>
+    <string name="bottom_sheet_delayed">%d\' delayed</string>
+    <string name="bottom_sheet_early">%d\' ahead</string>
+    <string name="bottom_sheet_punctual">Punctual</string>
+    <string name="bottom_sheet_last_updated">Updated %d\' ago</string>
+    <string name="bottom_sheet_trip">Trip #%d</string>
+    <string name="bottom_sheet_variant">Variant #%d</string>
+    <string name="bottom_sheet_vehicle_id">Bus #%d</string>
+    <string name="bottom_sheet_current_stop">Now at %s</string>
+    <string name="bottom_sheet_line">LINE</string>
+    <string name="bottom_sheet_vehicle">VEHICLE</string>
+    <string name="bottom_sheet_course">COURSE</string>
+
+
+    <!-- =============================== MAP =============================== -->
+    <string name="map_snackbar_update">Update</string>
+    <string name="map_snackbar_view">View</string>
+
+
+    <!-- =============================== BUS DETAILS =============================== -->
+    <string name="bus_details_not_available">Not available</string>
+    <string name="bus_details_manufacturer">Manufacturer</string>
+    <string name="bus_details_model">Model</string>
+    <string name="bus_detail_id" translatable="false">ID</string>
+    <string name="bus_details_fuel">Fuel</string>
+    <string name="bus_details_color">Color</string>
+
+
+    <!-- =============================== TRIPS =============================== -->
+    <string name="trip_details_from">From</string>
+    <string name="trip_details_to">To</string>
+    <string name="trip_details_distance">Distance</string>
+    <string name="trip_details_error">Could not load data</string>
+    <string name="trip_details_duration">Duration</string>
+    <string name="trip_details_line">Line</string>
+    <string name="trip_details_co2_emission">Your CO₂ emission using the bus</string>
+    <string name="trip_details_co2_emission_car">CO₂ emission using the car</string>
+    <string name="trip_details_fuel_price">Diesel price for this trip</string>
+    <string name="trips_none_title">No Trips</string>
+    <string name="trips_none_subtitle"><![CDATA[All your saved trips will appear here. Enable Bluetooth to detect and save a trip.<br><a href="">Help</a>]]></string>
+
+
+    <!-- =============================== DATE =============================== -->
+    <string name="monday_long">Monday</string>
+    <string name="friday_long">Friday</string>
+    <string name="saturday_long">Saturday</string>
+    <string name="sunday_long">Sunday</string>
+
+
+    <!-- =============================== PARKING =============================== -->
+    <string name="parking_call">Call</string>
+    <string name="parking_navigate">Navigate</string>
+    <string name="parking_detail_current_free">free slots</string>
+    <string name="parking_detail_slots_total">total slots</string>
+    <string name="parking_detail_station_distance">m from car parking</string>
+
+
+    <!-- =============================== ERROR POPUPS =============================== -->
+    <string name="error_wifi_title">Wi-Fi or Mobile Data required</string>
+    <string name="error_wifi_sub">to get location and update data</string>
+    <string name="error_general_title">An error happened</string>
+    <string name="error_general_sub">Please retry in a few minutes</string>
+    <string name="error_route_title">No results</string>
+    <string name="error_route_sub">No connections found</string>
+    <string name="error_lines_title">No buses driving</string>
+    <string name="error_lines_sub">at the moment</string>
+    <string name="error_not_tracked_title">This line is not tracked</string>
+    <string name="error_not_tracked_sub">There is no GPS data for this line</string>
+    <string name="error_data_title">Data update required</string>
+    <string name="error_data_sub">Please restart the app</string>
+
+
+    <!-- =============================== ERROR TEXTS =============================== -->
+    <string name="error_wifi">No internet connection</string>
+    <string name="error_general">An error happened</string>
+
+
+    <!-- =============================== TOASTS =============================== -->
+    <string name="toast_route_enter_departure">Please enter a departure bus stop</string>
+    <string name="toast_route_enter_arrival">Please enter an arrival bus stop</string>
+    <string name="toast_route_station_match">Arrival and departure bus stops cannot match</string>
+    <string name="toast_bluetooth_not_available">Bluetooth LE not supported on this device</string>
+
+
+    <!-- =============================== NEWS ================================ -->
+    <string name="news_none_title">No news for this area</string>
+    <string name="news_none_sub">News for this area will be displayed when added by SASA SpA-AG.
+    </string>
+
+
+    <!-- =============================== SNACKBARS ================================ -->
+    <string name="snackbar_permission_denied">Permission denied</string>
+    <string name="snackbar_report_success">Report sent</string>al
+    <string name="snackbar_report_error">Sending report failed. Please retry later.</string>
+    <string name="snackbar_timetable_error">Could not download timetables</string>
+    <string name="snackbar_retry">Retry</string>
+    <string name="snackbar_trips_delete_error">Could not delete trip</string>
+    <string name="snackbar_bus_not_driving">Bus not driving</string>
+
+
+    <!-- =============================== TIMETABLE =============================== -->
+    <string name="timetable_download">Downloading timetables…</string>
+    <string name="timetable_extract">Extracting timetables…</string>
+    <string name="timetable_map_bolzano">Route network of Bolzano</string>
+    <string name="timetable_map_merano">Route network of Merano</string>
+    <string name="timetable_open">Open timetable</string>
+    <string name="timetable_update_text">New timetables available</string>
+    <string name="timetable_update_action">Load</string>
+
+
+    <!-- =============================== SURVEY =============================== -->
+    <string name="survey_rating_awful">Awful</string>
+    <string name="survey_rating_poor">Poor</string>
+    <string name="survey_rating_average">Average</string>
+    <string name="survey_rating_good">Good</string>
+    <string name="survey_rating_excellent">Excellent</string>
+
+    <string name="survey_title_header">Surveys help us to improve our bus service by analysing
+        opinions and complains by our customers. Please tell us how you perceived this bus ride or
+        how we can improve our service. Thanks.
+    </string>
+    <string name="survey_title_rate">How would you rate your experience on the bus?</string>
+    <string name="survey_title_form">Please provide your email address so we can contact you.
+    </string>
+
+    <string name="survey_form_submit">Submit</string>
+    <string name="survey_form_feedback">Feedback (optional)</string>
+
+    <string name="survey_dialog_error_title">Couldn’t send valuation</string>
+    <string name="survey_dialog_error_sub">Your feedback will be sent as soon as possible.</string>
+    <string name="survey_dialog_success_title">Valuation sent</string>
+    <string name="survey_dialog_success_sub">Thanks! If you experienced any problems we will get
+        back to you as soon as possible.
+    </string>
+
+
+    <!-- =============================== NOTIFICATIONS =============================== -->
+    <string name="notifications">Notifications</string>
+    <string name="notification_bus_stop_sub_pull">Pull to view next departures</string>
+    <string name="notification_bus_stop_sub_click">Click to view details</string>
+    <string name="notification_bus_title">Line %1$s to %2$s</string>
+    <string name="notification_bus_sub">Click to view on map</string>
+    <string name="notification_trip_title">Trip saved</string>
+    <string name="notification_trip_sub">Click to view trip details</string>
+    <string name="notification_survey_title">Survey</string>
+    <string name="notification_survey_subtitle">Click to take survey about your bus ride</string>
+    <string name="notification_expanded_title">Next departures from %1$s</string>
+    <string name="notification_heading">Heading to %s</string>
+    <string name="notification_planned_trip_departs_at_content">Line %1$s departs at %2$s</string>
+    <string name="notification_planned_trip_departs_in_content_1">Line %1$s departs in %2$d’
+    </string>
+    <string name="notification_planned_trip_departs_in_content_2">Line %1$s departs in %2$d‘ with
+        %3$d’ delay
+    </string>
+
+    <!-- =============================== INTRO =============================== -->
+    <string name="intro_offline_data_title">Offline data</string>
+    <string name="intro_offline_data_sub">The app downloads all the departures at every bus stop and
+        stores them locally. The data\'s size is about 150 KB.
+    </string>
+    <string name="intro_offline_data_update_title">Offline data</string>
+
+
+    <!-- =============================== RATING =============================== -->
+    <string name="rating_title1">Do you enjoy SasaBus?</string>
+    <string name="rating_title2">Would you like to rate it?</string>
+    <string name="rating_title3">Would you mind giving us feedback?</string>
+    <string name="rating_positive1">Yes</string>
+    <string name="rating_negative1">Not really</string>
+    <string name="rating_negative2">No, thanks</string>
+
+
+    <!-- =============================== FAVORITES =============================== -->
+    <string name="line_favorites_add">Added line %s to favorites</string>
+    <string name="line_favorites_remove">Removed line %s from favorites</string>
+    <string name="line_no_favorites_title">No favorite lines</string>
+    <string name="line_no_favorites_sub">Tap and hold a line to add it to the favorites so you can
+        easily access it later.
+    </string>
+    <string name="line_no_hydrogen_title">No hydrogen buses driving</string>
+    <string name="line_no_hydrogen_sub">There are no hydrogen buses in service at the moment.
+    </string>
+    <string name="bus_stop_favorites_add">Added %s to favorites</string>
+    <string name="bus_stop_favorites_remove">Removed %s from favorites</string>
+    <string name="bus_stop_no_favorites_title">No favorite bus stops</string>
+    <string name="bus_stop_no_favorites_sub">Tap and hold a bus stop to add it to the favorites so
+        you can easily access it later.
+    </string>
+
+
+    <!-- =============================== PLANNED TRIPS =============================== -->
+    <string name="planned_trips">Planned trips</string>
+    <string name="planned_trips_add_no_lines">Please select a line first!</string>
+    <string name="planned_trips_add_dialog_add_bus_stop">Select bus stop</string>
+    <string name="planned_trips_add_line">Add line(s)</string>
+    <string name="planned_trips_add_location">Add bus stop</string>
+    <string name="planned_trips_add_date">Departure time and date</string>
+    <string name="planned_trips_add_dialog_line">Select line(s)</string>
+    <string name="planned_trips_add_title">Enter title of event</string>
+    <string name="planned_trips_add_notification">Add another notification</string>
+    <string name="planned_trips_add_notification_none">None</string>
+    <string name="planned_trips_add_notification_10">10 minutes before</string>
+    <string name="planned_trips_add_notification_30">30 minutes before</string>
+    <string name="planned_trips_add_notification_60">1 hour before</string>
+    <string name="planned_trips_add_repeat_day_long">Repeat every day</string>
+    <string name="planned_trips_add_repeat_never">Does not repeat</string>
+    <string name="planned_trips_add_repeat_day_short">Every day</string>
+    <string name="planned_trips_add_repeat_week">Every week</string>
+    <string name="planned_trips_add_confirm_discard">Are you sure you want to discard this event?
+    </string>
+    <string name="planned_trips_add_keep_editing">Keep editing</string>
+    <string name="planned_trips_add_discard">Discard</string>
+    <string name="planned_trips_add_empty_fields">Some fields are empty. Please fill them out.
+    </string>
+    <string name="planned_trips_empty_title">No planned trips</string>
+    <string name="planned_trips_empty_content">Add trips to get notified about bus departures and
+        bus delays.
+    </string>
+    <string name="planned_trips_delete_confirmation">Trip deleted</string>
+    <string name="planned_trips_delete_undo">Undo</string>
+
+
+    <!-- =============================== DIALOGS =============================== -->
+    <string name="dialog_beacons_title">What are beacons?</string>
+    <string name="dialog_beacons_sub">Beacons are tiny devices that send data via Bluetooth to any
+        user in range. They are mounted in every bus and nearly at all bus stops. The user can read
+        the beacons\' data. This functionality is used to show the user information about the bus he
+        is driving in or, alternatively, the bus stop he is waiting at.
+    </string>
+    <string name="dialog_trips_title_1">Trip detection</string>
+    <string name="dialog_trips_sub_1">Using the beacons attached at buses and bus stops the app is
+        capable of recording and saving your trips when Bluetooth is turned on. In case you
+        shouldn’t know what beacons are, please read the \“What are beacons?\” section in the
+        settings first.
+    </string>
+    <string name="dialog_trips_title_2">How do I use this feature?</string>
+    <string name="dialog_trips_sub_2">In order to register your trips, you need to have Bluetooth
+        turned on during the whole journey. Be sure to activate it already before you enter the bus.
+        It’s not necessary to keep the app open while driving, it will record your trips in the
+        background.\nBe aware that both your entrance and exit bus stops need to have a beacon
+        attached to them. Please do not blame us if the recording of a trips has failed, because
+        there are many problems that can occur, a beacon could be damaged or out of service.
+    </string>
+    <string name="dialog_trips_title_3">How does trip recording work?</string>
+    <string name="dialog_trips_sub_3">Many bus stops and all buses are laid out with beacons. When
+        you are waiting at a bus stop your phone will receive the beacon data over Bluetooth, thus
+        it knows where you trip starts. Then it will search for bus beacons in order to know what
+        bus you are driving in. As soon as you exit the bus, the first bus stop beacon that is found
+        will be marked as your exit point. Then you will be notified about your trip and some
+        additional details like vehicle information and CO₂ emissions.
+    </string>
+    <string name="dialog_trips_title_4">Restrictions</string>
+    <string name="dialog_trips_sub_4">Unfortunately this functionality is only available on Android
+        4.4 or higher, because beacons require Bluetooth Low Energy to work.
+    </string>
+    <string name="dialog_permission_location_sub">This permission is needed to scan for beacons and
+        give you details about a nearby bus or bus stop. If you deny this permission, the beacon
+        scanner will not work. Are you sure you want to deny it?
+    </string>
+    <string name="dialog_permission_storage_sub">Without the permission to access storage the app is
+        unable to select photos from the gallery. Are you sure you want to deny this permission?
+    </string>
+    <string name="dialog_permission_allow">Allow</string>
+    <string name="dialog_permission_deny">Deny</string>
+    <string name="dialog_changelog_title">What\'s new</string>
+    <string name="dialog_changelog_dont_show_again">Don\'t show again</string>
+    <string name="dialog_route_number_title">Select result amount</string>
+    <string name="dialog_route_number_negative">Cancel</string>
+    <string name="dialog_trips_delete_message">Delete this trip?</string>
+    <string name="dialog_report_title">Send report</string>
+    <string name="dialog_report_email">Your email</string>
+    <string name="dialog_report_content">Explain your problem</string>
+    <string name="dialog_report_screenshot">Add screenshot</string>
+    <string name="dialog_report_bus_photo">Add photo</string>
+    <string name="dialog_report_bus_content">Describe the problem</string>
+    <string name="dialog_report_send">Send</string>
+    <string name="dialog_report_email_invalid">Invalid email</string>
+    <string name="dialog_report_content_invalid">Please fill out the whole form</string>
+    <string name="dialog_report_sending">Sending report…</string>
+
+
+    <!-- =============================== INTRO =============================== -->
+    <string name="intro_realtime_data">Real-time data</string>
+    <string name="intro_agreement">Agreement</string>
+    <string name="intro_permissions">Permission</string>
+    <string name="intro_realtime_data_text">SasaBus informs you about departures, delays, paths and
+        bus stops of the urban buses in Bolzano and Merano.
+    </string>
+    <string name="intro_beacons_text">Enable Bluetooth to get information of nearby buses and bus
+        stops. The app will record and save your trips.
+    </string>
+    <string name="intro_agreement_text" tools:ignore="TypographyQuotes">
+        By using SasaBus you agree to the %1$s and the %2$s.
+    </string>
+    <string name="intro_agreement_terms" tools:ignore="TypographyQuotes">
+        <![CDATA[<a href=\"terms:\">Terms and Conditions</a>]]></string>
+    <string name="intro_agreement_privacy" tools:ignore="TypographyQuotes">
+        <![CDATA[<a href=\"privacy:\">Privacy Policy</a>]]></string>
+    <string name="intro_permission_text">As of Android 6 the app needs the location permission to
+        scan for beacons. Please grant it.
+    </string>
+    <string name="intro_offline_data_update_sub">The offline data (about 150 KB) needs to be
+        updated.
+    </string>
+    <string name="intro_tutorial_swipe_title">Pull up</string>
+    <string name="intro_tutorial_swipe_sub">Pull up for details about this bus.</string>
+    <string name="intro_tutorial_swipe_btn">GOT IT</string>
+
+    <string name="transition_morph_view" translatable="false">morph_view_transition</string>
 
 </resources>

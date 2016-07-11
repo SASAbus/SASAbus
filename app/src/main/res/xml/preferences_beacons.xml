@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <PreferenceCategory android:title="@string/preferences_menu_beacons_title">
+
+        <SwitchPreference
+            android:key="pref_beacons_enabled"
+            android:title="@string/settings_beacons_enable_title"
+            android:summary="@string/settings_beacons_enable_sub"
+            android:defaultValue="true"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

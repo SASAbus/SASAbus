@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string-array name="settings_language_readable">
+        <item>System language</item>
+        <item>English</item>
+        <item>Deutsch</item>
+        <item>Italiano</item>
+    </string-array>
+
+    <string-array name="settings_language_values" translatable="false">
+        <item>system</item>
+        <item>en</item>
+        <item>de</item>
+        <item>it</item>
+    </string-array>
+
+
+    <string-array name="settings_map_interval_readable">
+        <item>5 seconds</item>
+        <item>10 seconds</item>
+        <item>15 seconds</item>
+    </string-array>
+
+    <string-array name="settings_map_interval_values" translatable="false">
+        <item>5000</item>
+        <item>10000</item>
+        <item>15000</item>
+    </string-array>
+
+
+    <string-array name="settings_fetch_images_readable">
+        <item>Always</item>
+        <item>Using WiFi only</item>
+        <item>Never</item>
+    </string-array>
+
+    <string-array name="settings_fetch_images_values" translatable="false">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+
+    <string-array name="settings_night_mode_readable">
+        <item>Follow system</item>
+        <item>Auto</item>
+        <item>Never</item>
+        <item>Always</item>
+    </string-array>
+
+    <string-array name="settings_night_mode_values" translatable="false">
+        <item>-1</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="settings_survey_interval_readable">
+        <item>Every time</item>
+        <item>Once a day</item>
+        <item>Once a week</item>
+        <item>Once a month</item>
+    </string-array>
+
+    <string-array name="settings_survey_interval_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "505998734927",
+    "firebase_url": "https://sasabus-18fb1.firebaseio.com",
+    "project_id": "sasabus-18fb1",
+    "storage_bucket": "sasabus-18fb1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505998734927:android:cfc872dc263412a3",
+        "android_client_info": {
+          "package_name": "it.sasabz.android.sasabus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "505998734927-j7lbg8enaulpfmedn43vfmjrn1oc08cc.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "505998734927-163li27me5rvt780e9gsjea71g2e8v8d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8BPdyaxD5klTPrNSj9abl1GhdF33R4YU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

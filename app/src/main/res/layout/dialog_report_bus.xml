@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/dialog_report_email_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/TextInputLayout"
+            android:textColorHint="@color/black_400"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:hintTextAppearance="@style/TextInputLayout.Hint"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
+
+            <EditText
+                android:id="@+id/dialog_report_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/dialog_report_email"
+                android:textSize="14sp"
+                android:textColorHint="@color/black_400"
+                android:textColor="@color/text_default"
+                android:inputType="textEmailAddress"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/dialog_report_content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:theme="@style/TextInputLayout"
+            android:textColorHint="@color/black_400"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:hintTextAppearance="@style/TextInputLayout.Hint"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
+
+            <EditText
+                android:id="@+id/dialog_report_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/dialog_report_bus_content"
+                android:textSize="14sp"
+                android:textColor="@color/text_default"
+                android:textColorHint="@color/black_400"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/dialog_report_screenshot_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/dialog_report_bus_photo"
+            android:textColor="@color/primary_teal"
+            style="?attr/borderlessButtonStyle"
+            android:layout_marginStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:layout_marginEnd="10dp"/>
+
+        <ImageView
+            android:id="@+id/dialog_report_screenshot"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_collections_white_48dp"
+            android:background="@color/primary_teal"
+            android:visibility="gone"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"/>
+
+    </LinearLayout>
+
+</ScrollView>

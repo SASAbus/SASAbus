@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:id="@+id/list_item_planned_trips_notification_image"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_notifications_white_48dp"
+            android:layout_marginLeft="16dp"
+            android:tint="@color/icon_grey"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"/>
+
+        <TextView
+            android:id="@+id/planned_trips_notification_text_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="64dp"
+            android:textColor="@color/text_default"
+            android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            android:layout_marginStart="64dp"/>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/list_item_planned_trips_add_notification"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <TextView
+            android:id="@+id/planned_trips_notification_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="64dp"
+            android:textColor="@color/text_default"
+            android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            android:layout_marginStart="64dp"/>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/list_item_planned_trips_notification_light"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <TextView
+            android:id="@+id/planned_trips_notification_text_light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="64dp"
+            android:textColor="@color/text_primary"
+            android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            android:layout_marginStart="64dp"/>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/list_item_planned_trips_notification_light_image"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_notifications_white_48dp"
+            android:layout_marginLeft="16dp"
+            android:tint="@color/icon_grey"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"/>
+
+        <TextView
+            android:id="@+id/planned_trips_notification_text_light_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="64dp"
+            android:textColor="@color/text_primary"
+            android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            android:layout_marginStart="64dp"/>
+
+    </FrameLayout>
+
+</FrameLayout>

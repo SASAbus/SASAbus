@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <plurals name="route_result_count">
+        <item quantity="one">%d result</item>
+        <item quantity="other">%d results</item>
+    </plurals>
+
+    <plurals name="route_walk_count">
+        <item quantity="one">%d’ walk</item>
+        <item quantity="other">%d’ walk</item>
+    </plurals>
+
+    <plurals name="disruptions_notification_title">
+        <item quantity="one">%1$s on line %2$s</item>
+        <item quantity="other">%1$s on lines %2$s</item>
+    </plurals>
+
+    <plurals name="disruptions_slight">
+        <item quantity="one">Slight delay</item>
+        <item quantity="other">Slight delays</item>
+    </plurals>
+
+    <plurals name="disruptions_moderate">
+        <item quantity="one">Moderate delay</item>
+        <item quantity="other">Moderate delays</item>
+    </plurals>
+
+    <plurals name="disruptions_high">
+        <item quantity="one">High delay</item>
+        <item quantity="other">High delays</item>
+    </plurals>
+
+</resources>

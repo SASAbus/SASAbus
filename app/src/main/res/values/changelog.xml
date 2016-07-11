@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="changelog_content" tools:ignore="TypographyQuotes">
+        [
+        {
+        \"VERSION_NAME\": \"2.1.0\",
+        \"CHANGES\": [
+        \"Initial release\"
+        ]
+        }
+        ]
+    </string>
+
+</resources>

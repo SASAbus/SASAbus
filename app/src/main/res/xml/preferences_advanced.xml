@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <PreferenceCategory android:title="@string/settings_data">
+
+        <ListPreference
+            android:key="pref_fetch_images"
+            android:title="@string/settings_fetch_images_title"
+            android:summary="@string/settings_fetch_images_sub"
+            android:entries="@array/settings_fetch_images_readable"
+            android:entryValues="@array/settings_fetch_images_values"
+            android:defaultValue="2"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_advanced">
+
+        <SwitchPreference
+            android:key="pref_show_station_ids"
+            android:summary="@string/settings_station_ids_title"
+            android:title="@string/settings_station_ids_sub"
+            android:defaultValue="false"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

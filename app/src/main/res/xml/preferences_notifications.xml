@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <PreferenceCategory android:title="@string/preferences_menu_notifications_title">
+
+        <SwitchPreference
+            android:key="pref_news_push_enabled"
+            android:title="@string/news"
+            android:summary="@string/settings_news_push_sub"
+            android:defaultValue="true"/>
+
+        <SwitchPreference
+            android:key="pref_bus_beacons_enabled"
+            android:title="@string/settings_beacons_bus_enabled_title"
+            android:summary="@string/settings_beacons_bus_enabled_sub"
+            android:defaultValue="true"/>
+
+        <SwitchPreference
+            android:key="pref_bus_stop_beacons_enabled"
+            android:title="@string/settings_beacons_station_enabled_title"
+            android:summary="@string/settings_beacons_station_enabled_sub"
+            android:defaultValue="true"/>
+
+        <SwitchPreference
+            android:key="pref_trips_enabled"
+            android:title="@string/settings_trips_enabled_title"
+            android:summary="@string/settings_trips_enabled_sub"
+            android:defaultValue="true"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_notifications_vibrations">
+
+        <SwitchPreference
+            android:key="pref_bus_stop_beacon_vibration"
+            android:title="@string/settings_beacons_station_enabled_title"
+            android:summary="@string/settings_beacons_station_vibration_sub"
+            android:defaultValue="true"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_survey_category">
+
+        <SwitchPreference
+            android:key="pref_survey_enabled"
+            android:title="@string/settings_survey_enable_title"
+            android:summary="@string/settings_survey_enable_summary"
+            android:defaultValue="true"/>
+
+        <ListPreference
+            android:key="pref_survey_interval"
+            android:title="@string/settings_survey_interval_title"
+            android:summary="@string/settings_survey_interval_summary"
+            android:defaultValue="2"
+            android:entries="@array/settings_survey_interval_readable"
+            android:entryValues="@array/settings_survey_interval_values" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

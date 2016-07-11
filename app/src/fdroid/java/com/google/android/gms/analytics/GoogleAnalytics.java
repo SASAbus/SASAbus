@@ -1,25 +1,31 @@
 package com.google.android.gms.analytics;
 
-import android.app.Application;
+import android.content.Context;
 
-public class GoogleAnalytics extends TrackerHandler {
-    private static GoogleAnalytics Bs;
-    private static Tracker Tr;
+public final class GoogleAnalytics {
 
-    public static GoogleAnalytics getInstance(Application app) {
-        GoogleAnalytics googleAnalytics;
-	synchronized (GoogleAnalytics.class) {
-            googleAnalytics = Bs;
-        }
-        return googleAnalytics;
+    public boolean isInitialized() {
+        return false;
     }
 
-    public static Tracker newTracker(String id) {
-        Tracker t;
-	synchronized (Tracker.class) {
-            t = Tr;
-        }
-	return t.getInstance();
+    public GoogleAnalytics() {
+        super();
     }
 
+    public static GoogleAnalytics getInstance(Context context) {
+        return null;
+    }
+
+    public void setDryRun(boolean value) {
+    }
+
+    public Tracker newTracker(String string) {
+        return null;
+    }
+
+    public void setAppOptOut(boolean value) {
+    }
+
+    public void setLocalDispatchPeriod(int period) {
+    }
 }

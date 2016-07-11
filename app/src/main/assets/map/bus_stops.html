@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>SASAbus Web Map</title>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link type="text/css" rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="leaflet/leaflet.css"/>
+    <link rel="stylesheet" href="leaflet-markers/leaflet-vector-markers.css">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+    <script src="leaflet/leaflet.js"></script>
+    <script src="leaflet-markers/leaflet-vector-markers.js"></script>
+
+    <style type="text/css">
+        center {
+            font-size: 14px;
+        }
+        .button {
+            color: #FF9800;
+            font-size: 16px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <noscript>
+        <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+            Your web browser must have JavaScript enabled
+            in order for this application to display correctly.
+        </div>
+    </noscript>
+
+    <div id="map"></div>
+
+    <script type="text/javascript">
+
+        var busStopDetails = Android.getBusStopDetailsString();
+
+        var map = L.map('map').setView([46.58, 11.25], 10);
+
+        var mapPath = Android.getMapTilesRootUrl() + "/{z}/{x}/{y}.png";
+
+        L.tileLayer(mapPath, {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+            maxZoom: 13,
+            minZoom: 8
+        }).addTo(map);
+
+        function onBusStopDetailsClick(vehicle) {
+            Android.onBusStopDetailsClick(vehicle);
+        }
+
+        function setMarkers(data) {
+            var busStops = data.split("=");
+
+            for (i = 0; i < busStops.length; i++) {
+                var busStopData = busStops[i].split("#");
+
+                var html = "<center>" +
+                            "<b>" + busStopData[1] + "</b><br>" +
+                            busStopData[2] + "<br><br>" +
+                            "<b><span class=\"button\" onclick=\"onBusStopDetailsClick(" + busStopData[0] + ");\">" + busStopDetails + "</span><br></b>" +
+                            "</center>"
+
+                var marker = new L.Marker([busStopData[3], busStopData[4]])
+                    .addTo(map)
+                    .bindPopup(html);
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

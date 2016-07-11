@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <dimen name="card_margin_full_width">0dp</dimen>
+
+    <dimen name="appbarHeight">80dp</dimen>
+    <dimen name="statusBarHeight">24dp</dimen>
+
+</resources>

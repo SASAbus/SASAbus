@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>SASAbus Web Map</title>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link type="text/css" rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="leaflet/leaflet.css"/>
+    <link rel="stylesheet" href="leaflet-markers/leaflet-vector-markers.css">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+    <script src="leaflet/leaflet.js"></script>
+    <script src="leaflet-markers/leaflet-vector-markers.js"></script>
+
+    <style type="text/css">
+        center {
+            font-size: 14px;
+        }
+        .button {
+            color: #FF9800;
+            font-size: 16px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <noscript>
+        <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+            Your web browser must have JavaScript enabled
+            in order for this application to display correctly.
+        </div>
+    </noscript>
+
+    <div id="map"></div>
+
+    <script type="text/javascript">
+
+        DataMarker = L.Marker.extend({
+           options: {
+              trip: 0,
+              lineId: 0
+           }
+        });
+
+        var busDetails = Android.getBusDetailsString();
+        var lineDetails = Android.getLineDetailsString();
+        var courseDetails = Android.getCourseDetailsString();
+
+        var map = L.map('map').setView([46.58, 11.25], 10);
+
+        var markers = [];
+
+        var mapPath = Android.getMapTilesRootUrl() + "/{z}/{x}/{y}.png";
+
+        L.tileLayer(mapPath, {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+            maxZoom: 13,
+            minZoom: 8
+        }).addTo(map);
+
+        function onVehicleClick(vehicle) {
+            Android.onVehicleClick(vehicle);
+        }
+
+        function onLineClick(lineId) {
+            Android.onLineClick(lineId);
+        }
+
+        function onLineCourseClick(vehicle, lineId, busStop) {
+            Android.onLineCourseClick(vehicle, lineId, busStop);
+        }
+
+        function filterMarkers(params) {
+            for (i = 0; i < markers.length; i++) {
+                var marker = markers[i];
+
+                var found = false;
+                for (j = 0; j < params.length && !found; j++) {
+                    if (params[j] == marker.options.lineId) {
+                        found = true;
+                    }
+                }
+
+                if (found) {
+                    marker.setOpacity(1);
+                } else {
+                    marker.setOpacity(0);
+                }
+            }
+        }
+
+        function setMarkers(data, params) {
+            var buses = data.split("=");
+
+            for(var i = 0; i < this.markers.length; i++){
+                this.map.removeLayer(this.markers[i]);
+            }
+
+            markers.length = 0;
+
+            for (i = 0; i < buses.length; i++) {
+                var busData = buses[i].split("#");
+
+                var marker = L.VectorMarkers.icon({
+                    icon: 'ion-android-bus',
+                    markerColor: "#" + busData[10]
+                });
+
+                var color = "";
+                if (parseInt(busData[8], 10) > 0) {
+                    color = "#F44336";
+                } else {
+                    color = "#4CAF50";
+                }
+
+                var html = "<center>" +
+                            "<b>Line " + busData[0] + "</b><br>" +
+                            "Now at " + busData[6] + "<br>" +
+                            "Heading to " + busData[7] + "<br>" +
+                            "<font color=\"" + color + "\">" + Android.getDelayString(parseInt(busData[8], 10)) + "</font><br><br>" +
+                            "<b><span class=\"button\" onclick=\"onVehicleClick(" + busData[3] + ");\">" + busDetails + "</span><br><br></b>" +
+                            "<b><span class=\"button\" onclick=\"onLineClick(" + busData[2] + ");\">" + lineDetails + "</span><br><br></b>" +
+                            "<b><span class=\"button\" onclick=\"onLineCourseClick(" + busData[3] + ", " + busData[2] + ", " + busData[9] + ");\">" + courseDetails + "</span><br></b>" +
+                            "</center>"
+
+                var marker = new DataMarker([busData[4], busData[5]], {
+                    icon: marker,
+                    trip: busData[1],
+                    lineId: busData[2]
+                })
+                .addTo(map)
+                .bindPopup(html);
+
+                var found = false;
+                for (j = 0; j < params.length && !found; j++) {
+                    if (params[j] == marker.options.lineId) {
+                        found = true;
+                    }
+                }
+
+                if (found) {
+                    marker.setOpacity(1);
+                } else {
+                    marker.setOpacity(0);
+                }
+
+                this.markers.push(marker);
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

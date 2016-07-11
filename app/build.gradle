@@ -1,45 +1,124 @@
+buildscript {
+    repositories {
+        jcenter()
+
+        maven {
+            url 'https://maven.fabric.io/public'
+        }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.21.4'
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.5.3'
+        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+        classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    }
+
+    configurations.classpath.exclude group: 'com.androoid.tools.external.lombok'
+}
+
 apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
+apply plugin: 'io.fabric'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.getkeepsafe.dexcount'
+
+repositories {
+    maven {
+        url 'https://maven.fabric.io/public'
+    }
+}
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 23
+    buildToolsVersion '23.0.3'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
     defaultConfig {
         applicationId "it.sasabz.android.sasabus"
-        minSdkVersion 9
+        minSdkVersion 15
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 57
+        versionName "2.3.0"
     }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    productFlavors{
-        playstore{
+
+    dexOptions {
+        jumboMode true
+    }
+
+    retrolambda {
+        jdk '/Library/Java/JavaVirtualMachines/jdk1.8.0_73.jdk/Contents/Home'
+    }
+
+    productFlavors {
+        playStore {
 
         }
-        fdroid{
+        fdroid {
 
         }
     }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile 'com.google.code.gson:gson:2.3.1'
-    playstoreCompile 'com.google.android.gms:play-services:7.0.0'
-    compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
-    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // UI
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:cardview-v7:23.4.0'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
+    compile 'com.android.support:customtabs:23.4.0'
+
+    // Play services & Firebase
+    playStoreCompile 'com.google.android.gms:play-services-analytics:9.0.2'
+    playStoreCompile 'com.google.firebase:firebase-messaging:9.0.2'
+
+    // Beacon
     compile 'org.altbeacon:android-beacon-library:2.7.1'
-    compile files('libs/commons-io-2.4.jar')
-    compile files('libs/dm-web-lib-1.0.20140410.jar')
-    compile files('libs/dm-xml-json-lib-1.0.20140408.jar')
-    compile files('libs/org-json-parser-2013-12-13.jar')
-    compile files('libs/sasabus-backend-lib-1.0.20140417.jar')
-    compile files('libs/sasabus-opendata-lib-1.0.20140329.jar')
-    compile files('libs/sasabus-realtime-1.0.20140508.jar')
+
+    // Networking
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.squareup.okhttp3:okhttp:3.3.1'
+
+    // ReactiveX
+    compile 'io.reactivex:rxjava:1.1.5'
+    compile 'io.reactivex:rxandroid:1.2.0'
+    compile 'com.trello:rxlifecycle:0.6.1'
+    compile 'com.trello:rxlifecycle-components:0.6.1'
+
+    // Stetho
+    // debugCompile 'com.facebook.stetho:stetho:1.3.1'
+    // debugCompile 'com.facebook.stetho:stetho-okhttp3:1.3.1'
+    // debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
+
+    // Other
+    compile 'com.github.tslamic.adn:library:1.1'
+    compile 'de.hdodenhof:circleimageview:2.0.0'
+
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.0@aar') {
+        transitive = true;
+    }
+
+    // ButterKnife
+    compile 'com.jakewharton:butterknife:8.0.1'
+    apt 'com.jakewharton:butterknife-compiler:8.0.1'
 }
+
+apply plugin: 'com.google.gms.google-services'

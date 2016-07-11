@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string-array name="settings_language_readable">
+        <item>Lingua del systema</item>
+        <item>English</item>
+        <item>Deutsch</item>
+        <item>Italiano</item>
+    </string-array>
+
+    <string-array name="settings_map_interval_readable">
+        <item>5 secondi</item>
+        <item>10 secondi</item>
+        <item>15 secondi</item>
+    </string-array>
+
+    <string-array name="settings_fetch_images_readable">
+        <item>Sempre</item>
+        <item>Solo con WiFi</item>
+        <item>Mai</item>
+    </string-array>
+
+    <string-array name="settings_night_mode_readable">
+        <item>Segui sistema</item>
+        <item>Automatico</item>
+        <item>Mai</item>
+        <item>Sempre</item>
+    </string-array>
+
+    <string-array name="settings_survey_interval_readable">
+        <item>Ogni volta</item>
+        <item>Una volta al giorno</item>
+        <item>Una volta alla settimana</item>
+        <item>Una volta al mese</item>
+    </string-array>
+
+</resources>

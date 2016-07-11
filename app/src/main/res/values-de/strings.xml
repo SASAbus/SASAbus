@@ -1,179 +1,380 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
- * SASAbus - Android app for SASA bus open data
- *
- * strings.xml
- *
- * Created: Feb 26, 2014 11:11:00 AM
- *
- * Copyright (C) 2011-2015 Paolo Dongilli, Markus Windegger, Davide Montesin,
- *   Matthias Dieter Wallnöfer
- *
- * This file is part of SASAbus.
- *
- * SASAbus is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * SASAbus is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with SASAbus.  If not, see <http://www.gnu.org/licenses/>.
--->
-<resources>
+
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="app_name">SASAbus</string>
-    <string name="bus_station_name_language">de</string>
-    <!-- first time dialogs -->
-    <string name="first_time_opendata_dialog_title">Erster Zugriff</string>
-    <string name="first_time_opendata_dialog_message">Beim ersten Zugriff auf die App müssen noch zusätzliche Daten (Open Data) heruntergeladen werden. Möchten Sie diesen Download jetzt durchführen?</string>
-    <string name="update_opendata_dialog_title">Neue Daten verfügbar</string>
-    <string name="update_opendata_dialog_message">Ein neuer Fahrplan ist vorhanden. Möchten Sie ihn herunterladen?</string>
-    <string name="first_time_opendata_dialog_yes">Ja</string>
-    <string name="first_time_opendata_dialog_no">Später</string>
-    <string name="first_time_map_dialog_title">Karte herunterladen</string>
-    <string name="first_time_map_dialog_message">Die App möchte OpenStreetMap Map Tiles (Karten) herunterladen. Diese sind ca. 60MB groß. Wenn Sie keinen Mobilfunkvertrag mit Fixkosten haben, empfehlen wir Ihnen die Benutzung eines Wi-Fi Netzwerkes um hohe Kosten zu vermeiden. Möchten Sie den Download jetzt durchführen?</string>
-    <string name="first_time_map_dialog_yes">Ja</string>
-    <string name="first_time_map_dialog_no">Später</string>
-    <string name="download_opendata_map_progress_dialog_title">Downloading ...</string>
-    <!-- update notification -->
-    <string name="update_opendata_notification_message">Klicken Sie bitte um den aktuellen Fahrplan zu laden</string>
-    <!-- menu/title labels -->
-    <string name="bus_lines">Linien</string>
-    <string name="bus_line">Linie</string>
-    <string name="bus_stops">Haltestellen</string>
-    <string name="bus_stop">Haltestelle</string>
-    <string name="search_route">Route berechnen</string>
-    <string name="parking_spots">Parkplätze</string>
-    <string name="news">Mitteilungen</string>
-    <string name="menu_map">Karte</string>
-    <string name="menu_park">Parkplätze</string>
-    <string name="menu_settings">Einstellungen</string>
-    <string name="menu_about">Info</string>
-    <!-- ActionBarDrawer -->
-    <string name="drawer_open_close">Unbenutzt</string>
-    <!-- BusStationAdvancedInputText -->
-    <string name="NearbyDialog_title">Haltestellen in der Nähe</string>
-    <string name="NearbyDialog_searching">GPS sucht aktuelle Position ...</string>
-    <string name="SelectFromMap_title">Haltestelle auf der Karte auswählen</string>
-    <string name="SelectFromMap_select_stop">Haltestelle auswählen</string>
-    <string name="more">Mehr</string>
-    <string name="nearby_button">Haltestellen in der Nähe</string>
-    <string name="map_button">Haltestelle auf der Karte auswählen</string>
-    <string name="favorites_button">Favoriten</string>
-    <string name="FavouriteDialog_title">Favoriten</string>
-    <string name="FavouriteDialog_add_favourite">"%s" zu den Favoriten hinzufügen</string>
-    <string name="FavouriteDialog_delete_toast">Einen Favoriten-Eintrag gedrückt halten, um ihn zu löschen</string>
-    <string name="FavouriteDialog_delete_confirm_title">Löschen bestätigen?</string>
-    <string name="FavouriteDialog_delete_confirm_message">Möchten Sie die Haltestelle "%s" wirklich aus den Favoriten löschen?</string>
-    <string name="FavouriteDialog_delete_favourite_yes">Ja</string>
-    <string name="FavouriteDialog_delete_favourite_cancel">Abbrechen</string>
-    <string name="delete">Löschen</string>
-    <string name="nearest_bus_stations">Haltestellen in der Nähe</string>
-    <string name="deselect_all">Auswahl aufheben</string>
-    <!-- route -->
-    <string name="date">Datum:</string>
-    <string name="time">Uhrzeit:</string>
-    <!-- route -->
-    <string name="departure_bus_stop">Starthaltestelle</string>
-    <string name="arrival_bus_stop">Ankunftshaltestelle</string>
-    <string name="route_missing_bus_stops">Bitte Start- und Endhaltestelle eingeben</string>
-    <string name="search_connection">Route berechnen</string>
-    <string name="searching_connection">Berechnen...</string>
-    <!-- route detail -->
-    <string name="departure">Abfahrt:</string>
-    <string name="arrival">Ankunft:</string>
-    <string name="route_walk">Fußweg</string>
-    <!-- bus lines -->
-    <string name="BusSchedulesFragment_area_all">Alle Bereiche</string>
-    <string name="BusSchedulesFragment_area_bz">Bereich Bozen</string>
-    <string name="BusSchedulesFragment_area_me">Bereich Meran</string>
-    <string name="BusSchedulesFragment_area_other">Andere Linien (BZ-ME, SKIBUS)</string>
-    <string name="BusSchedulesFragment_select_line">Linie aussuchen ...</string>
-    <string name="BusSchedulesFragment_refresh">Aktualisieren</string>
-    <string name="BusSchedulesFragment_searching">Beim Berechnen ...</string>
-    <string name="departures">Abfahrten</string>
-    <!-- bus lines detail -->
-    <string name="line_txt">Linien</string>
-    <string name="course">Kursfahrt</string>
-    <!-- bus station departures -->
-    <string name="NextBusFragment_destination">Ankunftshaltestelle</string>
-    <string name="NextBusFragment_searching">Berechnen ...</string>
-    <!-- menu news -->
+    <string name="about">Über</string>
+    <string name="settings">Einstellungen</string>
+    <string name="changelog">Changelog</string>
+    <string name="about_changelog_title">Änderungen</string>
+    <string name="about_changelog_subtitle">Version</string>
+    <string name="settings_general">Sprache</string>
+    <string name="settings_language_title">Sprache</string>
+    <string name="settings_language_sub">Sprache ändern</string>
+    <string name="map">Karte</string>
+    <string name="route">Route</string>
     <string name="refresh">Aktualisieren</string>
-    <string name="lines">Linien</string>
-    
-    <string name="delay">min. in Verspätung</string>
-    <string name="advance">min. zu früh</string>
-    <string name="in_time">pünktlich</string>
-    <string name="no_realtime">keine Daten</string>
-    
-    <string name="laststop">Richtung: %1$s</string>
-    <string name="next_departures">Nächste Abfahrten</string>
-    <string name="show_next_departures">Nächste Abfahrten anzeigen</string>
-    <string name="txt_delay">versp.</string>
-    <string name="txt_advance">verfr.</string>
-
-    <string name="about_text">
-        &lt;b&gt;SASAbus&lt;/b&gt; - Android app für die Freien Daten von SASA
-		&lt;p&gt;
-		Version: %1$s
-		&lt;/p&gt;
-		&lt;p&gt;
-		Copyright (C) 2011-2015 Paolo Dongilli, Markus Windegger, Davide Montesin, Thomas Nocker, Matthias Dieter Wallnöfer, Raiffeisen Online GmbH (Norman Marmsoler, Jürgen Sprenger, Aaron Falk)
-		&lt;/p&gt;
-		&lt;p&gt;
-		Lizenz: GPLv3
-		&lt;/p&gt;
-		&lt;p&gt;
-		Third part libraries:
-		&lt;/p&gt;
-		&lt;p&gt;
-		 - ActionBarSherlock (&lt;a href="http://www.apache.org/licenses/LICENSE-2.0.txt"&gt;Apache v2.0&lt;/a&gt;)&lt;br /&gt;
-		 - Viewpager (&lt;a href="http://www.apache.org/licenses/LICENSE-2.0.txt"&gt;Apache v2.0&lt;/a&gt;)&lt;br /&gt;
-		 - &lt;a href="http://leafletjs.com"&gt;Leaflet&lt;/a&gt; (&lt;a href="http://github.com/Leaflet/Leaflet/blob/master/LICENSE"&gt;BSD&lt;/a&gt;)&lt;br /&gt;
-		 - &lt;a href="http://sasabus.org/wiki"&gt;SASAbus HTML5 backend&lt;/a&gt; (AGPLv3)&lt;br /&gt;
-		 - &lt;a href="http://www.davide.bz/en/dmxj"&gt;DM-xml-json&lt;/a&gt; (&lt;a href="http://en.wikipedia.org/wiki/GNU_Lesser_General_Public_License"&gt;LGPLv3&lt;/a&gt;)&lt;br /&gt;
-		 - &lt;a href="http://www.davide.bz/en/dmweb"&gt;DM-web&lt;/a&gt; (&lt;a href="http://en.wikipedia.org/wiki/GNU_Lesser_General_Public_License"&gt;LGPLv3&lt;/a&gt;)&lt;br /&gt;
-		 - Gson (&lt;a href="http://www.apache.org/licenses/LICENSE-2.0.txt"&gt;Apache v2.0&lt;/a&gt;)&lt;br /&gt;
-		 - AltBeacon (&lt;a href="http://www.apache.org/licenses/LICENSE-2.0.txt"&gt;Apache v2.0&lt;/a&gt;)&lt;br /&gt;
-		 &lt;/p&gt;
-		&lt;p&gt;
-		Credits:
-		 - Parking Icon: by &lt;a href="http://www.flaticon.com/authors/freepik"&gt;flaticon&lt;/a&gt; &lt;br /&gt;
-		 &lt;/p&gt;
-		&lt;p&gt;
-			Für Verbesserungen, Anregungen und Kritik bitte eine Email an &lt;a href="mailto:open@sasabz.it"&gt;open@sasabz.it&lt;/a&gt;.
-		&lt;/p&gt;
-		&lt;p&gt;
-			Datenschutzerklärung: ...
-		&lt;/p&gt;
+    <string name="route_arrival">Ankunft</string>
+    <string name="route_departure">Abfahrt</string>
+    <string name="settings_maptype_title">Kartentyp</string>
+    <string name="settings_maptype_sub">Kartentyp ändern</string>
+    <string name="stations">Haltestellen</string>
+    <string name="route_results">Gefundene Busse</string>
+    <string name="pick_stations">Wähle eine Haltestelle</string>
+    <string name="route_recent">Kürzlich gesucht</string>
+    <string name="bus_lines">Buslinien</string>
+    <string name="list_lines_station">Haltestelle</string>
+    <string name="list_lines_delay">Verspätung</string>
+    <string name="bolzano">Bozen</string>
+    <string name="merano">Meran</string>
+    <string name="line">Linie</string>
+    <string name="error_general_sub">Versuche es später erneut</string>
+    <string name="error_general_title">Ein Fehler ist aufgetreten</string>
+    <string name="error_wifi_sub">um Position und Daten zu laden</string>
+    <string name="error_wifi_title">Internetverbindung nötig</string>
+    <string name="friday_long">Freitag</string>
+    <string name="lines_detail">Liniendetails</string>
+    <string name="monday_long">Montag</string>
+    <string name="saturday_long">Samstag</string>
+    <string name="sunday_long">Sonntag</string>
+    <string name="error_general">Ein Fehler ist aufgetreten</string>
+    <string name="error_wifi">Keine Internetverbindung</string>
+    <string name="additional_info">Weitere Informationen:</string>
+    <string name="lines_all">Alle Linien</string>
+    <string name="lines_driving">In Betrieb</string>
+    <string name="news">Neuigkeiten</string>
+    <string name="toast_route_enter_arrival">Bitte Ankunftshaltestelle eingeben</string>
+    <string name="toast_route_station_match">Abfahrt und Ankunft dürfen nicht übereinstimmen
     </string>
-    <string name="settings_survey_recurring_title">Umfragen-Zyklus</string>
-    <string name="settings_survey_daily">Täglich</string>
-    <string name="settings_survey_weekly">Wöchentlich</string>
-    <string name="settings_survey_monthly">Monatlich</string>
-    <string name="settings_busstop_iBeacon_guessing_title">iBeacon Busstop Erkennung</string>
-    
+    <string name="toast_route_enter_departure">Bitte Abfahrtshaltestelle eingeben</string>
+    <string name="delete">Löschen</string>
+    <string name="station_details">Haltestellendetails</string>
+    <string name="activity_credits">Credits</string>
+    <string name="help_feedback">Hilfe und Feedback</string>
+    <string name="support">Support</string>
+    <string name="dialog_route_number_negative">Abbrechen</string>
+    <string name="dialog_route_number_title">Anzahl der Ergebnisse wählen</string>
+    <string name="error_route_sub">Keine Routen gefunden</string>
+    <string name="error_route_title">Keine Ergebnisse</string>
+    <string name="lines_path">Linienroute</string>
+    <string name="route_result_default">3 Ergebnisse</string>
+    <string name="parking">Parkplätze</string>
+    <string name="parking_call">Anrufen</string>
+    <string name="parking_navigate">Navigation</string>
+    <string name="parking_detail_slots_total">Plätze insgesamt</string>
+    <string name="parking_detail_current_free">freie Plätze</string>
+    <string name="parking_detail_station_distance">m vom Parkplatz entfernt</string>
+    <string name="bus_details">Busdetails</string>
+    <string name="bus_details_color">Farbe</string>
+    <string name="bus_details_fuel">Treibstoff</string>
+    <string name="bus_details_manufacturer">Hersteller</string>
+    <string name="bus_details_model">Modell</string>
+    <string name="bus_details_not_available">Nicht verfügbar</string>
+    <string name="station_select">Auswählen</string>
+    <string name="station_no_lines">Keine Linien</string>
+    <string name="dialog_changelog_title">Neuigkeiten</string>
+    <string name="credits_community">Beta-Tester</string>
+    <string name="credits_developers">Entwickler</string>
+    <string name="credits_license_title">Open-Source-Lizenzen</string>
+    <string name="unknown">unbekannt</string>
+    <string name="bottom_sheet_last_updated">Aktualisiert vor %d\'</string>
+    <string name="bottom_sheet_heading">Fährt nach %1$s</string>
+    <string name="settings_beacons_help_sub">Bluetooth wird benötigt um Beacons zu suchen</string>
+    <string name="settings_beacons_enable_sub">Erhalte Informationen über Busse und Haltestellen
+    </string>
+    <string name="settings_beacons_enable_title">Aktiviere Beacons</string>
+    <string name="snackbar_bus_not_driving">Bus fährt nicht</string>
+    <string name="dialog_beacons_title">Was sind Beacons?</string>
+    <string name="dialog_beacons_sub">Beacons sind kleine Geräte, die Daten über Bluetooth an
+        Benutzern in der Nähe senden. Sie sind in allen Bussen angebracht und nahezu an allen
+        Haltestellen. SasaBus kann die Daten der Beacons lesen und diese werden genutzt um dem
+        Benutzer Informationen zum Bus in dem er sich gerade befindet oder zur Haltestelle an der er
+        gerade wartet, anzuzeigen.
+    </string>
+    <string name="toast_bluetooth_not_available">Bluetooth LE wird nicht unterstützt</string>
+    <string name="bottom_sheet_current_stop">Jetzt bei %1$s</string>
+    <string name="snackbar_permission_denied">Keine Berechtigung</string>
+    <string name="dialog_permission_allow">Zulassen</string>
+    <string name="dialog_permission_deny">Verweigern</string>
+    <string name="dialog_permission_location_sub">Ohne die Berechtigung auf Ihrer aktuellen Position
+        zuzugreifen kann die App Ihnen nicht ihre Echtzeitposition auf der Karte anzeigen. Wollen
+        Sie diese Berechtigung wirklich verweigern?
+    </string>
+    <string name="notification_expanded_title">Nächste Abfahrten von %1$s</string>
+    <string name="station_tab_list">Liste</string>
+    <string name="search">Suchen</string>
+    <string name="station_nearby_action">Details</string>
+    <string name="course_details">Fahrtverlauf</string>
+    <string name="about_policy_subtitle">Im Browser öffnen</string>
+    <string name="about_policy_title">Datenschutzerklärung</string>
+    <string name="all">Alle</string>
+    <string name="map_snackbar_update">Aktualisieren</string>
+    <string name="none">Keine</string>
+    <string name="map_snackbar_view">Öffnen</string>
+    <string name="station_menu_cancel">Schließen</string>
+    <string name="station_menu_course">Route</string>
+    <string name="station_menu_line">Linie</string>
+    <string name="dialog_report_content">Erkläre dein Problem</string>
+    <string name="dialog_report_email">Deine E-Mail</string>
+    <string name="dialog_report_screenshot">Screenshot hinzufügen</string>
+    <string name="dialog_report_send">Senden</string>
+    <string name="dialog_report_title">Bericht senden</string>
+    <string name="snackbar_report_success">Bericht gesendet</string>
+    <string name="snackbar_report_error">Bericht senden fehlgeschlagen. Bitte versuche es später
+        erneut.
+    </string>
+    <string name="dialog_report_content_invalid">Bitte fülle das ganze Formular aus</string>
+    <string name="dialog_report_email_invalid">Ungültige E-Mail</string>
+    <string name="dialog_report_sending">Sende Bericht…</string>
+    <string name="dialog_permission_storage_sub">Ohne die Berechtigung auf ihre Speicherkarte
+        zuzugreifen kann die App keine Fotos aus der Galerie auswählen. Wollen Sie diese
+        Berechtigung wirklich verweigern?
+    </string>
+    <string name="general">Allgemein</string>
+    <string name="settings_map_auto_interval_sub">Aktualisierungsintervall ändern</string>
+    <string name="settings_map_auto_interval_title">Aktualisierungsintervall</string>
+    <string name="settings_map_auto_sub">Buspositionen auf der Karte</string>
+    <string name="settings_map_auto_title">Automatische Aktualisierung</string>
+    <string name="settings_beacons_bus_enabled_sub">Benachrichtigungen von Bussen in der Nähe
+    </string>
+    <string name="settings_beacons_bus_enabled_title">Busse</string>
+    <string name="settings_beacons_station_enabled_sub">Benachrichtigungen von Haltestellen in der
+        Nähe
+    </string>
+    <string name="settings_beacons_station_enabled_title">Haltestellen</string>
+    <string name="snackbar_retry">Wiederholen</string>
+    <string name="trips">Fahrten</string>
+    <string name="trip_details">Fahrtdetails</string>
+    <string name="trip_details_distance">Distanz</string>
+    <string name="trip_details_duration">Dauer</string>
+    <string name="trip_details_error">Daten konnten nicht geladen werden</string>
+    <string name="trip_details_from">Von</string>
+    <string name="trip_details_line">Linie</string>
+    <string name="trip_details_to">Nach</string>
+    <string name="notification_trip_sub">Klicke um Fahrtdetails anzusehen</string>
+    <string name="notification_trip_title">Fahrt gespeichert</string>
+    <string name="line_format">Linie %s</string>
+    <string name="snackbar_timetable_error">Fahrpläne konnten nicht heruntergeladen werden</string>
+    <string name="timetable_download">Fahrpläne werden heruntergeladen…</string>
+    <string name="timetable_map_bolzano">Streckennetz Bozen</string>
+    <string name="timetable_map_merano">Streckennetz Meran</string>
+    <string name="timetables">Fahrpläne</string>
+    <string name="timetable_open">Fahrplan öffnen</string>
+    <string name="timetable_update_action">Laden</string>
+    <string name="timetable_update_text">Neue Fahrpläne verfügbar</string>
+    <string name="trip_details_co2_emission">Dein CO₂-Verbrauch mit dem Bus</string>
+    <string name="trip_details_co2_emission_car">CO₂-Verbrauch mit dem Auto</string>
+    <string name="trip_details_fuel_price">Dieselpreis dieser Fahrt</string>
+    <string name="about_credits_subtitle">Entwickler und Bibliotheken</string>
+    <string name="changelog_version">Version</string>
+    <string name="snackbar_trips_delete_error">Fahrt konnte nicht gelöscht werden</string>
+    <string name="settings_news_push_sub">Benachrichtigungen über Fahrplanänderungen</string>
+    <string name="bus_depot">Depot</string>
+    <string name="bus_not_in_service_short">Außer Dienst</string>
+    <string name="bus_id">#%d</string>
+    <string name="credits_alex_sub">App-Entwickler</string>
+    <string name="hydrogen_buses">H₂-Busse</string>
+    <string name="credits_david_sub">Server-Entwickler</string>
+    <string name="route_details">Routendetails</string>
+    <string name="dialog_trips_sub_1">Mit den Beacons, die an Bussen und Haltestellen angebracht
+        sind, kann die App Busfahrten registrieren und abspeichern, sofern Bluetooth eingeschaltet
+        ist. Falls du nicht wissen solltest was Beacons sind, bitten wir dich zuerst den Text \“Was
+        sind Beacons?\” in den Einstellungen durchzulesen.
+    </string>
+    <string name="dialog_trips_sub_2">Um deine Fahrten zu speichern musst du Bluetooth während der
+        ganzen Fahrt eingeschaltet haben. Versichere dich, dass du es schon bevor du den Bus
+        betrittst aktivierst. Du brauchst die App nicht während der ganzen Fahrt offen zu halten,
+        denn das Aufzeichnen der Fahrten erfolgt im Hintergrund.\nBeachte, dass an den Start- und
+        Endhaltestellen Beacons angebracht müssen sein, damit die Fahrt korrekt registriert wird.
+        Bitte beschwere dich nicht gleich bei uns, sollte eine Fahrt nicht aufgezeichnet werden
+        sollte, oder nur teilweise, da während der Fahrt viele Faktoren zum Funktionieren dieses
+        Features beitragen. Fehler sind dabei nicht vermeidbar. Vielen Dank!
+    </string>
+    <string name="dialog_trips_sub_3">Viele Haltestellen und alle Busse sind mit Beacons
+        ausgestattet. Wenn du bei einer Haltestelle wartest empfängt dein Smartphone die
+        Beacon-Daten über Bluetooth, somit weiß es wo deine Fahrt beginnt. Nachher sucht es nach
+        einem fahrenden Bus um zu wissen in welchem Fahrzeug du dich befindest. Sobald du den Bus
+        verlässt, wird nach einem Beacon an einer Haltestelle gesucht, um zu wissen wo du
+        ausgestiegen bist. Dann wirst du über deine Fahrt, CO₂-Emissionen und die dazugehörigen
+        Details informiert.
+    </string>
+    <string name="dialog_trips_sub_4">Leider ist diese Funktionalität erst ab Android 4.4 verfügbar,
+        weil Beacons mit Bluetooth Low Energy funktionieren.
+    </string>
+    <string name="dialog_trips_title_1">Speichern von Fahrten</string>
+    <string name="dialog_trips_title_2">Wie benutze ich diese Feature?</string>
+    <string name="dialog_trips_title_3">Wie funktioniert das Aufzeichnen von Fahrten?</string>
+    <string name="dialog_trips_title_4">Einschränkungen</string>
+    <string name="station_nearby_text">Haltestellen in der Nähe</string>
+    <string name="error_lines_title">Keine Busse</string>
+    <string name="error_lines_sub">in Betrieb</string>
+    <string name="credits_copyright_sub">
+        <![CDATA[© 2015–2016 David Dejori & Alex Lardschneider. Alle Rechte vorbehalten.\n\nEs ist untersagt die Inhalte dieser Anwendung in irgendeiner Art und Weise zu reproduzieren, kopieren, oder vervielfältigen, ohne die schriftliche Erlaubnis der Inhaber.]]></string>
+    <string name="navigation_drawer_close">Navigationsfenster schließen</string>
+    <string name="navigation_drawer_open">Navigationsfenster öffnen</string>
+    <string name="search_hint">Haltestellen suchen</string>
+    <string name="search_label">Haltestellen</string>
+    <string name="title_search">Suchen</string>
+    <string name="rating_negative2">Nein danke</string>
+    <string name="rating_positive1">Ja</string>
+    <string name="rating_title1">Gefällt dir SasaBus?</string>
+    <string name="rating_title2">Möchtest du es bewerten?</string>
+    <string name="rating_title3">Möchtest du uns Feedback geben?</string>
+    <string name="rating_negative1">Nicht wirklich</string>
+    <string name="bus_stop_favorites_add">%s zu Favoriten hinzugefügt</string>
+    <string name="bus_stop_favorites_remove">%s von Favoriten entfernt</string>
+    <string name="bus_stop_no_favorites_sub">Tippe und halte eine Haltestelle um sie zu den Favoriten hinzuzufügen.</string>
+    <string name="bus_stop_no_favorites_title">Keine Favoriten</string>
+    <string name="favorites">Favoriten</string>
+    <string name="line_favorites_add">Linie %s zu den Favoriten hinzugefügt</string>
+    <string name="line_favorites_remove">Linie %s von den Favoriten entfernt</string>
+    <string name="line_no_favorites_title">Keine Favoriten</string>
+    <string name="bus_specifications">Spezifikationen</string>
+    <string name="intro_agreement">Rechtliches</string>
+    <string name="intro_agreement_text" tools:ignore="TypographyQuotes">
+        Indem du SasaBus benutzt, stimmst du den %1$s und der %2$s zu.</string>
+    <string name="intro_permissions">Berechtigung</string>
+    <string name="intro_realtime_data">Echtzeitdaten</string>
+    <string name="intro_permission_text">Mit Android 6 braucht die App die Standort-Berechtigung um
+        nach Beacons zu suchen. Bitte erlaube dies.
+    </string>
+    <string name="intro_beacons_text">Aktivere Bluetooth, um Informationen über Busse und
+        Haltestellen in der Nähe zu erhalten. Die App kann deine Fahrten aufzeichnen und speichern.
+    </string>
+    <string name="intro_realtime_data_text">SasaBus informiert dich über Abfahrten, Verspätungen,
+        Fahrtverläufe und Haltestellen der Stadtbusse in Bozen und Meran.
+    </string>
+    <string name="notification_bus_sub">Klicke um auf Karte zu sehen</string>
+    <string name="notification_bus_title">Linie %1$s nach %2$s</string>
+    <string name="notification_bus_stop_sub_pull">Ziehe für nächste Abfahrten</string>
+    <string name="preferences_menu_appearance_title">Sprache und Design</string>
+    <string name="preferences_menu_map_title">Karte</string>
+    <string name="preferences_menu_notifications_title">Benachrichtigungen</string>
+    <string name="settings_notifications_vibrations">Vibration</string>
+    <string name="settings_appearance">Thema</string>
+    <string name="preferences_menu_advanced_title">Erweitert</string>
+    <string name="settings_advanced">Identifizierung</string>
+    <string name="settings_data">Daten und Internet</string>
+    <string name="settings_fetch_images_title">Fotos der Haltestellen herunterladen</string>
+    <string name="settings_fetch_images_sub">Auswählen wann Fotos heruntergeladen werden sollen
+    </string>
+    <string name="settings_station_ids_sub">Haltestellen-IDs anzeigen</string>
+    <string name="settings_station_ids_title">Zeige die numerische ID der Haltestelle</string>
+    <string name="settings_trips_enabled_sub">Benachrichtigungen von abgeschlossenen Fahrten</string>
+    <string name="settings_trips_enabled_title">Fahrten</string>
+    <string name="settings_beacons_station_vibration_sub">Vibriere wenn eine Haltestelle in der Nähe
+        ist
+    </string>
+    <string name="error_data_title">Aktualisierung der Daten nötig</string>
+    <string name="error_data_sub">Bitte starte die App neu</string>
+    <string name="dialog_changelog_dont_show_again">Nicht erneut anzeigen</string>
+    <string name="bus_report">Ein Problem in diesem Bus melden</string>
+    <string name="dialog_report_bus_content">Beschreibe das Problem</string>
+    <string name="dialog_report_bus_photo">Foto hinzufügen</string>
+    <string name="done_button">Fertig</string>
+    <string name="error_not_tracked_title">Diese Linie wird nicht geortet</string>
+    <string name="error_not_tracked_sub">Es gibt keine GPS-Daten über diese Linie</string>
+    <string name="intro_offline_data_title">Offline-Daten</string>
+    <string name="intro_offline_data_update_title">Offline-Daten</string>
+    <string name="intro_offline_data_update_sub">Die Offline-Daten (ungefähr 150 KB) müssen
+        aktualisiert werden.
+    </string>
+    <string name="intro_offline_data_sub">Die App lädt die Abfahrtszeiten an allen Haltestellen
+        herunter und speichert sie lokal. Die Daten haben eine ungefähre Größe von 150 KB.
+    </string>
+    <string name="settings_night_mode_title">Nachtmodus</string>
+    <string name="settings_night_mode_sub">Wann soll der Nachtmodus an sein?</string>
+    <string name="planned_trips">Geplante Fahrten</string>
+    <string name="bottom_sheet_course">VERLAUF</string>
+    <string name="bottom_sheet_delayed">%d\' verspätet</string>
+    <string name="bottom_sheet_early">%d\' verfrüht</string>
+    <string name="bottom_sheet_line">LINIE</string>
+    <string name="bottom_sheet_punctual">Pünktlich</string>
+    <string name="bottom_sheet_trip">Fahrt #%d</string>
+    <string name="bottom_sheet_variant">Variante #%d</string>
+    <string name="bottom_sheet_vehicle">FAHRZEUG</string>
+    <string name="bottom_sheet_vehicle_id">Bus #%d</string>
+    <string name="lines">Linien</string>
+    <string name="intro_tutorial_swipe_btn">OK</string>
+    <string name="intro_tutorial_swipe_sub">Ziehe hier nach oben, um Details zu diesem Bus zu
+        sehen.
+    </string>
+    <string name="intro_tutorial_swipe_title">Ziehe nach oben</string>
+    <string name="line_current_stop">Jetzt bei %s</string>
+    <string name="line_heading">Fährt nach %s</string>
+    <string name="station_heading">Fährt nach %s</string>
+    <string name="notification_heading">Jetzt bei %s</string>
+    <string name="notification_planned_trip_departs_at_content">Linie %1$s fährt um %2$s ab</string>
+    <string name="notification_planned_trip_departs_in_content_1">Linie %1$s fährt in %2$d\' ab
+    </string>
+    <string name="notification_planned_trip_departs_in_content_2">Linie %1$s fährt in %2$d\' mit
+        %3$d\' Verspätung ab
+    </string>
+    <string name="planned_trips_add_confirm_discard">Möchtest du dieses Event wirklich verwerfen?
+    </string>
+    <string name="planned_trips_add_date">Abfahrtszeit und -datum</string>
+    <string name="planned_trips_add_dialog_add_bus_stop">Wähle Haltestelle</string>
+    <string name="planned_trips_add_dialog_line">Wähle Linie(n)</string>
+    <string name="planned_trips_add_discard">Verwerfen</string>
+    <string name="planned_trips_add_empty_fields">Einige Felder sind leer. Bitte fülle Sie aus.
+    </string>
+    <string name="planned_trips_add_keep_editing">Weiter bearbeiten</string>
+    <string name="planned_trips_add_line">Linie(n) hinzufügen</string>
+    <string name="planned_trips_add_location">Haltestelle hinzufügen</string>
+    <string name="planned_trips_add_no_lines">Bitte wähle zuerst eine Linie!</string>
+    <string name="planned_trips_add_notification">Noch eine Benachrichtigung hinzufügen</string>
+    <string name="planned_trips_add_notification_10">10 Minuten früher</string>
+    <string name="planned_trips_add_notification_30">30 Minuten früher</string>
+    <string name="planned_trips_add_notification_60">1 Stunde früher</string>
+    <string name="planned_trips_add_repeat_day_long">Wiederhole jeden Tag</string>
+    <string name="planned_trips_add_repeat_day_short">Jeden Tag</string>
+    <string name="planned_trips_add_repeat_never">Keine Wiederholung</string>
+    <string name="planned_trips_add_repeat_week">Jede Woche</string>
+    <string name="planned_trips_add_title">Gib den Titel des Events ein</string>
+    <string name="save_button">Speichern</string>
+    <string name="line_no_favorites_sub">Tippe und halte eine Linie um sie zu den Favoriten hinzuzufügen.</string>
+    <string name="line_no_hydrogen_sub">Zurzeit sind keine Wasserstoffe in Betrieb.</string>
+    <string name="line_no_hydrogen_title">Keine Wasserstoffe in Betrieb</string>
+    <string name="planned_trips_empty_content">Füge Fahrten hinzu um über Abfahrten und Verspätungen benachrichtigt zu werden.</string>
+    <string name="planned_trips_empty_title">Keine geplanten Fahrten</string>
+    <string name="route_walk_default">5\' gehen</string>
+    <string name="dialog_trips_delete_message">Diese Fahrt löschen?</string>
+    <string name="notifications">Benachrichtigungen</string>
+    <string name="intro_agreement_privacy" tools:ignore="TypographyQuotes"><![CDATA[<a href=\"privacy:\">Datenschutzerklärung</a>]]></string>
+    <string name="intro_agreement_terms" tools:ignore="TypographyQuotes"><![CDATA[<a href=\"terms:\">Nutzungsbedingungen</a>]]></string>
+    <string name="planned_trips_add_notification_none">Keine</string>
+    <string name="planned_trips_delete_confirmation">Fahrt gelöscht</string>
+    <string name="planned_trips_delete_undo">Rückgänging</string>
+    <string name="settings_map_refresh">Aktualisierung der Marker</string>
+    <string name="news_none_sub">Neuigkeiten für diese Zone erscheinen sobald sie von SASA SpaA-AG hinzugefügt werden.</string>
+    <string name="news_none_title">Keine Neuigkeiten für diese Zone</string>
+    <string name="notification_bus_stop_sub_click">Klicke um Details anzusehen</string>
+    <string name="notification_survey_title">Umfrage</string>
+    <string name="notification_survey_subtitle">Klicke um deine Fahrt zu bewerten</string>
+    <string name="retry">Erneut versuchen</string>
+    <string name="settings_survey_category">Umfragen</string>
+    <string name="settings_survey_enable_summary">Du bekommst eine Benachrichtigung beim Beenden einer Fahrt und kannst uns Feedback über die Dienstleistung geben.</string>
+    <string name="settings_survey_enable_title">Umfragen aktivieren</string>
+    <string name="settings_survey_interval_title">Intervall zwischen Umfragen</string>
+    <string name="settings_survey_interval_summary">Umfragen erscheinen nur einmal in der ausgewählten Zeitspanne.</string>
+    <string name="survey_dialog_error_sub">Deine Bewertung wird so bald wie möglich versendet.</string>
+    <string name="survey_dialog_error_title">Bewertung konnte nicht versendet werden</string>
+    <string name="survey_dialog_success_sub">\"Danke! Wir werden dich bei Problemen so bald wie möglich kontaktieren.</string>
+    <string name="survey_dialog_success_title">Bewertung gesendet</string>
+    <string name="survey_form_feedback">Feedback (optional)</string>
+    <string name="survey_form_submit">Senden</string>
+    <string name="survey_rating_average">In Ordnung</string>
+    <string name="survey_rating_awful">Schlecht</string>
+    <string name="survey_rating_excellent">Ausgezeichnet</string>
+    <string name="survey_rating_good">Gut</string>
+    <string name="survey_rating_poor">Nicht so gut</string>
+    <string name="survey_title_form">Bitte gib deine E-Mail an, damit wir dich kontaktieren können.</string>
+    <string name="survey_title_header">Umfragen helfen uns den Busdienst zu analysieren und Meinungen und Beschwerden der Kunden aufzunehmen. Bitte beschreibe wie du die Fahrt empfunden hast bzw. welche Mängel oder Probleme du festgestellt hast. Danke!</string>
+    <string name="survey_title_rate">Wie würdest du deine Fahrt bewerten?</string>
     <string name="survey">Umfrage</string>
-    <string name="survey_title">Kurzumfrage</string>
-    <string name="survey_answer_yes">Ja</string>
-    <string name="survey_answer_no">Nein</string>
-    <string name="survey_contact_information_send">Senden</string>
-    <string name="survey_contact_information_cancel">Abbrechen</string>
-    <string name="survey_contact_email_address">E-Mail-Adresse</string>
-    <string name="survey_contact_phone">Telefonnummer</string>
-    <string name="survey_required_fields">Bitte füllen Sie eines dieser Felder aus</string>
-    <string name="email_invalid">Ungültige E-Mail-Adresse</string>
-    <string name="phone_invalid">Ungültige Telefonnummer</string>
+    <string name="about_feedback_subtitle">Teilen Sie uns Fehler oder Anregungen mit</string>
+    <string name="timetable_extract">Fahrpläne werden extrahiert…</string>
+    <string name="trips_none_title">Keine Fahrten</string>
+    <string name="trips_none_subtitle"><![CDATA[Deine Fahrten werden hier erscheinen. Aktiviere Bluetooth um Fahrten zu erkennen und speichern.<br><a href="">Hilfe</a>]]></string>
 
-    <string name="beacon_bus">Beacon Bus</string>
-    <string name="visible_buses">Busse in der Nähe</string>
-
-    <string name="location_service_required">Standort aktivieren</string>
-    <string name="for_beacon_background_scan">um Beacon-Scans im hintergrund zu erlauben.</string>
 </resources>

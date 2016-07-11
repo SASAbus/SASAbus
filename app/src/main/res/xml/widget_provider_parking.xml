@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minHeight="96dip"
+    android:minWidth="244dip"
+    android:previewImage="@drawable/ic_local_parking_white_48dp"
+    android:resizeMode="vertical"
+    android:updatePeriodMillis="21600000"
+    android:configure="it.sasabz.android.sasabus.ui.parking.ParkingConfigureActivity"/>
