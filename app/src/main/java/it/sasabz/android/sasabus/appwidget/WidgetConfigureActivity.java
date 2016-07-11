@@ -66,8 +66,7 @@ public class WidgetConfigureActivity extends AppCompatActivity {
             //saveTitlePref(context, mAppWidgetId, titlePrefix);
             // Push widget update to surface with newly set prefix
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-            WidgetProvider.updateAppWidget(context, appWidgetManager,
-                    mAppWidgetId, titlePrefix);
+            WidgetProvider.updateAppWidget(context, appWidgetManager, mAppWidgetId, titlePrefix);
             // Make sure we pass back the original appWidgetId
             Intent resultValue = new Intent();
             resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);

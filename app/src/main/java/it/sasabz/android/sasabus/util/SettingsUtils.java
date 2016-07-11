@@ -127,6 +127,11 @@ public final class SettingsUtils {
     private static final String PREF_SURVEY_LAST_MILLIS = "pref_survey_last_millis";
 
     /**
+     * Save the parking id of the widget
+     */
+    private static final String PREF_WIDGET_PARKING_ID = "pref_widget_parking_id";
+
+    /**
      * Default value to return when the user has installed the app and opened it
      * for the first time.
      */
@@ -157,6 +162,14 @@ public final class SettingsUtils {
         editor.apply();
     }
 
+
+    public static int getWidgetParking(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt(PREF_WIDGET_PARKING_ID, 0);
+    }
+
+    public static void setWidgetParking(Context context, int parkingId) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(PREF_WIDGET_PARKING_ID, parkingId).apply();
+    }
 
     // ========================================= FAVORITES =========================================
 

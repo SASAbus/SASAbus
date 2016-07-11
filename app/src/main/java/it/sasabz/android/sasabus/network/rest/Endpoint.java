@@ -20,6 +20,7 @@ public final class Endpoint {
 
     public static final String NEWS = "news/{language}";
     public static final String PARKING = "parking/{language}";
+    public static final String PARKING_ID = "parking/{language}/id/{id}";
     public static final String PATHS = "paths/{id}";
     public static final String ROUTE = "route/{language}/from/{from}/to/{to}/on/{date}/at/{time}/walk/{walk}/results/{results}";
     public static final String TOKEN = "gcm/tokens/{token}";

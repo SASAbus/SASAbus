@@ -11,4 +11,7 @@ public interface ParkingApi {
 
     @GET(Endpoint.PARKING)
     Observable<ParkingResponse> getParking(@Path("language") String language);
+
+    @GET(Endpoint.PARKING_ID)
+    Observable<ParkingResponse> getParking(@Path("language") String language, @Path("id") int id);
 }

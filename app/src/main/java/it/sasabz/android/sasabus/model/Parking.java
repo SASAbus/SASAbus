@@ -7,6 +7,9 @@ import com.google.gson.annotations.SerializedName;
 
 public final class Parking implements Parcelable {
 
+    @SerializedName("id")
+    private final int id;
+
     @SerializedName("name")
     private final String name;
 
@@ -29,6 +32,7 @@ public final class Parking implements Parcelable {
     private final int totalSlots;
 
     private Parking(Parcel in) {
+        id = in.readInt();
         name = in.readString();
         address = in.readString();
         phone = in.readString();
@@ -45,6 +49,7 @@ public final class Parking implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeString(name);
         dest.writeString(address);
         dest.writeString(phone);
@@ -57,7 +62,8 @@ public final class Parking implements Parcelable {
     @Override
     public String toString() {
         return "Parking{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
                 ", lat=" + lat +
@@ -65,6 +71,10 @@ public final class Parking implements Parcelable {
                 ", freeSlots=" + freeSlots +
                 ", totalSlots=" + totalSlots +
                 '}';
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
