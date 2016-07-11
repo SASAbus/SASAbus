@@ -44,8 +44,8 @@ android {
         applicationId "it.sasabz.android.sasabus"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 57
-        versionName "2.3.0"
+        versionCode 51
+        versionName "2.1.0-beta1"
     }
 
     buildTypes {
