@@ -1,9 +1,11 @@
 package it.sasabz.android.sasabus.fcm;
 
-import it.sasabz.android.sasabus.util.LogUtils;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.google.firebase.messaging.FirebaseMessaging;
+
+import it.sasabz.android.sasabus.util.LogUtils;
+import it.sasabz.android.sasabus.util.Utils;
 
 /**
  * Called if InstanceID token is updated. This may occur if the security of
@@ -19,6 +21,10 @@ public class InstanceIdService extends FirebaseInstanceIdService {
 
     @Override
     public void onTokenRefresh() {
+        if (Utils.isFDroid()) {
+            return;
+        }
+
         String token = FirebaseInstanceId.getInstance().getToken();
 
         LogUtils.e(TAG, "Got token: " + token);

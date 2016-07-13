@@ -12,11 +12,6 @@ import android.support.annotation.NonNull;
 import android.text.Html;
 
 import com.crashlytics.android.Crashlytics;
-import it.sasabz.android.sasabus.BuildConfig;
-import it.sasabz.android.sasabus.beacon.BusBeacon;
-import it.sasabz.android.sasabus.realm.UserRealmHelper;
-import it.sasabz.android.sasabus.realm.user.Trip;
-import it.sasabz.android.sasabus.ui.widget.SearchSnippet;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
@@ -35,6 +30,11 @@ import java.util.Locale;
 import javax.net.ssl.SSLException;
 
 import io.realm.Realm;
+import it.sasabz.android.sasabus.BuildConfig;
+import it.sasabz.android.sasabus.beacon.BusBeacon;
+import it.sasabz.android.sasabus.realm.UserRealmHelper;
+import it.sasabz.android.sasabus.realm.user.Trip;
+import it.sasabz.android.sasabus.ui.widget.SearchSnippet;
 
 /**
  * Utility class which holds various methods to help with things like logging exceptions.
@@ -44,6 +44,10 @@ import io.realm.Realm;
 public final class Utils {
 
     private Utils() {
+    }
+
+    public static boolean isFDroid() {
+        return BuildConfig.FLAVOR.equals("fdroid");
     }
 
     /**

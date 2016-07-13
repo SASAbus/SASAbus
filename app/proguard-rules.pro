@@ -11,9 +11,6 @@
 -keep public class * extends android.content.BroadcastReceiver
 -keep public class * extends android.content.ContentProvider
 -keep public class com.android.vending.licensing.ILicensingService
--keep public class com.google.android.gms.maps.GoogleMap
-
--keep public class custom.components.**
 
 -assumenosideeffects class android.util.Log {
     public static *** d(...);
@@ -64,8 +61,8 @@
 
 # GSON
 -keepattributes Signature
--keepclassmembers class com.davale.sasabus.network.rest.model.** { <fields>; }
--keepclassmembers class com.davale.sasabus.network.rest.response.** { <fields>; }
+-keepclassmembers class it.sasabz.android.sasabus.network.rest.model.** { <fields>; }
+-keepclassmembers class it.sasabz.android.sasabus.network.rest.response.** { <fields>; }
 -keepattributes *Annotation*
 
 # RxJava
@@ -86,4 +83,16 @@
 
 -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
     rx.internal.util.atomic.LinkedQueueNode consumerNode;
+}
+
+# Javascript Bridge
+
+-keep public class it.sasabz.android.sasabus.util.map.JSInterface
+-keepclassmembers class it.sasabz.android.sasabus.util.map.JSInterface {
+    <fields>;
+    <methods>;
+}
+
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
 }

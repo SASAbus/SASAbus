@@ -1,13 +1,12 @@
 package it.sasabz.android.sasabus.util.map;
 
-import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 
 import java.io.File;
-import java.io.IOException;
 
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.util.LogUtils;
@@ -18,8 +17,8 @@ public class MapDownloadHelper {
 
     private final String TAG = "MapDownloadHelper";
 
-    public static final String MAP_URL = "http://opensasa.info/files/maptiles";
-    public static final String OSM_ZIP_NAME = "osm-tiles.zip";
+    private static final String MAP_URL = "http://opensasa.info/files/maptiles";
+    private static final String OSM_ZIP_NAME = "osm-tiles.zip";
 
     private final Context context;
 
@@ -45,7 +44,7 @@ public class MapDownloadHelper {
         getRootFolder(context);
     }
 
-    public void checkMapFirstTime() throws IOException {
+    public void checkMapFirstTime() {
         if (rootFolder.listFiles().length == 0) {
             LogUtils.e(TAG, "Missing map");
 
@@ -57,16 +56,13 @@ public class MapDownloadHelper {
                     .setCancelable(false)
                     .setPositiveButton("Yes", (dialog, which) -> {
                         downloadOSMTiles();
-                        //MainActivity.this.initUI();
                     })
                     .setNegativeButton("Later", (dialog, which) -> {
-                        //MapDownloadHelper.this.initUI();
                     })
                     .create()
                     .show();
         } else {
             LogUtils.e(TAG, "Map exists");
-            //MainActivity.this.initUI();
         }
     }
 

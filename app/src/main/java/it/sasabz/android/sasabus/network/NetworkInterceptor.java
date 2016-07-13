@@ -4,15 +4,10 @@ import android.content.Context;
 import android.os.Build;
 import android.provider.Settings;
 
-import it.sasabz.android.sasabus.BuildConfig;
-import it.sasabz.android.sasabus.util.HashUtils;
-import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.Utils;
-
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
 
+import it.sasabz.android.sasabus.BuildConfig;
+import it.sasabz.android.sasabus.util.Utils;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -44,8 +39,6 @@ public class NetworkInterceptor implements Interceptor {
                 .newBuilder()
                 .header("User-Agent", getUserAgent())
                 .build();
-
-        LogUtils.w("OkHttp", requestWithUserAgent.method() + " url: " + originalRequest.url());
 
         return chain.proceed(requestWithUserAgent);
     }
