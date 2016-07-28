@@ -14,8 +14,6 @@ public final class Config {
     private Config() {
     }
 
-    public static final int NOTIFICATION_DISRUPTION_BASE = 1 << 21;
-
     public static final int NOTIFICATION_SURVEY = 1 << 20;
 
     public static final int NOTIFICATION_TRIP_SUCCESS = 1 << 19;

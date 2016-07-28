@@ -13,7 +13,7 @@ import io.realm.DynamicRealm;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmMigration;
-import it.sasabz.android.sasabus.beacon.BusBeacon;
+import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
 import it.sasabz.android.sasabus.model.line.Lines;
 import it.sasabz.android.sasabus.network.rest.model.CloudTrip;
 import it.sasabz.android.sasabus.realm.user.Beacon;
@@ -233,32 +233,32 @@ public final class UserRealmHelper {
     // ======================================= TRIPS ===============================================
 
     public static boolean insertTrip(BusBeacon beacon) {
-        int startIndex = beacon.getBusStops().indexOf(beacon.getOrigin());
+        int startIndex = beacon.busStops.indexOf(beacon.origin);
 
         if (startIndex == -1) {
-            Utils.throwTripError(sContext, "Trip " + beacon.getId() + " startIndex == -1");
+            Utils.throwTripError(sContext, "Trip " + beacon.id + " startIndex == -1");
             return false;
         }
 
         // Save the beacon trip list to a temporary list.
-        List<Integer> stops = new ArrayList<>(beacon.getBusStops());
-        beacon.getBusStops().clear();
+        List<Integer> stops = new ArrayList<>(beacon.busStops);
+        beacon.busStops.clear();
 
         // Check if the start index is not bigger that the size of the list, so we can sub-list
         // it without crash.
         if (startIndex > stops.size()) {
-            Utils.throwTripError(sContext, "Trip " + beacon.getId() + " startIndex > stops.size");
+            Utils.throwTripError(sContext, "Trip " + beacon.id + " startIndex > stops.size");
             return false;
         }
 
         // Get the stops from the start index till the end of the list.
         stops = stops.subList(startIndex, stops.size());
 
-        int stopIndex = stops.indexOf(beacon.getDestination());
+        int stopIndex = stops.indexOf(beacon.destination);
 
         // Check if the end index is bigger than 0, thus it exists in the list.
         if (stopIndex < 0) {
-            Utils.throwTripError(sContext, "Trip " + beacon.getId() + " stopIndex < 0");
+            Utils.throwTripError(sContext, "Trip " + beacon.id + " stopIndex < 0");
             return false;
         }
 
@@ -275,10 +275,10 @@ public final class UserRealmHelper {
         if (sb.length() > 0) {
             sb.setLength(sb.length() - 1);
         } else {
-            Utils.throwTripError(sContext, "Trip " + beacon.getId() + " invalid -> sb.length() == 0\n\n" +
-                    "list: " + Arrays.toString(beacon.getBusStops().toArray()) + "\n\n" +
-                    "start: " + beacon.getOrigin() + '\n' +
-                    "stop: " + beacon.getDestination());
+            Utils.throwTripError(sContext, "Trip " + beacon.id + " invalid -> sb.length() == 0\n\n" +
+                    "list: " + Arrays.toString(beacon.busStops.toArray()) + "\n\n" +
+                    "start: " + beacon.origin + '\n' +
+                    "stop: " + beacon.destination);
 
             return false;
         }
@@ -287,22 +287,22 @@ public final class UserRealmHelper {
         realm.beginTransaction();
 
         Trip trip = realm.createObject(Trip.class);
-        trip.setHash(beacon.getHash());
-        trip.setLine(beacon.getLineId());
-        trip.setVehicle(beacon.getId());
-        trip.setVariant(beacon.getVariant());
-        trip.setTrip(beacon.getTripId());
-        trip.setOrigin(beacon.getOrigin());
-        trip.setDestination(beacon.getDestination());
+        trip.setHash(beacon.hash);
+        trip.setLine(beacon.lineId);
+        trip.setVehicle(beacon.id);
+        trip.setVariant(beacon.variant);
+        trip.setTrip(beacon.trip);
+        trip.setOrigin(beacon.origin);
+        trip.setDestination(beacon.destination);
         trip.setDeparture(beacon.getStartDate().getTime() / 1000);
-        trip.setArrival(beacon.getLastSeen() / 1000);
+        trip.setArrival(beacon.lastSeen / 1000);
         trip.setPath(sb.toString());
-        trip.setFuelPrice(beacon.getFuelPrice());
+        trip.setFuelPrice(beacon.fuelPrice);
 
         realm.commitTransaction();
         realm.close();
 
-        LogUtils.e(TAG, "Inserted trip " + beacon.getHash());
+        LogUtils.e(TAG, "Inserted trip " + beacon.hash);
 
         return true;
     }

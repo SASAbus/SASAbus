@@ -13,6 +13,7 @@ import it.sasabz.android.sasabus.fcm.command.NewsCommand;
 import it.sasabz.android.sasabus.fcm.command.NotificationCommand;
 import it.sasabz.android.sasabus.fcm.command.SyncCommand;
 import it.sasabz.android.sasabus.fcm.command.TestCommand;
+import it.sasabz.android.sasabus.fcm.command.TrafficLightCommand;
 import it.sasabz.android.sasabus.util.LogUtils;
 
 /**
@@ -21,6 +22,7 @@ import it.sasabz.android.sasabus.util.LogUtils;
  * GCM message and process it further.
  *
  * @author Alex Lardschneider
+ * @author David Dejori
  */
 public class FcmService extends FirebaseMessagingService {
 
@@ -34,6 +36,7 @@ public class FcmService extends FirebaseMessagingService {
         receivers.put("sync", new SyncCommand());
         receivers.put("notification", new NotificationCommand());
         receivers.put("news", new NewsCommand());
+        receivers.put("traffic_light", new TrafficLightCommand());
         receivers.put("config", new ConfigCommand());
 
         MESSAGE_RECEIVERS = Collections.unmodifiableMap(receivers);

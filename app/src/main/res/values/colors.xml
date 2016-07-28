@@ -86,4 +86,6 @@
 
     <color name="filter_scrim">#88323232</color>
 
+    <color name="notification_text">#ffffff</color>
+
 </resources>

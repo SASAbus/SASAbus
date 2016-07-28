@@ -63,9 +63,6 @@ public class PreferenceActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //noinspection WrongConstant
-        AppCompatDelegate.setDefaultNightMode(SettingsUtils.getNightMode(this));
-
         super.onCreate(savedInstanceState);
 
         Utils.changeLanguage(this);
@@ -307,26 +304,6 @@ public class PreferenceActivity extends AppCompatActivity {
                 getActivity().overridePendingTransition(0, 0);
                 startActivity(intent);
                 getActivity().overridePendingTransition(0, 0);
-
-                return true;
-            });
-
-            ListPreference nightMode = (ListPreference) findPreference(SettingsUtils.PREF_NIGHT_MODE);
-            nightMode.setOnPreferenceChangeListener((preference, newValue) -> {
-                update = true;
-
-                new Handler().postDelayed(() -> {
-                    if (getActivity() == null) return;
-
-                    Intent intent = getActivity().getIntent();
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-                    intent.putExtra("FRAGMENT", "AppearanceFragment");
-                    getActivity().finish();
-                    getActivity().overridePendingTransition(0, 0);
-                    startActivity(intent);
-                    getActivity().overridePendingTransition(0, 0);
-                }, 300);
 
                 return true;
             });

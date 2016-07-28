@@ -30,7 +30,6 @@ import android.widget.EditText;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -41,8 +40,6 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.beacon.BusStopBeacon;
-import it.sasabz.android.sasabus.beacon.BusStopBeaconHandler;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.realm.user.FavoriteBusStop;
@@ -51,7 +48,6 @@ import it.sasabz.android.sasabus.ui.widget.NestedSwipeRefreshLayout;
 import it.sasabz.android.sasabus.ui.widget.adapter.TabsAdapter;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.DeviceUtils;
-import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.map.BusStopsMapView;
 import it.sasabz.android.sasabus.util.recycler.BusStopListAdapter;
 import rx.Observer;
@@ -369,8 +365,6 @@ public class BusStopActivity extends BaseActivity {
         private List<BusStop> mSearchItems;
         private List<BusStop> mItems;
 
-        private static int mBeaconCount;
-
         final Realm realm = Realm.getInstance(BusStopRealmHelper.CONFIG);
 
         @Override
@@ -389,16 +383,6 @@ public class BusStopActivity extends BaseActivity {
                 GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
 
                 mRecyclerView.setLayoutManager(layoutManager);
-                layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-                    @Override
-                    public int getSpanSize(int position) {
-                        if (mBeaconCount > 0 && position < mBeaconCount + 2 && !isSearching) {
-                            return 2;
-                        }
-
-                        return 1;
-                    }
-                });
             } else {
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             }
@@ -429,25 +413,6 @@ public class BusStopActivity extends BaseActivity {
 
         public void parseData() {
             mItems.clear();
-
-            if (Utils.isBeaconEnabled(getActivity())) {
-                BusStopBeaconHandler handler = BusStopBeaconHandler.getInstance(getActivity());
-
-                Collection<BusStopBeacon> beacons = new ArrayList<>(handler.getBeaconList());
-
-                if (!beacons.isEmpty()) {
-                    mItems.add(new BusStop(-1, null, null, 0, 0, 0));
-
-                    for (BusStopBeacon beacon : beacons) {
-                        mItems.add(realm.where(BusStop.class)
-                                .equalTo("id", beacon.getId()).findFirst());
-
-                        mBeaconCount++;
-                    }
-
-                    mItems.add(new BusStop(-2, null, null, 0, 0, 0));
-                }
-            }
 
             String locale = getResources().getConfiguration().locale.toString();
             String sort = locale.contains("de") ? "nameDe" : "nameIt";

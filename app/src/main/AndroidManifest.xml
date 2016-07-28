@@ -236,14 +236,6 @@
         <!-- Widget -->
 
         <activity
-            android:name="it.sasabz.android.sasabus.appwidget.WidgetConfigureActivity"
-            android:theme="@style/Theme.WidgetActivity">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
-            </intent-filter>
-        </activity>
-
-        <activity
             android:name="it.sasabz.android.sasabus.ui.parking.ParkingConfigureActivity"
             android:theme="@style/Theme.WidgetActivity">
             <intent-filter>
@@ -377,16 +369,6 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_provider_parking"/>
-        </receiver>
-
-        <receiver android:name="it.sasabz.android.sasabus.appwidget.WidgetProvider">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/appwidget"/>
         </receiver>
 
     </application>

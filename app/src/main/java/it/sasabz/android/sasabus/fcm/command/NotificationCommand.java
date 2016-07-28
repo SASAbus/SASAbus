@@ -13,12 +13,6 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
-import it.sasabz.android.sasabus.BuildConfig;
-import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.receiver.NotificationReceiver;
-import it.sasabz.android.sasabus.ui.MapActivity;
-import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.Utils;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
@@ -28,24 +22,32 @@ import org.json.JSONObject;
 import java.util.Date;
 import java.util.Map;
 
+import it.sasabz.android.sasabus.BuildConfig;
+import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.receiver.NotificationReceiver;
+import it.sasabz.android.sasabus.ui.MapActivity;
+import it.sasabz.android.sasabus.util.LogUtils;
+import it.sasabz.android.sasabus.util.Utils;
+
 /**
  * General purpose command which can display a highly customizable notification. The notification
  * can be targeted to only very specific devices by using {@link NotificationCommandModel#audience}
  * and {@link NotificationCommandModel#minVersion}.
- *
+ * <p>
  * A expiry time can also be specified. If the notification command arrives after the specified time,
  * either because the device was offline or not reachable by GCM, it will ignored. The notification
  * will be hidden after the expiry time.
- *
- * A invalid notification will be ignored.
+ * <p>
+ * An invalid notification will be ignored.
  *
  * @author Alex Lardschneider
+ * @author David Dejori
  */
 public class NotificationCommand implements FcmCommand {
 
     private static final String TAG = "NotificationCommand";
 
-    private static class NotificationCommandModel {
+    static class NotificationCommandModel {
 
         int id;
         int minVersion;
@@ -131,6 +133,12 @@ public class NotificationCommand implements FcmCommand {
             return;
         }
 
+        // Do not show this notification on fdroid build as it doesn't support FCM.
+        if (data.get("flavor").equals(BuildConfig.FLAVOR) && Utils.isFDroid()) {
+            LogUtils.e(TAG, "Fdroid is not supported.");
+            return;
+        }
+
         LogUtils.i(TAG, "Processing notification command.");
         processCommand(context, command);
     }
@@ -166,7 +174,7 @@ public class NotificationCommand implements FcmCommand {
         // Check package
         if (!TextUtils.isEmpty(command.packageName) && !command.packageName.equals(BuildConfig.APPLICATION_ID)) {
             LogUtils.w(TAG, "Skipping command because of wrong package name, is "
-                    + BuildConfig.APPLICATION_ID + ", should be " + command.packageName);
+                    + command.packageName + ", should be " + BuildConfig.APPLICATION_ID);
             return;
         }
 
@@ -299,7 +307,5 @@ public class NotificationCommand implements FcmCommand {
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, millis, pendingIntent);
-
-        // TODO: 04/05/16 Add AlarmManager to cancel notification when it is no longer valid
     }
 }

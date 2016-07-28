@@ -49,9 +49,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -59,8 +56,6 @@ import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.beacon.BusStopBeacon;
-import it.sasabz.android.sasabus.beacon.BusStopBeaconHandler;
 import it.sasabz.android.sasabus.fcm.FcmService;
 import it.sasabz.android.sasabus.model.Buses;
 import it.sasabz.android.sasabus.model.Vehicle;
@@ -72,7 +67,6 @@ import it.sasabz.android.sasabus.network.rest.model.RealtimeBus;
 import it.sasabz.android.sasabus.network.rest.response.RealtimeResponse;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.realm.UserRealmHelper;
-import it.sasabz.android.sasabus.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.ui.busstop.BusStopDetailActivity;
 import it.sasabz.android.sasabus.ui.widget.OffsetNestedSwipeRefreshLayout;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
@@ -261,10 +255,6 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
             }
         }
 
-        if (Utils.isBeaconEnabled(this)) {
-            BusStopBeaconHandler.getInstance(getApplicationContext()).setBeaconNearbyListener(this);
-        }
-
         new MapDownloadHelper(this).checkMapFirstTime();
 
         WebView webView = (WebView) findViewById(R.id.webview);
@@ -279,10 +269,6 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
         super.onDestroy();
 
         HANDLER.removeCallbacks(REFRESH_RUNNABLE);
-
-        if (Utils.isBeaconEnabled(this)) {
-            BusStopBeaconHandler.getInstance(getApplicationContext()).setBeaconNearbyListener(null);
-        }
     }
 
     @Override
@@ -512,30 +498,6 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
         mBusBeaconId = 0;
         showErrorSnackbar(R.string.snackbar_bus_not_driving);
     }
-
-    /**
-     * Called when a bus stop beacon is in range. Remember to unsubscribe this activity
-     * from the listener to prevent memory leaks.
-     *
-     * @param beacons a {@link List} which contains all the nearby bus stops.
-     */
-    public void beaconsInRange(Collection<BusStopBeacon> beacons) {
-        if (beacons.isEmpty() || !mCanShowBeaconSnackbar) return;
-
-        List<BusStopBeacon> list = new ArrayList<>(beacons);
-
-        Collections.sort(list, (lhs, rhs) -> (int) (lhs.getDistance() - rhs.getDistance()));
-
-        for (BusStopBeacon beacon : list) {
-            BusStop busStop = BusStopRealmHelper
-                    .getBusStopOrNull(beacon.getId());
-
-            if (busStop != null) {
-                showStationSnackbar(beacon.getId(), busStop.getName(this));
-            }
-        }
-    }
-
 
     /**
      * Shows a error snackbar when something happened. Also used to display the "BusMarker not driving"

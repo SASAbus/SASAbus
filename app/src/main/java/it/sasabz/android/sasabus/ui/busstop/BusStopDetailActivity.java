@@ -366,7 +366,7 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
                         for (int j = 1; j < mItems.size(); j++) {
                             BusStopDetail item = mItems.get(j);
 
-                            if (item.getTripId() == bus.trip) {
+                            if (item.getTrip() == bus.trip) {
                                 item.setDelay(bus.delayMin);
                                 item.setVehicle(bus.vehicle);
 

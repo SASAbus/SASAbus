@@ -17,16 +17,4 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/settings_appearance">
-
-        <ListPreference
-            android:key="pref_night_mode"
-            android:summary="@string/settings_night_mode_sub"
-            android:title="@string/settings_night_mode_title"
-            android:entries="@array/settings_night_mode_readable"
-            android:entryValues="@array/settings_night_mode_values"
-            android:defaultValue="-1"/>
-
-    </PreferenceCategory>
-
 </PreferenceScreen>

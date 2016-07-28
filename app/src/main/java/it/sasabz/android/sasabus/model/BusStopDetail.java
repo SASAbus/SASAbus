@@ -4,8 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class BusStopDetail implements Parcelable {
+
     private final int lineId;
-    private final int tripId;
+    private final int trip;
     private final String line;
     private final String time;
     private final String lastStation;
@@ -19,7 +20,7 @@ public class BusStopDetail implements Parcelable {
                          int delay, String additionalData) {
 
         this.lineId = lineId;
-        this.tripId = tripId;
+        this.trip = tripId;
         this.line = line;
         this.time = time;
         this.lastStation = lastStation;
@@ -29,7 +30,7 @@ public class BusStopDetail implements Parcelable {
 
     private BusStopDetail(Parcel in) {
         lineId = in.readInt();
-        tripId = in.readInt();
+        trip = in.readInt();
         line = in.readString();
         time = in.readString();
         lastStation = in.readString();
@@ -48,7 +49,7 @@ public class BusStopDetail implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(lineId);
-        dest.writeInt(tripId);
+        dest.writeInt(trip);
         dest.writeString(line);
         dest.writeString(time);
         dest.writeString(lastStation);
@@ -63,8 +64,8 @@ public class BusStopDetail implements Parcelable {
         return lineId;
     }
 
-    public int getTripId() {
-        return tripId;
+    public int getTrip() {
+        return trip;
     }
 
     public CharSequence getLine() {

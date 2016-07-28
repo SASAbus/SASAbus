@@ -25,6 +25,7 @@ public final class Endpoint {
     public static final String ROUTE = "route/{language}/from/{from}/to/{to}/on/{date}/at/{time}/walk/{walk}/results/{results}";
     public static final String TOKEN = "gcm/tokens/{token}";
     public static final String BEACONS = "beacons";
+    public static final String TRAFFIC_LIGHT = "traffic_light/{language}/{city}";
 
     public static final String REPORT = "report/{type}";
     public static final String SURVEY = "survey";

@@ -12,10 +12,12 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import java.util.List;
+import java.util.Random;
+
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.beacon.BusStopBeaconHandler;
 import it.sasabz.android.sasabus.beacon.survey.SurveyActivity;
 import it.sasabz.android.sasabus.model.BusStopDetail;
 import it.sasabz.android.sasabus.model.line.Lines;
@@ -25,9 +27,6 @@ import it.sasabz.android.sasabus.ui.NewsActivity;
 import it.sasabz.android.sasabus.ui.busstop.BusStopDetailActivity;
 import it.sasabz.android.sasabus.ui.plannedtrip.PlannedTripsViewActivity;
 import it.sasabz.android.sasabus.ui.trips.TripDetailActivity;
-
-import java.util.List;
-import java.util.Random;
 
 /**
  * Utility class to display notifications. Also handles scheduling planned trip notifications.
@@ -78,7 +77,8 @@ public final class NotificationUtils {
 
     /**
      * Shows a notification if a bus stop beacon in range is detected and the user is near the beacon
-     * for more than {@link BusStopBeaconHandler#BEACON_NOTIFICATION_TIME_DELTA} seconds
+     * for more than {@link it.sasabz.android.sasabus.beacon.busstop.BusStopBeaconHandler
+     * #BEACON_NOTIFICATION_TIME_DELTA} seconds
      *
      * @param context   application context
      * @param busStopId id of the bus stop to display

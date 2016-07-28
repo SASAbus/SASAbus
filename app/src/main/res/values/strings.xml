@@ -99,14 +99,11 @@
     <string name="settings_appearance">Appearance</string>
     <string name="settings_advanced">Identification</string>
 
-    <string name="preferences_menu_appearance_title">Language and appearance</string>
+    <string name="preferences_menu_appearance_title">Language</string>
     <string name="preferences_menu_map_title">Map</string>
     <string name="preferences_menu_advanced_title">Advanced</string>
     <string name="preferences_menu_beacons_title" translatable="false">Beacons</string>
     <string name="preferences_menu_notifications_title">Notifications</string>
-
-    <string name="settings_night_mode_title">Night mode</string>
-    <string name="settings_night_mode_sub">Choose when to enable night mode</string>
 
     <string name="settings_language_title">Language</string>
     <string name="settings_language_sub">Change language</string>
@@ -503,5 +500,7 @@
     <string name="intro_tutorial_swipe_btn">GOT IT</string>
 
     <string name="transition_morph_view" translatable="false">morph_view_transition</string>
+    <string name="about_traffic_light_city">Status for %s</string>
+    <string name="about_traffic_light_loading">Loading…</string>
 
 </resources>

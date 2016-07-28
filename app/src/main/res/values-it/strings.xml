@@ -241,7 +241,7 @@
     <string name="notification_bus_sub">Clicca per vedere su mappa</string>
     <string name="notification_bus_title">Linea %1$s verso %2$s</string>
     <string name="notification_bus_stop_sub_pull">Trascina per prossime partenze</string>
-    <string name="preferences_menu_appearance_title">Lingua e design</string>
+    <string name="preferences_menu_appearance_title">Lingua</string>
     <string name="preferences_menu_map_title">Mappa</string>
     <string name="preferences_menu_notifications_title">Notifiche</string>
     <string name="settings_notifications_vibrations">Vibrazione</string>
@@ -274,8 +274,6 @@
     <string name="intro_offline_data_sub">L\'app scarica tutte le partenze ad ogni fermata e le
         salva offline. I dati hanno una dimensione di circa 150 KB.
     </string>
-    <string name="settings_night_mode_title">Modalità notturna</string>
-    <string name="settings_night_mode_sub">Seleziona quando attiva</string>
     <string name="planned_trips">Viaggi previsti</string>
     <string name="bottom_sheet_course">PERCORSO</string>
     <string name="bottom_sheet_delayed">%d\' di ritardo</string>
@@ -369,5 +367,7 @@
     <string name="timetable_extract">Estrago orari…</string>
     <string name="trips_none_title"><![CDATA[I tuoi viaggi appariranno qui. Accendi Bluetooth per registrare i viaggi.<br><a href="">Aiuto</a>]]></string>
     <string name="trips_none_subtitle"><![CDATA[I tuoi viaggi appariranno qui. Accendi Bluetooth per registrare i viaggi.<br><a href="">Aiuto</a>]]></string>
+    <string name="about_traffic_light_loading">Carico…</string>
+    <string name="about_traffic_light_city">Status per %s</string>
 
 </resources>

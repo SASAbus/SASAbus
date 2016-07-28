@@ -199,75 +199,75 @@ public final class Lines {
     public static String getColorForId(int id) {
         switch (id) {
             case 1001:
-                return lineColors[4];
+                return lineColors[2];
             case 1003:
-                return lineColors[5];
+                return lineColors[3];
             case 1005:
-                return lineColors[6];
+                return lineColors[4];
             case 1006:
-                return lineColors[7];
+                return lineColors[5];
             case 1071:
-                return lineColors[8];
+                return lineColors[6];
             case 1072:
-                return lineColors[9];
+                return lineColors[7];
             case 1008:
-                return lineColors[10];
+                return lineColors[8];
             case 1009:
-                return lineColors[11];
+                return lineColors[9];
             case 1101:
-                return lineColors[12];
+                return lineColors[10];
             case 1102:
-                return lineColors[13];
+                return lineColors[11];
             case 1011:
-                return lineColors[14];
+                return lineColors[12];
             case 1012:
-                return lineColors[15];
+                return lineColors[13];
             case 1014:
-                return lineColors[16];
+                return lineColors[14];
             case 110:
-                return lineColors[17];
+                return lineColors[15];
             case 111:
-                return lineColors[18];
+                return lineColors[16];
             case 112:
-                return lineColors[19];
+                return lineColors[17];
             case 116:
-                return lineColors[20];
+                return lineColors[18];
             case 117:
-                return lineColors[21];
+                return lineColors[19];
             case 1153:
-                return lineColors[22];
+                return lineColors[20];
             case 183:
-                return lineColors[23];
+                return lineColors[21];
             case 201:
-                return lineColors[24];
+                return lineColors[22];
             case 202:
-                return lineColors[25];
+                return lineColors[23];
             case 211:
-                return lineColors[26];
+                return lineColors[24];
             case 212:
-                return lineColors[27];
+                return lineColors[25];
             case 213:
-                return lineColors[28];
+                return lineColors[26];
             case 214:
-                return lineColors[29];
+                return lineColors[27];
             case 215:
-                return lineColors[30];
+                return lineColors[28];
             case 221:
-                return lineColors[31];
+                return lineColors[29];
             case 222:
-                return lineColors[32];
+                return lineColors[30];
             case 1:
-                return lineColors[33];
+                return lineColors[31];
             case 2:
-                return lineColors[34];
+                return lineColors[32];
             case 3:
-                return lineColors[35];
+                return lineColors[33];
             case 4:
-                return lineColors[36];
+                return lineColors[34];
             case 6:
-                return lineColors[37];
+                return lineColors[35];
             case 146:
-                return lineColors[38];
+                return lineColors[36];
             default:
                 LogUtils.e("Lines", "Unknown line id " + id);
                 return "FF9800";

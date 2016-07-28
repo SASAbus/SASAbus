@@ -1,10 +1,8 @@
 package it.sasabz.android.sasabus.appwidget;
 
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
-import android.content.Intent;
 import android.text.Html;
 import android.widget.RemoteViews;
 
@@ -54,11 +52,6 @@ public class NewsWidgetProvider extends AppWidgetProvider {
 
                             views.setTextViewText(R.id.widget_news_list, Html.fromHtml(list));
 
-                            Intent intent = new Intent(context, NewsWidgetProvider.class);
-                            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-                            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-
-                            views.setOnClickPendingIntent(R.id.widget_news_refresh, PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT));
                             appWidgetManager.updateAppWidget(widgetId, views);
                         }
                     });

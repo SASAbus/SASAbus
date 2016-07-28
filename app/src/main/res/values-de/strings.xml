@@ -247,7 +247,7 @@
     <string name="notification_bus_sub">Klicke um auf Karte zu sehen</string>
     <string name="notification_bus_title">Linie %1$s nach %2$s</string>
     <string name="notification_bus_stop_sub_pull">Ziehe für nächste Abfahrten</string>
-    <string name="preferences_menu_appearance_title">Sprache und Design</string>
+    <string name="preferences_menu_appearance_title">Sprache</string>
     <string name="preferences_menu_map_title">Karte</string>
     <string name="preferences_menu_notifications_title">Benachrichtigungen</string>
     <string name="settings_notifications_vibrations">Vibration</string>
@@ -282,8 +282,6 @@
     <string name="intro_offline_data_sub">Die App lädt die Abfahrtszeiten an allen Haltestellen
         herunter und speichert sie lokal. Die Daten haben eine ungefähre Größe von 150 KB.
     </string>
-    <string name="settings_night_mode_title">Nachtmodus</string>
-    <string name="settings_night_mode_sub">Wann soll der Nachtmodus an sein?</string>
     <string name="planned_trips">Geplante Fahrten</string>
     <string name="bottom_sheet_course">VERLAUF</string>
     <string name="bottom_sheet_delayed">%d\' verspätet</string>
@@ -376,5 +374,7 @@
     <string name="timetable_extract">Fahrpläne werden extrahiert…</string>
     <string name="trips_none_title">Keine Fahrten</string>
     <string name="trips_none_subtitle"><![CDATA[Deine Fahrten werden hier erscheinen. Aktiviere Bluetooth um Fahrten zu erkennen und speichern.<br><a href="">Hilfe</a>]]></string>
+    <string name="about_traffic_light_loading">Lade…</string>
+    <string name="about_traffic_light_city">Status für %s</string>
 
 </resources>

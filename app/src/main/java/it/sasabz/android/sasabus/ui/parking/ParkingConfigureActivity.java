@@ -47,16 +47,6 @@ public class ParkingConfigureActivity extends AppCompatActivity {
     private final ArrayList<Parking> mItems = new ArrayList<>();
     private ParkingConfigureAdapter mAdapter;
 
-    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(ParkingConfigureActivity.this);
-
-            RemoteViews views = new RemoteViews(ParkingConfigureActivity.this.getPackageName(), R.layout.widget_parking);
-            appWidgetManager.updateAppWidget(mAppWidgetId, views);
-        }
-    };
-
     @BindView(R.id.error_general) RelativeLayout mErrorGeneral;
     @BindView(R.id.error_wifi) RelativeLayout mErrorWifi;
     @BindView(R.id.refresh) SwipeRefreshLayout mSwipeRefreshLayout;

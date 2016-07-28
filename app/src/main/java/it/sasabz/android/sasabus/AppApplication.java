@@ -2,9 +2,6 @@ package it.sasabz.android.sasabus;
 
 import android.app.Application;
 import android.content.Intent;
-import android.os.Build;
-import android.os.StrictMode;
-import android.support.v7.app.AppCompatDelegate;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -37,32 +34,9 @@ public class AppApplication extends Application {
             Fabric.with(this, new Crashlytics());
         }
 
-        // We want to be alerted when the app does heavy work on the UI thread like access
-        // disk or network by using StrictMode.
-        if (BuildConfig.DEBUG && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            new StrictMode.ThreadPolicy.Builder().detectAll().build();
-
-            new StrictMode.VmPolicy.Builder()
-                    .detectActivityLeaks()
-                    .detectCleartextNetwork()
-                    .detectFileUriExposure()
-                    .detectLeakedClosableObjects()
-                    .detectLeakedRegistrationObjects()
-                    .detectLeakedSqlLiteObjects()
-                    .penaltyDeathOnCleartextNetwork()
-                    .penaltyLog()
-                    .build();
-        }
-
-
         // Change the language to the one the user selected in the app settings.
         // If the user didn't select anything, use the default system language.
         Utils.changeLanguage(this);
-
-        // Set up the day/night theme if the user has chosen to enable it in the settings.
-        // Defaults to {@link AppCompatDelegate#MODE_NIGHT_FOLLOW_SYSTEM}
-        //noinspection WrongConstant,ResourceType
-        AppCompatDelegate.setDefaultNightMode(SettingsUtils.getNightMode(this));
 
         // Setup google analytics. Tracking is only done after the user accepted the terms
         // of use and privacy policy and has tracking enabled in the settings,

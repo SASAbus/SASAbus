@@ -14,12 +14,10 @@ public interface LinesApi {
     Observable<LinesAllResponse> allLines(@Path("language") String language);
 
     @GET(Endpoint.LINES)
-    Observable<LinesAllResponse> line(@Path("language") String language,
-                                             @Path("id") int id);
+    Observable<LinesAllResponse> line(@Path("language") String language, @Path("id") int id);
 
     @GET(Endpoint.LINES_FILTER)
-    Observable<LinesAllResponse> filterLines(@Path("language") String language,
-                                             @Path("lines") String lines);
+    Observable<LinesAllResponse> filterLines(@Path("language") String language, @Path("lines") String lines);
 
     @GET(Endpoint.LINES_HYDROGEN)
     Observable<RealtimeResponse> hydrogen();

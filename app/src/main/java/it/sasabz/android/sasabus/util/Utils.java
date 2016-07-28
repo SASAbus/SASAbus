@@ -31,7 +31,7 @@ import javax.net.ssl.SSLException;
 
 import io.realm.Realm;
 import it.sasabz.android.sasabus.BuildConfig;
-import it.sasabz.android.sasabus.beacon.BusBeacon;
+import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
 import it.sasabz.android.sasabus.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.realm.user.Trip;
 import it.sasabz.android.sasabus.ui.widget.SearchSnippet;
@@ -310,21 +310,21 @@ public final class Utils {
     }
 
     public static boolean insertTripIfValid(Context context, BusBeacon beacon) {
-        if (beacon.getDestination() == 0) {
-            throwTripError(context, "Trip " + beacon.getId() + " invalid -> getStopStation == 0");
+        if (beacon.destination == 0) {
+            throwTripError(context, "Trip " + beacon.id + " invalid -> getStopStation == 0");
             return false;
         }
 
-        if (beacon.getOrigin() == beacon.getDestination() &&
-                beacon.getLastSeen() - beacon.getStartDate().getTime() < 600000) {
-            throwTripError(context, "Trip " + beacon.getId() + " invalid -> getOrigin == getStopStation: " +
-                    beacon.getOrigin() + ", " + beacon.getDestination());
+        if (beacon.origin == beacon.destination &&
+                beacon.lastSeen - beacon.getStartDate().getTime() < 600000) {
+            throwTripError(context, "Trip " + beacon.id + " invalid -> getOrigin == getStopStation: " +
+                    beacon.origin + ", " + beacon.destination);
             return false;
         }
 
         Realm realm = Realm.getDefaultInstance();
 
-        Trip trip = realm.where(Trip.class).equalTo("hash", beacon.getHash()).findFirst();
+        Trip trip = realm.where(Trip.class).equalTo("hash", beacon.hash).findFirst();
 
         //noinspection SimplifiableIfStatement
         if (trip != null) {
@@ -335,5 +335,4 @@ public final class Utils {
 
         return UserRealmHelper.insertTrip(beacon);
     }
-
 }

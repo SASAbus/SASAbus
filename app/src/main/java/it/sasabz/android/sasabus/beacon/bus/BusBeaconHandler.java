@@ -1,12 +1,17 @@
-package it.sasabz.android.sasabus.beacon;
+package it.sasabz.android.sasabus.beacon.bus;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.v4.util.Pair;
 
 import org.altbeacon.beacon.Beacon;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -14,6 +19,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.beacon.BeaconStorage;
+import it.sasabz.android.sasabus.beacon.IBeaconHandler;
+import it.sasabz.android.sasabus.beacon.busstop.BusStopBeaconHandler;
+import it.sasabz.android.sasabus.beacon.notification.TripNotificationAction;
+import it.sasabz.android.sasabus.model.BusStop;
 import it.sasabz.android.sasabus.model.line.Lines;
 import it.sasabz.android.sasabus.network.NetUtils;
 import it.sasabz.android.sasabus.network.rest.RestClient;
@@ -31,19 +41,21 @@ import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 import rx.schedulers.Schedulers;
 
-class BusBeaconHandler {
+public final class BusBeaconHandler implements IBeaconHandler {
 
     private static final String TAG = "BusBeaconHandler";
 
     /**
      * The uuid which identifies a bus beacon.
      */
-    static final String UUID = "e923b236-f2b7-4a83-bb74-cfb7fa44cab8";
+    public static final String UUID = "e923b236-f2b7-4a83-bb74-cfb7fa44cab8";
 
     /**
      * the identifier used to identify the region the beacon scanner is listening in.
      */
-    static final String IDENTIFIER = "BUS";
+    public static final String IDENTIFIER = "BUS";
+
+    private static final int TIMEOUT = 10000;
 
     private static final int BUS_LAST_SEEN_THRESHOLD = 180000;
     private static final int SECONDS_IN_BUS = 90;
@@ -53,14 +65,22 @@ class BusBeaconHandler {
     private final Context mContext;
     private final BeaconStorage mPrefsManager;
 
+    @SuppressLint("StaticFieldLeak")
+    public static TripNotificationAction notificationAction;
+
+    @SuppressLint("StaticFieldLeak")
+    private static BusBeaconHandler sInstance;
+
     private byte mCycleCounter;
 
     private final Map<Integer, BusBeacon> mBeaconMap = new ConcurrentHashMap<>();
 
-    BusBeaconHandler(Context context) {
+    private BusBeaconHandler(Context context) {
         mContext = context;
         mPrefsManager = BeaconStorage.getInstance(context);
         mBeaconMap.putAll(mPrefsManager.getBeaconMap());
+
+        notificationAction = new TripNotificationAction(context);
 
         Handler handler = new Handler();
         new Timer().schedule(new TimerTask() {
@@ -75,48 +95,18 @@ class BusBeaconHandler {
         }, 0, 180000);
     }
 
-    private void beaconInRange(Beacon beacon) {
-        BusBeacon busBeacon;
-
-        int major = beacon.getId2().toInt();
-
-        if (mBeaconMap.keySet().contains(major)) {
-            busBeacon = mBeaconMap.get(major);
-
-            busBeacon.seen();
-            busBeacon.setDistance(beacon.getDistance());
-
-            LogUtils.w(TAG, "Beacon " + major + ", seen: " + busBeacon.getSeenSeconds() +
-                    ", distance: " + busBeacon.getDistance());
-
-
-            /*
-             * Checks if a beacon needs to download bus info because it is suitable for
-             * a trip.
-             */
-            if (busBeacon.getOrigin() == 0 && NetUtils.isOnline(mContext) &&
-                    beacon.getDistance() <= MAX_BEACON_DISTANCE) {
-
-                getBusInformation(busBeacon);
-            }
-        } else {
-            busBeacon = new BusBeacon(major, HashUtils.getHashForIdentifier(mContext, "trip"));
-
-            mBeaconMap.put(major, busBeacon);
-
-            LogUtils.e(TAG, "Added beacon " + major);
-
-            UserRealmHelper.addBeacon(beacon, it.sasabz.android.sasabus.realm.user.Beacon.TYPE_BUS);
-
-            if (NetUtils.isOnline(mContext) && beacon.getDistance() <= MAX_BEACON_DISTANCE) {
-                getBusInformation(busBeacon);
-            }
+    public static BusBeaconHandler getInstance(Context context) {
+        if (sInstance == null) {
+            sInstance = new BusBeaconHandler(context);
         }
+
+        return sInstance;
     }
 
-    void updateBeacons(Iterable<Beacon> beacons) {
+    @Override
+    public void updateBeacons(Collection<Beacon> beacons) {
         for (Beacon beacon : beacons) {
-            beaconInRange(beacon);
+            validateBeacon(beacon, beacon.getId2().toInt());
         }
 
         deleteInvisibleBeacons();
@@ -127,34 +117,54 @@ class BusBeaconHandler {
             BusBeacon beacon = entry.getValue();
 
             if ((firstBeacon == null || beacon.getStartDate().before(firstBeacon.getStartDate()))
-                    && beacon.getLastSeen() + 30000 > System.currentTimeMillis()) {
+                    && beacon.lastSeen + 30000 > System.currentTimeMillis()) {
                 firstBeacon = beacon;
             }
         }
 
-        if (firstBeacon != null) {
+        if (firstBeacon != null && firstBeacon.isSuitableForTrip) {
             if (mPrefsManager.hasCurrentTrip() &&
-                    mPrefsManager.getCurrentTrip().getBeacon().getId() == firstBeacon.getId()) {
+                    mPrefsManager.getCurrentTrip().beacon.id == firstBeacon.id) {
 
-                if (firstBeacon.getLastSeen() + 10000 >= System.currentTimeMillis()) {
-                    LogUtils.w(TAG, "Seen: " + (firstBeacon.getLastSeen() + 10000 - System.currentTimeMillis()));
+                if (firstBeacon.lastSeen + TIMEOUT >= System.currentTimeMillis()) {
+                    LogUtils.i(TAG, "Seen: " + (firstBeacon.lastSeen + TIMEOUT - System.currentTimeMillis()));
 
                     CurrentTrip currentTrip = mPrefsManager.getCurrentTrip();
                     currentTrip.setBeacon(firstBeacon);
 
-                    if (!currentTrip.isNotificationShown() &&
+                    Pair<Integer, BusStop> currentBusStop = BusStopBeaconHandler.getInstance(mContext)
+                            .getCurrentBusStop();
+                    if (currentBusStop != null) {
+                        List<BusStop> path = currentTrip.getPath();
+
+                        for (BusStop busStop : path) {
+                            if (busStop.getGroup() == currentBusStop.second.getGroup()) {
+                                firstBeacon.setBusStop(currentBusStop.second, currentBusStop.first);
+                                currentTrip.update();
+
+                                LogUtils.e(TAG, "Set current bus stop " + busStop.getId() +
+                                        " for vehicle " + firstBeacon.id);
+
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!currentTrip.isNotificationShown && currentTrip.beacon.isSuitableForTrip &&
                             SettingsUtils.isBusNotificationEnabled(mContext)) {
 
                         currentTrip.setNotificationShown(true);
 
-                        NotificationUtils.bus(mContext, firstBeacon.getId(), firstBeacon.getTitle());
+                        notificationAction.showNotification(currentTrip);
+                    }
+
+                    if (firstBeacon.shouldFetchDelay()) {
+                        fetchBusDelayAndInfo(currentTrip);
                     }
 
                     mPrefsManager.setCurrentTrip(currentTrip);
                 }
-            } else if (mCycleCounter % 4 == 0 && firstBeacon.isSuitableForTrip() &&
-                    firstBeacon.getDistance() <= MAX_BEACON_DISTANCE) {
-
+            } else if (mCycleCounter % 5 == 0 && firstBeacon.distance <= MAX_BEACON_DISTANCE) {
                 isBeaconCurrentTrip(firstBeacon);
                 mCycleCounter = 0;
             }
@@ -165,39 +175,85 @@ class BusBeaconHandler {
         mPrefsManager.writeBeaconMap(mBeaconMap);
     }
 
-    void inspectBeacons() {
+    @Override
+    public void validateBeacon(Beacon beacon, int major) {
+        BusBeacon busBeacon;
+
+        if (mBeaconMap.keySet().contains(major)) {
+            busBeacon = mBeaconMap.get(major);
+
+            busBeacon.seen();
+            busBeacon.setDistance(beacon.getDistance());
+
+            LogUtils.w(TAG, "Beacon " + major + ", seen: " + busBeacon.seenSeconds +
+                    ", distance: " + busBeacon.distance);
+
+
+            /*
+             * Checks if a beacon needs to download bus info because it is suitable for
+             * a trip.
+             */
+            if (busBeacon.origin == 0 && NetUtils.isOnline(mContext) &&
+                    beacon.getDistance() <= MAX_BEACON_DISTANCE) {
+
+                getBusInformation(busBeacon);
+            }
+        } else {
+            busBeacon = new BusBeacon(major, HashUtils.getHashForIdentifier(mContext, "trip"));
+
+            mBeaconMap.put(major, busBeacon);
+
+            UserRealmHelper.addBeacon(beacon, it.sasabz.android.sasabus.realm.user.Beacon.TYPE_BUS);
+
+            LogUtils.e(TAG, "Added beacon " + major);
+
+            if (NetUtils.isOnline(mContext) && beacon.getDistance() <= MAX_BEACON_DISTANCE) {
+                getBusInformation(busBeacon);
+            }
+        }
+    }
+
+    public void inspectBeacons() {
+        updateBeacons(Collections.emptyList());
+
         new Thread(() -> {
             synchronized (this) {
                 try {
                     wait(5000);
-                } catch (Exception ignored) {
+                } catch (InterruptedException ignored) {
                 }
             }
+
             updateBeacons(Collections.emptyList());
+
             synchronized (this) {
                 try {
                     wait(30000);
-                } catch (Exception ignored) {
+                } catch (InterruptedException ignored) {
                 }
             }
+
             updateBeacons(Collections.emptyList());
         }).start();
-
-        updateBeacons(Collections.emptyList());
     }
 
     private void getBusInformation(BusBeacon beacon) {
-        if (beacon.isOriginPending() || !beacon.canRetry()) {
+        if (beacon.isOriginPending) {
             return;
         }
 
-        LogUtils.e(TAG, "getBusInformation " + beacon.getId());
+        if (!beacon.canRetry()) {
+            beacon.setSuitableForTrip(mContext, false);
+            return;
+        }
+
+        LogUtils.e(TAG, "getBusInformation " + beacon.id);
 
         beacon.setOriginPending(true);
         beacon.retry();
 
         RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
-        realtimeApi.vehicleRx(beacon.getId())
+        realtimeApi.vehicleRx(beacon.id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
                 .subscribe(new Observer<RealtimeResponse>() {
@@ -209,38 +265,52 @@ class BusBeaconHandler {
                     @Override
                     public void onError(Throwable e) {
                         Utils.handleException(e);
+
                         beacon.setOriginPending(false);
+                        beacon.setSuitableForTrip(mContext, false);
                     }
 
                     @Override
                     public void onNext(RealtimeResponse response) {
-                        LogUtils.e(TAG, "getBusInformation response: " + response);
-
                         if (response.buses.isEmpty()) {
                             // Assume this bus is not driving at the moment and return.
                             // If this bus is still not driving after 3 retries ignore it.
-                            LogUtils.e(TAG, "Bus " + beacon.getId() + " not driving");
+                            LogUtils.e(TAG, "Vehicle " + beacon.id + " not driving");
+
+                            beacon.setSuitableForTrip(mContext, false);
+                            beacon.setOriginPending(false);
+
                             return;
                         }
 
                         RealtimeBus bus = response.buses.get(0);
 
-                        beacon.setOrigin(bus.busStop);
-                        beacon.setLineId(bus.lineId);
-                        beacon.setTripId(bus.trip);
-                        beacon.setVariant(bus.variant);
-                        beacon.setFuelPrice(1.35F);
+                        LogUtils.e(TAG, "getBusInformation: " + bus.busStop);
 
                         if (bus.path.isEmpty()) {
                             beacon.setOriginPending(false);
+                            beacon.setSuitableForTrip(mContext, false);
 
-                            Throwable t = new IllegalTripException("Triplist for " + beacon.getId() + " empty");
+                            Throwable t = new IllegalTripException("Triplist for " + beacon.id
+                                    + " empty");
                             Utils.handleException(t);
 
                             return;
                         }
 
+                        beacon.setOrigin(bus.busStop);
+                        beacon.setLineId(bus.lineId);
+                        beacon.setTrip(bus.trip);
+                        beacon.setVariant(bus.variant);
+                        beacon.setFuelPrice(1.35F);
+
+                        beacon.setBusStop(new BusStop(BusStopRealmHelper
+                                .getBusStop(bus.busStop)), BusBeacon.TYPE_REALTIME);
+
                         beacon.setBusStops(bus.path);
+
+                        beacon.setDelay(bus.delayMin);
+                        beacon.updateLastDelayFetch();
 
                         String destination = BusStopRealmHelper
                                 .getName(bus.path.get(bus.path.size() - 1));
@@ -250,43 +320,40 @@ class BusBeaconHandler {
 
                         beacon.setTitle(title);
 
-                        LogUtils.e(TAG, "Got bus info for " + beacon.getId() + ", but stop " + bus.busStop);
+                        LogUtils.e(TAG, "Got bus info for " + beacon.id +
+                                ", bus stop " + bus.busStop);
 
-                        beacon.setSuitableForTrip(true);
+                        beacon.setSuitableForTrip(mContext, true);
                         beacon.setOriginPending(false);
                     }
                 });
     }
 
     private void deleteInvisibleBeacons() {
-        LogUtils.w(TAG, "deleteInvisibleBeacons");
+        LogUtils.i(TAG, "deleteInvisibleBeacons");
 
         CurrentTrip currentTrip = mPrefsManager.getCurrentTrip();
 
         for (Map.Entry<Integer, BusBeacon> entry : mBeaconMap.entrySet()) {
             BusBeacon beacon = entry.getValue();
 
-            if (beacon.getLastSeen() + BUS_LAST_SEEN_THRESHOLD < System.currentTimeMillis()) {
+            if (beacon.lastSeen + BUS_LAST_SEEN_THRESHOLD < System.currentTimeMillis()) {
                 mBeaconMap.remove(entry.getKey());
 
                 LogUtils.e(TAG, "Removed beacon " + entry.getKey());
 
                 if (mPrefsManager.hasCurrentTrip() &&
-                        currentTrip.getId() == entry.getValue().getId()) {
+                        currentTrip.getId() == entry.getValue().id) {
 
-                    if (beacon.getSeenSeconds() > SECONDS_IN_BUS) {
-                        LogUtils.e(TAG, "TripsSQLiteOpenHelper");
-
+                    if (beacon.seenSeconds > SECONDS_IN_BUS) {
                         addTrip(beacon);
                     }
 
                     mPrefsManager.setCurrentTrip(null);
                 }
-            } else if (beacon.getLastSeen() + 10000 < System.currentTimeMillis()) {
-                if (mPrefsManager.hasCurrentTrip() &&
-                        currentTrip.getId() == entry.getValue().getId()) {
-
-                    if (currentTrip.isNotificationShown()) {
+            } else if (beacon.lastSeen + TIMEOUT < System.currentTimeMillis()) {
+                if (mPrefsManager.hasCurrentTrip() && currentTrip.getId() == beacon.id) {
+                    if (currentTrip.isNotificationShown) {
                         currentTrip.setNotificationShown(false);
                         currentTrip.setBeacon(beacon);
 
@@ -304,8 +371,8 @@ class BusBeaconHandler {
     }
 
     private void addTrip(BusBeacon beacon) {
-        if (beacon.getDestination() == 0) {
-            Utils.throwTripError(mContext, beacon.getId() + " stopStation == 0");
+        if (beacon.destination == 0) {
+            Utils.throwTripError(mContext, beacon.id + " stopStation == 0");
 
             return;
         }
@@ -313,11 +380,11 @@ class BusBeaconHandler {
         /*
          * Gets the index of the stop station from the stop list.
          */
-        int index = beacon.getBusStops().indexOf(beacon.getDestination());
+        int index = beacon.busStops.indexOf(beacon.destination);
         if (index == -1) {
-            String message = beacon.getId() + " index == -1, stopStation: " +
-                    beacon.getDestination() + ", stopList: " +
-                    Arrays.toString(beacon.getBusStops().toArray());
+            String message = beacon.id + " index == -1, stopStation: " +
+                    beacon.destination + ", stopList: " +
+                    Arrays.toString(beacon.busStops.toArray());
 
             Utils.throwTripError(mContext, message);
 
@@ -330,17 +397,17 @@ class BusBeaconHandler {
          * the api already outputs it at the third.
          */
         if (index > 0) {
-            beacon.setDestination(beacon.getBusStops().get(index - 1));
+            beacon.setDestination(beacon.busStops.get(index - 1));
         } else {
-            beacon.setDestination(beacon.getBusStops().get(index));
+            beacon.setDestination(beacon.busStops.get(index));
         }
 
         if (Utils.insertTripIfValid(mContext, beacon) &&
                 SettingsUtils.isTripNotificationEnabled(mContext)) {
 
-            NotificationUtils.trip(mContext, beacon.getHash());
+            NotificationUtils.trip(mContext, beacon.hash);
 
-            LogUtils.e(TAG, "Saved trip " + beacon.getId());
+            LogUtils.e(TAG, "Saved trip " + beacon.id);
 
             if (SettingsUtils.isSurveyEnabled(mContext)) {
                 LogUtils.e(TAG, "Survey is enabled");
@@ -383,41 +450,42 @@ class BusBeaconHandler {
 
                 if (showSurvey) {
                     LogUtils.e(TAG, "Showing survey");
-                    NotificationUtils.survey(mContext, beacon.getHash());
+                    NotificationUtils.survey(mContext, beacon.hash);
 
                     SettingsUtils.setLastSurveyMillis(mContext, System.currentTimeMillis());
                 }
             }
         } else {
-            LogUtils.e(TAG, "Could not save trip " + beacon.getId());
+            LogUtils.e(TAG, "Could not save trip " + beacon.id);
         }
     }
 
     private void isBeaconCurrentTrip(BusBeacon beacon) {
         LogUtils.e(TAG, "isBeaconCurrentTrip");
 
-        if (beacon.getSeenSeconds() > MIN_NOTIFICATION_SECONDS) {
+        if (beacon.seenSeconds > MIN_NOTIFICATION_SECONDS) {
             LogUtils.e(TAG, "Added trip because it was in range for more than " +
                     MIN_NOTIFICATION_SECONDS + 's');
 
-            mPrefsManager.setCurrentTrip(new CurrentTrip(beacon));
+            mPrefsManager.setCurrentTrip(new CurrentTrip(mContext, beacon));
 
             return;
         }
 
-        if (beacon.isCurrentTripPending()) {
+        if (beacon.isCurrentTripPending) {
             return;
         }
 
         beacon.setCurrentTripPending(true);
 
         RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
-        realtimeApi.vehicleRx(beacon.getId())
+        realtimeApi.vehicleRx(beacon.id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
                 .subscribe(new Observer<RealtimeResponse>() {
                     @Override
                     public void onCompleted() {
+
                     }
 
                     @Override
@@ -429,8 +497,6 @@ class BusBeaconHandler {
 
                     @Override
                     public void onNext(RealtimeResponse response) {
-                        LogUtils.e(TAG, "isBeaconCurrentTrip response: " + response);
-
                         beacon.setCurrentTripPending(false);
 
                         // Ignore trip.
@@ -438,17 +504,26 @@ class BusBeaconHandler {
                             return;
                         }
 
-                        if (beacon.getOrigin() != response.buses.get(0).busStop) {
-                            LogUtils.e(TAG, "Setting new bus stop for " + beacon.getId());
+                        RealtimeBus bus = response.buses.get(0);
 
-                            if (mPrefsManager.hasCurrentTrip() && mPrefsManager.getCurrentTrip().getBeacon().getId() != beacon.getId()) {
-                                BusBeacon preBeaconInfo = mPrefsManager.getCurrentTrip().getBeacon();
-                                if (preBeaconInfo.getSeenSeconds() > SECONDS_IN_BUS) {
+                        LogUtils.e(TAG, "isBeaconCurrentTrip response: " + bus.busStop);
+
+                        if (beacon.origin != bus.busStop) {
+                            LogUtils.e(TAG, "Setting new bus stop for " + beacon.id);
+
+                            if (mPrefsManager.hasCurrentTrip() &&
+                                    mPrefsManager.getCurrentTrip().beacon.id != beacon.id) {
+
+                                BusBeacon preBeaconInfo = mPrefsManager.getCurrentTrip().beacon;
+                                if (preBeaconInfo.seenSeconds > SECONDS_IN_BUS) {
                                     addTrip(preBeaconInfo);
                                 }
                             }
 
-                            mPrefsManager.setCurrentTrip(new CurrentTrip(beacon));
+                            beacon.setBusStop(new BusStop(BusStopRealmHelper
+                                    .getBusStop(bus.busStop)), BusBeacon.TYPE_REALTIME);
+
+                            mPrefsManager.setCurrentTrip(new CurrentTrip(mContext, beacon));
 
                             // Cancel all bus stop notifications
                             for (int i = 0; i < 6000; i++) {
@@ -460,10 +535,10 @@ class BusBeaconHandler {
     }
 
     private void getStopStation(BusBeacon beacon) {
-        LogUtils.e(TAG, "getStopStation " + beacon.getId());
+        LogUtils.e(TAG, "getStopStation " + beacon.id);
 
         RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
-        realtimeApi.vehicleRx(beacon.getId())
+        realtimeApi.vehicleRx(beacon.id)
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(new Observer<RealtimeResponse>() {
                     @Override
@@ -483,10 +558,96 @@ class BusBeaconHandler {
 
                             beacon.setDestination(bus.busStop);
 
-                            LogUtils.e(TAG, "Stop station for " + beacon.getId() + ": " +
+                            LogUtils.e(TAG, "Stop station for " + beacon.id + ": " +
                                     bus.busStop);
                         }
                     }
                 });
+    }
+
+    private void fetchBusDelayAndInfo(CurrentTrip currentTrip) {
+        BusBeacon beacon = currentTrip.beacon;
+        beacon.updateLastDelayFetch();
+
+        LogUtils.e(TAG, "fetchBusDelayAndInfo()");
+
+        RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
+        realtimeApi.vehicleRx(currentTrip.getId())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .subscribe(new Observer<RealtimeResponse>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Utils.handleException(e);
+                    }
+
+                    @Override
+                    public void onNext(RealtimeResponse response) {
+                        if (response.buses.isEmpty()) {
+                            LogUtils.e(TAG, "Vehicle " + currentTrip.getId() + " not driving");
+
+                            return;
+                        }
+
+                        RealtimeBus bus = response.buses.get(0);
+
+                        LogUtils.w(TAG, "Got bus delay for vehicle " + currentTrip.getId() + ": " +
+                                bus.delayMin);
+
+                        it.sasabz.android.sasabus.realm.busstop.BusStop realmStop =
+                                BusStopRealmHelper.getBusStopOrNull(bus.busStop);
+
+
+                        if (realmStop != null) {
+                            BusStop busStop = new BusStop(realmStop);
+
+                            beacon.setBusStop(busStop, BusBeacon.TYPE_REALTIME);
+
+                            LogUtils.w(TAG, "Got bus stop for vehicle " + currentTrip.getId() + ": " +
+                                    busStop.getId() + ' ' + busStop.getNameDe());
+                        }
+
+                        beacon.setDelay(bus.delayMin);
+
+                        currentTrip.update();
+                    }
+                });
+    }
+
+    public void currentBusStopOutOfRange(@NonNull Pair<Integer, BusStop> currentBusStop) {
+        if (mPrefsManager.hasCurrentTrip()) {
+            CurrentTrip currentTrip = mPrefsManager.getCurrentTrip();
+
+            List<BusStop> path = currentTrip.getPath();
+
+            int index = -1;
+            for (int i = 0, pathSize = path.size(); i < pathSize; i++) {
+                BusStop busStop = path.get(i);
+                if (busStop.getGroup() == currentBusStop.second.getGroup()) {
+                    index = i;
+
+                    break;
+                }
+            }
+
+            if (index == -1) {
+                return;
+            }
+
+            if (index < path.size() - 1) {
+                BusStop newBusStop = path.get(index + 1);
+
+                currentTrip.beacon.setBusStop(newBusStop, BusBeacon.TYPE_BEACON);
+                currentTrip.update();
+
+                LogUtils.e(TAG, "Set " + newBusStop.getId() + ' ' +
+                        newBusStop.getNameDe() + " as new bus stop for " + currentTrip.getId());
+            }
+        }
     }
 }

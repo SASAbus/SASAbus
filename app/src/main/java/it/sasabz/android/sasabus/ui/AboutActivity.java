@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -28,11 +29,19 @@ import com.bumptech.glide.Glide;
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.R;
 
+import it.sasabz.android.sasabus.network.rest.RestClient;
 import it.sasabz.android.sasabus.network.rest.api.ReportApi;
+import it.sasabz.android.sasabus.network.rest.api.TrafficLightApi;
+import it.sasabz.android.sasabus.network.rest.response.LinesAllResponse;
+import it.sasabz.android.sasabus.network.rest.response.TrafficLightResponse;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.CustomTabsHelper;
 import it.sasabz.android.sasabus.util.ReportHelper;
+import it.sasabz.android.sasabus.util.SettingsUtils;
 import it.sasabz.android.sasabus.util.Utils;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Activity which allows the user to view the changelog, credits ecc.
@@ -76,6 +85,16 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     private Button mScreenshotButton;
 
     /**
+     * Determines which city is selected for the traffic information.
+     */
+    private TextView statusCity;
+
+    /**
+     * Displays the status for the city as text, taken from the API.
+     */
+    private TextView status;
+
+    /**
      * The {@link Uri} of the selected report image to send.
      */
     private Uri mScreenshotUri;
@@ -108,6 +127,17 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
         RelativeLayout relativeLayout2 = (RelativeLayout) findViewById(R.id.about_second);
         RelativeLayout relativeLayout3 = (RelativeLayout) findViewById(R.id.about_third);
         RelativeLayout relativeLayout4 = (RelativeLayout) findViewById(R.id.about_fourth);
+        RelativeLayout relativeLayout5 = (RelativeLayout) findViewById(R.id.about_fifth);
+
+        status = (TextView) findViewById(R.id.about_traffic_light);
+        statusCity = (TextView) findViewById(R.id.about_traffic_light_city);
+
+        statusCity.setText(String.format(getResources().getString(R.string.about_traffic_light_city),
+                SettingsUtils.getTrafficLightCity(AboutActivity.this).equals("bz")
+                        ? getResources().getString(R.string.bolzano)
+                        : getResources().getString(R.string.merano)));
+
+        loadStatus();
 
         if (relativeLayout1 != null) {
             relativeLayout1.setOnClickListener(this);
@@ -120,6 +150,9 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
         }
         if (relativeLayout4 != null) {
             relativeLayout4.setOnClickListener(this);
+        }
+        if (relativeLayout5 != null) {
+            relativeLayout5.setOnClickListener(this);
         }
 
         TextView textView = (TextView) findViewById(R.id.about_first_sub);
@@ -138,6 +171,31 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 ReportApi.TYPE_DEFAULT);
     }
 
+    private void loadStatus() {
+        status.setText(getResources().getString(R.string.about_traffic_light_loading));
+
+        TrafficLightApi api = RestClient.ADAPTER.create(TrafficLightApi.class);
+        api.trafficLight(getResources().getConfiguration().locale.getLanguage(),
+                SettingsUtils.getTrafficLightCity(AboutActivity.this).toLowerCase())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<TrafficLightResponse>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        status.setText(R.string.error_general);
+                    }
+
+                    @Override
+                    public void onNext(TrafficLightResponse trafficLightResponse) {
+                        status.setText(trafficLightResponse.message);
+                    }
+                });
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -153,6 +211,17 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
             case R.id.about_fourth:
                 AnalyticsHelper.sendEvent(SCREEN_LABEL, "Privacy");
                 mCustomTabsHelper.launchUrl(Uri.parse(URL_PRIVACY));
+                break;
+            case R.id.about_fifth:
+                String city = SettingsUtils.getTrafficLightCity(AboutActivity.this);
+                SettingsUtils.setTrafficLightCity(AboutActivity.this, city.equals("bz") ? "me" : "bz");
+
+                statusCity.setText(String.format(getResources().getString(R.string.about_traffic_light_city), city.equals("bz")
+                                ? getResources().getString(R.string.merano)
+                                : getResources().getString(R.string.bolzano)));
+
+                loadStatus();
+
                 break;
         }
     }

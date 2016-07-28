@@ -4,10 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import it.sasabz.android.sasabus.BuildConfig;
-import it.sasabz.android.sasabus.util.NotificationUtils;
-import it.sasabz.android.sasabus.util.SettingsUtils;
-import it.sasabz.android.sasabus.util.Utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -16,11 +12,22 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 
-final class BeaconStorage {
+import it.sasabz.android.sasabus.BuildConfig;
+import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
+import it.sasabz.android.sasabus.beacon.bus.BusBeaconHandler;
+import it.sasabz.android.sasabus.beacon.bus.CurrentTrip;
+import it.sasabz.android.sasabus.util.LogUtils;
+import it.sasabz.android.sasabus.util.NotificationUtils;
+import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Utils;
+
+public final class BeaconStorage {
+
+    private static final String TAG = "BeaconStorage";
 
     /**
      * Preferences which contain the saved bus beacons to keep the trip progress
-     * in case the user quits the app. The saved beacons get restored as soon as
+     * in case the user quits the app. The saved beacons getPublicKey restored as soon as
      * the beacon handler starts.
      */
     private static final String STORAGE_NAME = BuildConfig.APPLICATION_ID + "_beacons";
@@ -53,25 +60,27 @@ final class BeaconStorage {
         return sInstance;
     }
 
-    void setCurrentTrip(CurrentTrip trip) {
+    public void setCurrentTrip(CurrentTrip trip) {
         mCurrentTrip = trip;
 
         if (trip == null) {
+            LogUtils.e(TAG, "trip == null, cancelling notification");
             NotificationUtils.cancelBus(mContext);
-        } else if (trip.checkUpdate() && trip.isNotificationShown() &&
-                SettingsUtils.isBusNotificationEnabled(mContext)) {
+        } else if (trip.checkUpdate() && trip.isNotificationShown &&
+                trip.beacon.isSuitableForTrip && SettingsUtils.isBusNotificationEnabled(mContext)) {
 
-            NotificationUtils.bus(mContext, trip.getId(), trip.getTitle());
+            BusBeaconHandler.notificationAction.showNotification(trip);
         }
 
         try {
-            mPrefs.edit().putString(PREF_BEACON_CURRENT_TRIP, GSON.toJson(trip)).apply();
+            String json = GSON.toJson(trip);
+            mPrefs.edit().putString(PREF_BEACON_CURRENT_TRIP, json).apply();
         } catch (Exception e) {
             Utils.handleException(e);
         }
     }
 
-    CurrentTrip getCurrentTrip() {
+    public CurrentTrip getCurrentTrip() {
         if (mCurrentTrip != null) {
             return mCurrentTrip;
         }
@@ -87,7 +96,18 @@ final class BeaconStorage {
         }
 
         try {
-            return GSON.fromJson(json, CurrentTrip.class);
+            CurrentTrip trip = GSON.fromJson(json, CurrentTrip.class);
+
+            if (trip != null) {
+                trip.setContext(mContext);
+                trip.update();
+
+                if (trip.beacon.trip == 0) {
+                    return null;
+                }
+            }
+
+            return trip;
         } catch (Exception e) {
             Utils.handleException(e);
         }
@@ -95,7 +115,7 @@ final class BeaconStorage {
         return null;
     }
 
-    void writeBeaconMap(Map<Integer, BusBeacon> mBusBeaconMap) {
+    public void writeBeaconMap(Map<Integer, BusBeacon> mBusBeaconMap) {
         try {
             String json = GSON.toJson(mBusBeaconMap);
             mPrefs.edit().putString(PREF_BUS_BEACON_MAP, json).apply();
@@ -110,7 +130,7 @@ final class BeaconStorage {
         }
     }
 
-    Map<Integer, BusBeacon> getBeaconMap() {
+    public Map<Integer, BusBeacon> getBeaconMap() {
         long currentTripTimeStamp = 0;
 
         if (mPrefs.getLong(PREF_BUS_BEACON_MAP_LAST, -999) != -999) {
@@ -129,7 +149,8 @@ final class BeaconStorage {
                         return Collections.emptyMap();
                     }
 
-                    Type type = new TypeToken<Map<Integer, BusBeacon>>() {}.getType();
+                    Type type = new TypeToken<Map<Integer, BusBeacon>>() {
+                    }.getType();
                     return GSON.fromJson(json, type);
                 } catch (Exception e) {
                     Utils.handleException(e);
@@ -143,7 +164,13 @@ final class BeaconStorage {
         return Collections.emptyMap();
     }
 
-    boolean hasCurrentTrip() {
+    public boolean hasCurrentTrip() {
         return getCurrentTrip() != null;
+    }
+
+    public void clear() {
+        mPrefs.edit().remove(PREF_BEACON_CURRENT_TRIP).apply();
+        mPrefs.edit().remove(PREF_BUS_BEACON_MAP).apply();
+        mPrefs.edit().remove(PREF_BUS_BEACON_MAP_LAST).apply();
     }
 }

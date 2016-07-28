@@ -11,9 +11,6 @@ import android.os.Build;
 import android.os.RemoteException;
 import android.support.v4.content.ContextCompat;
 
-import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.Utils;
-
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
@@ -21,6 +18,11 @@ import org.altbeacon.beacon.Identifier;
 import org.altbeacon.beacon.Region;
 import org.altbeacon.beacon.startup.BootstrapNotifier;
 import org.altbeacon.beacon.startup.RegionBootstrap;
+
+import it.sasabz.android.sasabus.beacon.bus.BusBeaconHandler;
+import it.sasabz.android.sasabus.beacon.busstop.BusStopBeaconHandler;
+import it.sasabz.android.sasabus.util.LogUtils;
+import it.sasabz.android.sasabus.util.Utils;
 
 /**
  * Beacon handler which scans for beacons in range. This scanner will be automatically stated
@@ -78,7 +80,7 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
             LogUtils.e(TAG, "Creating beacon handlers");
 
             sInstance = new BeaconHandler(context,
-                    new BusBeaconHandler(context),
+                    BusBeaconHandler.getInstance(context),
                     BusStopBeaconHandler.getInstance(context));
         }
 

@@ -111,6 +111,17 @@ public class BusStop implements Parcelable {
         group = in.readInt();
     }
 
+    public BusStop(it.sasabz.android.sasabus.realm.busstop.BusStop busStop) {
+        id = busStop.getId();
+        nameDe = busStop.getNameDe();
+        nameIt = busStop.getNameIt();
+        municDe = busStop.getMunicDe();
+        municIt = busStop.getMunicIt();
+        lat = busStop.getLat();
+        lng = busStop.getLng();
+        group = busStop.getFamily();
+    }
+
     @Override
     public int describeContents() {
         return 0;

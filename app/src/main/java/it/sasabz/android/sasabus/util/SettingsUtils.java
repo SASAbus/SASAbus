@@ -126,6 +126,8 @@ public final class SettingsUtils {
 
     private static final String PREF_SURVEY_LAST_MILLIS = "pref_survey_last_millis";
 
+    private static final String PREF_TRAFFIC_LIGHT_CITY = "pref_traffic_light_city_is_bz";
+
     /**
      * Save the parking id of the widget
      */
@@ -162,6 +164,8 @@ public final class SettingsUtils {
         editor.apply();
     }
 
+
+    // ========================================== WIDGETS ==========================================
 
     public static int getWidgetParking(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getInt(PREF_WIDGET_PARKING_ID, 0);
@@ -260,17 +264,6 @@ public final class SettingsUtils {
     }
 
     /**
-     * Determines if the app should automatically switch between day and night mode
-     * depending on the time.
-     *
-     * @param context Context to be used to lookup the {@link SharedPreferences}.
-     * @return a boolean value.
-     */
-    public static int getNightMode(Context context) {
-        return Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_NIGHT_MODE, "-1"));
-    }
-
-    /**
      * Returns the interval in millis which the app should reload.
      * Depends on {@link #isMapAutoEnabled(Context)}.
      *
@@ -355,6 +348,16 @@ public final class SettingsUtils {
     public static void setLastSurveyMillis(Context context, long millis) {
         PreferenceManager.getDefaultSharedPreferences(context).edit()
                 .putLong(PREF_SURVEY_LAST_MILLIS, millis).apply();
+    }
+
+    public static String getTrafficLightCity(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(PREF_TRAFFIC_LIGHT_CITY, "bz");
+    }
+
+    public static void setTrafficLightCity(Context context, String city) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit()
+                .putString(PREF_TRAFFIC_LIGHT_CITY, city).apply();
     }
 
 

@@ -17,12 +17,6 @@
     public static *** v(...);
 }
 
--keepclassmembers class * {
- public void onClickButton1(android.view.View);
- public void onClickButton2(android.view.View);
- public void onClickButton3(android.view.View);
-}
-
 -keepclasseswithmembernames class * {
     native <methods>;
 }
