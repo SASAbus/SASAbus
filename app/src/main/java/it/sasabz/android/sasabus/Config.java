@@ -28,6 +28,8 @@ public final class Config {
 
     public static final int SYNC_ALARM_ID = 1 << 14;
 
+    public static final int NOTIFICATION_BADGE = 1 << 13;
+
     /**
      * Static constant for intent extras which indicate a station id
      */

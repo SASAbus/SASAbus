@@ -21,6 +21,7 @@ import it.sasabz.android.sasabus.beacon.BeaconStorage;
 import it.sasabz.android.sasabus.beacon.IBeaconHandler;
 import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
 import it.sasabz.android.sasabus.beacon.bus.BusBeaconHandler;
+import it.sasabz.android.sasabus.beacon.ecopoints.BadgeHelper;
 import it.sasabz.android.sasabus.model.BusStop;
 import it.sasabz.android.sasabus.model.BusStopDetail;
 import it.sasabz.android.sasabus.model.line.Lines;
@@ -323,6 +324,8 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
                 if (!canShowNotification(beacon)) {
                     return;
                 }
+
+                BadgeHelper.evaluate(mContext, beacon);
 
                 LogUtils.e(TAG, "Notification station beacon " + beacon.id);
 

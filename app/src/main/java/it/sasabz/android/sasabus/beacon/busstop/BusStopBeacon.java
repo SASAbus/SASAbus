@@ -2,12 +2,14 @@ package it.sasabz.android.sasabus.beacon.busstop;
 
 import java.util.Date;
 
+import it.sasabz.android.sasabus.beacon.Beacon;
+
 /**
  * Model which represents a bus stop beacon and holds information about it.
  *
  * @author Alex Lardschneider
  */
-public class BusStopBeacon {
+public class BusStopBeacon implements Beacon {
 
     public final int id;
     private final Date startDate;
@@ -38,7 +40,8 @@ public class BusStopBeacon {
     /**
      * Updates {@link #seenSeconds} and {@link #lastSeen} to the current time stamp.
      */
-    void seen() {
+    @Override
+    public void seen() {
         long millis = System.currentTimeMillis();
 
         seenSeconds = (millis - startDate.getTime()) / 1000;

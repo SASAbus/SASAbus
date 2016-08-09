@@ -597,4 +597,15 @@
     <string name="register_form_male">Male</string>
     <string name="register_form_female">Female</string>
 
+
+    <!-- ====================================== BADGES ========================================= -->
+
+    <string name="badge_the_very_beginning_title">The very beginning</string>
+    <string name="badge_the_very_beginning_subtitle">Go to a bus stop and scan the attached
+        beacon!
+    </string>
+
+    <string name="badge_the_first_step_title">On the bus</string>
+    <string name="badge_the_first_step_subtitle">Scan a beacon located in one of the buses!</string>
+
 </resources>

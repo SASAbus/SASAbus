@@ -7,12 +7,13 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import it.sasabz.android.sasabus.beacon.Beacon;
 import it.sasabz.android.sasabus.model.BusStop;
 import it.sasabz.android.sasabus.model.JsonSerializable;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.NotificationUtils;
 
-public class BusBeacon implements JsonSerializable {
+public class BusBeacon implements Beacon, JsonSerializable {
 
     private final String TAG = "BusBeacon";
 
@@ -59,7 +60,8 @@ public class BusBeacon implements JsonSerializable {
         seen();
     }
 
-    void seen() {
+    @Override
+    public void seen() {
         Date now = new Date();
         seenSeconds = (now.getTime() - getStartDate().getTime()) / 1000;
         lastSeen = now.getTime();

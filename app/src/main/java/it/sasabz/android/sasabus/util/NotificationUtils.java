@@ -5,15 +5,21 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.WorkerThread;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.Config;
@@ -21,10 +27,12 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.beacon.survey.SurveyActivity;
 import it.sasabz.android.sasabus.model.BusStopDetail;
 import it.sasabz.android.sasabus.model.line.Lines;
+import it.sasabz.android.sasabus.network.rest.model.Badge;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.ui.MapActivity;
 import it.sasabz.android.sasabus.ui.NewsActivity;
 import it.sasabz.android.sasabus.ui.busstop.BusStopDetailActivity;
+import it.sasabz.android.sasabus.ui.ecopoints.EcoPointsActivity;
 import it.sasabz.android.sasabus.ui.plannedtrip.PlannedTripsViewActivity;
 import it.sasabz.android.sasabus.ui.trips.TripDetailActivity;
 
@@ -288,6 +296,78 @@ public final class NotificationUtils {
         NotificationManager notificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(Config.NOTIFICATION_SURVEY, mBuilder.build());
+    }
+
+    public static void badge(Context context, it.sasabz.android.sasabus.beacon.ecopoints.badge.Badge badge) {
+        Preconditions.checkNotNull(context, "context == null");
+        Preconditions.checkNotNull(badge, "badge == null");
+
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), badge.icon());
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+                .setSmallIcon(badge.icon())
+                .setLargeIcon(bitmap)
+                .setContentTitle(context.getString(badge.title()))
+                .setContentText(context.getString(badge.summary()))
+                .setAutoCancel(true)
+                .setLights(ContextCompat.getColor(context, R.color.primary), 500, 5000)
+                .setColor(ContextCompat.getColor(context, R.color.primary))
+                .setVibrate(new long[]{VIBRATION_TIME_MILLIS, VIBRATION_TIME_MILLIS})
+                .setCategory(NotificationCompat.CATEGORY_EVENT);
+
+        Intent resultIntent = new Intent(context, EcoPointsActivity.class);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(context,
+                Config.NOTIFICATION_BADGE,
+                resultIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        mBuilder.setContentIntent(pendingIntent);
+
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(Config.NOTIFICATION_BADGE, mBuilder.build());
+    }
+
+    @WorkerThread
+    public static void badge(Context context, Badge badge) {
+        Preconditions.checkNotNull(context, "context == null");
+        Preconditions.checkNotNull(badge, "badge == null");
+
+        try {
+            Bitmap bitmap = Glide.with(context)
+                    .load(badge.iconUrl)
+                    .asBitmap()
+                    .into(100, 100)
+                    .get();
+
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+                    .setSmallIcon(R.drawable.badge_red_stop)
+                    .setLargeIcon(bitmap)
+                    .setContentTitle(badge.title)
+                    .setContentText(badge.description)
+                    .setAutoCancel(true)
+                    .setLights(ContextCompat.getColor(context, R.color.primary), 500, 5000)
+                    .setColor(ContextCompat.getColor(context, R.color.primary))
+                    .setVibrate(new long[]{VIBRATION_TIME_MILLIS, VIBRATION_TIME_MILLIS})
+                    .setCategory(NotificationCompat.CATEGORY_EVENT);
+
+            Intent resultIntent = new Intent(context, EcoPointsActivity.class);
+            resultIntent.putExtra(Config.EXTRA_BADGE, badge);
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(context,
+                    Config.NOTIFICATION_BADGE,
+                    resultIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+
+            mBuilder.setContentIntent(pendingIntent);
+
+            NotificationManager notificationManager =
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(Config.NOTIFICATION_BADGE, mBuilder.build());
+        } catch (InterruptedException | ExecutionException e) {
+            Utils.handleException(e);
+        }
     }
 
     /**

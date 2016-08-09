@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.sasabz.android.sasabus.beacon.ecopoints.BadgeHelper;
 import it.sasabz.android.sasabus.model.BusStop;
 import it.sasabz.android.sasabus.model.JsonSerializable;
 import it.sasabz.android.sasabus.provider.apis.Trips;
@@ -26,6 +27,9 @@ public class CurrentTrip implements JsonSerializable {
     CurrentTrip(Context context, BusBeacon beacon) {
         this.mContext = context;
         this.beacon = beacon;
+
+        // Check for badge
+        BadgeHelper.evaluate(mContext, beacon);
 
         path = new ArrayList<>();
 

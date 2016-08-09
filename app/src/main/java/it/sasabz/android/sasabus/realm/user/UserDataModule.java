@@ -10,6 +10,7 @@ import io.realm.annotations.RealmModule;
  */
 @RealmModule(classes = {
         Beacon.class,
+        EarnedBadge.class,
         FavoriteBusStop.class,
         FavoriteLine.class,
         FilterLine.class,

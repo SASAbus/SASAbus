@@ -13,10 +13,12 @@ import io.realm.DynamicRealm;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmMigration;
+import io.realm.RealmSchema;
 import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
 import it.sasabz.android.sasabus.model.line.Lines;
 import it.sasabz.android.sasabus.network.rest.model.CloudTrip;
 import it.sasabz.android.sasabus.realm.user.Beacon;
+import it.sasabz.android.sasabus.realm.user.EarnedBadge;
 import it.sasabz.android.sasabus.realm.user.FavoriteBusStop;
 import it.sasabz.android.sasabus.realm.user.FavoriteLine;
 import it.sasabz.android.sasabus.realm.user.FilterLine;
@@ -67,6 +69,17 @@ public final class UserRealmHelper {
         @Override
         public void migrate(DynamicRealm realm, long oldVersion, long newVersion) {
             Log.e(TAG, "Upgrading realm from " + oldVersion + " to " + newVersion);
+
+            RealmSchema schema = realm.getSchema();
+
+            // Version 3 adds the EarnedBadge class, which saves the ids of the earned badges.
+            if (oldVersion == 1) {
+                schema.create("EarnedBadge")
+                        .addField("id", int.class)
+                        .addField("sent", boolean.class);
+
+                oldVersion++;
+            }
         }
     }
 
@@ -401,5 +414,33 @@ public final class UserRealmHelper {
         realm.close();
 
         LogUtils.w(TAG, "Added beacon " + major + " to realm");
+    }
+
+
+    // ======================================= BADGES ==============================================
+
+    public static boolean hasEarnedBadge(int badgeId) {
+        Realm realm = Realm.getDefaultInstance();
+
+        EarnedBadge badge = realm.where(EarnedBadge.class).equalTo("id", badgeId).findFirst();
+
+        boolean result = badge != null;
+
+        realm.close();
+
+        return result;
+    }
+
+    public static void setEarnedBadge(int badgeId) {
+        Realm realm = Realm.getDefaultInstance();
+
+        realm.beginTransaction();
+
+        EarnedBadge badge = realm.createObject(EarnedBadge.class);
+        badge.setId(badgeId);
+
+        realm.commitTransaction();
+
+        realm.close();
     }
 }
