@@ -41,6 +41,7 @@ import io.realm.RealmResults;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.realm.user.FavoriteBusStop;
 import it.sasabz.android.sasabus.ui.BaseActivity;
@@ -168,6 +169,10 @@ public class BusStopActivity extends BaseActivity {
             if (tab != null) {
                 tab.setIcon(drawable);
             }
+        }
+
+        if (!UserRealmHelper.hasFavoriteBusStops()) {
+            mViewPager.setCurrentItem(1);
         }
     }
 

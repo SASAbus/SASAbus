@@ -26,7 +26,6 @@ import it.sasabz.android.sasabus.realm.user.RecentRoute;
 import it.sasabz.android.sasabus.realm.user.Trip;
 import it.sasabz.android.sasabus.realm.user.UserDataModule;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.SettingsUtils;
 import it.sasabz.android.sasabus.util.Utils;
 
 public final class UserRealmHelper {
@@ -134,26 +133,6 @@ public final class UserRealmHelper {
 
     // ====================================== FAVORITES ============================================
 
-    public static void migrateFavorites() {
-        String favoriteLines = SettingsUtils.getFavoriteLines(sContext);
-        if (favoriteLines != null) {
-            String[] favoriteLinesSplit = favoriteLines.split(",");
-
-            for (String s : favoriteLinesSplit) {
-                addFavoriteLine(Integer.parseInt(s));
-            }
-        }
-
-        String favoriteBusStops = SettingsUtils.getFavoriteBusStops(sContext);
-        if (favoriteBusStops != null) {
-            String[] favoriteBusStopsSplit = favoriteBusStops.split(",");
-
-            for (String s : favoriteBusStopsSplit) {
-                addFavoriteBusStop(Integer.parseInt(s));
-            }
-        }
-    }
-
     public static void addFavoriteLine(int lineId) {
         Realm realm = Realm.getDefaultInstance();
 
@@ -237,6 +216,22 @@ public final class UserRealmHelper {
     public static boolean hasFavoriteBusStop(int busStopGroup) {
         Realm realm = Realm.getDefaultInstance();
         boolean result = realm.where(FavoriteBusStop.class).equalTo("group", busStopGroup).count() > 0;
+        realm.close();
+
+        return result;
+    }
+
+    public static boolean hasFavoriteLines() {
+        Realm realm = Realm.getDefaultInstance();
+        boolean result = realm.where(FavoriteLine.class).count() > 0;
+        realm.close();
+
+        return result;
+    }
+
+    public static boolean hasFavoriteBusStops() {
+        Realm realm = Realm.getDefaultInstance();
+        boolean result = realm.where(FavoriteBusStop.class).count() > 0;
         realm.close();
 
         return result;
