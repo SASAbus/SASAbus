@@ -89,7 +89,7 @@ public final class AuthHelper {
     // ======================================== LOGOUT =============================================
 
     public static void logout(Activity activity) {
-        if (!isTokenValid()) {
+        if (!isLoggedIn()) {
             LogUtils.e(TAG, "Cannot log out a user which is not logged in");
             return;
         }
@@ -169,7 +169,7 @@ public final class AuthHelper {
 
     @Nullable
     public static String getTokenIfValid() {
-        if (isTokenValid()) {
+        if (isLoggedIn()) {
             return getAuthToken(sContext);
         }
 
@@ -209,7 +209,7 @@ public final class AuthHelper {
         }
     }
 
-    public static boolean isTokenValid() {
+    public static boolean isLoggedIn() {
         String token = getAuthToken(sContext);
 
         return !TextUtils.isEmpty(token) && isTokenValid(token);

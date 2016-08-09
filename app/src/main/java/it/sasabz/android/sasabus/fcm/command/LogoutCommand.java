@@ -29,7 +29,7 @@ public class LogoutCommand implements FcmCommand {
 
         String user = data.get("user");
 
-        if (!AuthHelper.isTokenValid()) {
+        if (!AuthHelper.isLoggedIn()) {
             LogUtils.e(TAG, "Cannot log out if no user is logged in on this device");
             return;
         }
