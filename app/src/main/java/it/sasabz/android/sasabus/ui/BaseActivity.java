@@ -18,9 +18,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.provider.PlanData;
 import it.sasabz.android.sasabus.ui.busstop.BusStopActivity;
+import it.sasabz.android.sasabus.ui.ecopoints.EcoPointsActivity;
 import it.sasabz.android.sasabus.ui.intro.Intro;
 import it.sasabz.android.sasabus.ui.intro.data.IntroData;
 import it.sasabz.android.sasabus.ui.line.LinesActivity;
@@ -31,8 +34,6 @@ import it.sasabz.android.sasabus.ui.trips.TripsActivity;
 import it.sasabz.android.sasabus.util.Changelog;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.SettingsUtils;
-
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 /**
  * A base activity that handles common functionality in the app. This includes the
@@ -72,6 +73,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Naviga
     protected static final int NAVDRAWER_ITEM_LINES = R.id.nav_lines;
     protected static final int NAVDRAWER_ITEM_BUS_STOPS = R.id.nav_stations;
     protected static final int NAVDRAWER_ITEM_ROUTE = R.id.nav_route;
+    protected static final int NAVDRAWER_ITEM_ECO_POINTS = R.id.nav_eco_points;
     protected static final int NAVDRAWER_ITEM_TRIPS = R.id.nav_trips;
     static final int NAVDRAWER_ITEM_TIMETABLES = R.id.nav_timetables;
     static final int NAVDRAWER_ITEM_NEWS = R.id.nav_news;
@@ -186,8 +188,10 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Naviga
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (getNavItem() == NAVDRAWER_ITEM_INVALID || getNavItem() == NAVDRAWER_ITEM_BUS_STOPS ||
-                getNavItem() == NAVDRAWER_ITEM_MAP) {
+        if (getNavItem() == NAVDRAWER_ITEM_INVALID ||
+                getNavItem() == NAVDRAWER_ITEM_BUS_STOPS ||
+                getNavItem() == NAVDRAWER_ITEM_MAP ||
+                getNavItem() == NAVDRAWER_ITEM_ECO_POINTS) {
             return false;
         }
 
@@ -286,6 +290,9 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Naviga
                 break;
             case NAVDRAWER_ITEM_ROUTE:
                 createBackStack(new Intent(this, RouteActivity.class));
+                break;
+            case NAVDRAWER_ITEM_ECO_POINTS:
+                createBackStack(new Intent(this, EcoPointsActivity.class));
                 break;
             case NAVDRAWER_ITEM_TRIPS:
                 createBackStack(new Intent(this, TripsActivity.class));

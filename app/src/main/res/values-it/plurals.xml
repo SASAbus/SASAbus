@@ -12,24 +12,4 @@
         <item quantity="other">%d’ cammino</item>
     </plurals>
 
-    <plurals name="disruptions_notification_title">
-        <item quantity="one">%1$s sulla linea %2$s</item>
-        <item quantity="other">%1$s sulle linee %2$s</item>
-    </plurals>
-
-    <plurals name="disruptions_slight">
-        <item quantity="one">Lievo ritardo</item>
-        <item quantity="other">Lievi ritardi</item>
-    </plurals>
-
-    <plurals name="disruptions_moderate">
-        <item quantity="one">Ritardo moderato</item>
-        <item quantity="other">Ritardi moderati</item>
-    </plurals>
-
-    <plurals name="disruptions_high">
-        <item quantity="one">Alto ritardo</item>
-        <item quantity="other">Alti ritardi</item>
-    </plurals>
-
 </resources>

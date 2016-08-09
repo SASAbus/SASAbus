@@ -158,10 +158,6 @@ public final class BusBeaconHandler implements IBeaconHandler {
                         notificationAction.showNotification(currentTrip);
                     }
 
-                    if (firstBeacon.shouldFetchDelay()) {
-                        fetchBusDelayAndInfo(currentTrip);
-                    }
-
                     mPrefsManager.setCurrentTrip(currentTrip);
                 }
             } else if (mCycleCounter % 5 == 0 && firstBeacon.distance <= MAX_BEACON_DISTANCE) {
@@ -310,7 +306,6 @@ public final class BusBeaconHandler implements IBeaconHandler {
                         beacon.setBusStops(bus.path);
 
                         beacon.setDelay(bus.delayMin);
-                        beacon.updateLastDelayFetch();
 
                         String destination = BusStopRealmHelper
                                 .getName(bus.path.get(bus.path.size() - 1));
@@ -561,60 +556,6 @@ public final class BusBeaconHandler implements IBeaconHandler {
                             LogUtils.e(TAG, "Stop station for " + beacon.id + ": " +
                                     bus.busStop);
                         }
-                    }
-                });
-    }
-
-    private void fetchBusDelayAndInfo(CurrentTrip currentTrip) {
-        BusBeacon beacon = currentTrip.beacon;
-        beacon.updateLastDelayFetch();
-
-        LogUtils.e(TAG, "fetchBusDelayAndInfo()");
-
-        RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
-        realtimeApi.vehicleRx(currentTrip.getId())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.io())
-                .subscribe(new Observer<RealtimeResponse>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Utils.handleException(e);
-                    }
-
-                    @Override
-                    public void onNext(RealtimeResponse response) {
-                        if (response.buses.isEmpty()) {
-                            LogUtils.e(TAG, "Vehicle " + currentTrip.getId() + " not driving");
-
-                            return;
-                        }
-
-                        RealtimeBus bus = response.buses.get(0);
-
-                        LogUtils.w(TAG, "Got bus delay for vehicle " + currentTrip.getId() + ": " +
-                                bus.delayMin);
-
-                        it.sasabz.android.sasabus.realm.busstop.BusStop realmStop =
-                                BusStopRealmHelper.getBusStopOrNull(bus.busStop);
-
-
-                        if (realmStop != null) {
-                            BusStop busStop = new BusStop(realmStop);
-
-                            beacon.setBusStop(busStop, BusBeacon.TYPE_REALTIME);
-
-                            LogUtils.w(TAG, "Got bus stop for vehicle " + currentTrip.getId() + ": " +
-                                    busStop.getId() + ' ' + busStop.getNameDe());
-                        }
-
-                        beacon.setDelay(bus.delayMin);
-
-                        currentTrip.update();
                     }
                 });
     }

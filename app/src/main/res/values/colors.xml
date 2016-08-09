@@ -9,10 +9,11 @@
 
     <color name="primary_blue">#448AFF</color>
     <color name="primary_blue_dark">#2962FF</color>
-    <color name="intro_blue">#006DF0</color>
 
     <color name="primary_red">#F44336</color>
     <color name="primary_red_dark">#D32F2F</color>
+
+    <color name="material_pink_A200">#FF4081</color>
 
     <color name="primary_green">#4CAF50</color>
     <color name="primary_green_dark">#388E3C</color>
@@ -34,10 +35,8 @@
 
     <color name="red_500">#F44336</color>
     <color name="green_500">#4CAF50</color>
-    <color name="favorite_background">#FFB74D</color>
 
     <color name="red_400">#EF5350</color>
-    <color name="red_300">#E57373</color>
     <color name="orange_50">#FFF3E0</color>
     <color name="bus_stop_icon_tint">#FAE2B3</color>
     <color name="active_line_bg">#E3F2FD</color>
@@ -48,10 +47,8 @@
     <color name="black_200">#EEEEEE</color>
     <color name="black_300">#E0E0E0</color>
     <color name="black_400">#BDBDBD</color>
-    <color name="black_800">#E6424242</color>
     <color name="black">#000000</color>
 
-    <color name="marker_popup_text_default">#DE000000</color>
     <color name="marker_popup_text_primary">#8A000000</color>
 
     <color name="window_background">#EEEEEE</color>
@@ -60,9 +57,7 @@
     <color name="divider_light">#EEEEEE</color>
     <color name="text_secondary">#61000000</color>
     <color name="text_primary">#8A000000</color>
-    <color name="text_primary_inverted">#B3FFFFFF</color>
     <color name="text_default">#DE000000</color>
-    <color name="text_default_inverted">#FFFFFFFF</color>
     <color name="text_link">#FF008094</color>
     <color name="text_hint">#80000000</color>
 
@@ -81,8 +76,6 @@
     <color name="icon_grey">#757575</color>
 
     <color name="color_button_normal">#3F83FC</color>
-
-    <color name="disruption_toggle_bar">#FFB74D</color>
 
     <color name="filter_scrim">#88323232</color>
 

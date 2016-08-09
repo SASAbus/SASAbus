@@ -16,15 +16,12 @@ import it.sasabz.android.sasabus.util.Utils;
 
 public class OsmZipDownloadComplete extends BroadcastReceiver {
 
-    private Context context;
-
     private long downloadId;
     private File zipFile;
 
-    OsmZipDownloadComplete(Context context, long downloadId, File zipFile) {
+    OsmZipDownloadComplete(long downloadId, File zipFile) {
         this.downloadId = downloadId;
         this.zipFile = zipFile;
-        this.context = context;
     }
 
     @Override

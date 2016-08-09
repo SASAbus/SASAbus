@@ -78,7 +78,6 @@ public class LinesHydrogenFragment extends RxFragment {
         if (savedInstanceState != null) {
             int errorWifiVisibility = savedInstanceState.getInt(Config.BUNDLE_ERROR_WIFI);
             int errorGeneralVisibility = savedInstanceState.getInt(Config.BUNDLE_ERROR_GENERAL);
-            int emptyStateVisibility = savedInstanceState.getInt(Config.BUNDLE_ERROR_EMPTY_STATE);
 
             //noinspection ResourceType
             mErrorGeneral.setVisibility(errorGeneralVisibility);

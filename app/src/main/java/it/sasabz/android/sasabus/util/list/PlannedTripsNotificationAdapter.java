@@ -2,6 +2,7 @@ package it.sasabz.android.sasabus.util.list;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import java.util.List;
+
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.model.trip.PlannedTripNotification;
-
-import java.util.List;
 
 /**
  * @author Alex Lardschneider
@@ -27,8 +28,9 @@ public class PlannedTripsNotificationAdapter extends ArrayAdapter<PlannedTripNot
         this.context = context;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         ViewHolder holder;
         PlannedTripNotification item = getItem(position);
 

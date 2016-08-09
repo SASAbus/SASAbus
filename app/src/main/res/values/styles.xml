@@ -21,6 +21,9 @@
     <style name="AppTheme.BusStop" parent="Theme.BusStop"/>
     <style name="AppTheme.PlannedTrips" parent="Theme.PlannedTrips"/>
 
+    <style name="AppTheme.EcoPoints.Login" parent="Theme.EcoPoints.Login"/>
+    <style name="AppTheme.EcoPoints.Register" parent="Theme.EcoPoints.Login"/>
+
     <style name="BaseStyle" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:actionMenuTextColor">@color/text_default</item>
         <item name="colorControlNormal">@color/color_control</item>
@@ -174,6 +177,14 @@
         <item name="android:textColorPrimary">@color/text_default</item>
     </style>
 
+    <style name="Theme.EcoPoints.Login" parent="BaseStyle">
+        <item name="colorPrimary">@color/primary_light_blue</item>
+        <item name="colorPrimaryDark">@color/primary_light_blue</item>
+        <item name="colorAccent">@color/material_pink_A200</item>
+
+        <item name="android:textColorPrimary">@color/text_default</item>
+    </style>
+
     <style name="Theme.StationPicker" parent="BaseStyle">
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/divider</item>
@@ -319,6 +330,13 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="TextInputLayout.Grey" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorControlNormal">@color/text_hint</item>
+        <item name="colorControlHighlight">@color/material_pink_A200</item>
+        <item name="colorControlActivated">@color/material_pink_A200</item>
+    </style>
 
 </resources>

@@ -12,24 +12,4 @@
         <item quantity="other">%d’ Fußweg</item>
     </plurals>
 
-    <plurals name="disruptions_notification_title">
-        <item quantity="one">%1$s auf der Linie %2$s</item>
-        <item quantity="other">%1$s auf den Linien %2$s</item>
-    </plurals>
-
-    <plurals name="disruptions_slight">
-        <item quantity="one">Leichte Verspätung</item>
-        <item quantity="other">Leichte Verspätungen</item>
-    </plurals>
-
-    <plurals name="disruptions_moderate">
-        <item quantity="one">Moderate Verspätung</item>
-        <item quantity="other">Moderate Verspätungen</item>
-    </plurals>
-
-    <plurals name="disruptions_high">
-        <item quantity="one">Hohe Verspätung</item>
-        <item quantity="other">Hohe Verspätungen</item>
-    </plurals>
-
 </resources>

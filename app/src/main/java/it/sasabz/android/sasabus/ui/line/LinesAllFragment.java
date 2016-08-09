@@ -58,7 +58,7 @@ public class LinesAllFragment extends RxFragment {
         recyclerView.setAdapter(mAdapter);
 
         mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_amber, R.color.primary_red, R.color.primary_green, R.color.primary_indigo);
-        mSwipeRefreshLayout.setOnRefreshListener(() -> parseData());
+        mSwipeRefreshLayout.setOnRefreshListener(this::parseData);
 
         return view;
     }

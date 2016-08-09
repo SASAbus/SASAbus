@@ -29,7 +29,7 @@
 
             <TextView
                 android:id="@+id/list_lines_hydrogen_id"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"

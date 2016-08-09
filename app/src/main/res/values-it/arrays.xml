@@ -21,13 +21,6 @@
         <item>Mai</item>
     </string-array>
 
-    <string-array name="settings_night_mode_readable">
-        <item>Segui sistema</item>
-        <item>Automatico</item>
-        <item>Mai</item>
-        <item>Sempre</item>
-    </string-array>
-
     <string-array name="settings_survey_interval_readable">
         <item>Ogni volta</item>
         <item>Una volta al giorno</item>

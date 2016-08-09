@@ -9,6 +9,7 @@ import java.util.Map;
 
 import it.sasabz.android.sasabus.fcm.command.ConfigCommand;
 import it.sasabz.android.sasabus.fcm.command.FcmCommand;
+import it.sasabz.android.sasabus.fcm.command.LogoutCommand;
 import it.sasabz.android.sasabus.fcm.command.NewsCommand;
 import it.sasabz.android.sasabus.fcm.command.NotificationCommand;
 import it.sasabz.android.sasabus.fcm.command.SyncCommand;
@@ -38,6 +39,7 @@ public class FcmService extends FirebaseMessagingService {
         receivers.put("news", new NewsCommand());
         receivers.put("traffic_light", new TrafficLightCommand());
         receivers.put("config", new ConfigCommand());
+        receivers.put("logout", new LogoutCommand());
 
         MESSAGE_RECEIVERS = Collections.unmodifiableMap(receivers);
     }

@@ -8,10 +8,6 @@ import it.sasabz.android.sasabus.network.rest.response.ValidityResponse;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Preconditions;
 import it.sasabz.android.sasabus.util.Utils;
-import com.google.firebase.iid.FirebaseInstanceId;
-
-import java.io.IOException;
-
 import rx.Observer;
 import rx.schedulers.Schedulers;
 
@@ -75,16 +71,5 @@ public final class FcmUtils {
                     }
                 });
 
-    }
-
-    public static void fixFcmRegistration() {
-        new Thread(() -> {
-            try {
-                FirebaseInstanceId.getInstance().deleteInstanceId();
-                LogUtils.e(TAG, "Fixed FCM registration");
-            } catch (IOException e) {
-                Utils.handleException(e);
-            }
-        }).start();
     }
 }

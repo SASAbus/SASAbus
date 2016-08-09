@@ -2,6 +2,7 @@ package it.sasabz.android.sasabus.util.list;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +12,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.route.RouteLeg;
-import it.sasabz.android.sasabus.model.route.RouteResult;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.model.route.RouteLeg;
+import it.sasabz.android.sasabus.model.route.RouteResult;
 
 /**
  * @author Alex Lardschneider
@@ -62,8 +62,9 @@ public class RouteResultsAdapter extends ArrayAdapter<RouteResult> {
         }
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         ViewHolder holder;
         RouteResult item = getItem(position);
 

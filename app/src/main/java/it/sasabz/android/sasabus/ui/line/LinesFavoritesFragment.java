@@ -28,7 +28,6 @@ import it.sasabz.android.sasabus.util.recycler.LinesAllAdapter;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -86,7 +85,6 @@ public class LinesFavoritesFragment extends RxFragment {
         if (savedInstanceState != null) {
             int errorWifiVisibility = savedInstanceState.getInt(Config.BUNDLE_ERROR_WIFI);
             int errorGeneralVisibility = savedInstanceState.getInt(Config.BUNDLE_ERROR_GENERAL);
-            int emptyStateVisibility = savedInstanceState.getInt(Config.BUNDLE_ERROR_EMPTY_STATE);
 
             //noinspection ResourceType
             mErrorGeneral.setVisibility(errorGeneralVisibility);
@@ -116,7 +114,7 @@ public class LinesFavoritesFragment extends RxFragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .filter(RealmResults::isLoaded)
                 .first()
-                .flatMap((Func1<RealmResults<FavoriteLine>, Observable<LinesAllResponse>>) favoriteLines -> {
+                .flatMap(favoriteLines -> {
                     if (favoriteLines.isEmpty()) {
                         mErrorGeneral.setVisibility(View.GONE);
                         mErrorWifi.setVisibility(View.GONE);

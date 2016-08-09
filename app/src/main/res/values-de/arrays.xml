@@ -21,13 +21,6 @@
         <item>Nie</item>
     </string-array>
 
-    <string-array name="settings_night_mode_readable">
-        <item>System folgen</item>
-        <item>Automatisch</item>
-        <item>Nie</item>
-        <item>Immer</item>
-    </string-array>
-
     <string-array name="settings_survey_interval_readable">
         <item>Jedes Mal</item>
         <item>Einmal pro Tag</item>

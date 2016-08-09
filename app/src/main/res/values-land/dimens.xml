@@ -8,6 +8,4 @@
 
     <dimen name="intro_data_download_indicator_margin_bottom">52dp</dimen>
 
-    <dimen name="empty_state_negative_margin_top">0dp</dimen>
-
 </resources>

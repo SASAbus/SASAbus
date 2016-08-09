@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <string name="app_name">SASAbus</string>
     <string name="about">About</string>
     <string name="settings">Settings</string>
     <string name="delete">Delete</string>
+    <string name="account_settings">Account settings</string>
     <string name="changelog">Changelog</string>
     <string name="stations">Bus stops</string>
     <string name="pick_stations">Pick a bus stop</string>
     <string name="refresh">Refresh</string>
     <string name="map">Map</string>
+    <string name="eco_points">Eco points</string>
     <string name="bus_lines">Bus lines</string>
     <string name="lines">Lines</string>
     <string name="route">Route</string>
@@ -18,8 +20,6 @@
     <string name="lines_path">Line path</string>
     <string name="news">News</string>
     <string name="activity_credits">Credits</string>
-    <string name="support">Support</string>
-    <string name="help_feedback">Help and feedback</string>
     <string name="parking">Parking</string>
     <string name="search">Search</string>
     <string name="course_details">Course details</string>
@@ -28,16 +28,15 @@
     <string name="bus_details">Bus details</string>
     <string name="timetables">Timetables</string>
     <string name="route_results">Route results</string>
-    <string name="route_details">Route details</string>
     <string name="survey">Survey</string>
 
 
     <!-- ==================== GENERAL ==================== -->
+
     <string name="merano">Merano</string>
     <string name="bolzano">Bolzano</string>
     <string name="line">Line</string>
     <string name="line_format">Line %s</string>
-    <string name="info" translatable="false">Info</string>
     <string name="additional_info">Additional information:</string>
     <string name="lines_driving">Driving Lines</string>
     <string name="lines_all">All Lines</string>
@@ -55,9 +54,11 @@
     <string name="retry">Retry</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="bottom_sheet_delayed">%d\' delayed</string>
 
 
     <!-- ==================== ABOUT ==================== -->
+
     <string name="about_changelog_title">Changelog</string>
     <string name="about_changelog_subtitle">Version</string>
     <string name="about_feedback_title" translatable="false">Feedback</string>
@@ -69,11 +70,11 @@
 
 
     <!-- ==================== CREDITS ==================== -->
+
     <string name="credits_developers">Developers</string>
     <string name="credits_copyright" translatable="false">Copyright</string>
     <string name="credits_copyright_sub">
         <![CDATA[© 2015–2016 David Dejori & Alex Lardschneider\nAll rights reserved. No part of this publication may be reproduced, distributed, or transmitted in any form or by any means, without the prior written permission of the publishers.]]></string>
-    <string name="credits_community">Beta tester</string>
     <string name="credits_email" translatable="false">android@sasabz.it</string>
     <string name="credits_alex_title" translatable="false">Alex Lardschneider</string>
     <string name="credits_alex_sub">App developer</string>
@@ -94,9 +95,9 @@
 
 
     <!-- =============================== SETTINGS =============================== -->
+
     <string name="settings_general">Language</string>
     <string name="settings_data">Data and Internet</string>
-    <string name="settings_appearance">Appearance</string>
     <string name="settings_advanced">Identification</string>
 
     <string name="preferences_menu_appearance_title">Language</string>
@@ -108,8 +109,6 @@
     <string name="settings_language_title">Language</string>
     <string name="settings_language_sub">Change language</string>
 
-    <string name="settings_maptype_title">Map type</string>
-    <string name="settings_maptype_sub">Change map type</string>
     <string name="settings_map_refresh">Marker refresh</string>
     <string name="settings_map_auto_title">Auto refresh</string>
     <string name="settings_map_auto_sub">Automatically refresh bus positions on map</string>
@@ -118,7 +117,6 @@
 
     <string name="settings_beacons_enable_title">Enable beacons</string>
     <string name="settings_beacons_enable_sub">Get information about buses and bus stops</string>
-    <string name="settings_beacons_help_sub">Bluetooth is required to search for beacons</string>
 
     <string name="settings_beacons_bus_enabled_title">Buses</string>
     <string name="settings_beacons_bus_enabled_sub">Notifications of nearby buses</string>
@@ -154,6 +152,7 @@
 
 
     <!-- =============================== ROUTE =============================== -->
+
     <string name="route_departure">Departure</string>
     <string name="route_arrival">Arrival</string>
     <string name="route_recent">Recent searches</string>
@@ -162,11 +161,11 @@
 
 
     <!-- =============================== STATIONS =============================== -->
+
     <string name="station_details">Bus stop details</string>
     <string name="station_select">Select</string>
     <string name="station_no_lines">No lines</string>
     <string name="station_tab_list">List</string>
-    <string name="station_nearby_action">Details</string>
     <string name="station_menu_cancel">Cancel</string>
     <string name="station_menu_line">Line</string>
     <string name="station_menu_course">Route</string>
@@ -175,6 +174,7 @@
 
 
     <!-- =============================== LINES =============================== -->
+
     <string name="list_lines_station">Bus stop</string>
     <string name="list_lines_delay">Delay</string>
     <string name="line_current_stop">Now at %s</string>
@@ -182,35 +182,22 @@
 
 
     <!-- =============================== BUS =============================== -->
+
     <string name="bus_not_in_service_short">Not in service</string>
     <string name="bus_depot">Depot</string>
     <string name="hydrogen_buses">H₂ buses</string>
-    <string name="bus_id">#%d</string>
     <string name="bus_specifications">Specifications</string>
     <string name="bus_report">Report a problem in this bus</string>
 
 
-    <!-- =============================== BOTTOM SHEET =============================== -->
-    <string name="bottom_sheet_heading">Heading to %s</string>
-    <string name="bottom_sheet_delayed">%d\' delayed</string>
-    <string name="bottom_sheet_early">%d\' ahead</string>
-    <string name="bottom_sheet_punctual">Punctual</string>
-    <string name="bottom_sheet_last_updated">Updated %d\' ago</string>
-    <string name="bottom_sheet_trip">Trip #%d</string>
-    <string name="bottom_sheet_variant">Variant #%d</string>
-    <string name="bottom_sheet_vehicle_id">Bus #%d</string>
-    <string name="bottom_sheet_current_stop">Now at %s</string>
-    <string name="bottom_sheet_line">LINE</string>
-    <string name="bottom_sheet_vehicle">VEHICLE</string>
-    <string name="bottom_sheet_course">COURSE</string>
-
-
     <!-- =============================== MAP =============================== -->
+
     <string name="map_snackbar_update">Update</string>
     <string name="map_snackbar_view">View</string>
 
 
     <!-- =============================== BUS DETAILS =============================== -->
+
     <string name="bus_details_not_available">Not available</string>
     <string name="bus_details_manufacturer">Manufacturer</string>
     <string name="bus_details_model">Model</string>
@@ -220,6 +207,7 @@
 
 
     <!-- =============================== TRIPS =============================== -->
+
     <string name="trip_details_from">From</string>
     <string name="trip_details_to">To</string>
     <string name="trip_details_distance">Distance</string>
@@ -229,11 +217,10 @@
     <string name="trip_details_co2_emission">Your CO₂ emission using the bus</string>
     <string name="trip_details_co2_emission_car">CO₂ emission using the car</string>
     <string name="trip_details_fuel_price">Diesel price for this trip</string>
-    <string name="trips_none_title">No Trips</string>
-    <string name="trips_none_subtitle"><![CDATA[All your saved trips will appear here. Enable Bluetooth to detect and save a trip.<br><a href="">Help</a>]]></string>
 
 
     <!-- =============================== DATE =============================== -->
+
     <string name="monday_long">Monday</string>
     <string name="friday_long">Friday</string>
     <string name="saturday_long">Saturday</string>
@@ -241,6 +228,7 @@
 
 
     <!-- =============================== PARKING =============================== -->
+
     <string name="parking_call">Call</string>
     <string name="parking_navigate">Navigate</string>
     <string name="parking_detail_current_free">free slots</string>
@@ -249,6 +237,7 @@
 
 
     <!-- =============================== ERROR POPUPS =============================== -->
+
     <string name="error_wifi_title">Wi-Fi or Mobile Data required</string>
     <string name="error_wifi_sub">to get location and update data</string>
     <string name="error_general_title">An error happened</string>
@@ -264,34 +253,31 @@
 
 
     <!-- =============================== ERROR TEXTS =============================== -->
+
     <string name="error_wifi">No internet connection</string>
     <string name="error_general">An error happened</string>
 
 
     <!-- =============================== TOASTS =============================== -->
+
     <string name="toast_route_enter_departure">Please enter a departure bus stop</string>
     <string name="toast_route_enter_arrival">Please enter an arrival bus stop</string>
     <string name="toast_route_station_match">Arrival and departure bus stops cannot match</string>
     <string name="toast_bluetooth_not_available">Bluetooth LE not supported on this device</string>
 
 
-    <!-- =============================== NEWS ================================ -->
-    <string name="news_none_title">No news for this area</string>
-    <string name="news_none_sub">News for this area will be displayed when added by SASA SpA-AG.
-    </string>
-
-
     <!-- =============================== SNACKBARS ================================ -->
+
     <string name="snackbar_permission_denied">Permission denied</string>
     <string name="snackbar_report_success">Report sent</string>al
     <string name="snackbar_report_error">Sending report failed. Please retry later.</string>
     <string name="snackbar_timetable_error">Could not download timetables</string>
     <string name="snackbar_retry">Retry</string>
-    <string name="snackbar_trips_delete_error">Could not delete trip</string>
     <string name="snackbar_bus_not_driving">Bus not driving</string>
 
 
     <!-- =============================== TIMETABLE =============================== -->
+
     <string name="timetable_download">Downloading timetables…</string>
     <string name="timetable_extract">Extracting timetables…</string>
     <string name="timetable_map_bolzano">Route network of Bolzano</string>
@@ -302,6 +288,7 @@
 
 
     <!-- =============================== SURVEY =============================== -->
+
     <string name="survey_rating_awful">Awful</string>
     <string name="survey_rating_poor">Poor</string>
     <string name="survey_rating_average">Average</string>
@@ -328,7 +315,7 @@
 
 
     <!-- =============================== NOTIFICATIONS =============================== -->
-    <string name="notifications">Notifications</string>
+
     <string name="notification_bus_stop_sub_pull">Pull to view next departures</string>
     <string name="notification_bus_stop_sub_click">Click to view details</string>
     <string name="notification_bus_title">Line %1$s to %2$s</string>
@@ -347,6 +334,7 @@
     </string>
 
     <!-- =============================== INTRO =============================== -->
+
     <string name="intro_offline_data_title">Offline data</string>
     <string name="intro_offline_data_sub">The app downloads all the departures at every bus stop and
         stores them locally. The data\'s size is about 150 KB.
@@ -355,6 +343,7 @@
 
 
     <!-- =============================== RATING =============================== -->
+
     <string name="rating_title1">Do you enjoy SasaBus?</string>
     <string name="rating_title2">Would you like to rate it?</string>
     <string name="rating_title3">Would you mind giving us feedback?</string>
@@ -364,24 +353,15 @@
 
 
     <!-- =============================== FAVORITES =============================== -->
+
     <string name="line_favorites_add">Added line %s to favorites</string>
     <string name="line_favorites_remove">Removed line %s from favorites</string>
-    <string name="line_no_favorites_title">No favorite lines</string>
-    <string name="line_no_favorites_sub">Tap and hold a line to add it to the favorites so you can
-        easily access it later.
-    </string>
-    <string name="line_no_hydrogen_title">No hydrogen buses driving</string>
-    <string name="line_no_hydrogen_sub">There are no hydrogen buses in service at the moment.
-    </string>
     <string name="bus_stop_favorites_add">Added %s to favorites</string>
     <string name="bus_stop_favorites_remove">Removed %s from favorites</string>
-    <string name="bus_stop_no_favorites_title">No favorite bus stops</string>
-    <string name="bus_stop_no_favorites_sub">Tap and hold a bus stop to add it to the favorites so
-        you can easily access it later.
-    </string>
 
 
     <!-- =============================== PLANNED TRIPS =============================== -->
+
     <string name="planned_trips">Planned trips</string>
     <string name="planned_trips_add_no_lines">Please select a line first!</string>
     <string name="planned_trips_add_dialog_add_bus_stop">Select bus stop</string>
@@ -405,47 +385,12 @@
     <string name="planned_trips_add_discard">Discard</string>
     <string name="planned_trips_add_empty_fields">Some fields are empty. Please fill them out.
     </string>
-    <string name="planned_trips_empty_title">No planned trips</string>
-    <string name="planned_trips_empty_content">Add trips to get notified about bus departures and
-        bus delays.
-    </string>
     <string name="planned_trips_delete_confirmation">Trip deleted</string>
     <string name="planned_trips_delete_undo">Undo</string>
 
 
     <!-- =============================== DIALOGS =============================== -->
-    <string name="dialog_beacons_title">What are beacons?</string>
-    <string name="dialog_beacons_sub">Beacons are tiny devices that send data via Bluetooth to any
-        user in range. They are mounted in every bus and nearly at all bus stops. The user can read
-        the beacons\' data. This functionality is used to show the user information about the bus he
-        is driving in or, alternatively, the bus stop he is waiting at.
-    </string>
-    <string name="dialog_trips_title_1">Trip detection</string>
-    <string name="dialog_trips_sub_1">Using the beacons attached at buses and bus stops the app is
-        capable of recording and saving your trips when Bluetooth is turned on. In case you
-        shouldn’t know what beacons are, please read the \“What are beacons?\” section in the
-        settings first.
-    </string>
-    <string name="dialog_trips_title_2">How do I use this feature?</string>
-    <string name="dialog_trips_sub_2">In order to register your trips, you need to have Bluetooth
-        turned on during the whole journey. Be sure to activate it already before you enter the bus.
-        It’s not necessary to keep the app open while driving, it will record your trips in the
-        background.\nBe aware that both your entrance and exit bus stops need to have a beacon
-        attached to them. Please do not blame us if the recording of a trips has failed, because
-        there are many problems that can occur, a beacon could be damaged or out of service.
-    </string>
-    <string name="dialog_trips_title_3">How does trip recording work?</string>
-    <string name="dialog_trips_sub_3">Many bus stops and all buses are laid out with beacons. When
-        you are waiting at a bus stop your phone will receive the beacon data over Bluetooth, thus
-        it knows where you trip starts. Then it will search for bus beacons in order to know what
-        bus you are driving in. As soon as you exit the bus, the first bus stop beacon that is found
-        will be marked as your exit point. Then you will be notified about your trip and some
-        additional details like vehicle information and CO₂ emissions.
-    </string>
-    <string name="dialog_trips_title_4">Restrictions</string>
-    <string name="dialog_trips_sub_4">Unfortunately this functionality is only available on Android
-        4.4 or higher, because beacons require Bluetooth Low Energy to work.
-    </string>
+
     <string name="dialog_permission_location_sub">This permission is needed to scan for beacons and
         give you details about a nearby bus or bus stop. If you deny this permission, the beacon
         scanner will not work. Are you sure you want to deny it?
@@ -471,36 +416,185 @@
     <string name="dialog_report_content_invalid">Please fill out the whole form</string>
     <string name="dialog_report_sending">Sending report…</string>
 
+    <string name="dialog_change_password_title">Change password</string>
+
+    <string name="dialog_change_password_old">Old password</string>
+    <string name="dialog_change_password_new_1">New password</string>
+    <string name="dialog_change_password_new_2">Repeat new password</string>
+
+    <string name="dialog_change_password_new_no_match">New passwords don’t match</string>
+    <string name="dialog_change_password_positive">Change</string>
+
+    <string name="dialog_change_password_changing">Changing password…</string>
+
+    <string name="dialog_change_profile_picture_changing">Changing picture…</string>
+    <string name="dialog_logging_out">Logging out…</string>
+    <string name="dialog_deleting_account">Deleting account…</string>
+
+    <string name="dialog_change_password_success_title">Password changed!</string>
+    <string name="dialog_change_password_success_message">Your password has been changed
+        successfully.
+    </string>
+
+    <string name="dialog_change_password_error_title">Error</string>
+    <string name="dialog_change_password_error_message">Your password couldn’t be changed. Please
+        retry later again.
+    </string>
+
+    <string name="dialog_change_profile_picture_error_title">Error</string>
+    <string name="dialog_change_profile_picture_error_message">Your profile picture couldn’t be
+        changed. Please
+        retry later again.
+    </string>
+
+    <string name="dialog_button_cancel">Cancel</string>
+
 
     <!-- =============================== INTRO =============================== -->
-    <string name="intro_realtime_data">Real-time data</string>
-    <string name="intro_agreement">Agreement</string>
+
     <string name="intro_permissions">Permission</string>
-    <string name="intro_realtime_data_text">SasaBus informs you about departures, delays, paths and
-        bus stops of the urban buses in Bolzano and Merano.
-    </string>
-    <string name="intro_beacons_text">Enable Bluetooth to get information of nearby buses and bus
-        stops. The app will record and save your trips.
-    </string>
-    <string name="intro_agreement_text" tools:ignore="TypographyQuotes">
-        By using SasaBus you agree to the %1$s and the %2$s.
-    </string>
-    <string name="intro_agreement_terms" tools:ignore="TypographyQuotes">
-        <![CDATA[<a href=\"terms:\">Terms and Conditions</a>]]></string>
-    <string name="intro_agreement_privacy" tools:ignore="TypographyQuotes">
-        <![CDATA[<a href=\"privacy:\">Privacy Policy</a>]]></string>
     <string name="intro_permission_text">As of Android 6 the app needs the location permission to
         scan for beacons. Please grant it.
     </string>
     <string name="intro_offline_data_update_sub">The offline data (about 150 KB) needs to be
         updated.
     </string>
-    <string name="intro_tutorial_swipe_title">Pull up</string>
-    <string name="intro_tutorial_swipe_sub">Pull up for details about this bus.</string>
-    <string name="intro_tutorial_swipe_btn">GOT IT</string>
 
-    <string name="transition_morph_view" translatable="false">morph_view_transition</string>
     <string name="about_traffic_light_city">Status for %s</string>
     <string name="about_traffic_light_loading">Loading…</string>
+
+    <!-- ===================================== ECO POINTS ====================================== -->
+
+    <string name="activity_title_eco_points_leaderboard">Leaderboard</string>
+    <string name="activity_title_eco_points_badges">Badges</string>
+    <string name="activity_title_eco_points_profile">My profile</string>
+
+    <string name="eco_points_profile_points">Points</string>
+    <string name="eco_points_profile_badges">Badges</string>
+    <string name="eco_points_profile_rank">Rank</string>
+
+    <string name="eco_points_profile_settings_title">Settings</string>
+    <string name="eco_points_profile_account_title">Account</string>
+
+    <string name="eco_points_profile_change_password">Change password</string>
+    <string name="eco_points_profile_change_picture">Change profile picture</string>
+    <string name="eco_points_profile_logout">Log out</string>
+    <string name="eco_points_profile_logout_all">Log out from all devices</string>
+
+    <string name="eco_points_profile_delete_account">Delete my account</string>
+
+    <string name="eco_points_logout_error_dialog_title">Error</string>
+    <string name="eco_points_logout_error_dialog_message">You couldn’t be logged out at the moment.
+        Please retry later again.
+    </string>
+
+    <string name="eco_points_delete_account_confirmation_title">Delete account</string>
+    <string name="eco_points_delete_account_confirmation_message">Are you sure you want to delete
+        your account?
+        This operation cannot be undone.
+    </string>
+    <string name="eco_points_delete_account_confirmation_positive">Delete</string>
+
+    <string name="eco_points_delete_account_error_title">Error</string>
+    <string name="eco_points_delete_account_error_message">Your account couldn’t be deleted at the
+        moment. Please retry later again.
+    </string>
+
+    <string name="eco_points_next_badges">Next badges</string>
+
+    <string name="eco_points_earned_badges">Earned badges</string>
+    <string name="eco_points_earned_badges_empty">You haven\'t earned any badges yet</string>
+
+    <string name="eco_points_profile_settings">Profile settings</string>
+
+    <string name="eco_points_leaderboard">Leaderboard</string>
+    <string name="eco_points_leaderboard_full">View full leaderboard</string>
+
+    <string name="eco_points_badges_full">View all badges</string>
+
+    <plurals name="eco_points_points">
+        <item quantity="one">%d point</item>
+        <item quantity="other">%d points</item>
+    </plurals>
+
+    <plurals name="eco_points_badge_dialog_points">
+        <item quantity="one">%d point for the completion of this badge.</item>
+        <item quantity="other">%d points for the completion of this badge.</item>
+    </plurals>
+
+    <plurals name="eco_points_badge_dialog_users">
+        <item quantity="one">%d player completed this badge.</item>
+        <item quantity="other">%d players completed this badge.</item>
+    </plurals>
+
+    <string name="eco_points_badge_dialog_progress">Your progress: %d%%</string>
+
+
+    <!-- ================================= ECO POINTS LOGIN ==================================== -->
+
+    <string name="login_title">Welcome</string>
+    <string name="register_title">Register</string>
+
+    <string name="login_email">Email</string>
+    <string name="login_password">Password</string>
+
+    <string name="login_invalid_email">Invalid email</string>
+    <string name="login_invalid_password">Invalid password</string>
+
+    <string name="login_failed_dialog_title">Login failed</string>
+    <string name="login_failed_dialog_subtitle">The login could not be completed. Please retry
+        later.
+    </string>
+
+    <string name="login_no_internet_title">No internet connection</string>
+    <string name="login_no_internet_subtitle">Please check your network connection and try again.
+    </string>
+
+    <string name="login_already_verified_title">Email already verified</string>
+    <string name="login_already_verified_subtitle">You can now log in using your email and
+        password.
+    </string>
+
+    <string name="login_verify_link_invalid_title">Invalid link</string>
+    <string name="login_verify_link_invalid_subtitle">This link is invalid.</string>
+
+    <string name="login_verification_failed_title">Verification failed</string>
+    <string name="login_verification_failed_subtitle">Please retry again later.</string>
+
+    <string name="login_verification_progress_subtitle">Verifying email…</string>
+
+    <string name="register_email">Email</string>
+    <string name="register_username">Username</string>
+    <string name="register_password">Password</string>
+    <string name="register_birthday">Birthday</string>
+
+    <string name="register_email_empty">Please enter your email</string>
+    <string name="register_email_invalid">Invalid email</string>
+
+    <string name="register_name_empty">Please enter an username</string>
+    <string name="register_name_invalid">Invalid username</string>
+    <string name="register_name_too_short">Username too short</string>
+    <string name="register_name_first_letter">The username must start with a letter</string>
+
+    <string name="register_password_empty">Please enter a password</string>
+    <string name="register_password_invalid">Invalid password</string>
+    <string name="register_password_too_short">Password too short</string>
+
+    <string name="register_birthdate_empty">Please enter your birthdate</string>
+    <string name="register_birthdate_invalid">Invalid birthdate</string>
+    <string name="register_birthdate_too_young">You’re too young to participate</string>
+    <string name="register_birthdate_too_old">You’re too old to participate</string>
+
+    <string name="register_failed_dialog_title">Registration failed</string>
+    <string name="register_failed_dialog_subtitle">Please retry in a few minutes.
+    </string>
+
+    <string name="register_success_dialog_title">Registration completed</string>
+    <string name="register_success_dialog_subtitle">Your account has been created successfully.
+        Please use the link in the registration email to activate it.
+    </string>
+
+    <string name="register_form_male">Male</string>
+    <string name="register_form_female">Female</string>
 
 </resources>

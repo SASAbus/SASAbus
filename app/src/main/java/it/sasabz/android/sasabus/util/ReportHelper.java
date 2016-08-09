@@ -13,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -21,16 +22,16 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.TextView;
 
-import it.sasabz.android.sasabus.BuildConfig;
-import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.ReportApi;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 
 import java.io.File;
 import java.util.Map;
 
+import it.sasabz.android.sasabus.BuildConfig;
+import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.network.rest.RestClient;
+import it.sasabz.android.sasabus.network.rest.api.ReportApi;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import rx.Observable;
@@ -146,28 +147,44 @@ public final class ReportHelper {
         }
     }
 
+    public void showPermissionRationale() {
+        showPermissionRationale(mActivity);
+    }
+
     /**
-     * Requests the permission to access the external storage to get
+     * Requests the permission to access the external storage to getPublicKey
      * the selected image and convert it into a {@link Uri}.
      */
-    public void showPermissionRationale() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity, R.style.DialogStyle)
+    public static void showPermissionRationale(Activity activity) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(activity, R.style.DialogStyle)
                 .setTitle(R.string.snackbar_permission_denied)
                 .setMessage(R.string.dialog_permission_storage_sub)
                 .setPositiveButton(R.string.dialog_permission_deny, (dialog1, which) -> dialog1.dismiss())
-                .setNegativeButton(R.string.dialog_permission_allow, (dialog1, which) -> ActivityCompat.requestPermissions(mActivity,
+                .setNegativeButton(R.string.dialog_permission_allow, (dialog1, which) -> ActivityCompat.requestPermissions(activity,
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         PERMISSIONS_ACCESS_STORAGE));
 
         dialog.create().show();
     }
 
-    /**
-     * Checks if a entered email is valid by using pattern detection.
-     *
-     * @return {@code true} if it is valid, {@code false} otherwise.
-     */
-    public static boolean isValidEmail(CharSequence email) {
+    public static boolean validatePassword(Context context, TextInputLayout layout,
+                                           CharSequence password) {
+        if (TextUtils.isEmpty(password)) {
+            layout.setError(context.getString(R.string.register_password_empty));
+            return false;
+        }
+
+        if (password.length() < 6) {
+            layout.setError(context.getString(R.string.register_password_too_short));
+            return false;
+        }
+
+        layout.setError(null);
+
+        return true;
+    }
+
+    public static boolean isEmailValid(CharSequence email) {
         return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 

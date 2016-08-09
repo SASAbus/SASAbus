@@ -19,16 +19,6 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import it.sasabz.android.sasabus.Config;
-import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.network.NetUtils;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.SurveyApi;
-import it.sasabz.android.sasabus.realm.user.Survey;
-import it.sasabz.android.sasabus.realm.user.Trip;
-import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.ReportHelper;
-import it.sasabz.android.sasabus.util.Utils;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.jakewharton.rxbinding.widget.RxRatingBar;
@@ -39,6 +29,16 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
+import it.sasabz.android.sasabus.Config;
+import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.network.NetUtils;
+import it.sasabz.android.sasabus.network.rest.RestClient;
+import it.sasabz.android.sasabus.network.rest.api.SurveyApi;
+import it.sasabz.android.sasabus.realm.user.Survey;
+import it.sasabz.android.sasabus.realm.user.Trip;
+import it.sasabz.android.sasabus.util.LogUtils;
+import it.sasabz.android.sasabus.util.ReportHelper;
+import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -142,7 +142,7 @@ public class SurveyActivity extends AppCompatActivity {
      * @return {@code true} if it is valid, {@code false} otherwise.
      */
     private boolean validateEmail(String email) {
-        if (email.isEmpty() || !ReportHelper.isValidEmail(email)) {
+        if (email.isEmpty() || !ReportHelper.isEmailValid(email)) {
             formEmailLayout.setError(getString(R.string.dialog_report_email_invalid));
             return false;
         } else {

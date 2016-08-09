@@ -10,7 +10,7 @@ import android.support.annotation.Nullable;
  *
  * @author Alex Lardschneider
  */
-final class FcmSettings {
+public final class FcmSettings {
 
     private static final String PREF_GCM_TOKEN = "pref_gcm_token";
 

@@ -1,0 +1,20 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_account_settings"
+        android:title="@string/account_settings"
+        android:icon="@drawable/ic_settings_white_24dp"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/settings"/>
+
+    <item
+        android:id="@+id/action_about"
+        android:title="@string/about"/>
+
+
+</menu>

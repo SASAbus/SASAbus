@@ -15,8 +15,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.Buses;
 import it.sasabz.android.sasabus.model.Vehicle;
+import it.sasabz.android.sasabus.model.Vehicles;
 import it.sasabz.android.sasabus.network.rest.model.RealtimeBus;
 import it.sasabz.android.sasabus.ui.MapActivity;
 import it.sasabz.android.sasabus.util.Preconditions;
@@ -45,7 +45,7 @@ public class HydrogenAdapter extends RecyclerView.Adapter<HydrogenAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         RealtimeBus bus = mItems.get(position);
 
-        Vehicle vehicle = Buses.getBus(mContext, bus.vehicle);
+        Vehicle vehicle = Vehicles.getBus(mContext, bus.vehicle);
         Preconditions.checkNotNull(vehicle, "vehicle == null");
 
         holder.id.setText(String.valueOf(bus.vehicle));

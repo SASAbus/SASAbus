@@ -144,26 +144,6 @@ public final class SettingsUtils {
     private SettingsUtils() {
     }
 
-    /**
-     * Removes unneeded preference entries which are deprecated and no longer used. This is done
-     * to free up some space.
-     *
-     * @param context Context to be used to lookup the {@link SharedPreferences}.
-     */
-    static void removeDeprecatedTags(Context context) {
-        String[] tags = {
-
-        };
-
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-
-        for (String tag : tags) {
-            editor.remove(tag);
-        }
-
-        editor.apply();
-    }
-
 
     // ========================================== WIDGETS ==========================================
 

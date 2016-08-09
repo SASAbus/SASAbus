@@ -99,7 +99,7 @@ class MorphDrawable extends Drawable {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(@NonNull Canvas canvas) {
         canvas.drawRoundRect(getBounds().left, getBounds().top, getBounds().right, getBounds()
                 .bottom, cornerRadius, cornerRadius, paint);
     }
@@ -123,6 +123,7 @@ class MorphDrawable extends Drawable {
 
     @Override
     public int getOpacity() {
+        //noinspection WrongConstant
         return paint.getAlpha();
     }
 }

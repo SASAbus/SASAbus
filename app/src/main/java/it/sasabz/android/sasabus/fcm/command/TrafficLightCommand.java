@@ -20,7 +20,6 @@ import org.json.JSONObject;
 
 import java.util.Date;
 import java.util.Map;
-import java.util.Set;
 
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.R;

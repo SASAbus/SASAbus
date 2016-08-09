@@ -15,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -26,13 +25,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.R;
-
 import it.sasabz.android.sasabus.network.rest.RestClient;
 import it.sasabz.android.sasabus.network.rest.api.ReportApi;
 import it.sasabz.android.sasabus.network.rest.api.TrafficLightApi;
-import it.sasabz.android.sasabus.network.rest.response.LinesAllResponse;
 import it.sasabz.android.sasabus.network.rest.response.TrafficLightResponse;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.CustomTabsHelper;
@@ -371,7 +369,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     private boolean validateEmail() {
         String emailString = mEmail.getText().toString().trim();
 
-        if (emailString.isEmpty() || !ReportHelper.isValidEmail(emailString)) {
+        if (emailString.isEmpty() || !ReportHelper.isEmailValid(emailString)) {
             mEmailLayout.setError(getString(R.string.dialog_report_email_invalid));
             return false;
         } else {

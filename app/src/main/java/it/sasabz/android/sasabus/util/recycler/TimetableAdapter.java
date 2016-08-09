@@ -9,15 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.line.Lines;
-import it.sasabz.android.sasabus.util.IOUtils;
-
 import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.util.IOUtils;
 
 /**
  * @author Alex Lardschneider

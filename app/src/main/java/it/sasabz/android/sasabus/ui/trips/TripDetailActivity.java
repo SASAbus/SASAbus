@@ -32,8 +32,8 @@ import butterknife.ButterKnife;
 import io.realm.Realm;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.Buses;
 import it.sasabz.android.sasabus.model.Vehicle;
+import it.sasabz.android.sasabus.model.Vehicles;
 import it.sasabz.android.sasabus.model.line.Lines;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.realm.busstop.BusStop;
@@ -236,7 +236,7 @@ public class TripDetailActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void parseVehicleData() {
-        Vehicle vehicle = Buses.getBus(this, mTrip.getVehicle());
+        Vehicle vehicle = Vehicles.getBus(this, mTrip.getVehicle());
 
         if (vehicle != null) {
             loadBackdrop(vehicle.getGroup());

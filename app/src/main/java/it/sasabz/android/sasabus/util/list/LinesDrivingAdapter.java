@@ -2,6 +2,7 @@ package it.sasabz.android.sasabus.util.list;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -30,8 +31,9 @@ public class LinesDrivingAdapter extends ArrayAdapter<LineDriving> {
         this.context = context;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         ViewHolder holder;
         LineDriving item = getItem(position);
 

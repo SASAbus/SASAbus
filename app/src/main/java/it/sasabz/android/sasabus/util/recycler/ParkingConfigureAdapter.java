@@ -18,8 +18,6 @@ import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.appwidget.ParkingWidgetProvider;
 import it.sasabz.android.sasabus.model.Parking;
-import it.sasabz.android.sasabus.ui.parking.ParkingConfigureActivity;
-import it.sasabz.android.sasabus.ui.parking.ParkingDetailActivity;
 import it.sasabz.android.sasabus.util.SettingsUtils;
 
 import static android.app.Activity.RESULT_OK;

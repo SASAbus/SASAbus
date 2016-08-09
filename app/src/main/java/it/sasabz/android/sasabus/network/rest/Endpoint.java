@@ -27,6 +27,27 @@ public final class Endpoint {
     public static final String BEACONS = "beacons";
     public static final String TRAFFIC_LIGHT = "traffic_light/{language}/{city}";
 
+    public static final String USER_LOGIN = "auth/login";
+    public static final String USER_REGISTER = "auth/register";
+    public static final String USER_LOGOUT = "auth/logout";
+    public static final String USER_LOGOUT_ALL = "auth/logout/all";
+    public static final String USER_DELETE = "auth/delete";
+    public static final String USER_VERIFY = "auth/verify/{email}/{token}";
+    public static final String CHANGE_PASSWORD = "auth/password/change";
+
+    public static final String ECO_POINTS_BADGES = "eco/badges";
+    public static final String ECO_POINTS_BADGES_NEXT = "eco/badges/next";
+    public static final String ECO_POINTS_BADGES_EARNED = "eco/badges/earned";
+    public static final String ECO_POINTS_BADGES_SEND = "eco/badges/earned/{id}";
+
+    public static final String ECO_POINTS_LEADERBOARD = "eco/leaderboard/page/{page}";
+    public static final String ECO_POINTS_PROFILE = "eco/profile";
+    public static final String ECO_POINTS_PROFILE_ID = "eco/profile/{id}";
+
+    public static final String ECO_POINTS_PROFILE_PICTURE_DEFAULT = "eco/profile/default";
+    public static final String ECO_POINTS_PROFILE_PICTURE_CUSTOM = "eco/profile/custom";
+    public static final String ECO_POINTS_PROFILE_PICTURE_USER = "assets/images/profile_pictures/";
+
     public static final String REPORT = "report/{type}";
     public static final String SURVEY = "survey";
 

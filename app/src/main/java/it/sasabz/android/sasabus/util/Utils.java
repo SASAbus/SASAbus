@@ -78,6 +78,15 @@ public final class Utils {
         return Html.fromHtml(s).toString().replaceAll("\\p{C}", "");
     }
 
+    public static String locale(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return context.getResources().getConfiguration().getLocales().get(0).getLanguage();
+        }
+
+        //noinspection deprecation
+        return context.getResources().getConfiguration().locale.getLanguage();
+    }
+
     /**
      * Returns a {@link String} encoded in MD5.
      *
@@ -198,7 +207,7 @@ public final class Utils {
      * @see ConnectionResult#SUCCESS
      * @see ConnectionResult#API_UNAVAILABLE
      */
-    static int getPlayServicesStatus(Context context) {
+    public static int getPlayServicesStatus(Context context) {
         return GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context);
     }
 

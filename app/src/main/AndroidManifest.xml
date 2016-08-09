@@ -17,8 +17,8 @@
         android:name=".AppApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
         android:supportsRtl="true"
+        android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
         <activity
@@ -170,6 +170,44 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>
         </activity>
+
+
+        <!-- Eco points -->
+
+        <activity
+            android:name=".ui.ecopoints.EcoPointsActivity"
+            android:label="@string/eco_points"
+            android:launchMode="singleTop"/>
+
+        <activity
+            android:name=".ui.ecopoints.EcoPointsProfileActivity"
+            android:label="@string/activity_title_eco_points_profile"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.Normal"/>
+
+        <activity
+            android:name=".ui.ecopoints.EcoPointsLeaderboardActivity"
+            android:label="@string/activity_title_eco_points_leaderboard"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.Normal"/>
+
+        <activity
+            android:name=".ui.ecopoints.EcoPointsBadgesActivity"
+            android:label="@string/activity_title_eco_points_badges"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.Normal"/>
+
+        <activity
+            android:name=".ui.ecopoints.LoginActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.EcoPoints.Login"/>
+
+        <activity
+            android:name=".ui.ecopoints.RegisterActivity"
+            android:label="@string/eco_points"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.EcoPoints.Register"/>
 
 
         <!-- Lines -->

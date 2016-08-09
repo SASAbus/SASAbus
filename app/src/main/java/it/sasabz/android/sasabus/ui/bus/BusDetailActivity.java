@@ -30,8 +30,8 @@ import com.bumptech.glide.Glide;
 
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.Buses;
 import it.sasabz.android.sasabus.model.Vehicle;
+import it.sasabz.android.sasabus.model.Vehicles;
 import it.sasabz.android.sasabus.network.rest.api.ReportApi;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.ReportHelper;
@@ -251,7 +251,7 @@ public class BusDetailActivity extends AppCompatActivity {
      * @param vehicle the vehicle id.
      */
     private void parseData(int vehicle) {
-        Vehicle v = Buses.getBus(this, vehicle);
+        Vehicle v = Vehicles.getBus(this, vehicle);
         if (v != null) {
             mGroup = v.getGroup();
             loadBackdrop(mGroup);
@@ -371,7 +371,7 @@ public class BusDetailActivity extends AppCompatActivity {
     private boolean validateEmail() {
         String emailString = mEmail.getText().toString().trim();
 
-        if (emailString.isEmpty() || !ReportHelper.isValidEmail(emailString)) {
+        if (emailString.isEmpty() || !ReportHelper.isEmailValid(emailString)) {
             mEmailLayout.setError(getString(R.string.dialog_report_email_invalid));
             return false;
         } else {

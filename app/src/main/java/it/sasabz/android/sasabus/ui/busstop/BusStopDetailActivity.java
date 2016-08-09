@@ -54,7 +54,6 @@ import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.observers.Observers;
 import rx.schedulers.Schedulers;
 
@@ -288,7 +287,7 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
                                     .compose(bindToLifecycle())
                                     .subscribeOn(Schedulers.newThread())
                                     .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(Observers.create((Action1<Void>) busStopDetails1 -> {
+                                    .subscribe(Observers.create(busStopDetails1 -> {
                                         if (mItems.size() > 1) {
                                             mAdapter.notifyItemRangeChanged(1, mItems.size() - 1);
                                         }

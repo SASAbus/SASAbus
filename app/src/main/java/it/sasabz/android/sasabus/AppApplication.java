@@ -7,6 +7,7 @@ import com.crashlytics.android.Crashlytics;
 
 import io.fabric.sdk.android.Fabric;
 import it.sasabz.android.sasabus.fcm.FcmUtils;
+import it.sasabz.android.sasabus.network.auth.AuthHelper;
 import it.sasabz.android.sasabus.network.rest.RestClient;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.realm.UserRealmHelper;
@@ -49,6 +50,9 @@ public class AppApplication extends Application {
         // Initialize realms.
         BusStopRealmHelper.init(this);
         UserRealmHelper.init(this);
+
+        // Initialize authentication helper
+        AuthHelper.init(this);
 
         // Start the beacon handler if it hasn't been started already and start listening
         // for nearby beacons. Also start the beacon service.

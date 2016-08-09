@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import it.sasabz.android.sasabus.model.BusStop;
 import it.sasabz.android.sasabus.model.JsonSerializable;
@@ -20,8 +19,6 @@ public class BusBeacon implements JsonSerializable {
     public static final int TYPE_BEACON = 0;
     static final int TYPE_REALTIME = 1;
 
-    private static final long DELAY_FETCH_INTERVAL = TimeUnit.SECONDS.toMillis(30);
-
     public final String hash;
     public String title;
 
@@ -33,7 +30,6 @@ public class BusBeacon implements JsonSerializable {
     public float fuelPrice;
 
     public long lastSeen;
-    private long lastDelayFetch;
     long seenSeconds;
 
     public int trip;
@@ -91,10 +87,6 @@ public class BusBeacon implements JsonSerializable {
 
     boolean canRetry() {
         return retryCount < 3;
-    }
-
-    boolean shouldFetchDelay() {
-        return lastDelayFetch + DELAY_FETCH_INTERVAL < System.currentTimeMillis();
     }
 
     void setTrip(int trip) {
@@ -159,9 +151,5 @@ public class BusBeacon implements JsonSerializable {
     void setBusStop(BusStop busStop, int type) {
         this.busStop = busStop;
         //int busStopType = type;
-    }
-
-    void updateLastDelayFetch() {
-        lastDelayFetch = System.currentTimeMillis();
     }
 }

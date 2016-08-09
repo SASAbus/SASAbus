@@ -22,16 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import it.sasabz.android.sasabus.Config;
-import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.BusStopDetail;
-import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
-import it.sasabz.android.sasabus.ui.MapActivity;
-import it.sasabz.android.sasabus.ui.line.LineCourseActivity;
-import it.sasabz.android.sasabus.ui.line.LineDetailActivity;
-import it.sasabz.android.sasabus.ui.widget.animation.AnimationListenerAdapter;
-import it.sasabz.android.sasabus.util.Utils;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -41,6 +31,15 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import it.sasabz.android.sasabus.Config;
+import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.model.BusStopDetail;
+import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.ui.MapActivity;
+import it.sasabz.android.sasabus.ui.line.LineCourseActivity;
+import it.sasabz.android.sasabus.ui.line.LineDetailActivity;
+import it.sasabz.android.sasabus.ui.widget.animation.AnimationListenerAdapter;
+import it.sasabz.android.sasabus.util.Utils;
 
 /**
  * @author Alex Lardschneider
@@ -299,11 +298,10 @@ public class BusStopDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         showReveal(v.findViewById(R.id.list_stations_detail_card_line_reveal));
 
                         for (ViewHolderBus holder : mViews) {
-                            ViewHolderBus bus = (ViewHolderBus) holder;
-
-                            if (bus.lineCard != null && !bus.lineCard.equals(v)) {
+                            if (holder.lineCard != null && !holder.lineCard.equals(v)) {
                                 try {
-                                    hideReveal(bus.lineCard.findViewById(R.id.list_stations_detail_card_line_reveal));
+                                    hideReveal(holder.lineCard.findViewById(
+                                            R.id.list_stations_detail_card_line_reveal));
                                 } catch (Exception ignored) {
                                 }
                             }

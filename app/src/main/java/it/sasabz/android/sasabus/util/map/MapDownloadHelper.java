@@ -22,7 +22,7 @@ public class MapDownloadHelper {
 
     private final Context context;
 
-    static File rootFolder;
+    private static File rootFolder;
 
     static File getRootFolder(Context context) {
         if (rootFolder == null) {
@@ -83,7 +83,7 @@ public class MapDownloadHelper {
         request.setDestinationUri(Uri.fromFile(destination));
         long downloadId = dm.enqueue(request);
 
-        context.registerReceiver(new OsmZipDownloadComplete(context, downloadId, destination),
+        context.registerReceiver(new OsmZipDownloadComplete(downloadId, destination),
                 new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
     }
 }

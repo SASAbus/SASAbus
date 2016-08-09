@@ -69,7 +69,11 @@ public final class IOUtils {
             }
         } finally {
             if (bufferedReader != null) {
-                bufferedReader.close();
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    Utils.handleException(e);
+                }
             }
         }
 
@@ -134,8 +138,12 @@ public final class IOUtils {
 
                         zin.closeEntry();
                     } finally {
-                        outputStream.flush();
-                        outputStream.close();
+                        try {
+                            outputStream.flush();
+                            outputStream.close();
+                        } catch (IOException e) {
+                            Utils.handleException(e);
+                        }
                     }
                 }
             }

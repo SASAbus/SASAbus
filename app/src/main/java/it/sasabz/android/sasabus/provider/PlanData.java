@@ -2,16 +2,14 @@ package it.sasabz.android.sasabus.provider;
 
 import android.content.Context;
 
-import it.sasabz.android.sasabus.network.NetUtils;
-import it.sasabz.android.sasabus.network.rest.Endpoint;
-import it.sasabz.android.sasabus.util.IOUtils;
-import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.Preconditions;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import it.sasabz.android.sasabus.network.rest.Endpoint;
+import it.sasabz.android.sasabus.util.IOUtils;
+import it.sasabz.android.sasabus.util.LogUtils;
+import it.sasabz.android.sasabus.util.Preconditions;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;

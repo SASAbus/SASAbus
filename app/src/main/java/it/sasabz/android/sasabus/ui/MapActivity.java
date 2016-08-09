@@ -45,9 +45,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -57,17 +54,18 @@ import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.fcm.FcmService;
-import it.sasabz.android.sasabus.model.Buses;
 import it.sasabz.android.sasabus.model.Vehicle;
+import it.sasabz.android.sasabus.model.Vehicles;
 import it.sasabz.android.sasabus.model.line.Lines;
 import it.sasabz.android.sasabus.network.NetUtils;
 import it.sasabz.android.sasabus.network.rest.RestClient;
 import it.sasabz.android.sasabus.network.rest.api.RealtimeApi;
+import it.sasabz.android.sasabus.network.rest.api.TrafficLightApi;
 import it.sasabz.android.sasabus.network.rest.model.RealtimeBus;
 import it.sasabz.android.sasabus.network.rest.response.RealtimeResponse;
+import it.sasabz.android.sasabus.network.rest.response.TrafficLightResponse;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.realm.UserRealmHelper;
-import it.sasabz.android.sasabus.ui.busstop.BusStopDetailActivity;
 import it.sasabz.android.sasabus.ui.widget.OffsetNestedSwipeRefreshLayout;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.AnimUtils;
@@ -102,11 +100,6 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
     private static final String TAG = "MapActivity";
 
-    /**
-     * Request code for the google play error dialog in case play services are missing.
-     */
-    private static final int REQUEST_GOOGLE_PLAY_SERVICES = 10;
-
     public static final String EXTRA_DIALOG_TITLE = "it.sasabz.android.sasabus.EXTRA_DIALOG_TITLE";
 
     public static final String EXTRA_DIALOG_MESSAGE = "it.sasabz.android.sasabus.EXTRA_DIALOG_MESSAGE";
@@ -127,7 +120,8 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
      * Special type of swipe refresh layout which does not refresh when scrolled, as scrolling the
      * map will trigger the refresh.
      */
-    @BindView(R.id.refresh) OffsetNestedSwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.refresh)
+    OffsetNestedSwipeRefreshLayout mSwipeRefreshLayout;
 
     /**
      * Various views for the filter.
@@ -162,11 +156,6 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
      * so the user doesn't get annoyed by the continuous snackbar changes.
      */
     private boolean mShowInfoSnackBar = true;
-
-    /**
-     * Indicates if the station snackbar can be shown.
-     */
-    private boolean mCanShowBeaconSnackbar = true;
 
     /**
      * Indicates if auto refresh has been enabled in the settings.
@@ -225,7 +214,6 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
         if (!BuildConfig.DEBUG) {
             setupRating();
-            setupGMS();
         }
 
         setupFilter();
@@ -454,7 +442,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
                     .map(realtimeResponse -> {
                         for (RealtimeBus bus : realtimeResponse.buses) {
                             int group = -1;
-                            Vehicle bus1 = Buses.getBus(this, bus.vehicle);
+                            Vehicle bus1 = Vehicles.getBus(this, bus.vehicle);
                             if (bus1 != null) {
                                 group = bus1.getGroup();
                             }
@@ -472,6 +460,29 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
                     .delay(1, TimeUnit.SECONDS) // Delay is needed to make sure map is loaded.
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this);
+
+            TrafficLightApi trafficLightApi = RestClient.ADAPTER.create(TrafficLightApi.class);
+            trafficLightApi.trafficLight(locale(), SettingsUtils.getTrafficLightCity(MapActivity.this))
+                    .compose(bindToLifecycle())
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<TrafficLightResponse>() {
+                        @Override
+                        public void onCompleted() {
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Utils.handleException(e);
+                        }
+
+                        @Override
+                        public void onNext(TrafficLightResponse trafficLightResponse) {
+                            mFabFilterTop.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#" + trafficLightResponse.color)));
+                            mFabFilterBottom.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#" + trafficLightResponse.color)));
+                            mFabFilterBg.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#" + trafficLightResponse.color)));
+                        }
+                    });
         }
     }
 
@@ -613,35 +624,6 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
         new Handler().postDelayed(() -> mInfoSnackbar.show(), 500);
 
         mShowInfoSnackBar = false;
-    }
-
-    /**
-     * Shows a snackbar when a bus stop beacon is nearby.
-     *
-     * @param major      the bus stop id
-     * @param nameString the name of the bus stop
-     */
-    private void showStationSnackbar(int major, CharSequence nameString) {
-        mStationSnackbar = Snackbar.make(getMainContent(), nameString, Snackbar.LENGTH_INDEFINITE);
-        mStationSnackbar.setAction(R.string.station_nearby_action, v -> {
-            mFabFilterBg.setTranslationY(0);
-            mFabFilterBottom.setTranslationY(0);
-            mFabFilterTop.setTranslationY(0);
-
-            Intent intent = new Intent(this, BusStopDetailActivity.class);
-            intent.putExtra(Config.EXTRA_STATION_ID, major);
-            startActivity(intent);
-        });
-
-        View snackbarView = mStationSnackbar.getView();
-        TextView textView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(ContextCompat.getColor(this, R.color.white));
-
-        mStationSnackbar.setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_action_text));
-
-        runOnUiThread(() -> mStationSnackbar.show());
-
-        mCanShowBeaconSnackbar = false;
     }
 
     /**
@@ -955,19 +937,6 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
             }
 
             updateFilterMarkers();
-        }
-    }
-
-
-    /**
-     * Checks if the Google Play Services app is outdated and displays an error dialog.
-     */
-    private void setupGMS() {
-        GoogleApiAvailability api = GoogleApiAvailability.getInstance();
-        int googleStatus = api.isGooglePlayServicesAvailable(this);
-
-        if (googleStatus != ConnectionResult.SUCCESS) {
-            api.showErrorDialogFragment(this, googleStatus, REQUEST_GOOGLE_PLAY_SERVICES);
         }
     }
 

@@ -80,7 +80,6 @@ public class BusStopActivity extends BaseActivity {
     private MapFragment mMapFragment;
 
     private static boolean isSearchBarShown;
-    private static boolean isSearching;
 
     private final int[] tabIcons = {
             R.drawable.ic_star_white_48dp,
@@ -437,7 +436,6 @@ public class BusStopActivity extends BaseActivity {
             mSearchItems.clear();
 
             if (string.isEmpty()) {
-                isSearching = false;
                 mSearchItems.addAll(mItems);
             } else {
                 for (BusStop station : mItems) {
@@ -458,7 +456,6 @@ public class BusStopActivity extends BaseActivity {
                     }
                 }
 
-                isSearching = true;
             }
 
             mAdapter.notifyDataSetChanged();

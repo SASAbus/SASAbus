@@ -23,6 +23,11 @@
             android:title="@string/route"/>
 
         <item
+            android:id="@+id/nav_eco_points"
+            android:icon="@drawable/ic_nature_people_white_48dp"
+            android:title="@string/eco_points"/>
+
+        <item
             android:id="@+id/nav_trips"
             android:icon="@drawable/ic_timeline"
             android:title="@string/trips"/>

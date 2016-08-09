@@ -72,8 +72,8 @@ public class NotificationReceiver extends BroadcastReceiver {
      * the 6h < now - midnight, as we have to calculate the trip on the day the trip is
      * going to happen.
      *
-     * @param context
-     * @param intent
+     * @param context Context to access {@link NotificationManager}.
+     * @param intent the intent which was fired from this {@link BroadcastReceiver}.
      */
     private void calculateTrip(Context context, Intent intent) {
         String hash = intent.getStringExtra(AlarmUtils.EXTRA_PLANNED_TRIP_HASH);
