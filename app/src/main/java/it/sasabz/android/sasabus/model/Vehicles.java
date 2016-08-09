@@ -82,6 +82,8 @@ public final class Vehicles {
         BUSES.put(434, new Bus(0, 1, 1, 0, 2));
         BUSES.put(433, new Bus(0, 1, 1, 0, 2));
         BUSES.put(432, new Bus(1, 2, 0, 2, 1));
+        BUSES.put(431, new Bus(1, 2, 0, 2, 1));
+        BUSES.put(430, new Bus(1, 2, 0, 2, 1));
         BUSES.put(429, new Bus(1, 2, 0, 2, 1));
         BUSES.put(428, new Bus(1, 2, 0, 2, 1));
         BUSES.put(427, new Bus(2, 3, 1, 0, 5));
