@@ -271,9 +271,6 @@ public class PreferenceActivity extends AppCompatActivity {
                 case R.id.preferences_notifications:
                     ((PreferenceActivity) getActivity()).setNotificationsFragment();
                     break;
-                case R.id.preferences_advanced:
-                    ((PreferenceActivity) getActivity()).setAdvancedFragment();
-                    break;
             }
         }
     }

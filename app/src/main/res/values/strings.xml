@@ -55,6 +55,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="bottom_sheet_delayed">%d\' delayed</string>
+    <string name="bottom_sheet_early">%d\' ahead</string>
+    <string name="bottom_sheet_punctual">Punctual</string>
 
 
     <!-- ==================== ABOUT ==================== -->

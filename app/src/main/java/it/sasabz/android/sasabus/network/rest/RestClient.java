@@ -2,11 +2,10 @@ package it.sasabz.android.sasabus.network.rest;
 
 import android.content.Context;
 
-import it.sasabz.android.sasabus.network.NetworkInterceptor;
-import it.sasabz.android.sasabus.util.Preconditions;
-
 import java.util.concurrent.TimeUnit;
 
+import it.sasabz.android.sasabus.network.NetworkInterceptor;
+import it.sasabz.android.sasabus.util.Preconditions;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
