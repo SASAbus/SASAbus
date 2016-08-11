@@ -486,20 +486,19 @@
     <string name="eco_points_profile_delete_account">Delete my account</string>
 
     <string name="eco_points_logout_error_dialog_title">Error</string>
-    <string name="eco_points_logout_error_dialog_message">You couldn’t be logged out at the moment.
-        Please retry later again.
+    <string name="eco_points_logout_error_dialog_message">You couldn\'t be logged out at the moment.
+        Please retry again later.
     </string>
 
     <string name="eco_points_delete_account_confirmation_title">Delete account</string>
     <string name="eco_points_delete_account_confirmation_message">Are you sure you want to delete
-        your account?
-        This operation cannot be undone.
+        your account? This operation cannot be undone.
     </string>
     <string name="eco_points_delete_account_confirmation_positive">Delete</string>
 
     <string name="eco_points_delete_account_error_title">Error</string>
-    <string name="eco_points_delete_account_error_message">Your account couldn’t be deleted at the
-        moment. Please retry later again.
+    <string name="eco_points_delete_account_error_message">Your account couldn\'t be deleted at the
+        moment. Please retry again later.
     </string>
 
     <string name="eco_points_next_badges">Next badges</string>
@@ -512,6 +511,7 @@
     <string name="eco_points_leaderboard">Leaderboard</string>
     <string name="eco_points_leaderboard_full">View full leaderboard</string>
 
+    <string name="eco_points_badges">Badges</string>
     <string name="eco_points_badges_full">View all badges</string>
 
     <plurals name="eco_points_points">
@@ -520,13 +520,13 @@
     </plurals>
 
     <plurals name="eco_points_badge_dialog_points">
-        <item quantity="one">%d point for the completion of this badge.</item>
-        <item quantity="other">%d points for the completion of this badge.</item>
+        <item quantity="one">This badge gives you %d points.</item>
+        <item quantity="other">This badge gives you %d points.</item>
     </plurals>
 
     <plurals name="eco_points_badge_dialog_users">
-        <item quantity="one">%d player completed this badge.</item>
-        <item quantity="other">%d players completed this badge.</item>
+        <item quantity="one">%d player has this badge.</item>
+        <item quantity="other">%d players have this badge.</item>
     </plurals>
 
     <string name="eco_points_badge_dialog_progress">Your progress: %d%%</string>
@@ -545,7 +545,7 @@
 
     <string name="login_failed_dialog_title">Login failed</string>
     <string name="login_failed_dialog_subtitle">The login could not be completed. Please retry
-        later.
+        again later.
     </string>
 
     <string name="login_no_internet_title">No internet connection</string>
