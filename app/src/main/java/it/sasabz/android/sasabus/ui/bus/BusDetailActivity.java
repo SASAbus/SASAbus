@@ -30,8 +30,9 @@ import com.bumptech.glide.Glide;
 
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.model.Bus;
+import it.sasabz.android.sasabus.model.Buses;
 import it.sasabz.android.sasabus.model.Vehicle;
-import it.sasabz.android.sasabus.model.Vehicles;
 import it.sasabz.android.sasabus.network.rest.api.ReportApi;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.ReportHelper;
@@ -64,14 +65,8 @@ public class BusDetailActivity extends AppCompatActivity {
      */
     private TextView mManufacturer;
     private TextView mModel;
-    private TextView mId;
     private TextView mFuel;
     private TextView mColor;
-
-    /**
-     * The vehicle class id.
-     */
-    private int mGroup;
 
     /**
      * The vehicle id.
@@ -143,7 +138,6 @@ public class BusDetailActivity extends AppCompatActivity {
 
         mManufacturer = (TextView) findViewById(R.id.bus_details_manufacturer);
         mModel = (TextView) findViewById(R.id.bus_detail_model);
-        mId = (TextView) findViewById(R.id.bus_detail_id);
         mFuel = (TextView) findViewById(R.id.bus_detail_fuel);
         mColor = (TextView) findViewById(R.id.bus_detail_color);
 
@@ -153,44 +147,9 @@ public class BusDetailActivity extends AppCompatActivity {
             AnalyticsHelper.sendEvent(SCREEN_LABEL, "Report show");
         });
 
-        if (savedInstanceState != null) {
-            int errorVisibility = savedInstanceState.getInt("ERROR");
-
-            if (errorVisibility != 8) {
-                //noinspection ResourceType
-                mError.setVisibility(errorVisibility);
-            } else {
-                mGroup = savedInstanceState.getInt("GROUP");
-
-                loadBackdrop(mGroup);
-
-                mError.setVisibility(View.GONE);
-                mMainContent.setVisibility(View.VISIBLE);
-
-                mManufacturer.setText(savedInstanceState.getCharSequence("MANUFACTURER"));
-                mModel.setText(savedInstanceState.getCharSequence("MODEL"));
-                mId.setText(mVehicle);
-                mFuel.setText(savedInstanceState.getCharSequence("FUEL"));
-                mColor.setText(savedInstanceState.getCharSequence("COLOR"));
-            }
-        } else {
-            parseData(mVehicle);
-        }
+        parseData(mVehicle);
 
         reportHelper = new ReportHelper(this, mCoordinatorLayout, ReportApi.TYPE_BUS);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        outState.putCharSequence("MANUFACTURER", mManufacturer.getText());
-        outState.putCharSequence("MODEL", mModel.getText());
-        outState.putCharSequence("FUEL", mFuel.getText());
-        outState.putCharSequence("COLOR", mColor.getText());
-        outState.putInt("GROUP", mGroup);
-
-        outState.putInt("ERROR", mError.getVisibility());
     }
 
     @Override
@@ -227,17 +186,11 @@ public class BusDetailActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Loads the background image into the {@link CollapsingToolbarLayout} and sets the content
-     * scrim and the status bar scrim color. Also colors the card icons.
-     *
-     * @param id the vehicle class id.
-     */
-    private void loadBackdrop(int id) {
+    private void loadBackdrop(Vehicle vehicle) {
         ImageView imageView = (ImageView) findViewById(R.id.backdrop);
 
         if (imageView != null) {
-            Glide.with(this).load(Uri.parse("file:///android_asset/images/bus_" + id + ".jpg"))
+            Glide.with(this).load(Uri.parse("file:///android_asset/images/" + vehicle.getCode() + ".jpg"))
                     .animate(R.anim.fade_in_short)
                     .centerCrop()
                     .crossFade()
@@ -251,21 +204,24 @@ public class BusDetailActivity extends AppCompatActivity {
      * @param vehicle the vehicle id.
      */
     private void parseData(int vehicle) {
-        Vehicle v = Vehicles.getBus(this, vehicle);
-        if (v != null) {
-            mGroup = v.getGroup();
-            loadBackdrop(mGroup);
+        Bus b = Buses.getBus(vehicle);
 
-            mError.setVisibility(View.GONE);
+        if (b != null) {
+            Vehicle v = b.getVehicle();
 
-            mManufacturer.setText(v.getVendor());
-            mModel.setText(v.getModel());
-            mId.setText(String.valueOf(mVehicle));
-            mFuel.setText(v.getFuel());
-            mColor.setText(v.getColor());
-        } else {
-            mMainContent.setVisibility(View.GONE);
-            mError.setVisibility(View.VISIBLE);
+            if (v != null) {
+                mError.setVisibility(View.GONE);
+
+                mManufacturer.setText(v.getManufacturer());
+                mModel.setText(v.getModel());
+                mFuel.setText(v.getFuelString(this));
+                mColor.setText(v.getFuelString(this));
+
+                loadBackdrop(v);
+            } else {
+                mMainContent.setVisibility(View.GONE);
+                mError.setVisibility(View.VISIBLE);
+            }
         }
     }
 

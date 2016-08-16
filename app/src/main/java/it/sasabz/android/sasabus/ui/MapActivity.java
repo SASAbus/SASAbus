@@ -54,8 +54,8 @@ import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.fcm.FcmService;
+import it.sasabz.android.sasabus.model.Buses;
 import it.sasabz.android.sasabus.model.Vehicle;
-import it.sasabz.android.sasabus.model.Vehicles;
 import it.sasabz.android.sasabus.model.line.Lines;
 import it.sasabz.android.sasabus.network.NetUtils;
 import it.sasabz.android.sasabus.network.rest.RestClient;
@@ -441,16 +441,16 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
                     .subscribeOn(Schedulers.newThread())
                     .map(realtimeResponse -> {
                         for (RealtimeBus bus : realtimeResponse.buses) {
-                            int group = -1;
-                            Vehicle bus1 = Vehicles.getBus(this, bus.vehicle);
-                            if (bus1 != null) {
-                                group = bus1.getGroup();
+                            String bus1 = null;
+
+                            if (Buses.getBus(bus.vehicle) != null) {
+                                bus1 = Buses.getBus(bus.vehicle).getVehicle().getCode();
                             }
 
                             String currentStopName = BusStopRealmHelper.getName(bus.busStop);
                             String lastStopName = BusStopRealmHelper.getName(bus.destination);
 
-                            bus.group = group;
+                            bus.group = bus1;
                             bus.currentStopName = currentStopName;
                             bus.lastStopName = lastStopName;
                         }

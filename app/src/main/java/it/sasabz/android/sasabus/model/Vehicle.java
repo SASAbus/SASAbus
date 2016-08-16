@@ -1,38 +1,110 @@
 package it.sasabz.android.sasabus.model;
 
+import android.content.Context;
+
+import it.sasabz.android.sasabus.util.Utils;
+
 public class Vehicle {
 
-    private final String vendor;
-    private final String model;
-    private final String fuel;
-    private final String color;
-    private final int group;
+    private static final String[] FUEL_IT = {
+            "Idrogeno",
+            "Diesel",
+            "Metano"
+    };
 
-    public Vehicle(String vendor, String model, String fuel, String color, int group) {
-        this.vendor = vendor;
+    private static final String[] FUEL_DE = {
+            "Wasserstoff",
+            "Diesel",
+            "Methan"
+    };
+
+    private static final String[] FUEL_EN = {
+            "Hydrogen",
+            "Diesel",
+            "Methane"
+    };
+
+    private static final String[] COLOR_IT = {
+            "Bianco e viola",
+            "Giallo",
+            "Arancione"
+    };
+
+    private static final String[] COLOR_DE = {
+            "Weiß und violett",
+            "Gelb",
+            "Orange"
+    };
+
+    private static final String[] COLOR_EN = {
+            "White and purple",
+            "Yellow",
+            "Orange"
+    };
+
+    private static final String[] COLOR_LIGHT = {
+            "1976D2",
+            "FDD835",
+            "FF9800"
+    };
+
+    private static final String[] COLOR_DARK = {
+            "0D47A1",
+            "FBC02D",
+            "F57C00"
+    };
+
+    private final String manufacturer;
+    private final String model;
+    private final int fuel;
+    private final int color;
+    private final int emission;
+    private final String code;
+
+    Vehicle(String manufacturer, String model, int fuel, int color, int emission, String code) {
+        this.manufacturer = manufacturer;
         this.model = model;
         this.fuel = fuel;
         this.color = color;
-        this.group = group;
+        this.emission = emission;
+        this.code = code;
     }
 
-    public CharSequence getVendor() {
-        return vendor;
+    public String getManufacturer() {
+        return manufacturer;
     }
 
-    public CharSequence getModel() {
+    public String getModel() {
         return model;
     }
 
-    public CharSequence getFuel() {
-        return fuel;
+    public String getFuelString(Context context) {
+        switch (Utils.locale(context)) {
+            case "it":
+                return FUEL_IT[fuel];
+            case "de":
+                return FUEL_DE[fuel];
+            default:
+                return FUEL_EN[fuel];
+        }
     }
 
-    public CharSequence getColor() {
-        return color;
+    public String getColorString(Context context) {
+        switch (Utils.locale(context)) {
+            case "it":
+                return COLOR_IT[color];
+            case "de":
+                return COLOR_DE[color];
+            default:
+                return COLOR_EN[color];
+        }
     }
 
-    public int getGroup() {
-        return group;
+    public int getEmission() {
+        return emission;
+    }
+
+    public String getCode() {
+        return code;
     }
 }
