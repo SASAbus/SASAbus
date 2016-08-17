@@ -95,7 +95,7 @@ public final class PlanData {
     private static class DataResult {
         private boolean value;
 
-        public DataResult(boolean value) {
+        DataResult(boolean value) {
             this.value = value;
         }
 
@@ -103,7 +103,7 @@ public final class PlanData {
             return value;
         }
 
-        public void setValue() {
+        void setValue() {
             value = true;
         }
     }

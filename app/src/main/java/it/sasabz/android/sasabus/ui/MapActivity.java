@@ -55,7 +55,6 @@ import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.fcm.FcmService;
 import it.sasabz.android.sasabus.model.Buses;
-import it.sasabz.android.sasabus.model.Vehicle;
 import it.sasabz.android.sasabus.model.line.Lines;
 import it.sasabz.android.sasabus.network.NetUtils;
 import it.sasabz.android.sasabus.network.rest.RestClient;
@@ -73,7 +72,6 @@ import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Preconditions;
 import it.sasabz.android.sasabus.util.SettingsUtils;
 import it.sasabz.android.sasabus.util.Utils;
-import it.sasabz.android.sasabus.util.map.MapDownloadHelper;
 import it.sasabz.android.sasabus.util.map.RealtimeMapView;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -243,10 +241,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
             }
         }
 
-        new MapDownloadHelper(this).checkMapFirstTime();
-
         WebView webView = (WebView) findViewById(R.id.webview);
-
         mapView = new RealtimeMapView(this, webView);
 
         parseData();

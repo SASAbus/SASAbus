@@ -449,6 +449,15 @@
         retry later again.
     </string>
 
+    <string name="dialog_map_download_title">Map download</string>
+    <string name="dialog_map_download_message">The app needs to download the OpenStreetMap map
+        tiles, which are about 60MByte of data.
+        If you don\'t have a flat data plan, we suggest you to use a Wi-Fi network to avoid
+        expensive costs.
+        Would you like to do it now?
+    </string>
+    <string name="dialog_map_download_negative">Later</string>
+
     <string name="dialog_button_cancel">Cancel</string>
 
 

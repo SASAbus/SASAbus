@@ -17,6 +17,8 @@ public class RealtimeMapView {
 
     private WebView webView;
 
+    private MapDownloadHelper downloadHelper;
+
     public RealtimeMapView(Context context, WebView webView) {
         this.webView = webView;
         this.webView.setWebChromeClient(new WebChromeClient() {
@@ -31,6 +33,7 @@ public class RealtimeMapView {
         this.webView.getSettings().setDomStorageEnabled(true);
 
         JSInterface bridge = new JSInterface(context);
+        new MapDownloadHelper(context, webView).checkMapFirstTime();
 
         this.webView.addJavascriptInterface(bridge, "Android");
         this.webView.loadUrl("file:///android_asset/map/realtime.html");

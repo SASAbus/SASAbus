@@ -31,6 +31,13 @@ public final class Config {
     public static final int NOTIFICATION_BADGE = 1 << 13;
 
     /**
+     * The delay between the line fragments finishing loading and starting the internet data fetch.
+     */
+    public static final int LINE_FRAGMENTS_POST_DELAY = 500;
+
+    public static final int BUS_STOP_FRAGMENTS_POST_DELAY = 500;
+
+    /**
      * Static constant for intent extras which indicate a station id
      */
     public static final String EXTRA_STATION_ID = "EXTRA_STATION_ID";
@@ -126,11 +133,4 @@ public final class Config {
      * from the internet.
      */
     public static final int BUS_STOP_DETAILS_OPERATION_RUNNING = 1 << 9;
-
-    /**
-     * The delay between the line fragments finishing loading and starting the internet data fetch.
-     */
-    public static final int LINE_FRAGMENTS_POST_DELAY = 500;
-
-    public static final int BUS_STOP_FRAGMENTS_POST_DELAY = 500;
 }

@@ -59,7 +59,7 @@
 
         var mapPath = Android.getMapTilesRootUrl() + "/{z}/{x}/{y}.png";
 
-        L.tileLayer(mapPath, {
+        var tileLayer = L.tileLayer(mapPath, {
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
             maxZoom: 17,
             minZoom: 8
@@ -75,6 +75,12 @@
 
         function onLineCourseClick(vehicle, lineId, busStop) {
             Android.onLineCourseClick(vehicle, lineId, busStop);
+        }
+
+        function reloadMap() {
+            console.log("reloadMap");
+
+            tileLayer.redraw();
         }
 
         function filterMarkers(params) {

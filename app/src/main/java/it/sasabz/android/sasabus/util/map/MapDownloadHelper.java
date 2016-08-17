@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
+import android.webkit.WebView;
 
 import java.io.File;
 
 import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.receiver.DownloadReceiver;
 import it.sasabz.android.sasabus.util.LogUtils;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
@@ -24,6 +26,8 @@ public class MapDownloadHelper {
 
     private static File rootFolder;
 
+    private WebView webView;
+
     static File getRootFolder(Context context) {
         if (rootFolder == null) {
             File sdcardFilesDir = context.getExternalFilesDir(null);
@@ -38,27 +42,24 @@ public class MapDownloadHelper {
         return rootFolder;
     }
 
-    public MapDownloadHelper(Context context) {
+    MapDownloadHelper(Context context, WebView webView) {
         this.context = context;
+        this.webView = webView;
 
         getRootFolder(context);
     }
 
-    public void checkMapFirstTime() {
-        if (rootFolder.listFiles().length == 0) {
+    void checkMapFirstTime() {
+        if (rootFolder.listFiles().length < 2) {
+
             LogUtils.e(TAG, "Missing map");
 
             new AlertDialog.Builder(context, R.style.DialogStyle)
-                    .setTitle("Map download")
-                    .setMessage("The app needs to download the OpenStreetMap map tiles, which are about 60MByte of data. " +
-                            "If you don\\'t have a flat data plan, we suggest you to use a wi-fi network to avoid expensive costs. " +
-                            "Would you like to do it now?")
+                    .setTitle(R.string.dialog_map_download_title)
+                    .setMessage(R.string.dialog_map_download_message)
                     .setCancelable(false)
-                    .setPositiveButton("Yes", (dialog, which) -> {
-                        downloadOSMTiles();
-                    })
-                    .setNegativeButton("Later", (dialog, which) -> {
-                    })
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> downloadMap())
+                    .setNegativeButton(R.string.dialog_map_download_negative, (dialog, which) -> dialog.dismiss())
                     .create()
                     .show();
         } else {
@@ -66,7 +67,7 @@ public class MapDownloadHelper {
         }
     }
 
-    private void downloadOSMTiles() {
+    private void downloadMap() {
         LogUtils.e(TAG, "Downloading map tiles");
 
         String downloadZip = MAP_URL + "/" + OSM_ZIP_NAME;
@@ -78,12 +79,17 @@ public class MapDownloadHelper {
             destination.getParentFile().mkdirs();
         }
 
-        DownloadManager dm = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
+        DownloadManager downloadManager = (DownloadManager)
+                context.getSystemService(DOWNLOAD_SERVICE);
+
         DownloadManager.Request request = new DownloadManager.Request(mapUrl);
         request.setDestinationUri(Uri.fromFile(destination));
-        long downloadId = dm.enqueue(request);
 
-        context.registerReceiver(new OsmZipDownloadComplete(downloadId, destination),
+        long downloadId = downloadManager.enqueue(request);
+
+        LogUtils.e(TAG, "Download id is: " + downloadId);
+
+        context.registerReceiver(new DownloadReceiver(downloadId, destination, webView),
                 new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
     }
 }
