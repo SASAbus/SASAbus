@@ -25,6 +25,7 @@
             android:cacheColorHint="@android:color/transparent"
             android:divider="@null"
             android:paddingTop="@dimen/list_padding"
+            android:paddingBottom="@dimen/list_padding"
             android:clipToPadding="false"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
