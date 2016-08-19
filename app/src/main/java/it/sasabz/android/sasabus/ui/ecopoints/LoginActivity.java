@@ -83,7 +83,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
 
         TextView signInText = (TextView) findViewById(R.id.login_sign_in_text);
-        signInText.setText(Html.fromHtml("Not a member?<br><font color=\"#03A9F4\">Sign up</font> for Eco points"));
+        signInText.setText(Html.fromHtml("Not a member?<br><font color=\"#03A9F4\">Sign up</font> for eco points"));
         signInText.setOnClickListener(this);
 
         emailLayout.setError(getString(R.string.login_invalid_email));

@@ -22,7 +22,7 @@ public final class AnalyticsHelper {
     /**
      * The tracking id used to differentiate this project from other ones
      */
-    private static final String GA_TRACKING_ID = "UA-61528546-3";
+    private static final String GA_TRACKING_ID = "UA-61528546-6";
 
     /**
      * Context to access the analytics tracker

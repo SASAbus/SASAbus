@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.model.line.LineDriving;
 import it.sasabz.android.sasabus.model.line.LineDrivingContent;
+import it.sasabz.android.sasabus.model.line.Lines;
 import it.sasabz.android.sasabus.network.NetUtils;
 import it.sasabz.android.sasabus.network.rest.RestClient;
 import it.sasabz.android.sasabus.network.rest.api.RealtimeApi;
@@ -45,6 +47,7 @@ import rx.schedulers.Schedulers;
  * Displays all lines where at least one vehicle is currently in service.
  *
  * @author Alex Lardschneider
+ * @author David Dejori
  */
 public class LinesDrivingFragment extends RxFragment implements AdapterView.OnItemClickListener,
         AdapterView.OnItemLongClickListener {
@@ -227,9 +230,16 @@ public class LinesDrivingFragment extends RxFragment implements AdapterView.OnIt
                             stringBuilder.setLength(0);
                         }
 
-                        Iterable<Integer> keys = new TreeSet<>(map.keySet());
+                        List<Integer> lines = new ArrayList<>();
 
-                        for (int key : keys) {
+                        for (int line : Lines.allLines) {
+                            lines.add(line);
+                        }
+
+                        List<Integer> lineList = new ArrayList<>(map.keySet());
+                        Collections.sort(lineList, (lhs, rhs) -> lines.indexOf(lhs) - lines.indexOf(rhs));
+
+                        for (int key : lineList) {
                             String[] linesArray = map.get(key).split("=");
 
                             List<LineDrivingContent> contentList = new ArrayList<>();

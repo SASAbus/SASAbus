@@ -98,7 +98,7 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (!AuthHelper.isTokenValid()) {
+        if (!AuthHelper.isLoggedIn()) {
             LogUtils.e(TAG, "Token is null, showing login activity");
             finish();
             startActivity(new Intent(this, LoginActivity.class));

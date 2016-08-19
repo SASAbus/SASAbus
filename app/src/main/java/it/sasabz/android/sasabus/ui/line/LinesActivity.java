@@ -6,15 +6,15 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.ui.widget.adapter.TabsAdapter;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.DeviceUtils;
 import it.sasabz.android.sasabus.util.Utils;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Holds all the line fragments.
@@ -106,6 +106,10 @@ public class LinesActivity extends BaseActivity {
 
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
+
+        if (!UserRealmHelper.hasFavoriteLines()) {
+            mViewPager.setCurrentItem(1);
+        }
     }
 
     @Override

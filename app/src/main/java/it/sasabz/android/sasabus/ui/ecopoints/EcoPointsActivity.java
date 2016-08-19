@@ -97,7 +97,7 @@ public class EcoPointsActivity extends BaseActivity implements View.OnClickListe
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (!AuthHelper.isTokenValid()) {
+        if (!AuthHelper.isLoggedIn()) {
             finish();
             startActivity(new Intent(this, LoginActivity.class));
 

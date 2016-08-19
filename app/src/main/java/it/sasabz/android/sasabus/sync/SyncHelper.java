@@ -30,6 +30,7 @@ import it.sasabz.android.sasabus.network.NetUtils;
 import it.sasabz.android.sasabus.network.rest.RestClient;
 import it.sasabz.android.sasabus.network.rest.api.BeaconsApi;
 import it.sasabz.android.sasabus.network.rest.api.CloudApi;
+import it.sasabz.android.sasabus.network.rest.api.EcoPointsApi;
 import it.sasabz.android.sasabus.network.rest.api.SurveyApi;
 import it.sasabz.android.sasabus.network.rest.api.ValidityApi;
 import it.sasabz.android.sasabus.network.rest.model.CloudPlannedTrip;
@@ -39,6 +40,7 @@ import it.sasabz.android.sasabus.network.rest.response.CloudResponseGet;
 import it.sasabz.android.sasabus.network.rest.response.ValidityResponse;
 import it.sasabz.android.sasabus.provider.PlanData;
 import it.sasabz.android.sasabus.realm.user.Beacon;
+import it.sasabz.android.sasabus.realm.user.EarnedBadge;
 import it.sasabz.android.sasabus.realm.user.PlannedTrip;
 import it.sasabz.android.sasabus.realm.user.Survey;
 import it.sasabz.android.sasabus.realm.user.Trip;
@@ -123,12 +125,14 @@ public class SyncHelper {
         final int OP_PLAN_DATA_SYNC = 2;
         final int OP_SURVEY_SYNC = 3;
         final int OP_BEACON_SYNC = 4;
+        final int OP_BADGE_SYNC = 5;
 
         int[] opsToPerform = {
                 OP_TRIP_DATA_SYNC,
                 OP_PLANNED_TRIP_DATA_SYNC,
                 OP_PLAN_DATA_SYNC,
-                OP_SURVEY_SYNC
+                OP_SURVEY_SYNC,
+                OP_BADGE_SYNC,
         };
 
         for (int op : opsToPerform) {
@@ -148,6 +152,9 @@ public class SyncHelper {
                         break;
                     case OP_BEACON_SYNC:
                         dataChanged |= doBeaconSync();
+                        break;
+                    case OP_BADGE_SYNC:
+                        dataChanged |= doBadgeSync();
                         break;
                     default:
                         throw new IllegalStateException("Unknown operation " + op);
@@ -453,6 +460,45 @@ public class SyncHelper {
                 });
 
         LogUtils.e(TAG, "Uploaded " + size + " beacons");
+
+        return dataChanged[0];
+    }
+
+    /**
+     * Tells the server that the user has earnt a badge.
+     *
+     * @return {@code true} if one or more badges have been sent, {@code false} otherwise.
+     */
+    private boolean doBadgeSync() {
+        LogUtils.e(TAG, "Starting badge sync");
+
+        RealmResults<EarnedBadge> result = realm.where(EarnedBadge.class)
+                .equalTo("sent", false).findAll();
+
+        if (result.isEmpty()) {
+            LogUtils.e(TAG, "No badges to upload");
+            return false;
+        }
+
+        int size = result.size();
+
+        LogUtils.e(TAG, "Uploading " + size + " badges");
+
+        boolean[] dataChanged = {false};
+
+        for (EarnedBadge badge : result) {
+            EcoPointsApi api = RestClient.ADAPTER.create(EcoPointsApi.class);
+            api.sendBadge(badge.getId())
+                    .subscribe(aVoid -> {
+                        realm.beginTransaction();
+                        badge.setSent(true);
+                        realm.commitTransaction();
+
+                        dataChanged[0] |= true;
+                    });
+        }
+
+        LogUtils.e(TAG, "Uploaded " + size + " badges");
 
         return dataChanged[0];
     }

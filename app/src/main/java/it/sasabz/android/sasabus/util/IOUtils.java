@@ -18,8 +18,6 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import okio.Okio;
-
 /**
  * Utility methods and constants used for writing and reading to from streams and files.
  *
@@ -150,14 +148,6 @@ public final class IOUtils {
         }
 
         return true;
-    }
-
-    static void writeToFile(File file, String content) {
-        try {
-            Okio.buffer(Okio.sink(file)).write(content.getBytes()).close();
-        } catch (IOException e) {
-            Utils.handleException(e);
-        }
     }
 
     /**

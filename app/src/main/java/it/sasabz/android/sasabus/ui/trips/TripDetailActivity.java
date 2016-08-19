@@ -32,8 +32,9 @@ import butterknife.ButterKnife;
 import io.realm.Realm;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.model.Bus;
+import it.sasabz.android.sasabus.model.Buses;
 import it.sasabz.android.sasabus.model.Vehicle;
-import it.sasabz.android.sasabus.model.Vehicles;
 import it.sasabz.android.sasabus.model.line.Lines;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.realm.busstop.BusStop;
@@ -83,30 +84,6 @@ public class TripDetailActivity extends AppCompatActivity implements View.OnClic
     private float mDistance;
 
     private final Realm realm = Realm.getDefaultInstance();
-
-    private final short[] mEmissions = {
-            0,   // ignore
-            0,   // H2
-            89,  // 2
-            89,  // 3
-            110, // 4
-            89,  // 5
-            110, // 6
-            110, // 7
-            89,  // 8
-            89,  // 9
-            89,  // 10
-            110, // 11
-            110, // 12
-            110, // 13
-            110, // 14
-            160, // 15
-            160, // 16
-            160, // 17
-            160, // 18
-            160, // 19
-            160  // 99
-    };
 
     private TripDetailsMapView mapView;
 
@@ -236,13 +213,16 @@ public class TripDetailActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void parseVehicleData() {
-        Vehicle vehicle = Vehicles.getBus(this, mTrip.getVehicle());
+        Bus bus = Buses.getBus(mTrip.getVehicle());
 
-        if (vehicle != null) {
-            loadBackdrop(vehicle.getGroup());
+        if (bus != null) {
+            Vehicle vehicle = bus.getVehicle();
 
-            mVehicleBrand.setText(vehicle.getVendor());
-            mVehicleFuel.setText(vehicle.getFuel());
+            if (vehicle != null) {
+                loadBackdrop(vehicle);
+            }
+            mVehicleBrand.setText(vehicle.getManufacturer());
+            mVehicleFuel.setText(vehicle.getFuelString(this));
 
             mVehicleInfo.setVisibility(View.VISIBLE);
             mVehicleError.setVisibility(View.GONE);
@@ -252,8 +232,7 @@ public class TripDetailActivity extends AppCompatActivity implements View.OnClic
             TextView co2EmissionsCar = (TextView) findViewById(R.id.trip_detail_co2_emission_car);
             TextView fuelPrice = (TextView) findViewById(R.id.trip_detail_fuel_price);
 
-            float co2 = mEmissions[vehicle.getGroup()] * mDistance / 1000;
-            co2Emissions.setText(Math.round(co2) + " g");
+            co2Emissions.setText(vehicle.getEmission() + " g");
 
             float co2Car = 120 * mDistance / 1000;
             co2EmissionsCar.setText(Math.round(co2Car) + " g");
@@ -271,14 +250,12 @@ public class TripDetailActivity extends AppCompatActivity implements View.OnClic
     /**
      * Loads the background image into the {@link CollapsingToolbarLayout} and sets the content
      * scrim and the status bar scrim color. Also colors the card icons.
-     *
-     * @param id the vehicle class id.
      */
-    private void loadBackdrop(int id) {
+    private void loadBackdrop(Vehicle vehicle) {
         ImageView imageView = (ImageView) findViewById(R.id.trip_detail_vehicle_image);
 
         if (imageView != null) {
-            Glide.with(this).load(Uri.parse("file:///android_asset/images/bus_" + id + ".jpg"))
+            Glide.with(this).load(Uri.parse("file:///android_asset/images/" + vehicle.getCode() + ".jpg"))
                     .animate(R.anim.fade_in_short)
                     .centerCrop()
                     .crossFade()

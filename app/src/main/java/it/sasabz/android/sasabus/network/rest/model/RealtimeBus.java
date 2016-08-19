@@ -58,7 +58,7 @@ public final class RealtimeBus implements Parcelable {
     @SerializedName("zone")
     public final String zone;
 
-    public int group;
+    public String group;
 
     public String currentStopName;
 
@@ -81,7 +81,7 @@ public final class RealtimeBus implements Parcelable {
         destination = in.readInt();
 
         zone = in.readString();
-        group = in.readInt();
+        group = in.readString();
         currentStopName = in.readString();
         lastStopName = in.readString();
     }
@@ -104,7 +104,7 @@ public final class RealtimeBus implements Parcelable {
         dest.writeInt(destination);
 
         dest.writeString(zone);
-        dest.writeInt(group);
+        dest.writeString(group);
         dest.writeString(currentStopName);
         dest.writeString(lastStopName);
     }

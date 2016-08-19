@@ -12,6 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.realm.UserRealmHelper;
@@ -19,11 +23,6 @@ import it.sasabz.android.sasabus.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.ui.busstop.BusStopActivity;
 import it.sasabz.android.sasabus.ui.busstop.BusStopDetailActivity;
-
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * @author Alex Lardschneider
@@ -127,11 +126,11 @@ public class BusStopListAdapter extends RecyclerView.Adapter<BusStopListAdapter.
             BusStop station = mItems.get(getAdapterPosition());
 
             if (UserRealmHelper.hasFavoriteBusStop(station.getFamily())) {
-                UserRealmHelper.removeFavoriteBusStop(station.getId());
+                UserRealmHelper.removeFavoriteBusStop(station.getFamily());
                 Snackbar.make(((BaseActivity) mContext).getMainContent(), mContext.getString(R.string.bus_stop_favorites_remove,
                         station.getName(mContext)), Snackbar.LENGTH_SHORT).show();
             } else {
-                UserRealmHelper.addFavoriteBusStop(station.getId());
+                UserRealmHelper.addFavoriteBusStop(station.getFamily());
                 Snackbar.make(((BaseActivity) mContext).getMainContent(), mContext.getString(R.string.bus_stop_favorites_add,
                         station.getName(mContext)), Snackbar.LENGTH_SHORT).show();
             }

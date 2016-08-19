@@ -15,8 +15,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.model.Buses;
 import it.sasabz.android.sasabus.model.Vehicle;
-import it.sasabz.android.sasabus.model.Vehicles;
 import it.sasabz.android.sasabus.network.rest.model.RealtimeBus;
 import it.sasabz.android.sasabus.ui.MapActivity;
 import it.sasabz.android.sasabus.util.Preconditions;
@@ -45,7 +45,7 @@ public class HydrogenAdapter extends RecyclerView.Adapter<HydrogenAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         RealtimeBus bus = mItems.get(position);
 
-        Vehicle vehicle = Vehicles.getBus(mContext, bus.vehicle);
+        Vehicle vehicle = Buses.getBus(bus.vehicle).getVehicle();
         Preconditions.checkNotNull(vehicle, "vehicle == null");
 
         holder.id.setText(String.valueOf(bus.vehicle));
@@ -61,7 +61,7 @@ public class HydrogenAdapter extends RecyclerView.Adapter<HydrogenAdapter.ViewHo
         return mItems.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.list_item_lines_all_card) CardView cardView;
         @BindView(R.id.list_lines_hydrogen_id) TextView id;
@@ -72,19 +72,6 @@ public class HydrogenAdapter extends RecyclerView.Adapter<HydrogenAdapter.ViewHo
             super(view);
 
             ButterKnife.bind(this, view);
-
-            cardView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            int position = getAdapterPosition();
-            if (position == RecyclerView.NO_POSITION) return;
-
-            RealtimeBus item = mItems.get(position);
-            Intent intent = new Intent(mContext, MapActivity.class);
-            intent.putExtra(Config.EXTRA_VEHICLE, item.vehicle);
-            mContext.startActivity(intent);
         }
     }
 }

@@ -41,6 +41,7 @@ import io.realm.RealmResults;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.realm.user.FavoriteBusStop;
 import it.sasabz.android.sasabus.ui.BaseActivity;
@@ -48,6 +49,7 @@ import it.sasabz.android.sasabus.ui.widget.NestedSwipeRefreshLayout;
 import it.sasabz.android.sasabus.ui.widget.adapter.TabsAdapter;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.DeviceUtils;
+import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.map.BusStopsMapView;
 import it.sasabz.android.sasabus.util.recycler.BusStopListAdapter;
 import rx.Observer;
@@ -168,6 +170,10 @@ public class BusStopActivity extends BaseActivity {
             if (tab != null) {
                 tab.setIcon(drawable);
             }
+        }
+
+        if (!UserRealmHelper.hasFavoriteBusStops()) {
+            mViewPager.setCurrentItem(1);
         }
     }
 
@@ -323,8 +329,14 @@ public class BusStopActivity extends BaseActivity {
                         List<BusStop> busStops = new ArrayList<>();
 
                         for (FavoriteBusStop busStop : favoriteBusStops) {
-                            busStops.add(busStopRealm.where(BusStop.class).equalTo("family",
-                                    busStop.getGroup()).findFirst());
+                            BusStop stop = busStopRealm.where(BusStop.class).equalTo("family",
+                                    busStop.getGroup()).findFirst();
+
+                            if (stop != null) {
+                                busStops.add(stop);
+                            } else {
+                                LogUtils.e(TAG, "Bus stop family " + busStop.getGroup() + " == null");
+                            }
                         }
 
                         return busStops;
@@ -343,7 +355,9 @@ public class BusStopActivity extends BaseActivity {
 
                         @Override
                         public void onNext(List<BusStop> busStops) {
+                            mItems.clear();
                             mItems.addAll(busStops);
+
                             mAdapter.notifyDataSetChanged();
                         }
                     });

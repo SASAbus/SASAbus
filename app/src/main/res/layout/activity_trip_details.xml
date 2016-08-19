@@ -166,7 +166,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <WebView
+                    <it.sasabz.android.sasabus.ui.widget.TouchWebView
                         android:id="@+id/googlemap"
                         android:layout_width="match_parent"
                         android:layout_height="300dp"/>
