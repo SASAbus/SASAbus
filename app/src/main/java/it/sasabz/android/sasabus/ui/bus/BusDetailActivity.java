@@ -39,7 +39,7 @@ import it.sasabz.android.sasabus.util.ReportHelper;
 import it.sasabz.android.sasabus.util.Utils;
 
 /**
- * Displays information about a bus/vehicle like license plate, color, fuel type ecc.
+ * Displays information about a bus/vehicle like license plate, fuel type ecc.
  * This activity consists of a {@link android.support.design.widget.AppBarLayout} with a picture of
  * the vehicle type as scrim, and a {@link CardView} below which holds the bus information.
  *
@@ -66,7 +66,6 @@ public class BusDetailActivity extends AppCompatActivity {
     private TextView mManufacturer;
     private TextView mModel;
     private TextView mFuel;
-    private TextView mColor;
 
     /**
      * The vehicle id.
@@ -139,7 +138,6 @@ public class BusDetailActivity extends AppCompatActivity {
         mManufacturer = (TextView) findViewById(R.id.bus_details_manufacturer);
         mModel = (TextView) findViewById(R.id.bus_detail_model);
         mFuel = (TextView) findViewById(R.id.bus_detail_fuel);
-        mColor = (TextView) findViewById(R.id.bus_detail_color);
 
         TextView report = (TextView) findViewById(R.id.bus_details_report);
         report.setOnClickListener(v -> {
@@ -215,7 +213,6 @@ public class BusDetailActivity extends AppCompatActivity {
                 mManufacturer.setText(v.getManufacturer());
                 mModel.setText(v.getModel());
                 mFuel.setText(v.getFuelString(this));
-                mColor.setText(v.getFuelString(this));
 
                 loadBackdrop(v);
             } else {
