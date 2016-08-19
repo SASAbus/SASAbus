@@ -19,7 +19,7 @@ public final class Buses {
         Vehicle v88 = new Vehicle("Mercedes-Benz", "Citaro O 530 N", 1, 2, 90, "v88");
         Vehicle v87 = new Vehicle("Mercedes-Benz", "Citaro O 530 GN", 1, 2, 90, "v87");
         Vehicle mbgn = new Vehicle("Mercedes-Benz", "Citaro O 530 GN", 1, 2, 90, "mbgn");
-        Vehicle manlc = new Vehicle("MAN", "Lion\"s City 313 NG/CNG", 2, 2, 110, "manlc");
+        Vehicle manlc = new Vehicle("MAN", "Lion\'s City 313 NG/CNG", 2, 2, 110, "manlc");
         Vehicle ac = new Vehicle("BredaMenarinibus", "Avancity NU/3P/CNG", 2, 2, 110, "ac");
         Vehicle bmb = new Vehicle("BredaMenarinibus", "Monocar 231/2/CU/2P E3 CNG", 2, 2, 110, "bmb");
         Vehicle v69 = new Vehicle("MAN", "313 NG/CNG", 2, 2, 110, "v69");
