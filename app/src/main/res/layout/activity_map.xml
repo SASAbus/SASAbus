@@ -14,24 +14,22 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbar"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/appbarHeight"
             android:background="@color/primary_dark"
-            android:fitsSystemWindows="true"
-            app:elevation="4dp">
+            android:elevation="4dp"
+            android:fitsSystemWindows="true">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:layout_marginTop="@dimen/statusBarHeight"
                 android:background="?attr/colorPrimary"
                 android:theme="@style/ToolbarOverlay"
                 app:popupTheme="@style/MenuOverlay"/>
 
-        </android.support.design.widget.AppBarLayout>
+        </FrameLayout>
 
         <it.sasabz.android.sasabus.ui.widget.OffsetNestedSwipeRefreshLayout
             android:id="@+id/refresh"
