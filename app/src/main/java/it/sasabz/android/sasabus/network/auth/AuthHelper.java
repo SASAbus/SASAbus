@@ -90,8 +90,7 @@ public final class AuthHelper {
 
     public static void logout(Activity activity) {
         if (!isLoggedIn()) {
-            LogUtils.e(TAG, "Cannot log out a user which is not logged in");
-            return;
+            LogUtils.e(TAG, "Attempt to log out a player who is not logged in");
         }
 
         clearCredentials();
