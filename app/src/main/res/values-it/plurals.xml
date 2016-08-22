@@ -12,4 +12,19 @@
         <item quantity="other">%d’ cammino</item>
     </plurals>
 
+    <plurals name="eco_points_points">
+        <item quantity="one">%d punto</item>
+        <item quantity="other">%d punti</item>
+    </plurals>
+
+    <plurals name="eco_points_badge_dialog_points">
+        <item quantity="one">Questo distintivo ti dà %d punto.</item>
+        <item quantity="other">Questo distintivo ti dà %d punti.</item>
+    </plurals>
+
+    <plurals name="eco_points_badge_dialog_users">
+        <item quantity="one">%d giocatore ha questo distintivo.</item>
+        <item quantity="other">%d giocatori hanno questo distintivo.</item>
+    </plurals>
+
 </resources>
