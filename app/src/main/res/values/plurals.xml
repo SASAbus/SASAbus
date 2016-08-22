@@ -12,4 +12,19 @@
         <item quantity="other">%d’ walk</item>
     </plurals>
 
+    <plurals name="eco_points_points">
+        <item quantity="one">%d point</item>
+        <item quantity="other">%d points</item>
+    </plurals>
+
+    <plurals name="eco_points_badge_dialog_points">
+        <item quantity="one">This badge gives you %d points.</item>
+        <item quantity="other">This badge gives you %d points.</item>
+    </plurals>
+
+    <plurals name="eco_points_badge_dialog_users">
+        <item quantity="one">%d player has this badge.</item>
+        <item quantity="other">%d players have this badge.</item>
+    </plurals>
+
 </resources>
