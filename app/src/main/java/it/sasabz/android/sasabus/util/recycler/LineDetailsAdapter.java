@@ -42,6 +42,7 @@ import it.sasabz.android.sasabus.ui.bus.BusDetailActivity;
 
 /**
  * @author Alex Lardschneider
+ * @author David Dejori
  */
 public class LineDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -181,8 +182,7 @@ public class LineDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
-    final class ViewHolderBus extends RecyclerView.ViewHolder implements View.OnClickListener,
-            View.OnLongClickListener {
+    final class ViewHolderBus extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.list_lines_detail_current_name) TextView currentName;
         @BindView(R.id.list_lines_detail_current_time) TextView currentTime;
@@ -199,7 +199,6 @@ public class LineDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ButterKnife.bind(this, view);
 
             lineCard.setOnClickListener(this);
-            lineCard.setOnLongClickListener(this);
         }
 
         @Override
@@ -210,26 +209,10 @@ public class LineDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             LineDetail rowItem = mItems.get(position);
 
             if (rowItem.getAdditionalData() == null) {
-                Intent intent = new Intent(mContext, MapActivity.class);
-                intent.putExtra(Config.EXTRA_VEHICLE, rowItem.getVehicle());
-                mContext.startActivity(intent);
-            }
-        }
-
-        @Override
-        public boolean onLongClick(View view) {
-            int position = getLayoutPosition();
-            if (position == RecyclerView.NO_POSITION) return false;
-
-            LineDetail rowItem = mItems.get(position);
-
-            if (rowItem.getAdditionalData() == null) {
                 Intent intent = new Intent(mContext, BusDetailActivity.class);
                 intent.putExtra(Config.EXTRA_VEHICLE, rowItem.getVehicle());
                 mContext.startActivity(intent);
             }
-
-            return true;
         }
     }
 
