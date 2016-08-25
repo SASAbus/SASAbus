@@ -439,7 +439,7 @@ public class EcoPointsActivity extends BaseActivity implements View.OnClickListe
         progressText.setText(activity.getString(R.string.eco_points_badge_dialog_progress,
                 badge.progress));
 
-        progress.setProgress(badge.progress <= 3 ? 3 : badge.progress);
+        progress.setProgress(badge.progress);
 
         ImageView image = (ImageView) view.findViewById(R.id.dialog_badge_image);
 
