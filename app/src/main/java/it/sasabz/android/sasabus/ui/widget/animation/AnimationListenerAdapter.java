@@ -25,7 +25,7 @@ import android.view.animation.Animation;
  * Any custom listener that cares only about a subset of the methods of this listener can
  * simply subclass this adapter class instead of implementing the interface directly.
  */
-public class AnimationListenerAdapter implements Animation.AnimationListener {
+class AnimationListenerAdapter implements Animation.AnimationListener {
 
     @Override
     public void onAnimationStart(Animation animation) {

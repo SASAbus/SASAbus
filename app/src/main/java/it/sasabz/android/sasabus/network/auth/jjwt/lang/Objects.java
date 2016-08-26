@@ -17,7 +17,7 @@
 
 package it.sasabz.android.sasabus.network.auth.jjwt.lang;
 
-public abstract class Objects {
+abstract class Objects {
 
     /**
      * Returns {@code true} if the specified byte array is null or of zero length, {@code false} otherwise.

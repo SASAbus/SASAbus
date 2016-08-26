@@ -28,7 +28,7 @@ public final class Profile implements Parcelable {
     public final String username;
 
     @SerializedName("class")
-    public String cls;
+    public final String cls;
 
     public final int points;
     public final int badges;

@@ -76,7 +76,7 @@ public class ProfileFragment extends RxFragment implements View.OnClickListener 
     @BindView(R.id.recycler_leaderboard) RecyclerView recyclerView;
 
     public ArrayList<LeaderboardPlayer> mItems;
-    public LeaderboardAdapter mAdapter;
+    private LeaderboardAdapter mAdapter;
 
     public Profile profile;
 

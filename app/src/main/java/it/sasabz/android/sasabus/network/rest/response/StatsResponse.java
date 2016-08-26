@@ -23,7 +23,7 @@ import it.sasabz.android.sasabus.network.rest.model.TripStat;
 
 public class StatsResponse {
 
-    public List<TripStat> trips;
+    private List<TripStat> trips;
 
     @Override
     public String toString() {

@@ -32,7 +32,7 @@ import it.sasabz.android.sasabus.util.LogUtils;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 
-public class MapDownloadHelper {
+class MapDownloadHelper {
 
     private final String TAG = "MapDownloadHelper";
 
@@ -43,7 +43,7 @@ public class MapDownloadHelper {
 
     private static File rootFolder;
 
-    private WebView webView;
+    private final WebView webView;
 
     static File getRootFolder(Context context) {
         if (rootFolder == null) {

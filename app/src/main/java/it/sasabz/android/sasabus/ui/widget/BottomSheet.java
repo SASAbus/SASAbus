@@ -25,7 +25,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class BottomSheet<V extends View> extends BottomSheetBehavior<V> {
+class BottomSheet<V extends View> extends BottomSheetBehavior<V> {
 
     private boolean initialized;
     private static int defaultState;

@@ -49,10 +49,10 @@ public final class RealtimeBus implements Parcelable {
     public final int delayMin;
 
     @SerializedName("departure")
-    public final int departure;
+    private final int departure;
 
     @SerializedName("updated_min_ago")
-    public final int updatedMinAgo;
+    private final int updatedMinAgo;
 
     @SerializedName("latitude")
     public final double latitude;
@@ -61,7 +61,7 @@ public final class RealtimeBus implements Parcelable {
     public final double longitude;
 
     @SerializedName("color_hue")
-    public final int colorHue;
+    private final int colorHue;
 
     @SerializedName("color_hex")
     public final String colorHex;

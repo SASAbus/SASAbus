@@ -50,7 +50,7 @@ public class LeaderboardDetailsAdapter extends RecyclerView.Adapter<RecyclerView
     private int totalItemCount;
 
     private boolean loading;
-    public LoadMoreListener mListener;
+    public final LoadMoreListener mListener;
 
     public LeaderboardDetailsAdapter(Context context, List<LeaderboardPlayer> items,
                                      RecyclerView recyclerView, LoadMoreListener listener) {

@@ -37,7 +37,7 @@ import it.sasabz.android.sasabus.R;
  * A transition that morphs a circle into a rectangle, changing it's background color.
  */
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-public class MorphFabToDialog extends ChangeBounds {
+class MorphFabToDialog extends ChangeBounds {
 
     private static final String PROPERTY_COLOR = "property_color";
     private static final String PROPERTY_CORNER_RADIUS = "property_corner_radius";

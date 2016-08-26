@@ -31,7 +31,7 @@ public class LinePathMapView {
 
     private final String TAG = "LinePathMapView";
 
-    private WebView webView;
+    private final WebView webView;
 
     public LinePathMapView(Context context, WebView webView) {
         this.webView = webView;

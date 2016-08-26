@@ -36,11 +36,11 @@ public class Badge implements Parcelable {
     public final int users;
 
     @SerializedName("new")
-    public final boolean isNewBadge;
+    private final boolean isNewBadge;
 
     private final boolean locked;
 
-    protected Badge(Parcel in) {
+    private Badge(Parcel in) {
         id = in.readInt();
         title = in.readString();
         description = in.readString();

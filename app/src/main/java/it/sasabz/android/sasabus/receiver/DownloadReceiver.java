@@ -39,9 +39,9 @@ public class DownloadReceiver extends BroadcastReceiver {
 
     private static final String TAG = "DownloadReceiver";
 
-    private long downloadId;
-    private File zipFile;
-    private WebView webView;
+    private final long downloadId;
+    private final File zipFile;
+    private final WebView webView;
 
     public DownloadReceiver(long downloadId, File zipFile, WebView webView) {
         this.downloadId = downloadId;

@@ -267,7 +267,7 @@ public class EcoPointsActivity extends BaseActivity {
                 .show();
     }
 
-    public LeaderboardAdapter.ViewHolder findViewHolderForProfile() {
+    private LeaderboardAdapter.ViewHolder findViewHolderForProfile() {
         if (mProfileFragment == null || mProfileFragment.mItems == null ||
                 mProfileFragment.recyclerView == null || mProfileFragment.profile == null) {
             return null;

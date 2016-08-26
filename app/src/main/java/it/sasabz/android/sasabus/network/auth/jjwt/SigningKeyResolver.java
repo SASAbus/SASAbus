@@ -49,7 +49,7 @@ import java.security.Key;
  * @see SigningKeyResolverAdapter
  * @since 0.4
  */
-public interface SigningKeyResolver {
+interface SigningKeyResolver {
 
     /**
      * Returns the signing key that should be used to validate a digital signature for the Claims JWS with the specified

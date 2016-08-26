@@ -32,7 +32,7 @@ public class RealtimeMapView {
 
     private final String TAG = "RealtimeMapView";
 
-    private WebView webView;
+    private final WebView webView;
 
     private MapDownloadHelper downloadHelper;
 

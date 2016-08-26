@@ -129,7 +129,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
      * Various maps and lists to hold markers, bus data and filter.
      */
     private final ArrayList<RealtimeBus> mBusData = new ArrayList<>();
-    private ArrayList<Integer> mFilter = new ArrayList<>();
+    private final ArrayList<Integer> mFilter = new ArrayList<>();
 
     /**
      * Special type of swipe refresh layout which does not refresh when scrolled, as scrolling the

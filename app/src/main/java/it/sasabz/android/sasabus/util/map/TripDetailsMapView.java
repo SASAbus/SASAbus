@@ -32,9 +32,9 @@ public class TripDetailsMapView {
 
     private final String TAG = "BusStopsMapView";
 
-    private WebView webView;
+    private final WebView webView;
 
-    private Context context;
+    private final Context context;
 
     public TripDetailsMapView(Context context, WebView webView) {
         this.context = context;
