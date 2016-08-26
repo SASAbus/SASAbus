@@ -36,11 +36,11 @@ import java.lang.annotation.RetentionPolicy;
  */
 public final class AnimUtils {
 
-    public static final int DURATION_SHORT = 100;
+    private static final int DURATION_SHORT = 100;
     public static final int DURATION_MEDIUM = 250;
-    public static final int DURATION_LONG = 500;
+    private static final int DURATION_LONG = 500;
 
-    public static final int DURATION_EMPTY_STATE = DURATION_LONG;
+    private static final int DURATION_EMPTY_STATE = DURATION_LONG;
 
     private AnimUtils() {
     }

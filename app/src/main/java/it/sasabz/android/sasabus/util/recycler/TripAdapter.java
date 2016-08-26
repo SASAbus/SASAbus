@@ -117,6 +117,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
             int position = getAdapterPosition();
             if (position == RecyclerView.NO_POSITION) return false;
 
+            //noinspection CodeBlock2Expr
             new AlertDialog.Builder(context, R.style.DialogStyle)
                     .setMessage(R.string.dialog_trips_delete_message)
                     .setPositiveButton(R.string.delete, (dialog, which) -> {

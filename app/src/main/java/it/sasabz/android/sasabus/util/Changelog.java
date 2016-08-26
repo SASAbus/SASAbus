@@ -96,7 +96,7 @@ public final class Changelog {
             sb.append("</body>");
             sb.append("</html>");
         } catch (Exception e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
 
         return sb.toString();

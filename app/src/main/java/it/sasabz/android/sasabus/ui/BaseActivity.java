@@ -51,6 +51,7 @@ import it.sasabz.android.sasabus.ui.trips.TripsActivity;
 import it.sasabz.android.sasabus.util.Changelog;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Utils;
 
 /**
  * A base activity that handles common functionality in the app. This includes the
@@ -450,6 +451,6 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Naviga
     }
 
     protected String locale() {
-        return getResources().getConfiguration().locale.toString();
+        return Utils.locale(this);
     }
 }

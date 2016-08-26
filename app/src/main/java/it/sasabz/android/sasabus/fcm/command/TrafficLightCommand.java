@@ -77,7 +77,7 @@ public class TrafficLightCommand extends NotificationCommand implements FcmComma
             try {
                 json.put(entry.getKey(), entry.getValue());
             } catch (JSONException e) {
-                Utils.handleException(e);
+                Utils.logException(e);
             }
         }
 
@@ -113,7 +113,7 @@ public class TrafficLightCommand extends NotificationCommand implements FcmComma
             LogUtils.w(TAG, "Color: " + command.color);
             LogUtils.w(TAG, "City: " + command.city);
         } catch (Exception e) {
-            Utils.handleException(e);
+            Utils.logException(e);
 
             LogUtils.e(TAG, "Failed to parse GCM notification command.");
             return;
@@ -124,7 +124,7 @@ public class TrafficLightCommand extends NotificationCommand implements FcmComma
     }
 
     private void processCommand(Context context, TraficLightCommandModel command) {
-        String locale = context.getResources().getConfiguration().locale.toString();
+        String locale = Utils.locale(context);
 
         String title;
         String message;

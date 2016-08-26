@@ -233,7 +233,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
                         NotificationUtils.plannedTripDepartureIn(context, trip.getHash().hashCode(),
                                 trip.getLineId(), 0, 0, trip.getTitle(), minutes + 1);

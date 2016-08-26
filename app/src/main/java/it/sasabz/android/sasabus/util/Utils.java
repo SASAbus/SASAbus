@@ -76,10 +76,17 @@ public final class Utils {
         Resources resources = context.getResources();
         Configuration configuration = resources.getConfiguration();
 
-        if (!SettingsUtils.getLanguage(context).toLowerCase().equals("system")) {
-            configuration.locale = new Locale(SettingsUtils.getLanguage(context));
-        } else {
-            configuration.locale = new Locale(Locale.getDefault().getLanguage());
+        Locale locale = Locale.getDefault();
+
+        String language = SettingsUtils.getLanguage(context).toLowerCase();
+        if (!language.equals("system")) {
+            locale = new Locale(language);
+        }
+
+        //noinspection deprecation
+        configuration.locale = locale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            configuration.setLocale(locale);
         }
 
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
@@ -153,7 +160,7 @@ public final class Utils {
      * @param t the {@link Throwable} to log.
      */
     @SuppressWarnings("ChainOfInstanceofChecks")
-    public static void handleException(Throwable t) {
+    public static void logException(Throwable t) {
         if (BuildConfig.DEBUG) {
             t.printStackTrace();
         } else {
@@ -183,8 +190,8 @@ public final class Utils {
      *
      * @param t the {@link Throwable} to log.
      */
-    public static void handleException(Throwable t, String format, Object... params) {
-        handleException(new Throwable(String.format(format, params), t));
+    public static void logException(Throwable t, String format, Object... params) {
+        logException(new Throwable(String.format(format, params), t));
     }
 
     /**

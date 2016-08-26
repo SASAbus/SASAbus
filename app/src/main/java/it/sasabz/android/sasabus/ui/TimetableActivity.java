@@ -148,7 +148,7 @@ public class TimetableActivity extends BaseActivity implements Observer<Integer>
 
     @Override
     public void onError(Throwable throwable) {
-        Utils.handleException(throwable);
+        Utils.logException(throwable);
 
         progressBar.dismiss();
 
@@ -186,7 +186,7 @@ public class TimetableActivity extends BaseActivity implements Observer<Integer>
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
                     }
 
                     @Override

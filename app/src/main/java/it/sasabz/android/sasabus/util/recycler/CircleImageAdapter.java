@@ -40,7 +40,7 @@ public class CircleImageAdapter extends RecyclerView.Adapter<CircleImageAdapter.
 
     private final Context mContext;
     private final List<String> mItems;
-    private OnImageClickedListener mListener;
+    private final OnImageClickedListener mListener;
 
     public CircleImageAdapter(Context context, List<String> items,
                               OnImageClickedListener listener) {

@@ -177,7 +177,7 @@ public class SyncHelper {
                         throw new IllegalStateException("Unknown operation " + op);
                 }
             } catch (Throwable throwable) {
-                Utils.handleException(throwable);
+                Utils.logException(throwable);
 
                 LogUtils.e(TAG, "Error performing remote sync");
             }
@@ -239,7 +239,7 @@ public class SyncHelper {
             }
 
             if (!serverMissing.isEmpty()) {
-                dataChanged |= TripSyncHelper.upload(tripToCloudTrip(serverMissing));
+                dataChanged |= TripSyncHelper.upload(mContext, tripToCloudTrip(serverMissing));
             }
 
             LogUtils.e(TAG, "Finished trip sync");
@@ -377,7 +377,7 @@ public class SyncHelper {
 
                 @Override
                 public void onError(Throwable e) {
-                    Utils.handleException(e);
+                    Utils.logException(e);
                 }
 
                 @Override

@@ -275,7 +275,7 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
     }
 
     private void searchFor(String query) {
-        String order = getResources().getConfiguration().locale.toString().contains("de") ? "nameDe" : "nameIt";
+        String order = Utils.locale(this).contains("de") ? "nameDe" : "nameIt";
 
         mRealm.where(SadBusStop.class)
                 .contains("nameDe", query).or().contains("nameDe", query.toLowerCase()).or()

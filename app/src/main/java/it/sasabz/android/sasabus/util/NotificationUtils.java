@@ -41,10 +41,10 @@ import java.util.concurrent.ExecutionException;
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.beacon.ecopoints.badge.Badge;
 import it.sasabz.android.sasabus.beacon.survey.SurveyActivity;
 import it.sasabz.android.sasabus.model.BusStopDetail;
 import it.sasabz.android.sasabus.model.line.Lines;
-import it.sasabz.android.sasabus.network.rest.model.Badge;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.ui.MapActivity;
 import it.sasabz.android.sasabus.ui.NewsActivity;
@@ -315,7 +315,7 @@ public final class NotificationUtils {
         notificationManager.notify(Config.NOTIFICATION_SURVEY, mBuilder.build());
     }
 
-    public static void badge(Context context, it.sasabz.android.sasabus.beacon.ecopoints.badge.Badge badge) {
+    public static void badge(Context context, Badge badge) {
         Preconditions.checkNotNull(context, "context == null");
         Preconditions.checkNotNull(badge, "badge == null");
 
@@ -347,7 +347,7 @@ public final class NotificationUtils {
     }
 
     @WorkerThread
-    public static void badge(Context context, Badge badge) {
+    public static void badge(Context context, it.sasabz.android.sasabus.network.rest.model.Badge badge) {
         Preconditions.checkNotNull(context, "context == null");
         Preconditions.checkNotNull(badge, "badge == null");
 
@@ -373,7 +373,7 @@ public final class NotificationUtils {
             resultIntent.putExtra(Config.EXTRA_BADGE, badge);
 
             PendingIntent pendingIntent = PendingIntent.getActivity(context,
-                    Config.NOTIFICATION_BADGE,
+                    badge.id,
                     resultIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -381,9 +381,10 @@ public final class NotificationUtils {
 
             NotificationManager notificationManager =
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(Config.NOTIFICATION_BADGE, mBuilder.build());
+
+            notificationManager.notify(badge.id, mBuilder.build());
         } catch (InterruptedException | ExecutionException e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
     }
 
@@ -396,7 +397,7 @@ public final class NotificationUtils {
     public static void error(Context context, Throwable e) {
         if (!BuildConfig.DEBUG) {
             LogUtils.e(TAG, "Called error notification with production build.");
-            Utils.handleException(new Throwable("Called error notification with " +
+            Utils.logException(new Throwable("Called error notification with " +
                     "production build."));
 
             return;

@@ -23,8 +23,7 @@ import java.util.List;
 
 public class TripsResponse {
 
-    @SerializedName("trip")
-    public Trip trip;
+    @SerializedName("trip") private Trip trip;
 
     public int getLineId() {
         return trip.lineId;

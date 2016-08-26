@@ -168,7 +168,7 @@ public class LinesFavoritesFragment extends RxFragment {
 
                     sb.deleteCharAt(sb.length() - 1);
 
-                    String language = getResources().getConfiguration().locale.toString();
+                    String language = Utils.locale(getActivity());
 
                     LinesApi linesApi = RestClient.ADAPTER.create(LinesApi.class);
 
@@ -184,7 +184,7 @@ public class LinesFavoritesFragment extends RxFragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
                         mErrorGeneral.setVisibility(View.VISIBLE);
                         mErrorWifi.setVisibility(View.GONE);

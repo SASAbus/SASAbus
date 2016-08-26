@@ -39,9 +39,9 @@ class JSInterface {
 
     private static final String TAG = "JSInterface";
 
-    private Context context;
+    private final Context context;
 
-    private File rootFolder;
+    private final File rootFolder;
 
     JSInterface(Context context) {
         this.context = context;

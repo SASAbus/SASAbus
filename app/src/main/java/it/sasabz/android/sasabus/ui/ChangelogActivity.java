@@ -113,7 +113,7 @@ public class ChangelogActivity extends AppCompatActivity {
 
             mAdapter.notifyDataSetChanged();
         } catch (Exception e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
     }
 }

@@ -114,7 +114,7 @@ public final class ReportHelper {
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
                         barProgressDialog.dismiss();
 
@@ -160,7 +160,7 @@ public final class ReportHelper {
         try {
             mActivity.startActivityForResult(intent, SELECT_PHOTO);
         } catch (ActivityNotFoundException e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
     }
 
@@ -248,7 +248,7 @@ public final class ReportHelper {
             screenSize = DeviceUtils.getScreenWidth(context) + "x" +
                     DeviceUtils.getScreenHeight(context);
 
-            locale = context.getResources().getConfiguration().locale.toString();
+            locale = Utils.locale(context);
 
             playServicesStatus = Utils.getPlayServicesStatus(context);
 

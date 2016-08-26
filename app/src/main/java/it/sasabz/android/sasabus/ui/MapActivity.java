@@ -129,7 +129,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
      * Various maps and lists to hold markers, bus data and filter.
      */
     private final ArrayList<RealtimeBus> mBusData = new ArrayList<>();
-    private ArrayList<Integer> mFilter = new ArrayList<>();
+    private final ArrayList<Integer> mFilter = new ArrayList<>();
 
     /**
      * Special type of swipe refresh layout which does not refresh when scrolled, as scrolling the
@@ -417,7 +417,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onError(Throwable e) {
-        Utils.handleException(e);
+        Utils.logException(e);
 
         mIsRefreshing = false;
         showErrorSnackbar(R.string.error_general);
@@ -485,7 +485,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
                         @Override
                         public void onError(Throwable e) {
-                            Utils.handleException(e);
+                            Utils.logException(e);
                         }
 
                         @Override
@@ -622,7 +622,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(response.link)));
                     } catch (ActivityNotFoundException e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
                     }
                 });
                 break;

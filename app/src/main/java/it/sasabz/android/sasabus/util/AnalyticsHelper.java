@@ -133,7 +133,7 @@ public final class AnalyticsHelper {
                 mTracker.setAppVersion(BuildConfig.VERSION_NAME);
                 mTracker.setSessionTimeout(300);
             } catch (Exception e) {
-                Utils.handleException(e);
+                Utils.logException(e);
 
                 // If anything goes wrong, force an opt-out of tracking. It's better to accidentally
                 // protect privacy than accidentally collect data.

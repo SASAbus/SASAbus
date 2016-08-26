@@ -150,7 +150,7 @@ public class ParkingActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
                         mErrorGeneral.setVisibility(View.VISIBLE);
 

@@ -157,7 +157,7 @@ public class LinesActivity extends BaseActivity {
             getSupportFragmentManager().putFragment(outState, LinesAllFragment.class.getName(), mLinesAllFragment);
             getSupportFragmentManager().putFragment(outState, LinesHydrogenFragment.class.getName(), mLinesHydrogenFragment);
         } catch (IllegalStateException e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
     }
 

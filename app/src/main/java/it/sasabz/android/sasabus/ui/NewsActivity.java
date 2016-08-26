@@ -173,7 +173,7 @@ public class NewsActivity extends BaseActivity {
             getSupportFragmentManager().putFragment(outState, ZONE_BZ, mNewsBZFragment);
             getSupportFragmentManager().putFragment(outState, ZONE_ME, mNewsMEFragment);
         } catch (IllegalStateException e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
     }
 
@@ -222,7 +222,7 @@ public class NewsActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
                         mNewsAllFragment.onFailure("error");
                         mNewsBZFragment.onFailure("error");

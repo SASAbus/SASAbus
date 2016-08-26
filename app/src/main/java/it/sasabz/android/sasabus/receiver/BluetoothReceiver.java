@@ -68,7 +68,7 @@ public class BluetoothReceiver extends WakefulBroadcastReceiver {
                 NotificationUtils.cancelBus(context);
             }
         } catch (Exception e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
     }
 }

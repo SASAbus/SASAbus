@@ -75,7 +75,7 @@ public final class FcmUtils {
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
                         FcmSettings.setGcmTokenSent(context, false);
                     }

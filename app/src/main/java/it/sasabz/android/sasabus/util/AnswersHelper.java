@@ -18,6 +18,7 @@
 package it.sasabz.android.sasabus.util;
 
 import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.crashlytics.android.answers.LoginEvent;
 import com.crashlytics.android.answers.SignUpEvent;
 
@@ -28,7 +29,14 @@ public final class AnswersHelper {
     private AnswersHelper() {
     }
 
-    public static void logLogin() {
+    public static void logProfileAction(String action) {
+        CustomEvent event = new CustomEvent("EcoPointsProfile")
+                .putCustomAttribute("Category", action);
+
+        Answers.getInstance().logCustom(event);
+    }
+
+    public static void logLoginSuccess() {
         if (!BuildConfig.DEBUG) {
             LoginEvent event = new LoginEvent()
                     .putSuccess(true);
@@ -37,7 +45,7 @@ public final class AnswersHelper {
         }
     }
 
-    public static void logLogin(String error) {
+    public static void logLoginError(String error) {
         if (!BuildConfig.DEBUG) {
             LoginEvent event = new LoginEvent()
                     .putSuccess(false)
@@ -47,7 +55,7 @@ public final class AnswersHelper {
         }
     }
 
-    public static void logSignUp() {
+    public static void logSignUpSuccess() {
         if (!BuildConfig.DEBUG) {
             SignUpEvent event = new SignUpEvent()
                     .putSuccess(true);
@@ -56,7 +64,7 @@ public final class AnswersHelper {
         }
     }
 
-    public static void logSignUp(String error) {
+    public static void logSignUpError(String error) {
         if (!BuildConfig.DEBUG) {
             SignUpEvent event = new SignUpEvent()
                     .putSuccess(false)

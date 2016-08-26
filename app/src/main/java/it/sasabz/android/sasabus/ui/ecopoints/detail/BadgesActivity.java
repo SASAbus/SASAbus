@@ -15,19 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.sasabz.android.sasabus.ui.ecopoints;
+package it.sasabz.android.sasabus.ui.ecopoints.detail;
 
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,26 +38,29 @@ import it.sasabz.android.sasabus.network.NetUtils;
 import it.sasabz.android.sasabus.network.auth.AuthHelper;
 import it.sasabz.android.sasabus.network.rest.RestClient;
 import it.sasabz.android.sasabus.network.rest.api.EcoPointsApi;
-import it.sasabz.android.sasabus.network.rest.model.LeaderboardPlayer;
-import it.sasabz.android.sasabus.network.rest.response.LeaderboardResponse;
+import it.sasabz.android.sasabus.network.rest.model.Badge;
+import it.sasabz.android.sasabus.network.rest.response.BadgesResponse;
+import it.sasabz.android.sasabus.ui.ecopoints.LoginActivity;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
-import it.sasabz.android.sasabus.util.recycler.LeaderboardDetailsAdapter;
+import it.sasabz.android.sasabus.util.recycler.BadgeAdapter;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class EcoPointsLeaderboardActivity extends AppCompatActivity {
+public class BadgesActivity extends AppCompatActivity {
 
-    private static final String TAG = "EcoPointsLeaderboardActivity";
+    private static final String TAG = "BadgesActivity";
 
     @BindView(R.id.recycler) RecyclerView recyclerView;
+    @BindView(R.id.refresh) SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private ArrayList<LeaderboardPlayer> mItems;
-    private LeaderboardDetailsAdapter mAdapter;
+    @BindView(R.id.error_general) RelativeLayout errorGeneral;
+    @BindView(R.id.error_wifi) RelativeLayout errorWifi;
 
-    private int pageIndex;
+    private ArrayList<Badge> mItems;
+    private BadgeAdapter mAdapter;
 
     private BroadcastReceiver logoutReceiver;
 
@@ -73,7 +78,7 @@ public class EcoPointsLeaderboardActivity extends AppCompatActivity {
 
         logoutReceiver = AuthHelper.registerLogoutReceiver(this);
 
-        setContentView(R.layout.activity_eco_points_leaderboard);
+        setContentView(R.layout.activity_eco_points_badges);
         ButterKnife.bind(this);
 
         AnalyticsHelper.sendScreenView(TAG);
@@ -85,7 +90,14 @@ public class EcoPointsLeaderboardActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_amber, R.color.primary_red,
+                R.color.primary_green, R.color.primary_indigo);
+        mSwipeRefreshLayout.setOnRefreshListener(this::parseData);
+
         mItems = new ArrayList<>();
+        mAdapter = new BadgeAdapter(this, mItems);
+
+        recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this) {
             @Override
             public boolean canScrollHorizontally() {
@@ -93,19 +105,7 @@ public class EcoPointsLeaderboardActivity extends AppCompatActivity {
             }
         });
 
-        mAdapter = new LeaderboardDetailsAdapter(this, mItems, recyclerView, () -> {
-            mItems.add(null);
-            mAdapter.notifyItemInserted(mItems.size() - 1);
-
-            pageIndex++;
-
-            parseData();
-        });
-
-        recyclerView.setAdapter(mAdapter);
-
-        mAdapter.setLoading(true);
-        mAdapter.mListener.loadMore();
+        parseData();
     }
 
     @Override
@@ -117,14 +117,24 @@ public class EcoPointsLeaderboardActivity extends AppCompatActivity {
 
     private void parseData() {
         if (!NetUtils.isOnline(this)) {
+            errorWifi.setVisibility(View.VISIBLE);
+            errorGeneral.setVisibility(View.GONE);
+
+            mItems.clear();
+            mAdapter.notifyDataSetChanged();
+
+            mSwipeRefreshLayout.setRefreshing(false);
+
             return;
         }
 
+        mSwipeRefreshLayout.setRefreshing(true);
+
         EcoPointsApi ecoPointsApi = RestClient.ADAPTER.create(EcoPointsApi.class);
-        ecoPointsApi.getLeaderboard(pageIndex)
+        ecoPointsApi.getAllBadges()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<LeaderboardResponse>() {
+                .subscribe(new Observer<BadgesResponse>() {
                     @Override
                     public void onCompleted() {
 
@@ -132,21 +142,30 @@ public class EcoPointsLeaderboardActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
-                        AuthHelper.checkIfUnauthorized(EcoPointsLeaderboardActivity.this, e);
+                        AuthHelper.checkIfUnauthorized(BadgesActivity.this, e);
+
+                        mItems.clear();
+                        mAdapter.notifyDataSetChanged();
+
+                        errorGeneral.setVisibility(View.VISIBLE);
+                        errorWifi.setVisibility(View.GONE);
+
+                        mSwipeRefreshLayout.setRefreshing(false);
                     }
 
                     @Override
-                    public void onNext(LeaderboardResponse leaderboardResponse) {
-                        mItems.removeAll(Collections.singleton((LeaderboardPlayer) null));
+                    public void onNext(BadgesResponse badgesResponse) {
+                        mItems.clear();
+                        mItems.addAll(badgesResponse.badges);
 
                         mAdapter.notifyDataSetChanged();
 
-                        mItems.addAll(leaderboardResponse.leaderboard);
-                        mAdapter.notifyDataSetChanged();
+                        errorGeneral.setVisibility(View.GONE);
+                        errorWifi.setVisibility(View.GONE);
 
-                        mAdapter.setLoading(false);
+                        mSwipeRefreshLayout.setRefreshing(false);
                     }
                 });
     }

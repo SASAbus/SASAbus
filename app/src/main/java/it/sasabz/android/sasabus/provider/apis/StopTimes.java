@@ -54,7 +54,7 @@ public final class StopTimes {
                         Integer.parseInt(jStopTime.getString("HP_HZT")));
             }
         } catch (JSONException | IOException e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
 
         //noinspection CallToSystemGC

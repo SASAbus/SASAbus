@@ -39,7 +39,7 @@ public class CurrentTrip implements JsonSerializable {
     private boolean updated;
 
     private final List<BusStop> path;
-    private List<it.sasabz.android.sasabus.provider.model.BusStop> times;
+    private final List<it.sasabz.android.sasabus.provider.model.BusStop> times;
 
     CurrentTrip(Context context, BusBeacon beacon) {
         this.mContext = context;

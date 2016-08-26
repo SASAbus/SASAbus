@@ -54,7 +54,7 @@ public final class HaltTimes {
                         Integer.parseInt(jStopTime.getString("FRT_HZT_ZEIT")));
             }
         } catch (JSONException | IOException e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
 
         //noinspection CallToSystemGC

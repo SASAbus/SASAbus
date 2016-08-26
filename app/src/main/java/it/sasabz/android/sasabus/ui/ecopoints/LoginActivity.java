@@ -201,7 +201,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                         @Override
                         public void onError(Throwable e) {
-                            Utils.handleException(e);
+                            Utils.logException(e);
 
                             progressDialog.dismiss();
 
@@ -256,7 +256,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                         @Override
                         public void onError(Throwable e) {
-                            Utils.handleException(e);
+                            Utils.logException(e);
 
                             loginFailed();
                         }
@@ -297,7 +297,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                 field.setError(response.errorMessage);
                             }
 
-                            AnswersHelper.logLogin(response.param);
+                            AnswersHelper.logLoginError(response.param);
 
                             animateViews(false);
                         }
@@ -343,7 +343,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void loginFailed() {
         animateViews(false);
 
-        AnswersHelper.logLogin("Token error");
+        AnswersHelper.logLoginError("Token error");
 
         UIUtils.okDialog(this, R.string.login_failed_dialog_title,
                 R.string.login_failed_dialog_subtitle);
@@ -354,7 +354,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             finish();
             startActivity(new Intent(this, EcoPointsActivity.class));
 
-            AnswersHelper.logLogin();
+            AnswersHelper.logLoginSuccess();
         } else {
             LogUtils.e(TAG, "Could not set token");
             loginFailed();

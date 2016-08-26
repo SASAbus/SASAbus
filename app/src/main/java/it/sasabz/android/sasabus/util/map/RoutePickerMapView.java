@@ -31,9 +31,9 @@ public class RoutePickerMapView {
 
     private final String TAG = "BusStopsMapView";
 
-    private WebView webView;
+    private final WebView webView;
 
-    private RouteMapPickerActivity activity;
+    private final RouteMapPickerActivity activity;
 
     public RoutePickerMapView(RouteMapPickerActivity activity, WebView webView) {
         this.activity = activity;

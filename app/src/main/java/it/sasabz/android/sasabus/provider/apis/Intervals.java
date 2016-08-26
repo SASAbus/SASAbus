@@ -56,7 +56,7 @@ public final class Intervals {
                 ), Integer.parseInt(jInterval.getString("SEL_FZT")));
             }
         } catch (JSONException | IOException e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
 
         //noinspection CallToSystemGC

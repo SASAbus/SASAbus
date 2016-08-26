@@ -24,6 +24,7 @@ import it.sasabz.android.sasabus.network.rest.model.CloudPlannedTrip;
 import it.sasabz.android.sasabus.network.rest.model.CloudTrip;
 import it.sasabz.android.sasabus.network.rest.response.CloudResponseGet;
 import it.sasabz.android.sasabus.network.rest.response.CloudResponsePost;
+import it.sasabz.android.sasabus.network.rest.response.TripUploadResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -41,14 +42,14 @@ public interface CloudApi {
     @POST(Endpoint.CLOUD_TRIPS)
     Call<CloudResponsePost> downloadTrips(@Body List<String> trips);
 
-    @PUT(Endpoint.CLOUD_TRIPS)
-    Call<Void> uploadTrips(@Body List<CloudTrip> body);
-
     @DELETE(Endpoint.CLOUD_TRIPS_DELETE)
     Observable<Void> deleteTripRx(@Path("hash") String hash);
 
     @DELETE(Endpoint.CLOUD_TRIPS_DELETE)
     Call<Void> deleteTrip(@Path("hash") String hash);
+
+    @PUT(Endpoint.CLOUD_TRIPS)
+    Observable<TripUploadResponse> uploadTrips(@Body List<CloudTrip> body);
 
     @GET(Endpoint.CLOUD_PLANNED_TRIPS)
     Call<CloudResponseGet> comparePlannedTrips();

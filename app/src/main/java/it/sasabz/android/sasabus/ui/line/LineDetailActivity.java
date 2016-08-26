@@ -251,7 +251,7 @@ public class LineDetailActivity extends RxAppCompatActivity implements OnClickLi
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
                         mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
                     }
 
@@ -291,7 +291,7 @@ public class LineDetailActivity extends RxAppCompatActivity implements OnClickLi
                 }
             });
         } else {
-            String locale = getResources().getConfiguration().locale.toString();
+            String locale = Utils.locale(this);
             LinesApi linesApi = RestClient.ADAPTER.create(LinesApi.class);
 
             return linesApi.line(locale, lineId)

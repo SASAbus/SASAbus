@@ -77,7 +77,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.list_item_leaderboard_profile_picture) ImageView profilePicture;
+        @BindView(R.id.list_item_leaderboard_profile_picture) public ImageView profilePicture;
         @BindView(R.id.list_item_leaderboard_rank) TextView rank;
         @BindView(R.id.list_item_leaderboard_name) TextView name;
         @BindView(R.id.list_item_leaderboard_points) TextView points;

@@ -15,19 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.sasabz.android.sasabus.network.auth.jjwt;
+package it.sasabz.android.sasabus.network.rest.response;
 
-/**
- * Exception thrown when discovering that a required claim does not equal the required value, indicating the JWT is
- * invalid and may not be used.
- *
- * @since 0.6
- */
-public class IncorrectClaimException extends InvalidClaimException {
+import com.google.gson.annotations.SerializedName;
 
-    private static final long serialVersionUID = 1108704169682900519L;
+import java.util.List;
 
-    public IncorrectClaimException(Header header, Claims claims, String message) {
-        super(header, claims, message);
-    }
+import it.sasabz.android.sasabus.network.rest.model.Badge;
+
+public class TripUploadResponse {
+
+    public int status;
+
+    @SerializedName("earned_badges")
+    public List<Badge> badges;
 }

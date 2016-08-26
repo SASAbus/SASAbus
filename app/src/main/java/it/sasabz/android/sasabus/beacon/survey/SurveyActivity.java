@@ -216,7 +216,7 @@ public class SurveyActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
                         realm.beginTransaction();
 

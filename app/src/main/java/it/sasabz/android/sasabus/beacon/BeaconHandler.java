@@ -166,7 +166,7 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
                 mBusStopBeaconHandler.start();
             }
         } catch (RemoteException e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
     }
 
@@ -189,7 +189,7 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
                 mBusStopBeaconHandler.stop();
             }
         } catch (RemoteException e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
     }
 

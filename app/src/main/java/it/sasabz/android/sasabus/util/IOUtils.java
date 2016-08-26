@@ -87,7 +87,7 @@ public final class IOUtils {
                 try {
                     bufferedReader.close();
                 } catch (IOException e) {
-                    Utils.handleException(e);
+                    Utils.logException(e);
                 }
             }
         }
@@ -157,7 +157,7 @@ public final class IOUtils {
                             outputStream.flush();
                             outputStream.close();
                         } catch (IOException e) {
-                            Utils.handleException(e);
+                            Utils.logException(e);
                         }
                     }
                 }
