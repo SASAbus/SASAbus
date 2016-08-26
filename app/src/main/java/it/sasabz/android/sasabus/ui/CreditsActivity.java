@@ -41,6 +41,7 @@ import it.sasabz.android.sasabus.util.Utils;
  * Shows the credits of this app, like the developers and used libraries.
  *
  * @author Alex Lardschneider
+ * @author David Dejori
  */
 public class CreditsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -84,8 +85,6 @@ public class CreditsActivity extends AppCompatActivity implements View.OnClickLi
             return true;
         });
 
-        LinearLayout alex = (LinearLayout) findViewById(R.id.credits_alex);
-        LinearLayout david = (LinearLayout) findViewById(R.id.credits_david);
         TextView email = (TextView) findViewById(R.id.credits_email);
         CardView okhttp = (CardView) findViewById(R.id.credits_okhttp);
         CardView retrofit = (CardView) findViewById(R.id.credits_retrofit);
@@ -93,8 +92,6 @@ public class CreditsActivity extends AppCompatActivity implements View.OnClickLi
         CardView crashlytics = (CardView) findViewById(R.id.credits_crashlytics);
         CardView altbeacon = (CardView) findViewById(R.id.credits_altbeacon);
 
-        alex.setOnClickListener(this);
-        david.setOnClickListener(this);
         email.setOnClickListener(this);
         okhttp.setOnClickListener(this);
         retrofit.setOnClickListener(this);
@@ -116,12 +113,6 @@ public class CreditsActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.credits_alex:
-                mTabsHelper.launchUrl(Uri.parse("https://plus.google.com/u/1/+AlexLardschneider/posts"));
-                break;
-            case R.id.credits_david:
-                mTabsHelper.launchUrl(Uri.parse("https://plus.google.com/102078461347682395386/posts"));
-                break;
             case R.id.credits_email:
                 startActivity(new Intent(this, AboutActivity.class).putExtra("dialog_report", true));
                 break;

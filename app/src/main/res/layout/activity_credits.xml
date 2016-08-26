@@ -31,7 +31,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="1">
 
             <ImageView
                 android:id="@+id/credits_app_icon"
@@ -44,9 +45,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
                 android:text="@string/app_name"
-                android:layout_gravity="center_horizontal"
                 android:textColor="@color/text_default"
                 android:textSize="16sp"/>
 
@@ -62,133 +63,381 @@
                 android:id="@+id/credits_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/credits_email"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/primary_blue"
-                android:textSize="12sp"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
-                android:padding="12dp"/>
+                android:padding="12dp"
+                android:text="@string/credits_email"
+                android:textColor="@color/primary_blue"
+                android:textSize="12sp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/divider"
-                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"/>
+                android:layout_marginTop="20dp"
+                android:background="@color/divider"/>
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginStart="20dp"
-                android:textColor="@color/text_default"
+                android:layout_marginTop="20dp"
                 android:text="@string/credits_developers"
+                android:textColor="@color/text_default"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
             <LinearLayout
-                android:id="@+id/credits_alex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp">
+                android:orientation="horizontal">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:src="@drawable/background_alex"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"/>
+                    android:src="@drawable/alex_lardschneider"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginStart="20dp"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp">
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Alex Lardschneider"
                         android:textColor="@color/text_default"
-                        android:textSize="16sp"
-                        android:text="@string/credits_alex_title"/>
+                        android:textSize="16sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="alex.lardschneider@gmail.com"
                         android:textColor="@color/text_primary"
-                        android:textSize="12sp"
-                        android:text="@string/credits_alex_sub"/>
+                        android:textSize="12sp"/>
 
                 </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/credits_david"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="0dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="0dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp">
+                android:orientation="horizontal">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:src="@drawable/background_david"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"/>
+                    android:src="@drawable/david_dejori"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginStart="20dp"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp">
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="David Dejori"
                         android:textColor="@color/text_default"
-                        android:textSize="16sp"
-                        android:text="@string/credits_david_title"/>
+                        android:textSize="16sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="dejoridavid@gmail.it"
                         android:textColor="@color/text_primary"
-                        android:textSize="12sp"
-                        android:text="@string/credits_david_sub"/>
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="0dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/paolo_dongilli"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Paolo Dongilli"
+                        android:textColor="@color/text_default"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="paolo.dongilli@gmail.com"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="0dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/markus_windegger"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Markus Windegger"
+                        android:textColor="@color/text_default"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="windegger@sasabz.it"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="0dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/davide_montesin"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Davide Montesin"
+                        android:textColor="@color/text_default"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="d@vide.bz"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="0dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/thomas_nocker"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Thomas Nocker"
+                        android:textColor="@color/text_default"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="t.nocker.tn@gmail.com"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="0dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/raiffeisen"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Raiffeisen OnLine GmbH"
+                        android:textColor="@color/text_default"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="info@raiffeisen.net"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12sp"/>
 
                 </LinearLayout>
 
@@ -197,22 +446,22 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/divider"
-                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"/>
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/divider"/>
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginStart="20dp"
-                android:textColor="@color/text_default"
+                android:layout_marginTop="20dp"
                 android:text="@string/credits_license_title"
+                android:textColor="@color/text_default"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
@@ -220,59 +469,59 @@
                 android:id="@+id/credits_okhttp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
-                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
                 android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
                 card_view:cardBackgroundColor="@color/card_background"
-                card_view:cardElevation="2sp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginStart="15dp">
+                card_view:cardElevation="2sp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginBottom="12dp"
-                    android:layout_marginRight="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="12dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="20sp"
+                        android:text="@string/credits_okhttp_title"
                         android:textColor="@color/text_default"
-                        android:text="@string/credits_okhttp_title"/>
+                        android:textSize="20sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
+                        android:text="@string/credits_okhttp_sub"
                         android:textColor="@color/text_default"
-                        android:text="@string/credits_okhttp_sub"/>
+                        android:textSize="16sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:text="@string/credits_license_apache"
                         android:textColor="@color/text_primary"
-                        android:text="@string/credits_license_apache"/>
+                        android:textSize="12sp"/>
 
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_info"
-                    android:tint="@color/default_icon_color"
                     android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="32dp"
                     android:layout_marginRight="32dp"
-                    android:layout_marginEnd="32dp"/>
+                    android:src="@drawable/ic_info"
+                    android:tint="@color/default_icon_color"/>
 
             </android.support.v7.widget.CardView>
 
@@ -280,59 +529,59 @@
                 android:id="@+id/credits_retrofit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true"
-                card_view:cardBackgroundColor="@color/card_background"
-                card_view:cardElevation="2sp"
                 android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp">
+                android:layout_marginTop="5dp"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                card_view:cardBackgroundColor="@color/card_background"
+                card_view:cardElevation="2sp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginBottom="12dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp">
+                    android:layout_marginTop="12dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="20sp"
+                        android:text="@string/credits_retrofit_title"
                         android:textColor="@color/text_default"
-                        android:text="@string/credits_retrofit_title"/>
+                        android:textSize="20sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
+                        android:text="@string/credits_retrofit_sub"
                         android:textColor="@color/text_default"
-                        android:text="@string/credits_retrofit_sub"/>
+                        android:textSize="16sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:text="@string/credits_license_apache"
                         android:textColor="@color/text_primary"
-                        android:text="@string/credits_license_apache"/>
+                        android:textSize="12sp"/>
 
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_info"
-                    android:tint="@color/default_icon_color"
                     android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="32dp"
                     android:layout_marginRight="32dp"
-                    android:layout_marginEnd="32dp"/>
+                    android:src="@drawable/ic_info"
+                    android:tint="@color/default_icon_color"/>
 
             </android.support.v7.widget.CardView>
 
@@ -340,59 +589,59 @@
                 android:id="@+id/credits_appcompat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true"
-                card_view:cardBackgroundColor="@color/card_background"
-                card_view:cardElevation="2sp"
                 android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp">
+                android:layout_marginTop="5dp"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                card_view:cardBackgroundColor="@color/card_background"
+                card_view:cardElevation="2sp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginBottom="12dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp">
+                    android:layout_marginTop="12dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="20sp"
+                        android:text="@string/credits_appcompat_title"
                         android:textColor="@color/text_default"
-                        android:text="@string/credits_appcompat_title"/>
+                        android:textSize="20sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
+                        android:text="@string/credits_appcompat_sub"
                         android:textColor="@color/text_default"
-                        android:text="@string/credits_appcompat_sub"/>
+                        android:textSize="16sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:text="@string/credits_license_apache"
                         android:textColor="@color/text_primary"
-                        android:text="@string/credits_license_apache"/>
+                        android:textSize="12sp"/>
 
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_info"
-                    android:tint="@color/default_icon_color"
                     android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="32dp"
                     android:layout_marginRight="32dp"
-                    android:layout_marginEnd="32dp"/>
+                    android:src="@drawable/ic_info"
+                    android:tint="@color/default_icon_color"/>
 
             </android.support.v7.widget.CardView>
 
@@ -400,59 +649,59 @@
                 android:id="@+id/credits_crashlytics"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true"
-                card_view:cardBackgroundColor="@color/card_background"
-                card_view:cardElevation="2sp"
                 android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp">
+                android:layout_marginTop="5dp"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                card_view:cardBackgroundColor="@color/card_background"
+                card_view:cardElevation="2sp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginBottom="12dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp">
+                    android:layout_marginTop="12dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="20sp"
+                        android:text="@string/credits_crashlytics_title"
                         android:textColor="@color/text_default"
-                        android:text="@string/credits_crashlytics_title"/>
+                        android:textSize="20sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
+                        android:text="@string/credits_crashlytics_sub"
                         android:textColor="@color/text_default"
-                        android:text="@string/credits_crashlytics_sub"/>
+                        android:textSize="16sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:text="@string/credits_license_apache"
                         android:textColor="@color/text_primary"
-                        android:text="@string/credits_license_apache"/>
+                        android:textSize="12sp"/>
 
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_info"
-                    android:tint="@color/default_icon_color"
                     android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="32dp"
                     android:layout_marginRight="32dp"
-                    android:layout_marginEnd="32dp"/>
+                    android:src="@drawable/ic_info"
+                    android:tint="@color/default_icon_color"/>
 
             </android.support.v7.widget.CardView>
 
@@ -460,94 +709,94 @@
                 android:id="@+id/credits_altbeacon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true"
-                card_view:cardBackgroundColor="@color/card_background"
-                card_view:cardElevation="2sp"
                 android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp">
+                android:layout_marginTop="5dp"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                card_view:cardBackgroundColor="@color/card_background"
+                card_view:cardElevation="2sp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginBottom="12dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp">
+                    android:layout_marginTop="12dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="20sp"
+                        android:text="@string/credits_altbeacon_title"
                         android:textColor="@color/text_default"
-                        android:text="@string/credits_altbeacon_title"/>
+                        android:textSize="20sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
+                        android:text="@string/credits_altbeacon_sub"
                         android:textColor="@color/text_default"
-                        android:text="@string/credits_altbeacon_sub"/>
+                        android:textSize="16sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:text="@string/credits_license_apache"
                         android:textColor="@color/text_primary"
-                        android:text="@string/credits_license_apache"/>
+                        android:textSize="12sp"/>
 
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_info"
-                    android:tint="@color/default_icon_color"
                     android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="32dp"
                     android:layout_marginRight="32dp"
-                    android:layout_marginEnd="32dp"/>
+                    android:src="@drawable/ic_info"
+                    android:tint="@color/default_icon_color"/>
 
             </android.support.v7.widget.CardView>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/divider"
-                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"/>
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/divider"/>
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginStart="20dp"
-                android:textColor="@color/text_default"
+                android:layout_marginTop="20dp"
                 android:text="@string/credits_copyright"
+                android:textColor="@color/text_default"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
-                android:textColor="@color/text_primary"
-                android:text="@string/credits_copyright_sub"/>
+                android:layout_marginEnd="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/credits_copyright_sub"
+                android:textColor="@color/text_primary"/>
 
         </LinearLayout>
 
