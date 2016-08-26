@@ -323,7 +323,7 @@
     <string name="login_failed_dialog_title">Login fallito</string>
     <string name="login_invalid_email">E-mail invalida</string>
     <string name="login_invalid_password">Password invalida</string>
-    <string name="login_no_internet_subtitle">Per favore controlla che tu abbia una connessione internet.</string>
+    <string name="login_no_internet_subtitle">Per favore controlla che tu abbia una connessione Internet.</string>
     <string name="login_no_internet_title">Nessuna connessione internet</string>
     <string name="login_password">Password</string>
     <string name="login_verification_failed_subtitle">Per favore riprova più tardi.</string>
@@ -364,11 +364,6 @@
     <string name="register_weak_password_dialog_title">Password debole</string>
     <string name="register_weak_password_negative">No</string>
     <string name="register_weak_password_positive">Sì</string>
-    <string name="settings_map_overlay">Copertura marker</string>
-    <string name="settings_map_overlay_all_sub">Visualizza tutti i percorsi disponibili</string>
-    <string name="settings_map_overlay_all_title">Visualizza percorsi</string>
-    <string name="settings_map_overlay_sub">Visualizza il percorso dell\'autobus selezionato se possibile</string>
-    <string name="settings_map_overlay_title">Visualizza percorso unico</string>
     <string name="activity_title_eco_points_profile">Il mio profilo</string>
     <string name="eco_points_next_badges">Prossimi distintivi</string>
     <string name="badge_the_very_beginning_subtitle">Scannerizza il beacon in un autobus!</string>
@@ -413,5 +408,9 @@
     <string name="register_form_male">Maschile</string>
     <string name="register_password_no_match">Password non corrispondono</string>
     <string name="register_password_repeat">Ripeti password</string>
+    <string name="account_settings">Impostazioni account</string>
+    <string name="dialog_map_download_negative">Più tardi</string>
+    <string name="dialog_map_download_title">Download della mappa</string>
+    <string name="dialog_map_download_message">L\'app deve scaricare 60MByte di dati per visulizzare la mappa. Vorresti scaricare la cartina adesso?</string>
 
 </resources>
