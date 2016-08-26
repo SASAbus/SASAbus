@@ -296,7 +296,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             registrationCompleted();
 
-            AnswersHelper.logSignUp();
+            AnswersHelper.logSignUpSuccess();
         } else {
             LogUtils.e(TAG, "Registration failure, got error: " + response.error);
 
@@ -319,7 +319,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     break;
             }
 
-            AnswersHelper.logSignUp(response.param);
+            AnswersHelper.logSignUpError(response.param);
 
             if (field != null) {
                 field.setError(response.errorMessage);

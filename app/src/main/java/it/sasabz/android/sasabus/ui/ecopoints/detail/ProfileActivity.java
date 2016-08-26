@@ -69,6 +69,7 @@ import it.sasabz.android.sasabus.network.rest.response.PasswordResponse;
 import it.sasabz.android.sasabus.network.rest.response.ProfilePictureResponse;
 import it.sasabz.android.sasabus.ui.ecopoints.LoginActivity;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
+import it.sasabz.android.sasabus.util.AnswersHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.ReportHelper;
 import it.sasabz.android.sasabus.util.UIUtils;
@@ -237,6 +238,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             return;
         }
 
+        AnswersHelper.logProfileAction("logout");
+
         ProgressDialog progressDialog = new ProgressDialog(this, R.style.DialogStyle);
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
@@ -280,6 +283,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             return;
         }
 
+        AnswersHelper.logProfileAction("logout_all");
+
         ProgressDialog progressDialog = new ProgressDialog(this, R.style.DialogStyle);
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
@@ -322,6 +327,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             Snackbar.make(mainContent, R.string.error_wifi, Snackbar.LENGTH_LONG);
             return;
         }
+
+        AnswersHelper.logProfileAction("delete_account");
 
         new AlertDialog.Builder(this, R.style.DialogStyle)
                 .setTitle(R.string.eco_points_delete_account_confirmation_title)
@@ -375,6 +382,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     // ===================================== PASSWORD ==============================================
 
     private void showPasswordDialog() {
+        AnswersHelper.logProfileAction("change_password");
+
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.dialog_change_password, null, false);
 
@@ -610,6 +619,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void selectFromDefaults() {
+        AnswersHelper.logProfileAction("change_picture_default");
+
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.dialog_change_profile_picture, null, false);
 
@@ -718,6 +729,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void takePicture() {
+        AnswersHelper.logProfileAction("change_picture_camera");
+
         imageFile = new File(getExternalCacheDir(), System.currentTimeMillis() + ".jpg");
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -771,6 +784,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void pickFromGallery() {
+        AnswersHelper.logProfileAction("change_picture_gallery");
+
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
