@@ -239,7 +239,7 @@ public class SyncHelper {
             }
 
             if (!serverMissing.isEmpty()) {
-                dataChanged |= TripSyncHelper.upload(tripToCloudTrip(serverMissing));
+                dataChanged |= TripSyncHelper.upload(mContext, tripToCloudTrip(serverMissing));
             }
 
             LogUtils.e(TAG, "Finished trip sync");
