@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package it.sasabz.android.sasabus.ui.ecopoints;
 
 import android.app.DatePickerDialog;
@@ -38,6 +55,7 @@ import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.AnswersHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.ReportHelper;
+import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -128,13 +146,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 .subscribe(charSequence -> ReportHelper.validatePassword(this,
                         passwordLayout, charSequence.toString()));
 
-        male.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            female.setChecked(!isChecked);
-        });
-
-        female.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            male.setChecked(!isChecked);
-        });
+        male.setOnCheckedChangeListener((buttonView, isChecked) -> female.setChecked(!isChecked));
+        female.setOnCheckedChangeListener((buttonView, isChecked) -> male.setChecked(!isChecked));
 
         button.setOnClickListener(this);
 
@@ -279,7 +292,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             registrationCompleted();
 
-            AnswersHelper.logSignUp();
+            AnswersHelper.logSignUpSuccess();
         } else {
             LogUtils.e(TAG, "Registration failure, got error: " + response.error);
 
@@ -302,7 +315,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     break;
             }
 
-            AnswersHelper.logSignUp(response.param);
+            AnswersHelper.logSignUpError(response.param);
 
             if (field != null) {
                 field.setError(response.errorMessage);
@@ -342,7 +355,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void updateDateFormPicker() {
         SimpleDateFormat sdf;
-        switch (getResources().getConfiguration().locale.toString()) {
+        switch (Utils.locale(this)) {
             case "it":
                 sdf = new SimpleDateFormat("dd MMM yyyy", Locale.ITALY);
                 break;

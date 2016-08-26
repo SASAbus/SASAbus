@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package it.sasabz.android.sasabus.ui.busstop;
 
 import android.content.ActivityNotFoundException;
@@ -133,7 +150,7 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
                 startActivity(new Intent(Intent.ACTION_VIEW,
                         Uri.parse("http://maps.google.com/maps?daddr=" + busStop.getLat() + ',' + busStop.getLng())));
             } catch (ActivityNotFoundException e) {
-                Utils.handleException(e);
+                Utils.logException(e);
             }
         });
 
@@ -268,7 +285,7 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
                     public void onError(Throwable e) {
                         // Should not happen as the Observable itself never calls onError,
                         // except when a RuntimeException occurs.
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
                         mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
                     }
@@ -291,7 +308,7 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
                                         if (mItems.size() > 1) {
                                             mAdapter.notifyItemRangeChanged(1, mItems.size() - 1);
                                         }
-                                    }, Utils::handleException));
+                                    }, Utils::logException));
                         }
                     }
                 });

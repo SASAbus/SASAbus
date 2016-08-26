@@ -1,12 +1,29 @@
-package it.sasabz.android.sasabus.provider.apis;
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-import it.sasabz.android.sasabus.provider.ApiUtils;
-import it.sasabz.android.sasabus.provider.model.BusStop;
-import it.sasabz.android.sasabus.provider.model.Trip;
+package it.sasabz.android.sasabus.provider.apis;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import it.sasabz.android.sasabus.provider.ApiUtils;
+import it.sasabz.android.sasabus.provider.model.BusStop;
+import it.sasabz.android.sasabus.provider.model.Trip;
 
 /**
  * Retrieves the departing buses at a specific bus stop. The data is taken from SASA SpA-AG.

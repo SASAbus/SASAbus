@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!--
+  ~ Copyright (C) 2016 David Dejori, Alex Lardschneider
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <resources>
 
     <string name="app_name">SASAbus</string>
@@ -334,5 +351,73 @@
     <string name="register_form_male">Männlich</string>
     <string name="register_password_no_match">Passwörter stimmen nicht überein</string>
     <string name="register_password_repeat">Wiederhole Passwort</string>
+    <string name="account_settings">Kontoeinstellungen</string>
+    <string name="activity_title_eco_points_badges">Abzeichen</string>
+    <string name="activity_title_eco_points_leaderboard">Rangliste</string>
+    <string name="dialog_button_cancel">Abbrechen</string>
+    <string name="dialog_map_download_negative">Später</string>
+    <string name="dialog_map_download_title">Download der Karte</string>
+    <string name="dialog_map_download_message">Die App muss 60MByte an Kartendaten herunterladen? Möchtest du die Karte jetzt herunterladen?</string>
+    <string name="eco_points">Öko-Punkte</string>
+    <string name="eco_points_badges">Abzeichen</string>
+    <string name="eco_points_badges_full">Alle Badges anzeigen</string>
+    <string name="eco_points_earned_badges">Erhaltene Abzeichen</string>
+    <string name="eco_points_earned_badges_empty">Du hast noch keine Abzeichen erhalten</string>
+    <string name="eco_points_leaderboard">Rangliste</string>
+    <string name="eco_points_leaderboard_full">Vollständige Rangliste anzeigen</string>
+    <string name="eco_points_profile_badges">Abzeichen</string>
+    <string name="eco_points_profile_points">Punkte</string>
+    <string name="eco_points_profile_rank">Rang</string>
+    <string name="error_gps_title">GPS-Lokalisierung ist aus</string>
+    <string name="login_already_verified_title">E-Mail bereits verifiziert</string>
+    <string name="login_already_verified_subtitle">Du kannst dich jetzt mit deiner E-Mail und deinem Passwort einloggen.</string>
+    <string name="login_email">E-Mail</string>
+    <string name="login_failed_dialog_subtitle">Bitte versuche es später erneut.</string>
+    <string name="login_failed_dialog_title">Login fehlgeschlagen</string>
+    <string name="login_invalid_email">Ungültige E-Mail</string>
+    <string name="login_invalid_password">Ungültiges Passwort</string>
+    <string name="login_no_internet_subtitle">Bitte überprüfe deine Internetverbindung und versuche es erneut.</string>
+    <string name="login_no_internet_title">Keine Internetverbindung</string>
+    <string name="login_password">Passwort</string>
+    <string name="login_verification_failed_subtitle">Bitte versuche es später erneut.</string>
+    <string name="login_title">Willkommen</string>
+    <string name="login_verification_failed_title">Verifizierung fehlgeschlagen</string>
+    <string name="login_verification_progress_subtitle">E-Mail wird verifiziert…</string>
+    <string name="login_verify_link_invalid_subtitle">Dieser Link ist ungültig.</string>
+    <string name="login_verify_link_invalid_title">Ungültiger Link</string>
+    <string name="parking_pick">Suche einen Parkplatz aus</string>
+    <string name="planned_trips_delete_dialog_positive">Löschen</string>
+    <string name="planned_trips_delete_dialog_subtitle">Willst du diese geplante Fahrt wirklich löschen?</string>
+    <string name="planned_trips_delete_dialog_title">%s löschen?</string>
+    <string name="pois_details_bus_stops">Haltestellen</string>
+    <string name="register_birthdate_empty">Bitte gib dein Geburtsdatum ein</string>
+    <string name="register_birthdate_invalid">Ungültiges Geburtsdatum</string>
+    <string name="register_birthdate_too_old">Du bist zu alt um teilnehmen zu können</string>
+    <string name="register_birthdate_too_young">Du bist zu jung um teilnehmen zu können</string>
+    <string name="register_birthday">Geburtsdatum</string>
+    <string name="register_email">E-Mail</string>
+    <string name="register_email_empty">Bitte gib deine E-Mail ein</string>
+    <string name="register_email_invalid">Ungültige E-Mail</string>
+    <string name="register_failed_dialog_title">Registrierung fehlgeschlagen</string>
+    <string name="register_failed_dialog_subtitle">Bitte versuche es in einigen Minuten erneut.</string>
+    <string name="register_name_empty">Bitte gib einen Benutzernamen ein</string>
+    <string name="register_name_first_letter">Der Benutzername muss mit einem Buchstaben beginnen</string>
+    <string name="register_name_invalid">Ungültiger Benutzername</string>
+    <string name="register_name_too_short">Benutzername zu kurz</string>
+    <string name="register_password">Passwort</string>
+    <string name="register_password_empty">Bitte gib ein Passwort ein</string>
+    <string name="register_password_invalid">Ungültiges Passwort</string>
+    <string name="register_password_too_short">Passwort zu kurz</string>
+    <string name="register_success_dialog_subtitle">Dein Konto wurde erfolgreich erstellt. Benutze den Link in der Verifizierungsmail um auf dein Konto zugreifen zu können.</string>
+    <string name="register_success_dialog_title">Registrierung abgeschlossen</string>
+    <string name="register_title">Registrierung</string>
+    <string name="register_username">Benutzername</string>
+    <string name="register_weak_password_dialog_subtitle">Das eingegebene Passwort ist schwach und unsicher. Bist du sicher dieses Passwort verwenden zu wollen?</string>
+    <string name="register_weak_password_dialog_title">Schwaches Passwort</string>
+    <string name="register_weak_password_negative">Nein</string>
+    <string name="register_weak_password_positive">Ja</string>
+    <string name="fragment_eco_points_badges">Abzeichen</string>
+    <string name="fragment_eco_points_events">Events</string>
+    <string name="fragment_eco_points_profile">Profil</string>
 
 </resources>

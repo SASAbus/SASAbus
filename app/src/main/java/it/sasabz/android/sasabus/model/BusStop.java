@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package it.sasabz.android.sasabus.model;
 
 import android.content.Context;
@@ -5,6 +22,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import it.sasabz.android.sasabus.realm.busstop.SadBusStop;
+import it.sasabz.android.sasabus.util.Utils;
 
 /**
  * A representation of a bus stop.
@@ -153,7 +171,7 @@ public class BusStop implements Parcelable {
     }
 
     public String getName(Context context) {
-        String locale = context.getResources().getConfiguration().locale.toString();
+        String locale = Utils.locale(context);
         return locale.contains("de") ? nameDe : nameIt;
     }
 
@@ -170,7 +188,7 @@ public class BusStop implements Parcelable {
     }
 
     public String getMunic(Context context) {
-        String locale = context.getResources().getConfiguration().locale.toString();
+        String locale = Utils.locale(context);
         return locale.contains("de") ? municDe : municIt;
     }
 

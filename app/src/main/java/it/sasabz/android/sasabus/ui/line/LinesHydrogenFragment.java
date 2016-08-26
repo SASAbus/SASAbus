@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package it.sasabz.android.sasabus.ui.line;
 
 import android.os.Bundle;
@@ -13,6 +30,7 @@ import android.widget.RelativeLayout;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -137,7 +155,7 @@ public class LinesHydrogenFragment extends RxFragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
                         mErrorGeneral.setVisibility(View.VISIBLE);
                         mErrorWifi.setVisibility(View.GONE);
@@ -150,11 +168,12 @@ public class LinesHydrogenFragment extends RxFragment {
 
                     @Override
                     public void onNext(RealtimeResponse realtimeResponse) {
+                        mItems.clear();
+
                         if (realtimeResponse.buses.isEmpty()) {
                             mErrorGeneral.setVisibility(View.GONE);
                             mErrorWifi.setVisibility(View.GONE);
 
-                            mItems.clear();
                             mAdapter.notifyDataSetChanged();
 
                             mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
@@ -162,8 +181,8 @@ public class LinesHydrogenFragment extends RxFragment {
                             return;
                         }
 
-                        mItems.clear();
                         mItems.addAll(realtimeResponse.buses);
+                        Collections.sort(mItems, (o1, o2) -> o1.vehicle - o2.vehicle);
 
                         mAdapter.notifyDataSetChanged();
 

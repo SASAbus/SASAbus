@@ -1,14 +1,24 @@
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package it.sasabz.android.sasabus.provider.apis;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-
-import it.sasabz.android.sasabus.provider.API;
-import it.sasabz.android.sasabus.provider.model.BusStop;
-import it.sasabz.android.sasabus.provider.model.Trip;
-import it.sasabz.android.sasabus.util.IOUtils;
-import it.sasabz.android.sasabus.util.Preconditions;
-import it.sasabz.android.sasabus.util.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,6 +33,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+
+import it.sasabz.android.sasabus.provider.API;
+import it.sasabz.android.sasabus.provider.model.BusStop;
+import it.sasabz.android.sasabus.provider.model.Trip;
+import it.sasabz.android.sasabus.util.IOUtils;
+import it.sasabz.android.sasabus.util.Preconditions;
+import it.sasabz.android.sasabus.util.Utils;
 
 /**
  * Stores all trips executed by SASA SpA-AG. There are more than 20000.
@@ -73,7 +90,7 @@ public final class Trips {
                 }
             }
         } catch (JSONException | IOException e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
 
         //noinspection CallToSystemGC

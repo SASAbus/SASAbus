@@ -1,21 +1,25 @@
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package it.sasabz.android.sasabus.provider;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
-import it.sasabz.android.sasabus.model.line.Lines;
-import it.sasabz.android.sasabus.provider.apis.CompanyCalendar;
-import it.sasabz.android.sasabus.provider.apis.Departures;
-import it.sasabz.android.sasabus.provider.apis.Handler;
-import it.sasabz.android.sasabus.provider.apis.Paths;
-import it.sasabz.android.sasabus.provider.apis.Trips;
-import it.sasabz.android.sasabus.provider.model.BusStop;
-import it.sasabz.android.sasabus.provider.model.PlannedDeparture;
-import it.sasabz.android.sasabus.provider.model.Trip;
-import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
-import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.Preconditions;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,6 +34,19 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import it.sasabz.android.sasabus.model.line.Lines;
+import it.sasabz.android.sasabus.provider.apis.CompanyCalendar;
+import it.sasabz.android.sasabus.provider.apis.Departures;
+import it.sasabz.android.sasabus.provider.apis.Handler;
+import it.sasabz.android.sasabus.provider.apis.Paths;
+import it.sasabz.android.sasabus.provider.apis.Trips;
+import it.sasabz.android.sasabus.provider.model.BusStop;
+import it.sasabz.android.sasabus.provider.model.PlannedDeparture;
+import it.sasabz.android.sasabus.provider.model.Trip;
+import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.util.LogUtils;
+import it.sasabz.android.sasabus.util.Preconditions;
 
 /**
  * This is the main offline API where the app gets data from. This API tells us specific information

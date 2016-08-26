@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package it.sasabz.android.sasabus.ui.parking;
 
 import android.content.ActivityNotFoundException;
@@ -14,13 +31,13 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.ui.busstop.BusStopDetailActivity;
 import it.sasabz.android.sasabus.util.Utils;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * Shows detailed information about a parking.
@@ -84,7 +101,7 @@ public class ParkingDetailActivity extends AppCompatActivity {
                         return true;
                 }
             } catch (ActivityNotFoundException e) {
-                Utils.handleException(e);
+                Utils.logException(e);
             }
 
             return false;
@@ -172,7 +189,7 @@ public class ParkingDetailActivity extends AppCompatActivity {
                 TextView name = (TextView) findViewById(R.id.parking_detail_station_name_1);
                 TextView distance = (TextView) findViewById(R.id.parking_detail_station_distance_1);
 
-                name.setText(split[getResources().getConfiguration().locale.toString().contains("de") ? 1 : 2]);
+                name.setText(split[Utils.locale(this).contains("de") ? 1 : 2]);
                 distance.setText(split[7] + getString(R.string.parking_detail_station_distance));
 
                 relativeLayout.setOnClickListener(v -> onClickStation(s));
@@ -183,7 +200,7 @@ public class ParkingDetailActivity extends AppCompatActivity {
                 TextView name = (TextView) findViewById(R.id.parking_detail_station_name_2);
                 TextView distance = (TextView) findViewById(R.id.parking_detail_station_distance_2);
 
-                name.setText(split[getResources().getConfiguration().locale.toString().contains("de") ? 1 : 2]);
+                name.setText(split[Utils.locale(this).contains("de") ? 1 : 2]);
                 distance.setText(split[7] + getString(R.string.parking_detail_station_distance));
 
                 relativeLayout.setOnClickListener(v -> onClickStation(s));
@@ -194,7 +211,7 @@ public class ParkingDetailActivity extends AppCompatActivity {
                 TextView name = (TextView) findViewById(R.id.parking_detail_station_name_3);
                 TextView distance = (TextView) findViewById(R.id.parking_detail_station_distance_3);
 
-                name.setText(split[getResources().getConfiguration().locale.toString().contains("de") ? 1 : 2]);
+                name.setText(split[Utils.locale(this).contains("de") ? 1 : 2]);
                 distance.setText(split[7] + getString(R.string.parking_detail_station_distance));
 
                 relativeLayout.setOnClickListener(v -> onClickStation(s));

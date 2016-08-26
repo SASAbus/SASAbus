@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package it.sasabz.android.sasabus.util.recycler;
 
 import android.content.Context;
@@ -10,12 +27,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import it.sasabz.android.sasabus.Config;
-import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.line.LineDetail;
-import it.sasabz.android.sasabus.ui.MapActivity;
-import it.sasabz.android.sasabus.ui.bus.BusDetailActivity;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -23,9 +34,14 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import it.sasabz.android.sasabus.Config;
+import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.model.line.LineDetail;
+import it.sasabz.android.sasabus.ui.bus.BusDetailActivity;
 
 /**
  * @author Alex Lardschneider
+ * @author David Dejori
  */
 public class LineDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -165,8 +181,7 @@ public class LineDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
-    final class ViewHolderBus extends RecyclerView.ViewHolder implements View.OnClickListener,
-            View.OnLongClickListener {
+    final class ViewHolderBus extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.list_lines_detail_current_name) TextView currentName;
         @BindView(R.id.list_lines_detail_current_time) TextView currentTime;
@@ -183,7 +198,6 @@ public class LineDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ButterKnife.bind(this, view);
 
             lineCard.setOnClickListener(this);
-            lineCard.setOnLongClickListener(this);
         }
 
         @Override
@@ -194,26 +208,10 @@ public class LineDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             LineDetail rowItem = mItems.get(position);
 
             if (rowItem.getAdditionalData() == null) {
-                Intent intent = new Intent(mContext, MapActivity.class);
-                intent.putExtra(Config.EXTRA_VEHICLE, rowItem.getVehicle());
-                mContext.startActivity(intent);
-            }
-        }
-
-        @Override
-        public boolean onLongClick(View view) {
-            int position = getLayoutPosition();
-            if (position == RecyclerView.NO_POSITION) return false;
-
-            LineDetail rowItem = mItems.get(position);
-
-            if (rowItem.getAdditionalData() == null) {
                 Intent intent = new Intent(mContext, BusDetailActivity.class);
                 intent.putExtra(Config.EXTRA_VEHICLE, rowItem.getVehicle());
                 mContext.startActivity(intent);
             }
-
-            return true;
         }
     }
 

@@ -1,4 +1,21 @@
-package it.sasabz.android.sasabus.ui.ecopoints;
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package it.sasabz.android.sasabus.ui.ecopoints.detail;
 
 import android.content.BroadcastReceiver;
 import android.content.Intent;
@@ -23,6 +40,7 @@ import it.sasabz.android.sasabus.network.rest.RestClient;
 import it.sasabz.android.sasabus.network.rest.api.EcoPointsApi;
 import it.sasabz.android.sasabus.network.rest.model.Badge;
 import it.sasabz.android.sasabus.network.rest.response.BadgesResponse;
+import it.sasabz.android.sasabus.ui.ecopoints.LoginActivity;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
@@ -31,9 +49,9 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class EcoPointsBadgesActivity extends AppCompatActivity {
+public class BadgesActivity extends AppCompatActivity {
 
-    private static final String TAG = "EcoPointsBadgesActivity";
+    private static final String TAG = "BadgesActivity";
 
     @BindView(R.id.recycler) RecyclerView recyclerView;
     @BindView(R.id.refresh) SwipeRefreshLayout mSwipeRefreshLayout;
@@ -124,9 +142,9 @@ public class EcoPointsBadgesActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
-                        AuthHelper.checkIfUnauthorized(EcoPointsBadgesActivity.this, e);
+                        AuthHelper.checkIfUnauthorized(BadgesActivity.this, e);
 
                         mItems.clear();
                         mAdapter.notifyDataSetChanged();

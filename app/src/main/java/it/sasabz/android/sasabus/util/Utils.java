@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package it.sasabz.android.sasabus.util;
 
 import android.content.Context;
@@ -59,10 +76,17 @@ public final class Utils {
         Resources resources = context.getResources();
         Configuration configuration = resources.getConfiguration();
 
-        if (!SettingsUtils.getLanguage(context).toLowerCase().equals("system")) {
-            configuration.locale = new Locale(SettingsUtils.getLanguage(context));
-        } else {
-            configuration.locale = new Locale(Locale.getDefault().getLanguage());
+        Locale locale = Locale.getDefault();
+
+        String language = SettingsUtils.getLanguage(context).toLowerCase();
+        if (!language.equals("system")) {
+            locale = new Locale(language);
+        }
+
+        //noinspection deprecation
+        configuration.locale = locale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            configuration.setLocale(locale);
         }
 
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
@@ -136,7 +160,7 @@ public final class Utils {
      * @param t the {@link Throwable} to log.
      */
     @SuppressWarnings("ChainOfInstanceofChecks")
-    public static void handleException(Throwable t) {
+    public static void logException(Throwable t) {
         if (BuildConfig.DEBUG) {
             t.printStackTrace();
         } else {
@@ -166,8 +190,8 @@ public final class Utils {
      *
      * @param t the {@link Throwable} to log.
      */
-    public static void handleException(Throwable t, String format, Object... params) {
-        handleException(new Throwable(String.format(format, params), t));
+    public static void logException(Throwable t, String format, Object... params) {
+        logException(new Throwable(String.format(format, params), t));
     }
 
     /**

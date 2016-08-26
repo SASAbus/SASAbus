@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package it.sasabz.android.sasabus.ui.plannedtrip;
 
 import android.os.Bundle;
@@ -10,6 +27,12 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import io.realm.Realm;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.model.line.Lines;
@@ -19,13 +42,6 @@ import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.list.PlannedTripsNotificationAdapter;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import io.realm.Realm;
 
 /**
  * Displays detailed information about a planned trip. By pressing the
@@ -136,7 +152,7 @@ public class PlannedTripsViewActivity extends AppCompatActivity {
     }
 
     private CharSequence getFormattedDateTime(long timeStamp) {
-        String locale = getResources().getConfiguration().locale.toString();
+        String locale = Utils.locale(this);
 
         String formatString;
         switch (locale) {

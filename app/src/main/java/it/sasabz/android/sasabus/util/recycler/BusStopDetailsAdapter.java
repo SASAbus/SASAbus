@@ -1,30 +1,34 @@
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package it.sasabz.android.sasabus.util.recycler;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.TranslateAnimation;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -35,10 +39,8 @@ import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.model.BusStopDetail;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
-import it.sasabz.android.sasabus.ui.MapActivity;
 import it.sasabz.android.sasabus.ui.line.LineCourseActivity;
 import it.sasabz.android.sasabus.ui.line.LineDetailActivity;
-import it.sasabz.android.sasabus.ui.widget.animation.AnimationListenerAdapter;
 import it.sasabz.android.sasabus.util.Utils;
 
 /**
@@ -49,7 +51,6 @@ public class BusStopDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private final Context mContext;
     private final List<BusStopDetail> mItems;
-    private final Collection<ViewHolderBus> mViews = new ArrayList<>();
     private final int mBusStopFamily;
 
     private static final int BUS_STOP_DETAIL_HEADER = 0;
@@ -97,7 +98,6 @@ public class BusStopDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                 viewHolder = new ViewHolderBus(view);
 
-                mViews.add((ViewHolderBus) viewHolder);
                 break;
             case BUS_STOP_DETAIL_HEADER:
                 view = LayoutInflater.from(viewGroup.getContext())
@@ -127,18 +127,6 @@ public class BusStopDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             bus.lineCard.setVisibility(View.VISIBLE);
 
-            if (item.isReveal()) {
-                bus.lineCard.findViewById(R.id.list_stations_detail_card_line_reveal).setVisibility(View.VISIBLE);
-                bus.lineCard.findViewById(R.id.list_stations_detail_card_line_button_1).setVisibility(View.VISIBLE);
-                bus.lineCard.findViewById(R.id.list_stations_detail_card_line_button_2).setVisibility(View.VISIBLE);
-                bus.lineCard.findViewById(R.id.list_stations_detail_card_line_button_3).setVisibility(View.VISIBLE);
-            } else {
-                bus.lineCard.findViewById(R.id.list_stations_detail_card_line_reveal).setVisibility(View.GONE);
-                bus.lineCard.findViewById(R.id.list_stations_detail_card_line_button_1).setVisibility(View.GONE);
-                bus.lineCard.findViewById(R.id.list_stations_detail_card_line_button_2).setVisibility(View.GONE);
-                bus.lineCard.findViewById(R.id.list_stations_detail_card_line_button_3).setVisibility(View.GONE);
-            }
-
             if (item.getDelay() == Config.BUS_STOP_DETAILS_OPERATION_RUNNING) {
                 setVisibilityIfNeeded(bus.delayProgress, View.VISIBLE);
                 setVisibilityIfNeeded(bus.delay, View.GONE);
@@ -159,14 +147,6 @@ public class BusStopDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 bus.delay.setText("");
             } else {
                 bus.delay.setText(item.getDelay() + "'");
-            }
-
-            if (item.getVehicle() == 0) {
-                ((ImageView) bus.lineCard.findViewById(R.id.list_stations_detail_card_line_button_3_image)).setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_timeline));
-                ((TextView) bus.lineCard.findViewById(R.id.list_stations_detail_card_line_button_3_text)).setText(mContext.getString(R.string.station_menu_course));
-            } else {
-                ((ImageView) bus.lineCard.findViewById(R.id.list_stations_detail_card_line_button_3_image)).setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_map_white_48dp));
-                ((TextView) bus.lineCard.findViewById(R.id.list_stations_detail_card_line_button_3_text)).setText(mContext.getString(R.string.map));
             }
 
             bus.line.setText(item.getLine());
@@ -190,7 +170,7 @@ public class BusStopDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     bus.departureMinutes.setText("");
                 }
             } catch (Exception e) {
-                Utils.handleException(e);
+                Utils.logException(e);
             }
         }
     }
@@ -209,10 +189,8 @@ public class BusStopDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     static final class ViewHolderHeader extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.stations_detail_munic)
-        TextView overviewMunic;
-        @BindView(R.id.stations_detail_lines)
-        TextView overviewLines;
+        @BindView(R.id.stations_detail_munic) TextView overviewMunic;
+        @BindView(R.id.stations_detail_lines) TextView overviewLines;
 
         private ViewHolderHeader(View view) {
             super(view);
@@ -223,30 +201,14 @@ public class BusStopDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     final class ViewHolderBus extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.list_stations_detail_line)
-        TextView line;
-        @BindView(R.id.list_stations_detail_delay)
-        TextView delay;
-        @BindView(R.id.list_stations_detail_delay_progress)
-        ProgressBar delayProgress;
-        @BindView(R.id.list_stations_detail_heading)
-        TextView heading;
-        @BindView(R.id.list_stations_detail_departure_time)
-        TextView departureTime;
-        @BindView(R.id.list_stations_detail_departure_minutes)
-        TextView departureMinutes;
+        @BindView(R.id.list_stations_detail_line) TextView line;
+        @BindView(R.id.list_stations_detail_delay) TextView delay;
+        @BindView(R.id.list_stations_detail_delay_progress) ProgressBar delayProgress;
+        @BindView(R.id.list_stations_detail_heading) TextView heading;
+        @BindView(R.id.list_stations_detail_departure_time) TextView departureTime;
+        @BindView(R.id.list_stations_detail_departure_minutes) TextView departureMinutes;
 
-        @BindView(R.id.list_stations_detail_card_line)
-        CardView lineCard;
-
-        @BindView(R.id.list_stations_detail_card_line_reveal)
-        LinearLayout reveal;
-        @BindView(R.id.list_stations_detail_card_line_button_1)
-        LinearLayout button1;
-        @BindView(R.id.list_stations_detail_card_line_button_2)
-        LinearLayout button2;
-        @BindView(R.id.list_stations_detail_card_line_button_3)
-        LinearLayout button3;
+        @BindView(R.id.list_stations_detail_card_line) CardView lineCard;
 
         private ViewHolderBus(View view) {
             super(view);
@@ -254,9 +216,6 @@ public class BusStopDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             ButterKnife.bind(this, view);
 
             lineCard.setOnClickListener(this);
-            button1.setOnClickListener(this);
-            button2.setOnClickListener(this);
-            button3.setOnClickListener(this);
         }
 
         @Override
@@ -266,157 +225,17 @@ public class BusStopDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             BusStopDetail item = mItems.get(position);
 
-            switch (v.getId()) {
-                case R.id.list_stations_detail_card_line_button_1:
-                    hideReveal(reveal);
-                    item.setReveal(false);
-                    break;
-                case R.id.list_stations_detail_card_line_button_2:
-                    Intent intent1 = new Intent(mContext, LineDetailActivity.class);
-                    intent1.putExtra(Config.EXTRA_LINE_ID, item.getLineId());
-                    mContext.startActivity(intent1);
-                    break;
-                case R.id.list_stations_detail_card_line_button_3:
-                    Intent intent;
-
-                    if (item.getVehicle() == 0) {
-                        intent = new Intent(mContext, LineCourseActivity.class)
-                                .putExtra(Config.EXTRA_STATION_ID, toIntArray(BusStopRealmHelper
-                                        .getBusStopIdsFromGroup(mBusStopFamily)))
-                                .putExtra("time", item.getTime())
-                                .putExtra(Config.EXTRA_LINE_ID, item.getLineId());
-                    } else {
-                        intent = new Intent(mContext, MapActivity.class)
-                                .putExtra(Config.EXTRA_VEHICLE, item.getVehicle())
-                                .putExtra(Config.EXTRA_DISPLAY_BUS, true);
-                    }
-
-                    mContext.startActivity(intent);
-                    break;
-                default:
-                    if (!item.isReveal()) {
-                        showReveal(v.findViewById(R.id.list_stations_detail_card_line_reveal));
-
-                        for (ViewHolderBus holder : mViews) {
-                            if (holder.lineCard != null && !holder.lineCard.equals(v)) {
-                                try {
-                                    hideReveal(holder.lineCard.findViewById(
-                                            R.id.list_stations_detail_card_line_reveal));
-                                } catch (Exception ignored) {
-                                }
-                            }
-                        }
-
-                        for (BusStopDetail tempItem : mItems) {
-                            tempItem.setReveal(false);
-                        }
-
-                        item.setReveal(true);
-                    }
-                    break;
+            if (item.getVehicle() == 0) {
+                Intent intent = new Intent(mContext, LineCourseActivity.class)
+                        .putExtra(Config.EXTRA_STATION_ID, toIntArray(BusStopRealmHelper
+                                .getBusStopIdsFromGroup(mBusStopFamily)))
+                        .putExtra("time", item.getTime())
+                        .putExtra(Config.EXTRA_LINE_ID, item.getLineId());
+            } else {
+                Intent intent1 = new Intent(mContext, LineDetailActivity.class);
+                intent1.putExtra(Config.EXTRA_LINE_ID, item.getLineId());
+                mContext.startActivity(intent1);
             }
-        }
-
-        private void showReveal(View v) {
-            if (v == null) return;
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                Animator anim = ViewAnimationUtils.createCircularReveal(v, 0, 0, 0, lineCard.getWidth());
-                anim.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        showIcon(button1, 0);
-                        showIcon(button2, 1);
-                        showIcon(button3, 2);
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-                        v.setVisibility(View.GONE);
-                        v.findViewById(R.id.list_stations_detail_card_line_button_1).setVisibility(View.GONE);
-                        v.findViewById(R.id.list_stations_detail_card_line_button_2).setVisibility(View.GONE);
-                        v.findViewById(R.id.list_stations_detail_card_line_button_3).setVisibility(View.GONE);
-                    }
-                });
-
-                v.setVisibility(View.VISIBLE);
-                anim.start();
-                return;
-            }
-
-            AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
-            alphaAnimation.setDuration(200);
-            alphaAnimation.setInterpolator(new DecelerateInterpolator());
-            alphaAnimation.setAnimationListener(new AnimationListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    showIcon(button1, 0);
-                    showIcon(button2, 1);
-                    showIcon(button3, 2);
-                }
-            });
-
-            v.setVisibility(View.VISIBLE);
-            v.startAnimation(alphaAnimation);
-        }
-
-        private void hideReveal(View v) {
-            if (v == null) return;
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                Animator anim = ViewAnimationUtils.createCircularReveal(v, 0, 0, lineCard.getWidth(), 0);
-                anim.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        v.setVisibility(View.GONE);
-                        v.findViewById(R.id.list_stations_detail_card_line_button_1).setVisibility(View.GONE);
-                        v.findViewById(R.id.list_stations_detail_card_line_button_2).setVisibility(View.GONE);
-                        v.findViewById(R.id.list_stations_detail_card_line_button_3).setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-                        v.setVisibility(View.GONE);
-                        v.findViewById(R.id.list_stations_detail_card_line_button_1).setVisibility(View.GONE);
-                        v.findViewById(R.id.list_stations_detail_card_line_button_2).setVisibility(View.GONE);
-                        v.findViewById(R.id.list_stations_detail_card_line_button_3).setVisibility(View.GONE);
-                    }
-                });
-
-                anim.start();
-
-                return;
-            }
-
-            v.setVisibility(View.GONE);
-            v.findViewById(R.id.list_stations_detail_card_line_button_1).setVisibility(View.GONE);
-            v.findViewById(R.id.list_stations_detail_card_line_button_2).setVisibility(View.GONE);
-            v.findViewById(R.id.list_stations_detail_card_line_button_3).setVisibility(View.GONE);
-        }
-
-        void showIcon(View view, int n) {
-            view.setVisibility(View.INVISIBLE);
-
-            AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
-            alphaAnimation.setDuration(70);
-
-            TranslateAnimation translateAnimation = new TranslateAnimation(0.0f, 0.0f, 100.0f, 0.0f);
-            translateAnimation.setDuration(220);
-
-            AnimationSet animationSet = new AnimationSet(true);
-            animationSet.setInterpolator(new DecelerateInterpolator());
-            animationSet.addAnimation(alphaAnimation);
-            animationSet.addAnimation(translateAnimation);
-            animationSet.setFillAfter(false);
-            animationSet.setStartOffset(n * 60L);
-            animationSet.setAnimationListener(new AnimationListenerAdapter() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                    view.setVisibility(View.VISIBLE);
-                }
-            });
-
-            view.startAnimation(animationSet);
         }
     }
 

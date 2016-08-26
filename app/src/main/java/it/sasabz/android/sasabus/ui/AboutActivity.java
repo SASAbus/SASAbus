@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package it.sasabz.android.sasabus.ui;
 
 import android.Manifest;
@@ -173,7 +190,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
         status.setText(getResources().getString(R.string.about_traffic_light_loading));
 
         TrafficLightApi api = RestClient.ADAPTER.create(TrafficLightApi.class);
-        api.trafficLight(getResources().getConfiguration().locale.getLanguage(),
+        api.trafficLight(Utils.locale(this),
                 SettingsUtils.getTrafficLightCity(AboutActivity.this).toLowerCase())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

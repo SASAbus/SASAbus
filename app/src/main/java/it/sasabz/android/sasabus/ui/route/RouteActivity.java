@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package it.sasabz.android.sasabus.ui.route;
 
 import android.app.Activity;
@@ -52,6 +69,7 @@ import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.ui.widget.RecyclerItemClickListener;
 import it.sasabz.android.sasabus.ui.widget.RecyclerItemDivider;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
+import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.recycler.RecentAdapter;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -495,7 +513,7 @@ public class RouteActivity extends BaseActivity implements View.OnClickListener,
 
     private void updateDateFormPicker() {
         SimpleDateFormat sdf;
-        switch (getResources().getConfiguration().locale.toString()) {
+        switch (Utils.locale(this)) {
             case "it":
                 sdf = new SimpleDateFormat("dd MMM", Locale.ITALY);
                 break;
@@ -522,7 +540,7 @@ public class RouteActivity extends BaseActivity implements View.OnClickListener,
         calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
         calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH));
 
-        switch (getResources().getConfiguration().locale.toString()) {
+        switch (Utils.locale(this)) {
             case "it":
                 sdf = new SimpleDateFormat("dd MMM", Locale.ITALY);
                 break;

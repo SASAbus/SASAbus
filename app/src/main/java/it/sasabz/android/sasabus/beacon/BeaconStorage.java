@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package it.sasabz.android.sasabus.beacon;
 
 import android.annotation.SuppressLint;
@@ -76,7 +93,7 @@ public final class BeaconStorage {
             String json = GSON.toJson(trip);
             mPrefs.edit().putString(PREF_BEACON_CURRENT_TRIP, json).apply();
         } catch (Exception e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
     }
 
@@ -109,7 +126,7 @@ public final class BeaconStorage {
 
             return trip;
         } catch (Exception e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
 
         return null;
@@ -120,7 +137,7 @@ public final class BeaconStorage {
             String json = GSON.toJson(mBusBeaconMap);
             mPrefs.edit().putString(PREF_BUS_BEACON_MAP, json).apply();
         } catch (Exception e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
 
         if (mBusBeaconMap == null) {
@@ -153,7 +170,7 @@ public final class BeaconStorage {
                     }.getType();
                     return GSON.fromJson(json, type);
                 } catch (Exception e) {
-                    Utils.handleException(e);
+                    Utils.logException(e);
                 }
             } else {
                 setCurrentTrip(null);

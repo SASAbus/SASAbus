@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package it.sasabz.android.sasabus.ui.line;
 
 import android.content.Intent;
@@ -200,7 +217,7 @@ public class LineCourseActivity extends RxAppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
                         mItems.clear();
                         mAdapter.notifyDataSetChanged();
@@ -256,7 +273,7 @@ public class LineCourseActivity extends RxAppCompatActivity {
                     @Override
                     public void onError(Throwable e) {
                         if (e != null) {
-                            Utils.handleException(e);
+                            Utils.logException(e);
                         }
 
                         mErrorGeneral.setVisibility(View.VISIBLE);

@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!--
+  ~ Copyright (C) 2016 David Dejori, Alex Lardschneider
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <resources>
 
     <string name="app_name">SASAbus</string>
@@ -306,7 +323,7 @@
     <string name="login_failed_dialog_title">Login fallito</string>
     <string name="login_invalid_email">E-mail invalida</string>
     <string name="login_invalid_password">Password invalida</string>
-    <string name="login_no_internet_subtitle">Per favore controlla che tu abbia una connessione internet.</string>
+    <string name="login_no_internet_subtitle">Per favore controlla che tu abbia una connessione Internet.</string>
     <string name="login_no_internet_title">Nessuna connessione internet</string>
     <string name="login_password">Password</string>
     <string name="login_verification_failed_subtitle">Per favore riprova più tardi.</string>
@@ -347,11 +364,6 @@
     <string name="register_weak_password_dialog_title">Password debole</string>
     <string name="register_weak_password_negative">No</string>
     <string name="register_weak_password_positive">Sì</string>
-    <string name="settings_map_overlay">Copertura marker</string>
-    <string name="settings_map_overlay_all_sub">Visualizza tutti i percorsi disponibili</string>
-    <string name="settings_map_overlay_all_title">Visualizza percorsi</string>
-    <string name="settings_map_overlay_sub">Visualizza il percorso dell\'autobus selezionato se possibile</string>
-    <string name="settings_map_overlay_title">Visualizza percorso unico</string>
     <string name="activity_title_eco_points_profile">Il mio profilo</string>
     <string name="eco_points_next_badges">Prossimi distintivi</string>
     <string name="badge_the_very_beginning_subtitle">Scannerizza il beacon in un autobus!</string>
@@ -396,5 +408,12 @@
     <string name="register_form_male">Maschile</string>
     <string name="register_password_no_match">Password non corrispondono</string>
     <string name="register_password_repeat">Ripeti password</string>
+    <string name="account_settings">Impostazioni account</string>
+    <string name="dialog_map_download_negative">Più tardi</string>
+    <string name="dialog_map_download_title">Download della mappa</string>
+    <string name="dialog_map_download_message">L\'app deve scaricare 60MByte di dati per visulizzare la mappa. Vorresti scaricare la cartina adesso?</string>
+    <string name="fragment_eco_points_events">Eventi</string>
+    <string name="fragment_eco_points_badges">Distintivi</string>
+    <string name="fragment_eco_points_profile">Profilo</string>
 
 </resources>

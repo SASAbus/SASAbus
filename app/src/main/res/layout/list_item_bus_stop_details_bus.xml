@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!--
+  ~ Copyright (C) 2016 David Dejori, Alex Lardschneider
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <android.support.v7.widget.CardView
     android:id="@+id/list_stations_detail_card_line"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -84,109 +101,5 @@
             android:textSize="14sp"/>
 
     </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/list_stations_detail_card_line_reveal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/primary_blue_grey"
-        android:baselineAligned="false"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        android:weightSum="3">
-
-        <LinearLayout
-            android:id="@+id/list_stations_detail_card_line_button_1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_clear_white_48dp"
-                android:tint="@color/black_200"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="-2dp"
-                android:gravity="center_horizontal"
-                android:text="@string/station_menu_cancel"
-                android:textColor="@color/white"
-                android:textSize="13sp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/list_stations_detail_card_line_button_2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_bus"
-                android:tint="@color/black_200"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="-2dp"
-                android:gravity="center_horizontal"
-                android:text="@string/station_menu_line"
-                android:textColor="@color/white"
-                android:textSize="13sp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/list_stations_detail_card_line_button_3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/list_stations_detail_card_line_button_3_image"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_map_white_48dp"
-                android:tint="@color/black_200"/>
-
-            <TextView
-                android:id="@+id/list_stations_detail_card_line_button_3_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="-2dp"
-                android:gravity="center_horizontal"
-                android:text="@string/map"
-                android:textColor="@color/white"
-                android:textSize="13sp"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
 
 </android.support.v7.widget.CardView>

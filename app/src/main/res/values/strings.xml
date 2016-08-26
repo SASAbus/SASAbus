@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!--
+  ~ Copyright (C) 2016 David Dejori, Alex Lardschneider
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <resources>
 
     <string name="app_name">SASAbus</string>
@@ -480,6 +497,10 @@
     <string name="activity_title_eco_points_badges">Badges</string>
     <string name="activity_title_eco_points_profile">My profile</string>
 
+    <string name="fragment_eco_points_profile">Profile</string>
+    <string name="fragment_eco_points_badges">Badges</string>
+    <string name="fragment_eco_points_events">Events</string>
+
     <string name="eco_points_profile_points">Points</string>
     <string name="eco_points_profile_badges">Badges</string>
     <string name="eco_points_profile_rank">Rank</string>
@@ -522,21 +543,6 @@
 
     <string name="eco_points_badges">Badges</string>
     <string name="eco_points_badges_full">View all badges</string>
-
-    <plurals name="eco_points_points">
-        <item quantity="one">%d point</item>
-        <item quantity="other">%d points</item>
-    </plurals>
-
-    <plurals name="eco_points_badge_dialog_points">
-        <item quantity="one">This badge gives you %d points.</item>
-        <item quantity="other">This badge gives you %d points.</item>
-    </plurals>
-
-    <plurals name="eco_points_badge_dialog_users">
-        <item quantity="one">%d player has this badge.</item>
-        <item quantity="other">%d players have this badge.</item>
-    </plurals>
 
     <string name="eco_points_badge_dialog_progress">Your progress: %d%%</string>
 
@@ -618,5 +624,19 @@
 
     <string name="badge_the_first_step_title">On the bus</string>
     <string name="badge_the_first_step_subtitle">Scan a beacon located in one of the buses!</string>
+    <string name="error_gps_title">GPS localization is off</string>
+    <string name="loading">Loading…</string>
+    <string name="login_no_account">No account? Sign up for eco points</string>
+    <string name="parking_pick">Pick a parking lot</string>
+    <string name="planned_trips_delete_dialog_positive">Delete</string>
+    <string name="planned_trips_delete_dialog_subtitle">Do you really want to delete this planned trip?</string>
+    <string name="planned_trips_delete_dialog_title">Delete %s?</string>
+    <string name="pois_details_bus_stops">Bus stops</string>
+    <string name="register_weak_password_dialog_subtitle">The entered password is weak and insecure. Are you sure you want to use this password?</string>
+    <string name="register_weak_password_dialog_title">Weak password</string>
+    <string name="register_weak_password_negative">No</string>
+    <string name="register_weak_password_positive">Yes</string>
+    <string name="register_password_no_match">Passwords don\'t match</string>
+    <string name="register_password_repeat">Repeat password</string>
 
 </resources>

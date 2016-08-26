@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package it.sasabz.android.sasabus.ui.plannedtrip;
 
 import android.app.DatePickerDialog;
@@ -24,6 +41,18 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+
+import io.realm.Realm;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.model.CircleLine;
 import it.sasabz.android.sasabus.model.line.Lines;
@@ -40,19 +69,6 @@ import it.sasabz.android.sasabus.util.HashUtils;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.list.PlannedTripsNotificationAdapter;
 import it.sasabz.android.sasabus.util.recycler.CircleLinesAdapter;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-
-import io.realm.Realm;
 
 /**
  * Allows to add a planned trip by specifying bus stop, line, notification interval, departure
@@ -362,7 +378,7 @@ public class PlannedTripsAddActivity extends AppCompatActivity implements View.O
     private void updateDate() {
         SimpleDateFormat sdf;
 
-        switch (getResources().getConfiguration().locale.toString()) {
+        switch (Utils.locale(this)) {
             case "it":
                 sdf = new SimpleDateFormat("EEE dd MMM yyyy", Locale.ITALY);
                 break;

@@ -1,4 +1,21 @@
-package it.sasabz.android.sasabus.ui.ecopoints;
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package it.sasabz.android.sasabus.ui.ecopoints.detail;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -50,7 +67,9 @@ import it.sasabz.android.sasabus.network.rest.api.UserApi;
 import it.sasabz.android.sasabus.network.rest.model.Profile;
 import it.sasabz.android.sasabus.network.rest.response.PasswordResponse;
 import it.sasabz.android.sasabus.network.rest.response.ProfilePictureResponse;
+import it.sasabz.android.sasabus.ui.ecopoints.LoginActivity;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
+import it.sasabz.android.sasabus.util.AnswersHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.ReportHelper;
 import it.sasabz.android.sasabus.util.UIUtils;
@@ -65,7 +84,7 @@ import rx.schedulers.Schedulers;
 /**
  * @author David Dejori
  */
-public class EcoPointsProfileActivity extends AppCompatActivity implements View.OnClickListener {
+public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int CAMERA_REQUEST = 101;
     private static final int GALLERY_REQUEST = 102;
@@ -78,7 +97,7 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
 
     private static final String TAG = "EcoPointsActivity";
 
-    static final String EXTRA_PROFILE = "com.davale.sasabus.EXTRA_PROFILE";
+    public static final String EXTRA_PROFILE = "com.davale.sasabus.EXTRA_PROFILE";
 
     @BindView(R.id.main_content) FrameLayout mainContent;
 
@@ -219,6 +238,8 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
             return;
         }
 
+        AnswersHelper.logProfileAction("logout");
+
         ProgressDialog progressDialog = new ProgressDialog(this, R.style.DialogStyle);
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
@@ -237,11 +258,11 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
                         progressDialog.dismiss();
 
-                        UIUtils.okDialog(EcoPointsProfileActivity.this,
+                        UIUtils.okDialog(ProfileActivity.this,
                                 R.string.eco_points_logout_error_dialog_title,
                                 R.string.eco_points_logout_error_dialog_message,
                                 (dialogInterface, i) -> dialogInterface.dismiss());
@@ -251,7 +272,7 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
                     public void onNext(Void response) {
                         progressDialog.dismiss();
 
-                        AuthHelper.logout(EcoPointsProfileActivity.this);
+                        AuthHelper.logout(ProfileActivity.this);
                     }
                 });
     }
@@ -261,6 +282,8 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
             Snackbar.make(mainContent, R.string.error_wifi, Snackbar.LENGTH_LONG);
             return;
         }
+
+        AnswersHelper.logProfileAction("logout_all");
 
         ProgressDialog progressDialog = new ProgressDialog(this, R.style.DialogStyle);
         progressDialog.setIndeterminate(true);
@@ -280,11 +303,11 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
                         progressDialog.dismiss();
 
-                        UIUtils.okDialog(EcoPointsProfileActivity.this,
+                        UIUtils.okDialog(ProfileActivity.this,
                                 R.string.eco_points_logout_error_dialog_title,
                                 R.string.eco_points_logout_error_dialog_message,
                                 (dialogInterface, i) -> dialogInterface.dismiss());
@@ -294,7 +317,7 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
                     public void onNext(Void response) {
                         progressDialog.dismiss();
 
-                        AuthHelper.logout(EcoPointsProfileActivity.this);
+                        AuthHelper.logout(ProfileActivity.this);
                     }
                 });
     }
@@ -304,6 +327,8 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
             Snackbar.make(mainContent, R.string.error_wifi, Snackbar.LENGTH_LONG);
             return;
         }
+
+        AnswersHelper.logProfileAction("delete_account");
 
         new AlertDialog.Builder(this, R.style.DialogStyle)
                 .setTitle(R.string.eco_points_delete_account_confirmation_title)
@@ -329,11 +354,11 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
 
                                 @Override
                                 public void onError(Throwable e) {
-                                    Utils.handleException(e);
+                                    Utils.logException(e);
 
                                     progressDialog.dismiss();
 
-                                    UIUtils.okDialog(EcoPointsProfileActivity.this,
+                                    UIUtils.okDialog(ProfileActivity.this,
                                             R.string.eco_points_delete_account_error_title,
                                             R.string.eco_points_delete_account_error_message,
                                             (dialogInterface, i) -> dialogInterface.dismiss());
@@ -343,7 +368,7 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
                                 public void onNext(Void response) {
                                     progressDialog.dismiss();
 
-                                    AuthHelper.logout(EcoPointsProfileActivity.this);
+                                    AuthHelper.logout(ProfileActivity.this);
                                 }
                             });
                 })
@@ -357,6 +382,8 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
     // ===================================== PASSWORD ==============================================
 
     private void showPasswordDialog() {
+        AnswersHelper.logProfileAction("change_password");
+
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.dialog_change_password, null, false);
 
@@ -457,11 +484,11 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
 
                         @Override
                         public void onError(Throwable e) {
-                            Utils.handleException(e);
+                            Utils.logException(e);
 
                             progressDialog.dismiss();
 
-                            UIUtils.okDialog(EcoPointsProfileActivity.this,
+                            UIUtils.okDialog(ProfileActivity.this,
                                     R.string.dialog_change_password_error_title,
                                     R.string.dialog_change_password_error_message,
                                     (dialogInterface, i) -> {
@@ -477,7 +504,7 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
                                 String token = response.token;
 
                                 if (!AuthHelper.setInitialToken(token)) {
-                                    AuthHelper.logout(EcoPointsProfileActivity.this);
+                                    AuthHelper.logout(ProfileActivity.this);
                                     return;
                                 }
 
@@ -485,7 +512,7 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
 
                                 progressDialog.dismiss();
 
-                                UIUtils.okDialog(EcoPointsProfileActivity.this,
+                                UIUtils.okDialog(ProfileActivity.this,
                                         R.string.dialog_change_password_success_title,
                                         R.string.dialog_change_password_success_message,
                                         (dialogInterface, i) -> {
@@ -592,6 +619,8 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
     }
 
     private void selectFromDefaults() {
+        AnswersHelper.logProfileAction("change_picture_default");
+
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.dialog_change_profile_picture, null, false);
 
@@ -625,11 +654,11 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
 
                         @Override
                         public void onError(Throwable e) {
-                            Utils.handleException(e);
+                            Utils.logException(e);
 
                             progressDialog.dismiss();
 
-                            UIUtils.okDialog(EcoPointsProfileActivity.this,
+                            UIUtils.okDialog(ProfileActivity.this,
                                     R.string.dialog_change_profile_picture_error_title,
                                     R.string.dialog_change_profile_picture_error_message,
                                     (dialogInterface, i) -> {
@@ -644,7 +673,7 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
                             progressDialog.dismiss();
                             dialog.dismiss();
 
-                            Glide.with(EcoPointsProfileActivity.this)
+                            Glide.with(ProfileActivity.this)
                                     .load(imageUrl)
                                     .into(profilePicture);
 
@@ -684,7 +713,7 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
                     }
 
                     @Override
@@ -700,6 +729,8 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
     }
 
     private void takePicture() {
+        AnswersHelper.logProfileAction("change_picture_camera");
+
         imageFile = new File(getExternalCacheDir(), System.currentTimeMillis() + ".jpg");
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -728,11 +759,11 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
                         progressDialog.dismiss();
 
-                        UIUtils.okDialog(EcoPointsProfileActivity.this,
+                        UIUtils.okDialog(ProfileActivity.this,
                                 R.string.dialog_change_profile_picture_error_title,
                                 R.string.dialog_change_profile_picture_error_message,
                                 (dialogInterface, i) -> dialogInterface.dismiss());
@@ -742,7 +773,7 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
                     public void onNext(Void response) {
                         progressDialog.dismiss();
 
-                        Glide.with(EcoPointsProfileActivity.this)
+                        Glide.with(ProfileActivity.this)
                                 .load(file)
                                 .into(profilePicture);
 
@@ -753,6 +784,8 @@ public class EcoPointsProfileActivity extends AppCompatActivity implements View.
     }
 
     private void pickFromGallery() {
+        AnswersHelper.logProfileAction("change_picture_gallery");
+
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, GALLERY_REQUEST);

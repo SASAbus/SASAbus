@@ -1,4 +1,23 @@
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package it.sasabz.android.sasabus.sync;
+
+import android.content.Context;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -7,16 +26,20 @@ import java.util.List;
 import io.realm.Realm;
 import it.sasabz.android.sasabus.network.rest.RestClient;
 import it.sasabz.android.sasabus.network.rest.api.CloudApi;
+import it.sasabz.android.sasabus.network.rest.model.Badge;
 import it.sasabz.android.sasabus.network.rest.model.CloudPlannedTrip;
 import it.sasabz.android.sasabus.network.rest.model.CloudTrip;
 import it.sasabz.android.sasabus.network.rest.response.CloudResponsePost;
+import it.sasabz.android.sasabus.network.rest.response.TripUploadResponse;
 import it.sasabz.android.sasabus.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.realm.user.PlannedTrip;
 import it.sasabz.android.sasabus.realm.user.TripToDelete;
 import it.sasabz.android.sasabus.util.LogUtils;
+import it.sasabz.android.sasabus.util.NotificationUtils;
 import it.sasabz.android.sasabus.util.Utils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
+import rx.Observer;
 
 /**
  * Utility class to help with syncing trips to the server.
@@ -46,7 +69,7 @@ final class TripSyncHelper {
         CloudApi cloudApi = RestClient.ADAPTER.create(CloudApi.class);
         Response<CloudResponsePost> response = cloudApi.downloadTrips(trips).execute();
 
-        if (response.body() != null) {
+        if (response.isSuccessful()) {
             LogUtils.w(TAG, "Download: " + response.body());
 
             Collection<CloudTrip> cloudTrips = response.body().trips;
@@ -63,7 +86,8 @@ final class TripSyncHelper {
             }
         } else {
             ResponseBody body = response.errorBody();
-            LogUtils.e(TAG, "Error while downloading trips: " + (body != null ? body.string() : null));
+            LogUtils.e(TAG, response.code() + " error while downloading trips: " +
+                    (body != null ? body.string() : null));
 
             return false;
         }
@@ -77,20 +101,34 @@ final class TripSyncHelper {
      *
      * @param trips the trips to upload.
      * @return {@code true} if one or more trips have been uploaded, {@code false} otherwise.
-     * @throws IOException if downloading the trips failed.
      */
-    static boolean upload(List<CloudTrip> trips) throws IOException {
+    static boolean upload(Context context, List<CloudTrip> trips) {
         LogUtils.w(TAG, "Uploading " + trips.size() + " trips");
 
         CloudApi cloudApi = RestClient.ADAPTER.create(CloudApi.class);
-        Response<Void> response = cloudApi.uploadTrips(trips).execute();
+        cloudApi.uploadTrips(trips)
+                .subscribe(new Observer<TripUploadResponse>() {
+                    @Override
+                    public void onCompleted() {
 
-        if (response.body() == null) {
-            ResponseBody body = response.errorBody();
-            LogUtils.e(TAG, "Error while uploading trips: " + (body != null ? body.string() : null));
+                    }
 
-            return false;
-        }
+                    @Override
+                    public void onError(Throwable e) {
+                        Utils.logException(e);
+                    }
+
+                    @Override
+                    public void onNext(TripUploadResponse response) {
+                        LogUtils.e(TAG, "Got " + response.badges.size() + " new badges to display");
+
+                        new Thread(() -> {
+                            for (Badge badge : response.badges) {
+                                NotificationUtils.badge(context, badge);
+                            }
+                        }).start();
+                    }
+                });
 
         return true;
     }

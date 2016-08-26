@@ -1,13 +1,31 @@
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package it.sasabz.android.sasabus.fcm.command;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import java.util.Map;
+
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.NotificationUtils;
 import it.sasabz.android.sasabus.util.SettingsUtils;
-
-import java.util.Map;
+import it.sasabz.android.sasabus.util.Utils;
 
 /**
  * Handles incoming news. Because the user is always registered to the GCM topic which will receive
@@ -30,7 +48,7 @@ public class NewsCommand implements FcmCommand {
             return;
         }
 
-        String language = context.getResources().getConfiguration().locale.toString();
+        String language = Utils.locale(context);
         if (language.length() > 2) {
             language = language.substring(0, 2);
         }
