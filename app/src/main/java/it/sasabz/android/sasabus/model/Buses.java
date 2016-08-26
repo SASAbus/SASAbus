@@ -25,25 +25,25 @@ public final class Buses {
     private static final SparseArray<Bus> BUSES = new SparseArray<>();
 
     static {
-        Vehicle spr = new Vehicle("Mercedes-Benz", "Sprinter O 513 NFXL", 1, 1, 90, "spr");
-        Vehicle u18 = new Vehicle("Solaris", "Urbino 18", 1, 1, 90, "u18");
-        Vehicle u12 = new Vehicle("Solaris", "Urbino 12", 1, 1, 90, "u12");
-        Vehicle h2 = new Vehicle("Mercedes-Benz", "Citaro O 530 BZ", 0, 0, 0, "h2");
-        Vehicle vc = new Vehicle("BredaMenarinibus", "Vivacity+ 231 MU/3P/E5 EEV", 1, 1, 90, "vc");
-        Vehicle c18 = new Vehicle("Mercedes-Benz", "Citaro O 530 GN", 1, 1, 90, "c18");
-        Vehicle c10 = new Vehicle("Mercedes-Benz", "Citaro O 530 K", 1, 1, 90, "c10");
-        Vehicle vco = new Vehicle("BredaMenarinibus", "Vivacity 231 MU/3P/E5", 1, 2, 110, "vco");
-        Vehicle v88 = new Vehicle("Mercedes-Benz", "Citaro O 530 N", 1, 2, 90, "v88");
-        Vehicle v87 = new Vehicle("Mercedes-Benz", "Citaro O 530 GN", 1, 2, 90, "v87");
-        Vehicle mbgn = new Vehicle("Mercedes-Benz", "Citaro O 530 GN", 1, 2, 90, "mbgn");
-        Vehicle manlc = new Vehicle("MAN", "Lion\'s City 313 NG/CNG", 2, 2, 110, "manlc");
-        Vehicle ac = new Vehicle("BredaMenarinibus", "Avancity NU/3P/CNG", 2, 2, 110, "ac");
-        Vehicle bmb = new Vehicle("BredaMenarinibus", "Monocar 231/2/CU/2P E3 CNG", 2, 2, 110, "bmb");
-        Vehicle v69 = new Vehicle("MAN", "313 NG/CNG", 2, 2, 110, "v69");
-        Vehicle m240 = new Vehicle("BredaMenarinibus", "Monocar 240", 2, 2, 110, "m240");
-        Vehicle ib = new Vehicle("Iveco", "Irisbus 491E CityClass CNG", 2, 2, 110, "ib");
-        Vehicle s4x = new Vehicle("MAN", "NL 313", 1, 2, 160, "s4x");
-        Vehicle l4x = new Vehicle("MAN", "NG 313", 1, 2, 160, "l4x");
+        Vehicle spr = new Vehicle("Mercedes-Benz", "Sprinter O 513 NFXL", 1, 90, "spr");
+        Vehicle u18 = new Vehicle("Solaris", "Urbino 18", 1, 90, "u18");
+        Vehicle u12 = new Vehicle("Solaris", "Urbino 12", 1, 90, "u12");
+        Vehicle h2 = new Vehicle("Mercedes-Benz", "Citaro O 530 BZ", 0, 0, "h2");
+        Vehicle vc = new Vehicle("BredaMenarinibus", "Vivacity+ 231 MU/3P/E5 EEV", 1, 90, "vc");
+        Vehicle c18 = new Vehicle("Mercedes-Benz", "Citaro O 530 GN", 1, 90, "c18");
+        Vehicle c10 = new Vehicle("Mercedes-Benz", "Citaro O 530 K", 1, 90, "c10");
+        Vehicle vco = new Vehicle("BredaMenarinibus", "Vivacity 231 MU/3P/E5", 1, 110, "vco");
+        Vehicle v88 = new Vehicle("Mercedes-Benz", "Citaro O 530 N", 1, 90, "v88");
+        Vehicle v87 = new Vehicle("Mercedes-Benz", "Citaro O 530 GN", 1, 90, "v87");
+        Vehicle mbgn = new Vehicle("Mercedes-Benz", "Citaro O 530 GN", 1, 90, "mbgn");
+        Vehicle manlc = new Vehicle("MAN", "Lion\'s City 313 NG/CNG", 2, 110, "manlc");
+        Vehicle ac = new Vehicle("BredaMenarinibus", "Avancity NU/3P/CNG", 2, 110, "ac");
+        Vehicle bmb = new Vehicle("BredaMenarinibus", "Monocar 231/2/CU/2P E3 CNG", 2, 110, "bmb");
+        Vehicle v69 = new Vehicle("MAN", "313 NG/CNG", 2, 110, "v69");
+        Vehicle m240 = new Vehicle("BredaMenarinibus", "Monocar 240", 2, 110, "m240");
+        Vehicle ib = new Vehicle("Iveco", "Irisbus 491E CityClass CNG", 2, 110, "ib");
+        Vehicle s4x = new Vehicle("MAN", "NL 313", 1, 160, "s4x");
+        Vehicle l4x = new Vehicle("MAN", "NG 313", 1, 160, "l4x");
 
         BUSES.put(439, new Bus(439, spr));
         BUSES.put(438, new Bus(438, u18));

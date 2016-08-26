@@ -146,13 +146,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 .subscribe(charSequence -> ReportHelper.validatePassword(this,
                         passwordLayout, charSequence.toString()));
 
-        male.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            female.setChecked(!isChecked);
-        });
-
-        female.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            male.setChecked(!isChecked);
-        });
+        male.setOnCheckedChangeListener((buttonView, isChecked) -> female.setChecked(!isChecked));
+        female.setOnCheckedChangeListener((buttonView, isChecked) -> male.setChecked(!isChecked));
 
         button.setOnClickListener(this);
 

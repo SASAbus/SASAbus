@@ -74,6 +74,7 @@ public class BusStopsMapView {
 
         // Need this to make sure the page has loaded otherwise WebView
         // will throw a Uncaught ReferenceError when calling JS.
+        //noinspection CodeBlock2Expr
         new Handler().postDelayed(() -> {
             webView.loadUrl("javascript:setMarkers(\"" + data.toString() + "\");");
         }, 500);
