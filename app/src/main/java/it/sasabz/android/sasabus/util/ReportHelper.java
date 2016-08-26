@@ -114,7 +114,7 @@ public final class ReportHelper {
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
                         barProgressDialog.dismiss();
 
@@ -160,7 +160,7 @@ public final class ReportHelper {
         try {
             mActivity.startActivityForResult(intent, SELECT_PHOTO);
         } catch (ActivityNotFoundException e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
     }
 

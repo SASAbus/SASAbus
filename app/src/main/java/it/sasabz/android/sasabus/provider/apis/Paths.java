@@ -72,7 +72,7 @@ public final class Paths {
                 PATHS.put(line, variants);
             }
         } catch (JSONException | IOException e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
 
         //noinspection CallToSystemGC

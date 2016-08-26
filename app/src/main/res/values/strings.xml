@@ -497,6 +497,10 @@
     <string name="activity_title_eco_points_badges">Badges</string>
     <string name="activity_title_eco_points_profile">My profile</string>
 
+    <string name="fragment_eco_points_profile">Profile</string>
+    <string name="fragment_eco_points_badges">Badges</string>
+    <string name="fragment_eco_points_events">Events</string>
+
     <string name="eco_points_profile_points">Points</string>
     <string name="eco_points_profile_badges">Badges</string>
     <string name="eco_points_profile_rank">Rank</string>

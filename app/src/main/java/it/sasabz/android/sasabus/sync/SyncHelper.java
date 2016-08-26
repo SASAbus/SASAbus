@@ -177,7 +177,7 @@ public class SyncHelper {
                         throw new IllegalStateException("Unknown operation " + op);
                 }
             } catch (Throwable throwable) {
-                Utils.handleException(throwable);
+                Utils.logException(throwable);
 
                 LogUtils.e(TAG, "Error performing remote sync");
             }
@@ -377,7 +377,7 @@ public class SyncHelper {
 
                 @Override
                 public void onError(Throwable e) {
-                    Utils.handleException(e);
+                    Utils.logException(e);
                 }
 
                 @Override

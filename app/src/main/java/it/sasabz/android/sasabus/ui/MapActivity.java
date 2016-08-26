@@ -417,7 +417,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onError(Throwable e) {
-        Utils.handleException(e);
+        Utils.logException(e);
 
         mIsRefreshing = false;
         showErrorSnackbar(R.string.error_general);
@@ -485,7 +485,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
                         @Override
                         public void onError(Throwable e) {
-                            Utils.handleException(e);
+                            Utils.logException(e);
                         }
 
                         @Override
@@ -622,7 +622,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(response.link)));
                     } catch (ActivityNotFoundException e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
                     }
                 });
                 break;

@@ -50,7 +50,7 @@ public final class DeviceUtils {
                 }
             }
         } catch (Exception e) {
-            Utils.handleException(e, "Exception: %s", "getDeviceName");
+            Utils.logException(e, "Exception: %s", "getDeviceName");
         }
 
         return "unknown";

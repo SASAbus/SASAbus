@@ -383,7 +383,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
 
                             @Override
                             public void onError(Throwable e) {
-                                Utils.handleException(e);
+                                Utils.logException(e);
 
                                 NotificationUtils.busStop(mContext, beacon.id, items);
                                 beacon.setNotificationShown();

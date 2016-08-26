@@ -30,6 +30,7 @@ import android.widget.RelativeLayout;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -154,7 +155,7 @@ public class LinesHydrogenFragment extends RxFragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
                         mErrorGeneral.setVisibility(View.VISIBLE);
                         mErrorWifi.setVisibility(View.GONE);
@@ -167,11 +168,12 @@ public class LinesHydrogenFragment extends RxFragment {
 
                     @Override
                     public void onNext(RealtimeResponse realtimeResponse) {
+                        mItems.clear();
+
                         if (realtimeResponse.buses.isEmpty()) {
                             mErrorGeneral.setVisibility(View.GONE);
                             mErrorWifi.setVisibility(View.GONE);
 
-                            mItems.clear();
                             mAdapter.notifyDataSetChanged();
 
                             mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
@@ -179,8 +181,8 @@ public class LinesHydrogenFragment extends RxFragment {
                             return;
                         }
 
-                        mItems.clear();
                         mItems.addAll(realtimeResponse.buses);
+                        Collections.sort(mItems, (o1, o2) -> o1.vehicle - o2.vehicle);
 
                         mAdapter.notifyDataSetChanged();
 

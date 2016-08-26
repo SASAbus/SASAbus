@@ -217,7 +217,7 @@ public class LineCourseActivity extends RxAppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
                         mItems.clear();
                         mAdapter.notifyDataSetChanged();
@@ -273,7 +273,7 @@ public class LineCourseActivity extends RxAppCompatActivity {
                     @Override
                     public void onError(Throwable e) {
                         if (e != null) {
-                            Utils.handleException(e);
+                            Utils.logException(e);
                         }
 
                         mErrorGeneral.setVisibility(View.VISIBLE);

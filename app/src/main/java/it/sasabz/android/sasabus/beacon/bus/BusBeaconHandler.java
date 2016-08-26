@@ -277,7 +277,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
                         beacon.setOriginPending(false);
                         beacon.setSuitableForTrip(mContext, false);
@@ -306,7 +306,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
 
                             Throwable t = new IllegalTripException("Triplist for " + beacon.id
                                     + " empty");
-                            Utils.handleException(t);
+                            Utils.logException(t);
 
                             return;
                         }
@@ -502,7 +502,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
                         beacon.setCurrentTripPending(false);
                     }
@@ -560,7 +560,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
                     }
 
                     @Override

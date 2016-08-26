@@ -90,7 +90,7 @@ public final class Trips {
                 }
             }
         } catch (JSONException | IOException e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
 
         //noinspection CallToSystemGC

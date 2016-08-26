@@ -51,7 +51,7 @@ public final class CompanyCalendar {
                 CALENDAR.put(jDay.getString("BETRIEBSTAG"), Integer.parseInt(jDay.getString("TAGESART_NR")));
             }
         } catch (JSONException | IOException e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
 
         //noinspection CallToSystemGC

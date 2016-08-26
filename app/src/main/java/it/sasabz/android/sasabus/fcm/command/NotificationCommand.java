@@ -109,7 +109,7 @@ public class NotificationCommand implements FcmCommand {
             try {
                 json.put(entry.getKey(), entry.getValue());
             } catch (JSONException e) {
-                Utils.handleException(e);
+                Utils.logException(e);
             }
         }
 
@@ -144,7 +144,7 @@ public class NotificationCommand implements FcmCommand {
             LogUtils.w(TAG, "Max version code: " + command.maxVersion);
             LogUtils.w(TAG, "Color: " + command.color);
         } catch (Exception e) {
-            Utils.handleException(e);
+            Utils.logException(e);
 
             LogUtils.e(TAG, "Failed to parse GCM notification command.");
             return;

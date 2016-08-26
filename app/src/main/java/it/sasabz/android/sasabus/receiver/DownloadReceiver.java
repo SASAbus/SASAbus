@@ -72,7 +72,7 @@ public class DownloadReceiver extends BroadcastReceiver {
 
                             @Override
                             public void onError(Throwable e) {
-                                Utils.handleException(e);
+                                Utils.logException(e);
                             }
 
                             @Override

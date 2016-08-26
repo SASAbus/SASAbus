@@ -93,7 +93,7 @@ public final class BeaconStorage {
             String json = GSON.toJson(trip);
             mPrefs.edit().putString(PREF_BEACON_CURRENT_TRIP, json).apply();
         } catch (Exception e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
     }
 
@@ -126,7 +126,7 @@ public final class BeaconStorage {
 
             return trip;
         } catch (Exception e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
 
         return null;
@@ -137,7 +137,7 @@ public final class BeaconStorage {
             String json = GSON.toJson(mBusBeaconMap);
             mPrefs.edit().putString(PREF_BUS_BEACON_MAP, json).apply();
         } catch (Exception e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
 
         if (mBusBeaconMap == null) {
@@ -170,7 +170,7 @@ public final class BeaconStorage {
                     }.getType();
                     return GSON.fromJson(json, type);
                 } catch (Exception e) {
-                    Utils.handleException(e);
+                    Utils.logException(e);
                 }
             } else {
                 setCurrentTrip(null);

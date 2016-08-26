@@ -215,7 +215,7 @@ public class PlannedTripsActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
                         // Sending the request to delete the planned trip on the cloud failed so we
                         // need to store the request so we can retry next time a sync happens.

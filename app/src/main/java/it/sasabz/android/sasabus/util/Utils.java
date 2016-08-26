@@ -153,7 +153,7 @@ public final class Utils {
      * @param t the {@link Throwable} to log.
      */
     @SuppressWarnings("ChainOfInstanceofChecks")
-    public static void handleException(Throwable t) {
+    public static void logException(Throwable t) {
         if (BuildConfig.DEBUG) {
             t.printStackTrace();
         } else {
@@ -183,8 +183,8 @@ public final class Utils {
      *
      * @param t the {@link Throwable} to log.
      */
-    public static void handleException(Throwable t, String format, Object... params) {
-        handleException(new Throwable(String.format(format, params), t));
+    public static void logException(Throwable t, String format, Object... params) {
+        logException(new Throwable(String.format(format, params), t));
     }
 
     /**

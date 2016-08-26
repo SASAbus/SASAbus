@@ -126,7 +126,7 @@ public class LinePathActivity extends RxAppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
 
                         showErrorSnackbar(R.string.error_general);
 

@@ -206,7 +206,7 @@ public class IntroFragmentData extends Fragment implements Observer<Void>, View.
     @Override
     public void onError(Throwable throwable) {
         if (throwable != null) {
-            Utils.handleException(throwable);
+            Utils.logException(throwable);
         }
 
         error = true;

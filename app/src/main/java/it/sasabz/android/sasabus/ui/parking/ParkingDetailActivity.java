@@ -101,7 +101,7 @@ public class ParkingDetailActivity extends AppCompatActivity {
                         return true;
                 }
             } catch (ActivityNotFoundException e) {
-                Utils.handleException(e);
+                Utils.logException(e);
             }
 
             return false;

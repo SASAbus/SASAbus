@@ -197,19 +197,19 @@
             android:launchMode="singleTop"/>
 
         <activity
-            android:name=".ui.ecopoints.EcoPointsProfileActivity"
+            android:name=".ui.ecopoints.detail.ProfileActivity"
             android:label="@string/activity_title_eco_points_profile"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.Normal"/>
 
         <activity
-            android:name=".ui.ecopoints.EcoPointsLeaderboardActivity"
+            android:name=".ui.ecopoints.detail.LeaderboardActivity"
             android:label="@string/activity_title_eco_points_leaderboard"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.Normal"/>
 
         <activity
-            android:name=".ui.ecopoints.EcoPointsBadgesActivity"
+            android:name=".ui.ecopoints.detail.BadgesActivity"
             android:label="@string/activity_title_eco_points_badges"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.Normal"/>

@@ -251,7 +251,7 @@ public class LineDetailActivity extends RxAppCompatActivity implements OnClickLi
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.handleException(e);
+                        Utils.logException(e);
                         mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
                     }
 

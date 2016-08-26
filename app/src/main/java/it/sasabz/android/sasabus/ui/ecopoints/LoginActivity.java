@@ -201,7 +201,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                         @Override
                         public void onError(Throwable e) {
-                            Utils.handleException(e);
+                            Utils.logException(e);
 
                             progressDialog.dismiss();
 
@@ -256,7 +256,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                         @Override
                         public void onError(Throwable e) {
-                            Utils.handleException(e);
+                            Utils.logException(e);
 
                             loginFailed();
                         }

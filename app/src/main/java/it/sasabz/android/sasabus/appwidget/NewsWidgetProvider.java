@@ -56,7 +56,7 @@ public class NewsWidgetProvider extends AppWidgetProvider {
 
                         @Override
                         public void onError(Throwable e) {
-                            Utils.handleException(e);
+                            Utils.logException(e);
                         }
 
                         @Override

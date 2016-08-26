@@ -383,7 +383,7 @@ public final class NotificationUtils {
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(Config.NOTIFICATION_BADGE, mBuilder.build());
         } catch (InterruptedException | ExecutionException e) {
-            Utils.handleException(e);
+            Utils.logException(e);
         }
     }
 
@@ -396,7 +396,7 @@ public final class NotificationUtils {
     public static void error(Context context, Throwable e) {
         if (!BuildConfig.DEBUG) {
             LogUtils.e(TAG, "Called error notification with production build.");
-            Utils.handleException(new Throwable("Called error notification with " +
+            Utils.logException(new Throwable("Called error notification with " +
                     "production build."));
 
             return;
