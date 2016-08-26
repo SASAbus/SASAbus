@@ -416,5 +416,8 @@
     <string name="register_weak_password_dialog_title">Schwaches Passwort</string>
     <string name="register_weak_password_negative">Nein</string>
     <string name="register_weak_password_positive">Ja</string>
+    <string name="fragment_eco_points_badges">Abzeichen</string>
+    <string name="fragment_eco_points_events">Events</string>
+    <string name="fragment_eco_points_profile">Profil</string>
 
 </resources>

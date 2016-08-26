@@ -412,5 +412,8 @@
     <string name="dialog_map_download_negative">Più tardi</string>
     <string name="dialog_map_download_title">Download della mappa</string>
     <string name="dialog_map_download_message">L\'app deve scaricare 60MByte di dati per visulizzare la mappa. Vorresti scaricare la cartina adesso?</string>
+    <string name="fragment_eco_points_events">Eventi</string>
+    <string name="fragment_eco_points_badges">Distintivi</string>
+    <string name="fragment_eco_points_profile">Profilo</string>
 
 </resources>
