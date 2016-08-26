@@ -38,12 +38,9 @@
   public static final android.os.Parcelable$Creator *;
 }
 
-
-
 # Other
 -dontwarn com.google.android.gms.**
 -dontwarn java.lang.invoke**
-
 
 # Square
 -dontwarn com.squareup.okhttp.**
@@ -57,6 +54,13 @@
 -keepattributes Signature
 -keepclassmembers class it.sasabz.android.sasabus.network.rest.model.** { <fields>; }
 -keepclassmembers class it.sasabz.android.sasabus.network.rest.response.** { <fields>; }
+
+-keep class it.sasabz.android.sasabus.model.JsonSerializable { *; }
+
+-keep class * implements it.sasabz.android.sasabus.model.JsonSerializable {
+  <fields>;
+}
+
 -keepattributes *Annotation*
 
 # RxJava
