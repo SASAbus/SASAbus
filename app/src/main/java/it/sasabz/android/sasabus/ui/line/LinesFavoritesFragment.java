@@ -168,7 +168,7 @@ public class LinesFavoritesFragment extends RxFragment {
 
                     sb.deleteCharAt(sb.length() - 1);
 
-                    String language = getResources().getConfiguration().locale.toString();
+                    String language = Utils.locale(getActivity());
 
                     LinesApi linesApi = RestClient.ADAPTER.create(LinesApi.class);
 

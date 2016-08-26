@@ -161,7 +161,7 @@ public class NotificationCommand implements FcmCommand {
     }
 
     private void processCommand(Context context, NotificationCommandModel command) {
-        String locale = context.getResources().getConfiguration().locale.toString();
+        String locale = Utils.locale(context);
 
         String title;
         String message;

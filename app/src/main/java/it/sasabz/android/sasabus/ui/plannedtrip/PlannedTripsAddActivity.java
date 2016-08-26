@@ -378,7 +378,7 @@ public class PlannedTripsAddActivity extends AppCompatActivity implements View.O
     private void updateDate() {
         SimpleDateFormat sdf;
 
-        switch (getResources().getConfiguration().locale.toString()) {
+        switch (Utils.locale(this)) {
             case "it":
                 sdf = new SimpleDateFormat("EEE dd MMM yyyy", Locale.ITALY);
                 break;

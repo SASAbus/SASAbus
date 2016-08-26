@@ -55,6 +55,7 @@ import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.AnswersHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.ReportHelper;
+import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -359,7 +360,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void updateDateFormPicker() {
         SimpleDateFormat sdf;
-        switch (getResources().getConfiguration().locale.toString()) {
+        switch (Utils.locale(this)) {
             case "it":
                 sdf = new SimpleDateFormat("dd MMM yyyy", Locale.ITALY);
                 break;

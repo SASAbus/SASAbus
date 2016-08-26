@@ -22,6 +22,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import it.sasabz.android.sasabus.realm.busstop.SadBusStop;
+import it.sasabz.android.sasabus.util.Utils;
 
 /**
  * A representation of a bus stop.
@@ -170,7 +171,7 @@ public class BusStop implements Parcelable {
     }
 
     public String getName(Context context) {
-        String locale = context.getResources().getConfiguration().locale.toString();
+        String locale = Utils.locale(context);
         return locale.contains("de") ? nameDe : nameIt;
     }
 
@@ -187,7 +188,7 @@ public class BusStop implements Parcelable {
     }
 
     public String getMunic(Context context) {
-        String locale = context.getResources().getConfiguration().locale.toString();
+        String locale = Utils.locale(context);
         return locale.contains("de") ? municDe : municIt;
     }
 

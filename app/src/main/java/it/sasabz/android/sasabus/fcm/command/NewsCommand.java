@@ -25,6 +25,7 @@ import java.util.Map;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.NotificationUtils;
 import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Utils;
 
 /**
  * Handles incoming news. Because the user is always registered to the GCM topic which will receive
@@ -47,7 +48,7 @@ public class NewsCommand implements FcmCommand {
             return;
         }
 
-        String language = context.getResources().getConfiguration().locale.toString();
+        String language = Utils.locale(context);
         if (language.length() > 2) {
             language = language.substring(0, 2);
         }

@@ -92,7 +92,7 @@ public final class BusStopRealmHelper {
     }
 
     public static String getName(int id) {
-        String locale = sContext.getResources().getConfiguration().locale.toString();
+        String locale = Utils.locale(sContext);
 
         Realm realm = Realm.getInstance(CONFIG);
         BusStop busStop = realm.where(BusStop.class).equalTo("id", id).findFirst();
@@ -111,7 +111,7 @@ public final class BusStopRealmHelper {
     }
 
     public static String getSadName(int id) {
-        String locale = sContext.getResources().getConfiguration().locale.toString();
+        String locale = Utils.locale(sContext);
 
         Realm realm = Realm.getInstance(CONFIG);
         SadBusStop busStop = realm.where(SadBusStop.class).equalTo("id", id).findFirst();
@@ -130,7 +130,7 @@ public final class BusStopRealmHelper {
     }
 
     public static String getMunic(int id) {
-        String locale = sContext.getResources().getConfiguration().locale.toString();
+        String locale = Utils.locale(sContext);
 
         Realm realm = Realm.getInstance(CONFIG);
         BusStop busStop = realm.where(BusStop.class).equalTo("id", id).findFirst();
@@ -149,7 +149,7 @@ public final class BusStopRealmHelper {
     }
 
     public static String getSadMunic(int id) {
-        String locale = sContext.getResources().getConfiguration().locale.toString();
+        String locale = Utils.locale(sContext);
 
         Realm realm = Realm.getInstance(CONFIG);
         SadBusStop busStop = realm.where(SadBusStop.class).equalTo("id", id).findFirst();

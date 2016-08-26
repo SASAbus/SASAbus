@@ -46,7 +46,7 @@ public class NewsWidgetProvider extends AppWidgetProvider {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_news);
 
             NewsApi newsApi = RestClient.ADAPTER.create(NewsApi.class);
-            newsApi.getNews(context.getResources().getConfiguration().locale.toString())
+            newsApi.getNews(Utils.locale(context))
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<NewsResponse>() {

@@ -20,6 +20,7 @@ package it.sasabz.android.sasabus.realm.busstop;
 import android.content.Context;
 
 import io.realm.RealmObject;
+import it.sasabz.android.sasabus.util.Utils;
 
 /**
  * Holds all the bus stops which the SASA Spa-AG operates. Most of the time the bus stops
@@ -60,7 +61,7 @@ public class BusStop extends RealmObject {
     }
 
     public String getName(Context context) {
-        String locale = context.getResources().getConfiguration().locale.toString();
+        String locale = Utils.locale(context);
         return locale.contains("de") ? nameDe : nameIt;
     }
 
@@ -73,7 +74,7 @@ public class BusStop extends RealmObject {
     }
 
     public CharSequence getMunic(Context context) {
-        String locale = context.getResources().getConfiguration().locale.toString();
+        String locale = Utils.locale(context);
         return locale.contains("de") ? municDe : municIt;
     }
 

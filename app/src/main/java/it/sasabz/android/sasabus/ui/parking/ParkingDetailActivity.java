@@ -189,7 +189,7 @@ public class ParkingDetailActivity extends AppCompatActivity {
                 TextView name = (TextView) findViewById(R.id.parking_detail_station_name_1);
                 TextView distance = (TextView) findViewById(R.id.parking_detail_station_distance_1);
 
-                name.setText(split[getResources().getConfiguration().locale.toString().contains("de") ? 1 : 2]);
+                name.setText(split[Utils.locale(this).contains("de") ? 1 : 2]);
                 distance.setText(split[7] + getString(R.string.parking_detail_station_distance));
 
                 relativeLayout.setOnClickListener(v -> onClickStation(s));
@@ -200,7 +200,7 @@ public class ParkingDetailActivity extends AppCompatActivity {
                 TextView name = (TextView) findViewById(R.id.parking_detail_station_name_2);
                 TextView distance = (TextView) findViewById(R.id.parking_detail_station_distance_2);
 
-                name.setText(split[getResources().getConfiguration().locale.toString().contains("de") ? 1 : 2]);
+                name.setText(split[Utils.locale(this).contains("de") ? 1 : 2]);
                 distance.setText(split[7] + getString(R.string.parking_detail_station_distance));
 
                 relativeLayout.setOnClickListener(v -> onClickStation(s));
@@ -211,7 +211,7 @@ public class ParkingDetailActivity extends AppCompatActivity {
                 TextView name = (TextView) findViewById(R.id.parking_detail_station_name_3);
                 TextView distance = (TextView) findViewById(R.id.parking_detail_station_distance_3);
 
-                name.setText(split[getResources().getConfiguration().locale.toString().contains("de") ? 1 : 2]);
+                name.setText(split[Utils.locale(this).contains("de") ? 1 : 2]);
                 distance.setText(split[7] + getString(R.string.parking_detail_station_distance));
 
                 relativeLayout.setOnClickListener(v -> onClickStation(s));

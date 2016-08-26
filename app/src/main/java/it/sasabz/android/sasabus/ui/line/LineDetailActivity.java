@@ -291,7 +291,7 @@ public class LineDetailActivity extends RxAppCompatActivity implements OnClickLi
                 }
             });
         } else {
-            String locale = getResources().getConfiguration().locale.toString();
+            String locale = Utils.locale(this);
             LinesApi linesApi = RestClient.ADAPTER.create(LinesApi.class);
 
             return linesApi.line(locale, lineId)

@@ -152,7 +152,7 @@ public class PlannedTripsViewActivity extends AppCompatActivity {
     }
 
     private CharSequence getFormattedDateTime(long timeStamp) {
-        String locale = getResources().getConfiguration().locale.toString();
+        String locale = Utils.locale(this);
 
         String formatString;
         switch (locale) {

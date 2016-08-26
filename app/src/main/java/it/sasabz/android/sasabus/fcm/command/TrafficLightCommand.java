@@ -124,7 +124,7 @@ public class TrafficLightCommand extends NotificationCommand implements FcmComma
     }
 
     private void processCommand(Context context, TraficLightCommandModel command) {
-        String locale = context.getResources().getConfiguration().locale.toString();
+        String locale = Utils.locale(context);
 
         String title;
         String message;

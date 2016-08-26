@@ -50,7 +50,7 @@ public class ParkingWidgetProvider extends AppWidgetProvider {
             if (id == 0) return;
 
             ParkingApi parkingApi = RestClient.ADAPTER.create(ParkingApi.class);
-            parkingApi.getParking(context.getResources().getConfiguration().locale.toString(), id)
+            parkingApi.getParking(Utils.locale(context), id)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<ParkingResponse>() {

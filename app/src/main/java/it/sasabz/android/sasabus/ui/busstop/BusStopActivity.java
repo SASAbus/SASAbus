@@ -67,6 +67,7 @@ import it.sasabz.android.sasabus.ui.widget.adapter.TabsAdapter;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.DeviceUtils;
 import it.sasabz.android.sasabus.util.LogUtils;
+import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.map.BusStopsMapView;
 import it.sasabz.android.sasabus.util.recycler.BusStopListAdapter;
 import rx.Observer;
@@ -444,7 +445,7 @@ public class BusStopActivity extends BaseActivity {
         public void parseData() {
             mItems.clear();
 
-            String locale = getResources().getConfiguration().locale.toString();
+            String locale = Utils.locale(getActivity());
             String sort = locale.contains("de") ? "nameDe" : "nameIt";
 
             realm.where(BusStop.class).findAllSortedAsync(sort).asObservable()

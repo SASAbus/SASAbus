@@ -135,7 +135,7 @@ public class LinesAllFragment extends RxFragment {
 
         mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
 
-        String language = getResources().getConfiguration().locale.toString();
+        String language = Utils.locale(getActivity());
 
         LinesApi linesApi = RestClient.ADAPTER.create(LinesApi.class);
         linesApi.allLines(language)

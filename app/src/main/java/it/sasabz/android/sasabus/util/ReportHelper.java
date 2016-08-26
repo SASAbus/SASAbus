@@ -248,7 +248,7 @@ public final class ReportHelper {
             screenSize = DeviceUtils.getScreenWidth(context) + "x" +
                     DeviceUtils.getScreenHeight(context);
 
-            locale = context.getResources().getConfiguration().locale.toString();
+            locale = Utils.locale(context);
 
             playServicesStatus = Utils.getPlayServicesStatus(context);
 

@@ -76,10 +76,17 @@ public final class Utils {
         Resources resources = context.getResources();
         Configuration configuration = resources.getConfiguration();
 
-        if (!SettingsUtils.getLanguage(context).toLowerCase().equals("system")) {
-            configuration.locale = new Locale(SettingsUtils.getLanguage(context));
-        } else {
-            configuration.locale = new Locale(Locale.getDefault().getLanguage());
+        Locale locale = Locale.getDefault();
+
+        String language = SettingsUtils.getLanguage(context).toLowerCase();
+        if (!language.equals("system")) {
+            locale = new Locale(language);
+        }
+
+        //noinspection deprecation
+        configuration.locale = locale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            configuration.setLocale(locale);
         }
 
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());

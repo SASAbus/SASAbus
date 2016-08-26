@@ -69,6 +69,7 @@ import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.ui.widget.RecyclerItemClickListener;
 import it.sasabz.android.sasabus.ui.widget.RecyclerItemDivider;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
+import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.recycler.RecentAdapter;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -512,7 +513,7 @@ public class RouteActivity extends BaseActivity implements View.OnClickListener,
 
     private void updateDateFormPicker() {
         SimpleDateFormat sdf;
-        switch (getResources().getConfiguration().locale.toString()) {
+        switch (Utils.locale(this)) {
             case "it":
                 sdf = new SimpleDateFormat("dd MMM", Locale.ITALY);
                 break;
@@ -539,7 +540,7 @@ public class RouteActivity extends BaseActivity implements View.OnClickListener,
         calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
         calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH));
 
-        switch (getResources().getConfiguration().locale.toString()) {
+        switch (Utils.locale(this)) {
             case "it":
                 sdf = new SimpleDateFormat("dd MMM", Locale.ITALY);
                 break;

@@ -190,7 +190,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
         status.setText(getResources().getString(R.string.about_traffic_light_loading));
 
         TrafficLightApi api = RestClient.ADAPTER.create(TrafficLightApi.class);
-        api.trafficLight(getResources().getConfiguration().locale.getLanguage(),
+        api.trafficLight(Utils.locale(this),
                 SettingsUtils.getTrafficLightCity(AboutActivity.this).toLowerCase())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
