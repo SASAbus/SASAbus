@@ -80,8 +80,6 @@ public final class Endpoint {
 
     public static final String CLOUD_TRIPS = "sync/trips";
     public static final String CLOUD_TRIPS_DELETE = "sync/trips/{hash}";
-    public static final String CLOUD_PLANNED_TRIPS = "sync/planned_trips";
-    public static final String CLOUD_PLANNED_TRIPS_DELETE = "sync/planned_trips/{hash}";
 
     private Endpoint() {
     }

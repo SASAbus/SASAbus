@@ -231,7 +231,7 @@ public final class Utils {
      * @see ConnectionResult#SUCCESS
      * @see ConnectionResult#API_UNAVAILABLE
      */
-    public static int getPlayServicesStatus(Context context) {
+    static int getPlayServicesStatus(Context context) {
         return GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context);
     }
 
@@ -357,7 +357,7 @@ public final class Utils {
 
         Realm realm = Realm.getDefaultInstance();
 
-        Trip trip = realm.where(Trip.class).equalTo("hash", beacon.hash).findFirst();
+        Trip trip = realm.where(Trip.class).equalTo("hash", beacon.getHash()).findFirst();
 
         //noinspection SimplifiableIfStatement
         if (trip != null) {

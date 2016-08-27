@@ -212,7 +212,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
                 getBusInformation(busBeacon);
             }
         } else {
-            busBeacon = new BusBeacon(major, HashUtils.getHashForIdentifier(mContext, "trip"));
+            busBeacon = new BusBeacon(major);
 
             mBeaconMap.put(major, busBeacon);
 
@@ -332,6 +332,9 @@ public final class BusBeaconHandler implements IBeaconHandler {
 
                         beacon.setTitle(title);
 
+                        String hash = HashUtils.getHashForTrip(mContext, beacon);
+                        beacon.setHash(hash);
+
                         LogUtils.e(TAG, "Got bus info for " + beacon.id +
                                 ", bus stop " + bus.busStop);
 
@@ -417,7 +420,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
         if (Utils.insertTripIfValid(mContext, beacon) &&
                 SettingsUtils.isTripNotificationEnabled(mContext)) {
 
-            NotificationUtils.trip(mContext, beacon.hash);
+            NotificationUtils.trip(mContext, beacon.getHash());
 
             LogUtils.e(TAG, "Saved trip " + beacon.id);
 
@@ -462,7 +465,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
 
                 if (showSurvey) {
                     LogUtils.e(TAG, "Showing survey");
-                    NotificationUtils.survey(mContext, beacon.hash);
+                    NotificationUtils.survey(mContext, beacon.getHash());
 
                     SettingsUtils.setLastSurveyMillis(mContext, System.currentTimeMillis());
                 }

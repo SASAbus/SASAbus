@@ -625,12 +625,12 @@ public class PlannedTripsAddActivity extends AppCompatActivity implements View.O
 
         Calendar time = Calendar.getInstance();
 
-            /*
-             * Sets the unique trip hash consisting of the android device id and
-             * the start date of this trip. The hash consists of the 8 first chars of the md5
-             * hash.
-             */
-        trip.setHash(HashUtils.getHashForIdentifier(this, "planned_trip"));
+        /*
+         * Sets the unique trip hash consisting of the android device id and
+         * the start date of this trip. The hash consists of the 8 first chars of the md5
+         * hash.
+         */
+        trip.setHash(HashUtils.getRandomString(16));
 
         time.set(Calendar.DAY_OF_MONTH, mDateCalendar.get(Calendar.DAY_OF_MONTH));
         time.set(Calendar.MONTH, mDateCalendar.get(Calendar.MONTH));
