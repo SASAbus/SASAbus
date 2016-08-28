@@ -20,7 +20,6 @@ package it.sasabz.android.sasabus.network.rest.api;
 import java.util.List;
 
 import it.sasabz.android.sasabus.network.rest.Endpoint;
-import it.sasabz.android.sasabus.network.rest.model.CloudPlannedTrip;
 import it.sasabz.android.sasabus.network.rest.model.CloudTrip;
 import it.sasabz.android.sasabus.network.rest.response.CloudResponseGet;
 import it.sasabz.android.sasabus.network.rest.response.CloudResponsePost;
@@ -50,19 +49,4 @@ public interface CloudApi {
 
     @PUT(Endpoint.CLOUD_TRIPS)
     Observable<TripUploadResponse> uploadTrips(@Body List<CloudTrip> body);
-
-    @GET(Endpoint.CLOUD_PLANNED_TRIPS)
-    Call<CloudResponseGet> comparePlannedTrips();
-
-    @POST(Endpoint.CLOUD_PLANNED_TRIPS)
-    Call<CloudResponsePost> downloadPlannedTrips(@Body List<String> trips);
-
-    @PUT(Endpoint.CLOUD_PLANNED_TRIPS)
-    Call<Void> uploadPlannedTrips(@Body List<CloudPlannedTrip> body);
-
-    @DELETE(Endpoint.CLOUD_PLANNED_TRIPS_DELETE)
-    Observable<Void> deletePlannedTripRx(@Path("hash") String hash);
-
-    @DELETE(Endpoint.CLOUD_PLANNED_TRIPS_DELETE)
-    Call<Void> deletePlannedTrip(@Path("hash") String hash);
 }

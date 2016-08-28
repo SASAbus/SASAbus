@@ -312,7 +312,7 @@ public final class UserRealmHelper {
         realm.beginTransaction();
 
         Trip trip = realm.createObject(Trip.class);
-        trip.setHash(beacon.hash);
+        trip.setHash(beacon.getHash());
         trip.setLine(beacon.lineId);
         trip.setVehicle(beacon.id);
         trip.setVariant(beacon.variant);
@@ -327,7 +327,7 @@ public final class UserRealmHelper {
         realm.commitTransaction();
         realm.close();
 
-        LogUtils.e(TAG, "Inserted trip " + beacon.hash);
+        LogUtils.e(TAG, "Inserted trip " + beacon.getHash());
 
         return true;
     }

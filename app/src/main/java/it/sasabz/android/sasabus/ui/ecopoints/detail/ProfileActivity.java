@@ -382,8 +382,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     // ===================================== PASSWORD ==============================================
 
     private void showPasswordDialog() {
-        AnswersHelper.logProfileAction("change_password");
-
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.dialog_change_password, null, false);
 
@@ -451,6 +449,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         dialog.show();
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            AnswersHelper.logProfileAction("change_password");
+
             String oldPassword = old.getText().toString();
             String newPassword1 = new1.getText().toString();
             String newPassword2 = new2.getText().toString();
@@ -565,8 +565,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == CAMERA_REQUEST) {
+                AnswersHelper.logProfileAction("change_picture_camera");
+
                 uploadPicture(imageFile);
             } else if (requestCode == GALLERY_REQUEST) {
+                AnswersHelper.logProfileAction("change_picture_gallery");
+
                 Uri imageUri = data.getData();
                 uploadPicture(getFileFromUri(imageUri));
             }
@@ -619,8 +623,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void selectFromDefaults() {
-        AnswersHelper.logProfileAction("change_picture_default");
-
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.dialog_change_profile_picture, null, false);
 
@@ -634,6 +636,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 .create();
 
         CircleImageAdapter adapter = new CircleImageAdapter(this, mItems, position -> {
+            AnswersHelper.logProfileAction("change_picture_default");
+
             ProgressDialog progressDialog = new ProgressDialog(this, R.style.DialogStyle);
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
@@ -729,8 +733,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void takePicture() {
-        AnswersHelper.logProfileAction("change_picture_camera");
-
         imageFile = new File(getExternalCacheDir(), System.currentTimeMillis() + ".jpg");
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -784,8 +786,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void pickFromGallery() {
-        AnswersHelper.logProfileAction("change_picture_gallery");
-
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, GALLERY_REQUEST);

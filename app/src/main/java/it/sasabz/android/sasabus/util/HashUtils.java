@@ -18,7 +18,14 @@
 package it.sasabz.android.sasabus.util;
 
 import android.content.Context;
-import android.provider.Settings;
+
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.util.Calendar;
+import java.util.Locale;
+
+import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
+import it.sasabz.android.sasabus.network.auth.AuthHelper;
 
 /**
  * Utility class to form weak hashes like md5 identifier for trips or app signatures.
@@ -31,25 +38,41 @@ public final class HashUtils {
     private HashUtils() {
     }
 
-    public static String getHashForIdentifier(Context context, String identifier) {
-        return Utils.md5(identifier + ':' +
-                Settings.Secure.getString(context.getContentResolver(),
-                        Settings.Secure.ANDROID_ID) + ':' +
-                System.currentTimeMillis()).substring(0, 8);
+    public static String getRandomString(int length) {
+        return Utils.md5(new BigInteger(130, new SecureRandom()).toString(32)).substring(0, length);
     }
 
-    private static String byte2HexF(byte... arr) {
-        StringBuilder str = new StringBuilder(arr.length << 1);
+    public static String getHashForTrip(Context context, BusBeacon beacon) {
 
-        for (int i = 0; i < arr.length; i++) {
-            String h = Integer.toHexString(arr[i]);
-            int l = h.length();
-            if (l == 1) h = '0' + h;
-            if (l > 2) h = h.substring(l - 2, l);
-            str.append(h.toUpperCase());
-            if (i < arr.length - 1) str.append(':');
+        // Use the trip id as a identifier for this trip, as a trip with that id only drives once
+        // a day.
+        int trip = beacon.trip;
+
+        Calendar start = Calendar.getInstance();
+        start.setTime(beacon.getStartDate());
+
+        // Use the day of the year to uniquely identify the trip. The trip id alone is not enough
+        // to identify this trip, as a bus which drives the next day can have the same trip id
+        // as the one we're generating the hash for.
+        int dayOfYear = start.get(Calendar.DAY_OF_YEAR);
+
+        // Use the year to prevent beacons with the same id having the same hash if they happened
+        // in a different year.
+        int year = start.get(Calendar.YEAR);
+
+        String accountId = AuthHelper.getUserId(context);
+        if (accountId == null) {
+            // If the user isn't logged in, choose a random account id and add it to the hash.
+            // As the trips are not synced if the user is not logged in, it won't matter if
+            // the account id is random as the final hash is only used for sync.
+
+            accountId = new BigInteger(130, new SecureRandom()).toString(32);
         }
 
-        return str.toString();
+        // The raw trip hash. The final hash will be a md5 version of this hash.
+        String identifier = String.format(Locale.ROOT, "%s:%s:%s:%s",
+                trip, dayOfYear, year, accountId);
+
+        return Utils.md5(identifier).substring(0, 16);
     }
 }

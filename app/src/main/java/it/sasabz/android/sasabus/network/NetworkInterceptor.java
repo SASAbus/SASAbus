@@ -47,7 +47,6 @@ public class NetworkInterceptor implements Interceptor {
 
     private final Context mContext;
 
-    private String mToken;
     private String mAndroidId;
 
     public NetworkInterceptor(Context context) {
@@ -65,7 +64,6 @@ public class NetworkInterceptor implements Interceptor {
                 .addHeader("X-Device", Build.MODEL)
                 .addHeader("X-Language", Utils.locale(mContext))
                 .addHeader("X-Serial", Build.SERIAL)
-                .addHeader("X-Token", getToken())
                 .addHeader("X-Version-Code", String.valueOf(BuildConfig.VERSION_CODE))
                 .addHeader("X-Version-Name", BuildConfig.VERSION_NAME);
 
@@ -84,16 +82,6 @@ public class NetworkInterceptor implements Interceptor {
         LogUtils.w("OkHttp", request.method() + " url " + originalRequest.url());
 
         return chain.proceed(request);
-    }
-
-    private String getToken() {
-        if (mToken != null) {
-            return mToken;
-        }
-
-        mToken = Utils.md5(Build.MODEL + getAndroidId() + Build.SERIAL).substring(0, 8);
-
-        return mToken;
     }
 
     private String getAndroidId() {

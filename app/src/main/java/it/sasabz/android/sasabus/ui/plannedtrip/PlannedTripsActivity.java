@@ -33,20 +33,14 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.model.trip.PlannedTrip;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.CloudApi;
-import it.sasabz.android.sasabus.realm.user.TripToDelete;
 import it.sasabz.android.sasabus.sync.SyncHelper;
 import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.ui.widget.SimpleItemTouchHelperCallback;
 import it.sasabz.android.sasabus.util.AlarmUtils;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.recycler.PlannedTripsAdapter;
-import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Displays all the planned trips. Planned trips are a special type of trip which the user can
@@ -202,43 +196,6 @@ public class PlannedTripsActivity extends BaseActivity {
         }
 
         AlarmUtils.cancelTrip(this, removedItem);
-
-        // Send the request to delete the planned trip on the cloud.
-        CloudApi cloudApi = RestClient.ADAPTER.create(CloudApi.class);
-        cloudApi.deletePlannedTripRx(removedItem.getHash())
-                .subscribeOn(Schedulers.newThread())
-                .subscribe(new Observer<Void>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Utils.logException(e);
-
-                        // Sending the request to delete the planned trip on the cloud failed so we
-                        // need to store the request so we can retry next time a sync happens.
-
-                        // Start a new realm instance as the activity-wide one might have been
-                        // closed already and this request continues to run even if the activity
-                        // has been destroyed.
-                        Realm realm1 = Realm.getDefaultInstance();
-                        realm1.beginTransaction();
-
-                        TripToDelete tripToDelete = realm1.createObject(TripToDelete.class);
-                        tripToDelete.setType(TripToDelete.TYPE_PLANNED_TRIP);
-                        tripToDelete.setHash(removedItem.getHash());
-
-                        realm1.commitTransaction();
-                        realm1.close();
-                    }
-
-                    @Override
-                    public void onNext(Void aVoid) {
-
-                    }
-                });
 
         removedItem = null;
     }
