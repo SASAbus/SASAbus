@@ -60,6 +60,14 @@ public final class HashUtils {
         // in a different year.
         int year = start.get(Calendar.YEAR);
 
+        // Use the origin and destination bus stops to differentiate a trip which drives the same
+        // line and trip as another one, but starts and ends at different bus stops (e.g. even though
+        // a trip from stazione to ospedale might have the same trip id on the same day, the trip
+        // from Stazione to Piazza Walther must have a different hash than a trip from Piazza Vittoria
+        // to Via Sorrento).
+        int origin = beacon.origin;
+        int destination = beacon.destination;
+
         String accountId = AuthHelper.getUserId(context);
         if (accountId == null) {
             // If the user isn't logged in, choose a random account id and add it to the hash.
@@ -70,8 +78,8 @@ public final class HashUtils {
         }
 
         // The raw trip hash. The final hash will be a md5 version of this hash.
-        String identifier = String.format(Locale.ROOT, "%s:%s:%s:%s",
-                trip, dayOfYear, year, accountId);
+        String identifier = String.format(Locale.ROOT, "%s:%s:%s:%s:%s:%s",
+                trip, dayOfYear, year, accountId, origin, destination);
 
         return Utils.md5(identifier).substring(0, 16);
     }
