@@ -43,6 +43,7 @@ import it.sasabz.android.sasabus.realm.user.RecentRoute;
 import it.sasabz.android.sasabus.realm.user.Trip;
 import it.sasabz.android.sasabus.realm.user.UserDataModule;
 import it.sasabz.android.sasabus.util.LogUtils;
+import it.sasabz.android.sasabus.util.Strings;
 import it.sasabz.android.sasabus.util.Utils;
 
 public final class UserRealmHelper {
@@ -346,7 +347,7 @@ public final class UserRealmHelper {
         trip.setDestination(cloudTrip.getDestination());
         trip.setDeparture(cloudTrip.getDeparture());
         trip.setArrival(cloudTrip.getArrival());
-        trip.setPath(Utils.listToString(cloudTrip.getPath(), ","));
+        trip.setPath(Strings.listToString(cloudTrip.getPath(), Strings.DEFAULT_DELIMITER));
         trip.setFuelPrice(cloudTrip.getDieselPrice());
 
         realm.commitTransaction();

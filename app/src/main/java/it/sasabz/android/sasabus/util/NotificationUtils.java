@@ -218,7 +218,7 @@ public final class NotificationUtils {
         Preconditions.checkNotNull(title, "title == null");
         Preconditions.checkNotNull(message, "message == null");
 
-        message = Utils.sanitizeString(message.toString());
+        message = Strings.sanitizeString(message.toString());
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_event_note_white_48dp)

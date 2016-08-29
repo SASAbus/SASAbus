@@ -78,7 +78,7 @@ public final class AlarmUtils {
         intent.setAction(NotificationReceiver.ACTION_CALCULATE_TRIPS);
         intent.putExtra(EXTRA_PLANNED_TRIP_HASH, trip.getHash());
 
-        List<Integer> notifications = Utils.stringToList(trip.getNotifications(), ",");
+        List<Integer> notifications = Strings.stringToList(trip.getNotifications(), Strings.DEFAULT_DELIMITER);
         notifications.add(0, 0);
 
         long millis = trip.getTimestamp() * 1000;

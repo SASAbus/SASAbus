@@ -20,6 +20,8 @@ package it.sasabz.android.sasabus.util;
 import android.content.Context;
 
 import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Calendar;
 import java.util.Locale;
@@ -39,7 +41,7 @@ public final class HashUtils {
     }
 
     public static String getRandomString(int length) {
-        return Utils.md5(new BigInteger(130, new SecureRandom()).toString(32)).substring(0, length);
+        return md5(new BigInteger(130, new SecureRandom()).toString(32)).substring(0, length);
     }
 
     public static String getHashForTrip(Context context, BusBeacon beacon) {
@@ -81,6 +83,35 @@ public final class HashUtils {
         String identifier = String.format(Locale.ROOT, "%s:%s:%s:%s:%s:%s",
                 trip, dayOfYear, year, accountId, origin, destination);
 
-        return Utils.md5(identifier).substring(0, 16);
+        return md5(identifier).substring(0, 16);
+    }
+
+    /**
+     * Returns a {@link String} encoded in MD5.
+     *
+     * @param s the s to encode
+     * @return the encoded string or an empty string if the encoding fails
+     */
+    public static String md5(String s) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes());
+            byte[] messageDigest = digest.digest();
+
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : messageDigest) {
+                String string = Integer.toHexString(0xFF & b);
+
+                while (string.length() < 2) {
+                    string = '0' + string;
+                }
+
+                hexString.append(string);
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

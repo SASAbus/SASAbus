@@ -66,6 +66,7 @@ import it.sasabz.android.sasabus.ui.widget.RecyclerItemClickListener;
 import it.sasabz.android.sasabus.util.AlarmUtils;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.HashUtils;
+import it.sasabz.android.sasabus.util.Strings;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.list.PlannedTripsNotificationAdapter;
 import it.sasabz.android.sasabus.util.recycler.CircleLinesAdapter;
@@ -677,8 +678,9 @@ public class PlannedTripsAddActivity extends AppCompatActivity implements View.O
         plannedTrip.setTimeStamp(trip.getTimestamp());
         plannedTrip.setRepeatDays(trip.getRepeatDays());
         plannedTrip.setRepeatWeeks(trip.getRepeatWeeks());
-        plannedTrip.setLines(Utils.listToString(trip.getLines(), ","));
-        plannedTrip.setNotifications(Utils.listToString(trip.getNotifications(), ","));
+        plannedTrip.setLines(Strings.listToString(trip.getLines(), Strings.DEFAULT_DELIMITER));
+        plannedTrip.setNotifications(Strings.listToString(trip.getNotifications(),
+                Strings.DEFAULT_DELIMITER));
 
         realm.commitTransaction();
         realm.close();
