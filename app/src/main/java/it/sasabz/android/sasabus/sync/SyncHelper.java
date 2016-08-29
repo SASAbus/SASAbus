@@ -131,6 +131,7 @@ public class SyncHelper {
         // individual failures on each.
         final int OP_TRIP_DATA_SYNC = 0;
         final int OP_SURVEY_SYNC = 3;
+        final int OP_BEACON_SYNC = 4;
         final int OP_BADGE_SYNC = 5;
 
         int[] opsToPerform = {
@@ -147,6 +148,9 @@ public class SyncHelper {
                         break;
                     case OP_SURVEY_SYNC:
                         dataChanged |= doSurveySync();
+                        break;
+                    case OP_BEACON_SYNC:
+                        dataChanged |= doBeaconSync();
                         break;
                     case OP_BADGE_SYNC:
                         dataChanged |= doBadgeSync();
@@ -273,6 +277,56 @@ public class SyncHelper {
         }
 
         LogUtils.e(TAG, "Uploaded " + surveyCount[0] + " surveys");
+
+        return dataChanged[0];
+    }
+
+    /**
+     * Syncs all the tracked beacons. If a user is near a bus or bus stop beacon, it automatically
+     * gets inserted into the database. On app sync, the beacon data like UUID, major and minor
+     * get sent to the server which then can be used to perform statistics.
+     *
+     * @return {@code true} if one or more beacons have been uploaded, {@code false} otherwise.
+     */
+    private boolean doBeaconSync() {
+        LogUtils.e(TAG, "Starting beacon sync");
+
+        RealmResults<Beacon> result = realm.where(Beacon.class).findAll();
+
+        if (result.isEmpty()) {
+            LogUtils.e(TAG, "No beacons to upload");
+            return false;
+        }
+
+        int size = result.size();
+
+        LogUtils.e(TAG, "Uploading " + size + " beacons");
+
+        boolean[] dataChanged = {false};
+
+        List<ScannedBeacon> beacons = new ArrayList<>();
+        for (Beacon beacon : result) {
+            ScannedBeacon scannedBeacon = new ScannedBeacon();
+
+            scannedBeacon.type = beacon.getType();
+            scannedBeacon.major = beacon.getMajor();
+            scannedBeacon.minor = beacon.getMinor();
+            scannedBeacon.timestamp = beacon.getTimeStamp();
+
+            beacons.add(scannedBeacon);
+        }
+
+        BeaconsApi beaconsApi = RestClient.ADAPTER.create(BeaconsApi.class);
+        beaconsApi.send(beacons)
+                .subscribe(aVoid -> {
+                    realm.beginTransaction();
+                    result.deleteAllFromRealm();
+                    realm.commitTransaction();
+
+                    dataChanged[0] |= true;
+                });
+
+        LogUtils.e(TAG, "Uploaded " + size + " beacons");
 
         return dataChanged[0];
     }
