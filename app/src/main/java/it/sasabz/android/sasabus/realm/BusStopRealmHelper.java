@@ -41,7 +41,7 @@ public final class BusStopRealmHelper {
 
     private static final String TAG = "BusStopRealmHelper";
 
-    private static final int DB_VERSION = 2016060801; // YY MM DD Rev.
+    private static final int DB_VERSION = 2016082901; // YY MM DD Rev.
     private static final String DB_NAME = "busstops.realm";
 
     public static RealmConfiguration CONFIG;
