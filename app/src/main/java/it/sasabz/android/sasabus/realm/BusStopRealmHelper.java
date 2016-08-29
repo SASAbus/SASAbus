@@ -221,8 +221,7 @@ public final class BusStopRealmHelper {
 
     public static Collection<BusStop> getBusStopsFromGroup(int group) {
         Realm realm = Realm.getInstance(CONFIG);
-        RealmResults<BusStop> results = realm.where(BusStop.class)
-                .equalTo("family", group).findAll();
+        RealmResults<BusStop> results = realm.where(BusStop.class).equalTo("family", group).findAll();
         Collection<BusStop> busStops = new ArrayList<>();
 
         for (BusStop busStop : results) {
@@ -236,7 +235,7 @@ public final class BusStopRealmHelper {
 
     public static List<Integer> getBusStopIdsFromGroup(int group) {
         Realm realm = Realm.getInstance(CONFIG);
-        RealmResults<BusStop> results = realm.where(BusStop.class).equalTo("group", group).findAll();
+        RealmResults<BusStop> results = realm.where(BusStop.class).equalTo("family", group).findAll();
         realm.close();
 
         List<Integer> resultIds = new ArrayList<>();
