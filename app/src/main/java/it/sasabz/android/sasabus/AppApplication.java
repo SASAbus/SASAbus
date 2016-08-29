@@ -23,7 +23,6 @@ import android.content.Intent;
 import com.crashlytics.android.Crashlytics;
 
 import io.fabric.sdk.android.Fabric;
-import it.sasabz.android.sasabus.fcm.FcmUtils;
 import it.sasabz.android.sasabus.network.auth.AuthHelper;
 import it.sasabz.android.sasabus.network.rest.RestClient;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
@@ -74,11 +73,6 @@ public class AppApplication extends Application {
         // Start the beacon handler if it hasn't been started already and start listening
         // for nearby beacons. Also start the beacon service.
         startBeacon();
-
-        // Sets up Google Cloud Messaging. If the token has not yet been generated/sent,
-        // we have to generate and send it to the app engine and store it there. If the sending
-        // of the token failed try to resend it.
-        FcmUtils.checkFcm(this);
 
         // Schedules the daily trip/plan data sync.
         SyncHelper.scheduleSync(this);
