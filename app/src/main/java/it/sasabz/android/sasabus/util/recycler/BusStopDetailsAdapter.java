@@ -225,17 +225,11 @@ public class BusStopDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             BusStopDetail item = mItems.get(position);
 
-            if (item.getVehicle() == 0) {
-                Intent intent = new Intent(mContext, LineCourseActivity.class)
-                        .putExtra(Config.EXTRA_STATION_ID, toIntArray(BusStopRealmHelper
-                                .getBusStopIdsFromGroup(mBusStopFamily)))
-                        .putExtra("time", item.getTime())
-                        .putExtra(Config.EXTRA_LINE_ID, item.getLineId());
-            } else {
-                Intent intent1 = new Intent(mContext, LineDetailActivity.class);
-                intent1.putExtra(Config.EXTRA_LINE_ID, item.getLineId());
-                mContext.startActivity(intent1);
-            }
+            mContext.startActivity(new Intent(mContext, LineCourseActivity.class)
+                    .putExtra("time", item.getTime())
+                    .putExtra(Config.EXTRA_LINE_ID, item.getLineId())
+                    .putExtra(Config.EXTRA_STATION_ID, toIntArray(BusStopRealmHelper
+                            .getBusStopIdsFromGroup(mBusStopFamily))));
         }
     }
 
