@@ -31,11 +31,9 @@ import java.util.Map;
 
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
-import it.sasabz.android.sasabus.beacon.bus.BusBeaconHandler;
 import it.sasabz.android.sasabus.beacon.bus.CurrentTrip;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.NotificationUtils;
-import it.sasabz.android.sasabus.util.SettingsUtils;
 import it.sasabz.android.sasabus.util.Utils;
 
 public final class BeaconStorage {
@@ -83,10 +81,6 @@ public final class BeaconStorage {
         if (trip == null) {
             LogUtils.e(TAG, "trip == null, cancelling notification");
             NotificationUtils.cancelBus(mContext);
-        } else if (trip.checkUpdate() && trip.isNotificationShown &&
-                trip.beacon.isSuitableForTrip && SettingsUtils.isBusNotificationEnabled(mContext)) {
-
-            BusBeaconHandler.notificationAction.showNotification(trip);
         }
 
         try {

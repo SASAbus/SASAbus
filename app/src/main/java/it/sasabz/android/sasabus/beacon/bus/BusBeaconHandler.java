@@ -39,7 +39,7 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.beacon.BeaconStorage;
 import it.sasabz.android.sasabus.beacon.IBeaconHandler;
 import it.sasabz.android.sasabus.beacon.busstop.BusStopBeaconHandler;
-import it.sasabz.android.sasabus.beacon.notification.TripNotificationAction;
+import it.sasabz.android.sasabus.beacon.notification.TripNotification;
 import it.sasabz.android.sasabus.model.BusStop;
 import it.sasabz.android.sasabus.model.line.Lines;
 import it.sasabz.android.sasabus.network.NetUtils;
@@ -83,9 +83,6 @@ public final class BusBeaconHandler implements IBeaconHandler {
     private final BeaconStorage mPrefsManager;
 
     @SuppressLint("StaticFieldLeak")
-    public static TripNotificationAction notificationAction;
-
-    @SuppressLint("StaticFieldLeak")
     private static BusBeaconHandler sInstance;
 
     private byte mCycleCounter;
@@ -96,8 +93,6 @@ public final class BusBeaconHandler implements IBeaconHandler {
         mContext = context;
         mPrefsManager = BeaconStorage.getInstance(context);
         mBeaconMap.putAll(mPrefsManager.getBeaconMap());
-
-        notificationAction = new TripNotificationAction(context);
 
         Handler handler = new Handler();
         new Timer().schedule(new TimerTask() {
@@ -167,12 +162,12 @@ public final class BusBeaconHandler implements IBeaconHandler {
                         }
                     }
 
-                    if (!currentTrip.isNotificationShown && currentTrip.beacon.isSuitableForTrip &&
+                    if (!currentTrip.notificationVisible && currentTrip.beacon.isSuitableForTrip &&
                             SettingsUtils.isBusNotificationEnabled(mContext)) {
 
-                        currentTrip.setNotificationShown(true);
+                        currentTrip.setNotificationVisible(true);
 
-                        notificationAction.showNotification(currentTrip);
+                        TripNotification.showNotification(mContext, currentTrip);
                     }
 
                     mPrefsManager.setCurrentTrip(currentTrip);
@@ -373,8 +368,8 @@ public final class BusBeaconHandler implements IBeaconHandler {
                 }
             } else if (beacon.lastSeen + TIMEOUT < System.currentTimeMillis()) {
                 if (mPrefsManager.hasCurrentTrip() && currentTrip.getId() == beacon.id) {
-                    if (currentTrip.isNotificationShown) {
-                        currentTrip.setNotificationShown(false);
+                    if (currentTrip.notificationVisible) {
+                        currentTrip.setNotificationVisible(false);
                         currentTrip.setBeacon(beacon);
 
                         LogUtils.e(TAG, "Dismissing notification for " + currentTrip.getId());

@@ -192,7 +192,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
         }
 
         if (currentBusStop != null && !found) {
-            LogUtils.e(TAG, "Removed current bus stop " +
+            LogUtils.i(TAG, "Removed current bus stop " +
                     currentBusStop.second.getId());
 
             BusBeaconHandler.getInstance(mContext)
@@ -264,7 +264,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
                 BusStopRealmHelper.getBusStopOrNull(major);
 
         if (busStop != null) {
-            LogUtils.e(TAG, "Set " + major + " as current bus stop");
+            LogUtils.i(TAG, "Set " + major + " as current bus stop");
             currentBusStop = new Pair<>(BusBeacon.TYPE_BEACON, new BusStop(busStop));
         }
     }

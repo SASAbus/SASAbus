@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.sasabz.android.sasabus.beacon.ecopoints.BadgeHelper;
+import it.sasabz.android.sasabus.beacon.notification.TripNotification;
 import it.sasabz.android.sasabus.model.BusStop;
 import it.sasabz.android.sasabus.model.JsonSerializable;
 import it.sasabz.android.sasabus.provider.apis.Trips;
@@ -34,9 +35,7 @@ public class CurrentTrip implements JsonSerializable {
 
     private transient Context mContext;
 
-    public boolean isNotificationShown;
-
-    private boolean updated;
+    public boolean notificationVisible;
 
     private final List<BusStop> path;
     private final List<it.sasabz.android.sasabus.provider.model.BusStop> times;
@@ -56,13 +55,6 @@ public class CurrentTrip implements JsonSerializable {
         }
     }
 
-    public boolean checkUpdate() {
-        boolean temp = updated;
-        updated = false;
-
-        return temp;
-    }
-
     public int getId() {
         return beacon.id;
     }
@@ -76,10 +68,8 @@ public class CurrentTrip implements JsonSerializable {
     }
 
     public void update() {
-        updated = true;
-
-        if (beacon.isSuitableForTrip) {
-            BusBeaconHandler.notificationAction.showNotification(this);
+        if (beacon.isSuitableForTrip && notificationVisible) {
+            TripNotification.showNotification(mContext, this);
         }
     }
 
@@ -87,8 +77,8 @@ public class CurrentTrip implements JsonSerializable {
         this.mContext = context;
     }
 
-    void setNotificationShown(boolean notificationShown) {
-        isNotificationShown = notificationShown;
+    void setNotificationVisible(boolean visible) {
+        notificationVisible = visible;
     }
 
     public List<it.sasabz.android.sasabus.provider.model.BusStop> getTimes() {
