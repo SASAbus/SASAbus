@@ -556,6 +556,10 @@
     <string name="event_details_points">Points</string>
     <string name="event_menu_visit_website">Visit website</string>
 
+    <string name="eco_points_profile_picture_defaults">"Select from defaults</string>
+    <string name="eco_points_profile_picture_camera">Take picture</string>
+    <string name="eco_points_profile_picture_gallery">Pick from gallery</string>
+
     <string name="event_list_share_button">details</string>
 
     <string name="qr_code_description">Ask the staff to scan the code on your phone to claim the

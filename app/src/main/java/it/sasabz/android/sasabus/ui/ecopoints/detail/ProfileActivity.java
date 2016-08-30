@@ -579,9 +579,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     private void showPictureDialog() {
         CharSequence[] options = {
-                "Select from defaults",
-                "Take picture",
-                "Pick from gallery"
+                getString(R.string.eco_points_profile_picture_defaults),
+                getString(R.string.eco_points_profile_picture_camera),
+                getString(R.string.eco_points_profile_picture_gallery)
         };
 
         new AlertDialog.Builder(this, R.style.DialogStyle)
