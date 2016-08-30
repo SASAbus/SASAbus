@@ -15,17 +15,39 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.sasabz.android.sasabus.beacon;
+package it.sasabz.android.sasabus.beacon.event;
 
-import org.altbeacon.beacon.Beacon;
+import java.util.Date;
 
-import java.util.Collection;
+class EventBeacon {
 
-public interface IBeaconHandler {
+    public final int major;
+    public final int minor;
 
-    void didRangeBeacons(Collection<Beacon> beacons);
+    private final Date startDate;
 
-    void validateBeacon(Beacon beacon, int major, int minor);
+    long seenSeconds;
+    long lastSeen;
 
-    void stop();
+    public double distance;
+
+    EventBeacon(int major, int minor) {
+        this.major = major;
+        this.minor = minor;
+
+        startDate = new Date();
+
+        seen();
+    }
+
+    void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    void seen() {
+        long millis = System.currentTimeMillis();
+
+        seenSeconds = (millis - startDate.getTime()) / 1000;
+        lastSeen = millis;
+    }
 }

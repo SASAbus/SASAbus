@@ -285,6 +285,35 @@ public final class NotificationUtils {
         notificationManager.notify(Config.NOTIFICATION_TRIP_SUCCESS, mBuilder.build());
     }
 
+    public static void eventBeacon(Context context, CharSequence event, int point, int color) {
+        String subtitle = context.getString(R.string.notification_event_beacon_subtitle, point);
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+                .setSmallIcon(R.drawable.ic_bluetooth_white_48dp)
+                .setContentTitle(event)
+                .setContentText(subtitle)
+                .setAutoCancel(true)
+                .setLights(color, 500, 5000)
+                .setColor(color)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setVibrate(new long[]{VIBRATION_TIME_MILLIS, VIBRATION_TIME_MILLIS})
+                .setCategory(NotificationCompat.CATEGORY_EVENT);
+
+        Intent resultIntent = new Intent(context, EcoPointsActivity.class);
+        resultIntent.putExtra(EcoPointsActivity.EXTRA_SHOW_EVENTS, true);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(context,
+                Config.NOTIFICATION_EVENT * point,
+                resultIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        mBuilder.setContentIntent(pendingIntent);
+
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(Config.NOTIFICATION_EVENT * point, mBuilder.build());
+    }
+
     public static void survey(Context context, String hash) {
         Preconditions.checkNotNull(context, "survey() context == null");
         Preconditions.checkNotNull(hash, "hash == null");
@@ -333,6 +362,7 @@ public final class NotificationUtils {
                 .setCategory(NotificationCompat.CATEGORY_EVENT);
 
         Intent resultIntent = new Intent(context, EcoPointsActivity.class);
+        resultIntent.putExtra(EcoPointsActivity.EXTRA_SHOW_BADGES, true);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context,
                 Config.NOTIFICATION_BADGE,
@@ -371,6 +401,7 @@ public final class NotificationUtils {
 
             Intent resultIntent = new Intent(context, EcoPointsActivity.class);
             resultIntent.putExtra(Config.EXTRA_BADGE, badge);
+            resultIntent.putExtra(EcoPointsActivity.EXTRA_SHOW_BADGES, true);
 
             PendingIntent pendingIntent = PendingIntent.getActivity(context,
                     badge.id,

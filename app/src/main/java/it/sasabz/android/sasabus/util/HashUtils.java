@@ -37,6 +37,8 @@ import it.sasabz.android.sasabus.network.auth.AuthHelper;
  */
 public final class HashUtils {
 
+    private static final String TAG = "HashUtils";
+
     private HashUtils() {
     }
 
@@ -68,7 +70,6 @@ public final class HashUtils {
         // from Stazione to Piazza Walther must have a different hash than a trip from Piazza Vittoria
         // to Via Sorrento).
         int origin = beacon.origin;
-        int destination = beacon.destination;
 
         String accountId = AuthHelper.getUserId(context);
         if (accountId == null) {
@@ -80,8 +81,11 @@ public final class HashUtils {
         }
 
         // The raw trip hash. The final hash will be a md5 version of this hash.
-        String identifier = String.format(Locale.ROOT, "%s:%s:%s:%s:%s:%s",
-                trip, dayOfYear, year, accountId, origin, destination);
+        String identifier = String.format(Locale.ROOT, "%s:%s:%s:%s:%s",
+                trip, dayOfYear, year, accountId, origin);
+
+        LogUtils.i(TAG, "Generating hash for bus " + beacon.id + ": " + identifier);
+
 
         return md5(identifier).substring(0, 16);
     }

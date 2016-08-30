@@ -64,6 +64,7 @@ public class EcoPointsActivity extends BaseActivity {
     private static final String TAG = "EcoPointsActivity";
 
     public static final String EXTRA_SHOW_EVENTS = "it.sasabz.android.sasabus.EXTRA_SHOW_EVENTS";
+    public static final String EXTRA_SHOW_BADGES = "it.sasabz.android.sasabus.EXTRA_SHOW_BADGES";
 
     private static final String FRAGMENT_PROFILE = "PROFILE";
     private static final String FRAGMENT_BADGES = "BADGES";
@@ -137,6 +138,14 @@ public class EcoPointsActivity extends BaseActivity {
         if (intent.hasExtra(Config.EXTRA_BADGE)) {
             Badge badge = intent.getParcelableExtra(Config.EXTRA_BADGE);
             showBadgeDialog(this, badge);
+        }
+
+        if (intent.hasExtra(EXTRA_SHOW_BADGES)) {
+            mViewPager.setCurrentItem(1);
+        }
+
+        if (intent.hasExtra(EXTRA_SHOW_EVENTS)) {
+            mViewPager.setCurrentItem(2);
         }
     }
 

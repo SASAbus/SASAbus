@@ -29,6 +29,8 @@ public class EventBeaconResponse {
     @SerializedName("qr_code")
     public String qrCode;
 
+    public String color;
+
     public int point;
 
     @Override

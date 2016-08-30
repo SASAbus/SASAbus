@@ -121,9 +121,9 @@ public final class BusBeaconHandler implements IBeaconHandler {
     }
 
     @Override
-    public void updateBeacons(Collection<Beacon> beacons) {
+    public void didRangeBeacons(Collection<Beacon> beacons) {
         for (Beacon beacon : beacons) {
-            validateBeacon(beacon, beacon.getId2().toInt());
+            validateBeacon(beacon, beacon.getId2().toInt(), beacon.getId3().toInt());
         }
 
         deleteInvisibleBeacons();
@@ -189,7 +189,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
     }
 
     @Override
-    public void validateBeacon(Beacon beacon, int major) {
+    public void validateBeacon(Beacon beacon, int major, int minor) {
         BusBeacon busBeacon;
 
         if (mBeaconMap.keySet().contains(major)) {
@@ -226,8 +226,13 @@ public final class BusBeaconHandler implements IBeaconHandler {
         }
     }
 
+    @Override
+    public void stop() {
+
+    }
+
     public void inspectBeacons() {
-        updateBeacons(Collections.emptyList());
+        didRangeBeacons(Collections.emptyList());
 
         new Thread(() -> {
             synchronized (this) {
@@ -237,7 +242,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
                 }
             }
 
-            updateBeacons(Collections.emptyList());
+            didRangeBeacons(Collections.emptyList());
 
             synchronized (this) {
                 try {
@@ -246,7 +251,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
                 }
             }
 
-            updateBeacons(Collections.emptyList());
+            didRangeBeacons(Collections.emptyList());
         }).start();
     }
 

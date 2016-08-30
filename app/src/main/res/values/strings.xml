@@ -352,6 +352,8 @@
     <string name="notification_planned_trip_departs_in_content_2">Line %1$s departs in %2$d‘ with
         %3$d’ delay
     </string>
+    <string name="notification_event_beacon_subtitle">Scanned beacon #%d</string>
+
 
     <!-- =============================== INTRO =============================== -->
 
