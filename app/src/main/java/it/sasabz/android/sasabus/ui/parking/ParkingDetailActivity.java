@@ -77,14 +77,14 @@ public class ParkingDetailActivity extends AppCompatActivity {
         Drawable callIcon = call.getIcon();
         if (callIcon != null) {
             callIcon.mutate();
-            callIcon.setColorFilter(ContextCompat.getColor(this, R.color.text_default),
+            callIcon.setColorFilter(ContextCompat.getColor(this, R.color.text_primary),
                     PorterDuff.Mode.SRC_ATOP);
         }
 
         Drawable navigateIcon = navigate.getIcon();
         if (navigateIcon != null) {
             navigateIcon.mutate();
-            navigateIcon.setColorFilter(ContextCompat.getColor(this, R.color.text_default),
+            navigateIcon.setColorFilter(ContextCompat.getColor(this, R.color.text_primary),
                     PorterDuff.Mode.SRC_ATOP);
         }
 

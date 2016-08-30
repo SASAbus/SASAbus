@@ -48,7 +48,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
                 android:text="@string/app_name"
-                android:textColor="@color/text_default"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"/>
 
             <TextView
@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/text_secondary"
                 android:textSize="13sp"/>
 
             <TextView
@@ -88,7 +88,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/credits_developers"
-                android:textColor="@color/text_default"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
@@ -128,14 +128,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Alex Lardschneider"
-                        android:textColor="@color/text_default"
+                        android:textColor="@color/text_primary"
                         android:textSize="16sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="alex.lardschneider@gmail.com"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/text_secondary"
                         android:textSize="12sp"/>
 
                 </LinearLayout>
@@ -178,14 +178,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="David Dejori"
-                        android:textColor="@color/text_default"
+                        android:textColor="@color/text_primary"
                         android:textSize="16sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="dejoridavid@gmail.com"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/text_secondary"
                         android:textSize="12sp"/>
 
                 </LinearLayout>
@@ -209,7 +209,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:text="Credits"
-                android:textColor="@color/text_default"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
@@ -222,7 +222,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="4dp"
                 android:text="- Paolo Dongilli\n- Markus Windegger\n- Davide Montesin\n- Thomas Nocker\n- David Dejori\n- Alex Lardschneider\n- Raiffeisen Online"
-                android:textColor="@color/text_primary"/>
+                android:textColor="@color/text_secondary"/>
 
             <View
                 android:layout_width="match_parent"
@@ -241,7 +241,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/credits_license_title"
-                android:textColor="@color/text_default"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
@@ -275,21 +275,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/credits_okhttp_title"
-                        android:textColor="@color/text_default"
+                        android:textColor="@color/text_primary"
                         android:textSize="20sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/credits_okhttp_sub"
-                        android:textColor="@color/text_default"
+                        android:textColor="@color/text_primary"
                         android:textSize="16sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/credits_license_apache"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/text_secondary"
                         android:textSize="12sp"/>
 
                 </LinearLayout>
@@ -335,21 +335,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/credits_retrofit_title"
-                        android:textColor="@color/text_default"
+                        android:textColor="@color/text_primary"
                         android:textSize="20sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/credits_retrofit_sub"
-                        android:textColor="@color/text_default"
+                        android:textColor="@color/text_primary"
                         android:textSize="16sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/credits_license_apache"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/text_secondary"
                         android:textSize="12sp"/>
 
                 </LinearLayout>
@@ -395,21 +395,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/credits_appcompat_title"
-                        android:textColor="@color/text_default"
+                        android:textColor="@color/text_primary"
                         android:textSize="20sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/credits_appcompat_sub"
-                        android:textColor="@color/text_default"
+                        android:textColor="@color/text_primary"
                         android:textSize="16sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/credits_license_apache"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/text_secondary"
                         android:textSize="12sp"/>
 
                 </LinearLayout>
@@ -455,21 +455,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/credits_crashlytics_title"
-                        android:textColor="@color/text_default"
+                        android:textColor="@color/text_primary"
                         android:textSize="20sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/credits_crashlytics_sub"
-                        android:textColor="@color/text_default"
+                        android:textColor="@color/text_primary"
                         android:textSize="16sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/credits_license_apache"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/text_secondary"
                         android:textSize="12sp"/>
 
                 </LinearLayout>
@@ -514,21 +514,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/credits_altbeacon_title"
-                        android:textColor="@color/text_default"
+                        android:textColor="@color/text_primary"
                         android:textSize="20sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/credits_altbeacon_sub"
-                        android:textColor="@color/text_default"
+                        android:textColor="@color/text_primary"
                         android:textSize="16sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/credits_license_apache"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/text_secondary"
                         android:textSize="12sp"/>
 
                 </LinearLayout>
@@ -561,7 +561,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/credits_copyright"
-                android:textColor="@color/text_default"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
@@ -575,7 +575,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="4dp"
                 android:text="@string/credits_copyright_sub"
-                android:textColor="@color/text_primary"/>
+                android:textColor="@color/text_secondary"/>
 
         </LinearLayout>
 

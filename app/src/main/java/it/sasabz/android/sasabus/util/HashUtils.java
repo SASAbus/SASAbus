@@ -86,6 +86,27 @@ public final class HashUtils {
         return md5(identifier).substring(0, 16);
     }
 
+    public static String sha256Hex(String text) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+
+            md.update(text.getBytes());
+            byte[] digest = md.digest();
+
+            return bytesToHex(digest);
+        } catch (Exception e) {
+            throw new RuntimeException("Could not create SHA256", e);
+        }
+    }
+
+    private static String bytesToHex(byte... bytes) {
+        StringBuilder result = new StringBuilder();
+        for (byte b : bytes) {
+            result.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
+        }
+        return result.toString();
+    }
+
     /**
      * Returns a {@link String} encoded in MD5.
      *

@@ -48,6 +48,7 @@ import it.sasabz.android.sasabus.network.rest.model.Badge;
 import it.sasabz.android.sasabus.network.rest.model.LeaderboardPlayer;
 import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.ui.ecopoints.detail.ProfileActivity;
+import it.sasabz.android.sasabus.ui.ecopoints.event.EventsFragment;
 import it.sasabz.android.sasabus.ui.widget.adapter.TabsAdapter;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
@@ -62,7 +63,7 @@ public class EcoPointsActivity extends BaseActivity {
 
     private static final String TAG = "EcoPointsActivity";
 
-    public static final String EXTRA_SHOW_EVENTS = "com.davale.sasabus.EXTRA_SHOW_EVENTS";
+    public static final String EXTRA_SHOW_EVENTS = "it.sasabz.android.sasabus.EXTRA_SHOW_EVENTS";
 
     private static final String FRAGMENT_PROFILE = "PROFILE";
     private static final String FRAGMENT_BADGES = "BADGES";
@@ -72,7 +73,7 @@ public class EcoPointsActivity extends BaseActivity {
 
     private ProfileFragment mProfileFragment;
     private BadgesFragment mBadgesFragment;
-    //private EventsFragment mEventsFragment;
+    private EventsFragment mEventsFragment;
 
     @BindView(R.id.viewpager) ViewPager mViewPager;
     @BindView(R.id.tabs) TabLayout mTabLayout;
@@ -109,8 +110,8 @@ public class EcoPointsActivity extends BaseActivity {
             mBadgesFragment = (BadgesFragment) getSupportFragmentManager()
                     .getFragment(savedInstanceState, FRAGMENT_BADGES);
 
-            /*mEventsFragment = (EventsFragment) getSupportFragmentManager()
-                    .getFragment(savedInstanceState, FRAGMENT_EVENTS);*/
+            mEventsFragment = (EventsFragment) getSupportFragmentManager()
+                    .getFragment(savedInstanceState, FRAGMENT_EVENTS);
         }
 
         if (mProfileFragment == null) {
@@ -121,13 +122,13 @@ public class EcoPointsActivity extends BaseActivity {
             mBadgesFragment = new BadgesFragment();
         }
 
-        /*if (mEventsFragment == null) {
+        if (mEventsFragment == null) {
             mEventsFragment = new EventsFragment();
-        }*/
+        }
 
         mAdapter.addFragment(mProfileFragment, getString(R.string.fragment_eco_points_profile));
         mAdapter.addFragment(mBadgesFragment, getString(R.string.fragment_eco_points_badges));
-        //mAdapter.addFragment(mEventsFragment, getString(R.string.fragment_eco_points_events));
+        mAdapter.addFragment(mEventsFragment, getString(R.string.fragment_eco_points_events));
 
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);

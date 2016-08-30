@@ -172,11 +172,11 @@ public class RouteActivity extends BaseActivity implements View.OnClickListener,
             arrival.setText(savedInstanceState.getString("ARRIVAL"));
 
             if (!departure.getText().equals(getString(R.string.route_departure))) {
-                departure.setTextColor(ContextCompat.getColor(this, R.color.text_default));
+                departure.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
             }
 
             if (!arrival.getText().equals(getString(R.string.route_arrival))) {
-                arrival.setTextColor(ContextCompat.getColor(this, R.color.text_default));
+                arrival.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
             }
 
             timePicker.setText(savedInstanceState.getString("TIME"));
@@ -286,7 +286,7 @@ public class RouteActivity extends BaseActivity implements View.OnClickListener,
 
                     if (mDepartureBusStop != null) {
                         departure.setText(mDepartureBusStop.getName(this));
-                        departure.setTextColor(ContextCompat.getColor(this, R.color.text_default));
+                        departure.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
                     }
                 }
                 break;
@@ -296,7 +296,7 @@ public class RouteActivity extends BaseActivity implements View.OnClickListener,
 
                     if (mArrivalBusStop != null) {
                         arrival.setText(mArrivalBusStop.getName(this));
-                        arrival.setTextColor(ContextCompat.getColor(this, R.color.text_default));
+                        arrival.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
                     }
                 }
                 break;
@@ -367,15 +367,15 @@ public class RouteActivity extends BaseActivity implements View.OnClickListener,
                 }
 
                 if (departure.getText().equals(getString(R.string.route_departure))) {
-                    departure.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
+                    departure.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
                 } else {
-                    departure.setTextColor(ContextCompat.getColor(this, R.color.text_default));
+                    departure.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
                 }
 
                 if (arrival.getText().equals(getString(R.string.route_arrival))) {
-                    arrival.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
+                    arrival.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
                 } else {
-                    arrival.setTextColor(ContextCompat.getColor(this, R.color.text_default));
+                    arrival.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
                 }
 
                 break;
@@ -418,10 +418,10 @@ public class RouteActivity extends BaseActivity implements View.OnClickListener,
             mArrivalBusStop = new BusStop(BusStopRealmHelper.getSadBusStop(item.getDestinationId()));
 
             departure.setText(mDepartureBusStop.getName());
-            departure.setTextColor(ContextCompat.getColor(this, R.color.text_default));
+            departure.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
 
             arrival.setText(mArrivalBusStop.getName());
-            arrival.setTextColor(ContextCompat.getColor(this, R.color.text_default));
+            arrival.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
         } else {
             onListItemSelect(childView, position);
         }

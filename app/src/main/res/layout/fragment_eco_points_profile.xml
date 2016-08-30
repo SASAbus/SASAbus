@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="12dp"
-                    android:textColor="@color/text_default"
+                    android:textColor="@color/text_primary"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -111,7 +111,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="6dp"
-                            android:textColor="@color/text_default"
+                            android:fontFamily="sans-serif-condensed"
+                            android:textColor="@color/text_primary"
                             android:textSize="36sp"
                             android:textStyle="bold"/>
 
@@ -146,7 +147,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="6dp"
-                            android:textColor="@color/text_default"
+                            android:fontFamily="sans-serif-condensed"
+                            android:textColor="@color/text_primary"
                             android:textSize="36sp"
                             android:textStyle="bold"/>
 
@@ -181,7 +183,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="6dp"
-                            android:textColor="@color/text_default"
+                            android:fontFamily="sans-serif-condensed"
+                            android:textColor="@color/text_primary"
                             android:textSize="36sp"
                             android:textStyle="bold"/>
 
@@ -199,7 +202,7 @@
                     android:paddingBottom="4dp"
                     android:paddingTop="4dp"
                     android:text="@string/eco_points_profile_settings"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/text_secondary"
                     android:textSize="14sp"/>
 
             </LinearLayout>
@@ -267,7 +270,7 @@
                     android:paddingBottom="4dp"
                     android:paddingTop="4dp"
                     android:text="@string/eco_points_leaderboard_full"
-                    android:textColor="@color/text_primary"/>
+                    android:textColor="@color/text_secondary"/>
 
             </LinearLayout>
 

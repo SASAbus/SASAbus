@@ -64,7 +64,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="16dp"
                         android:layout_marginTop="12dp"
-                        android:textColor="@color/text_default"
+                        android:textColor="@color/text_primary"
                         android:textSize="20sp"
                         android:textStyle="bold"/>
 
@@ -126,7 +126,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_marginStart="72dp"
                             android:text="@string/eco_points_profile_change_password"
-                            android:textColor="@color/text_default"
+                            android:textColor="@color/text_primary"
                             android:textSize="16sp"/>
 
                     </RelativeLayout>
@@ -156,7 +156,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_marginStart="72dp"
                             android:text="@string/eco_points_profile_change_picture"
-                            android:textColor="@color/text_default"
+                            android:textColor="@color/text_primary"
                             android:textSize="16sp"/>
 
                     </RelativeLayout>
@@ -220,7 +220,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_marginStart="72dp"
                             android:text="@string/eco_points_profile_logout"
-                            android:textColor="@color/text_default"
+                            android:textColor="@color/text_primary"
                             android:textSize="16sp"/>
 
                     </RelativeLayout>
@@ -250,7 +250,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_marginStart="72dp"
                             android:text="@string/eco_points_profile_logout_all"
-                            android:textColor="@color/text_default"
+                            android:textColor="@color/text_primary"
                             android:textSize="16sp"/>
 
                     </RelativeLayout>
@@ -280,7 +280,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_marginStart="72dp"
                             android:text="@string/eco_points_profile_delete_account"
-                            android:textColor="@color/text_default"
+                            android:textColor="@color/text_primary"
                             android:textSize="16sp"/>
 
                     </RelativeLayout>

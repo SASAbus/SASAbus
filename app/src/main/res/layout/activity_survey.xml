@@ -44,7 +44,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/survey_title_header"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/text_secondary"
                 android:textSize="14sp"/>
 
             <View
@@ -66,7 +66,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/survey_title_rate"
-                android:textColor="@color/text_primary"/>
+                android:textColor="@color/text_secondary"/>
 
             <RatingBar
                 android:id="@+id/survey_rating_bar"
@@ -114,7 +114,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/survey_title_form"
-                android:textColor="@color/text_primary"/>
+                android:textColor="@color/text_secondary"/>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/survey_form_email_layout"
@@ -137,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/dialog_report_email"
                     android:inputType="textEmailAddress"
-                    android:textColor="@color/text_default"
+                    android:textColor="@color/text_primary"
                     android:textColorHint="@color/black_400"
                     android:textSize="14sp"/>
 
@@ -161,7 +161,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/survey_form_feedback"
-                    android:textColor="@color/text_default"
+                    android:textColor="@color/text_primary"
                     android:textColorHint="@color/black_400"
                     android:textSize="14sp"/>
 

@@ -79,7 +79,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_gravity="center_vertical"
-                android:textColor="@color/text_default"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"/>
 
         </FrameLayout>
@@ -106,7 +106,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_gravity="center_vertical"
-                android:textColor="@color/text_default"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"/>
 
         </FrameLayout>
@@ -133,7 +133,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_gravity="center_vertical"
-                android:textColor="@color/text_default"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"/>
 
         </FrameLayout>

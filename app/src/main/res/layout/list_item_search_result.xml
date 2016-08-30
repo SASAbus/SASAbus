@@ -30,6 +30,6 @@
     android:paddingStart="@dimen/padding_normal"
     android:paddingRight="@dimen/padding_normal"
     android:paddingEnd="@dimen/padding_normal"
-    android:textColor="@color/text_default"
+    android:textColor="@color/text_primary"
     android:textAlignment="viewStart"
     style="@style/Body1Text"/>

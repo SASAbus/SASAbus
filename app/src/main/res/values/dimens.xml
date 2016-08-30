@@ -49,4 +49,10 @@
 
     <dimen name="intro_data_download_indicator_margin_bottom">72dp</dimen>
 
+    <dimen name="keyline_1">16dp</dimen>
+    <dimen name="keyline_2">72dp</dimen>
+    <dimen name="keyline_2_session_detail">@dimen/keyline_2</dimen>
+
+    <item name="h3_spacing" format="float" type="dimen">1.14285714286</item>
+
 </resources>

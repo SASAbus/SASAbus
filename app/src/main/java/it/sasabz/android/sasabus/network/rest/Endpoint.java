@@ -60,6 +60,9 @@ public final class Endpoint {
     public static final String ECO_POINTS_PROFILE = "eco/profile";
     public static final String ECO_POINTS_PROFILE_ID = "eco/profile/{id}";
 
+    public static final String ECO_POINTS_EVENTS = "eco/events";
+    public static final String EVENT_PUT_BEACON = "eco/events/beacon/{major}/{minor}";
+
     public static final String ECO_POINTS_PROFILE_PICTURE_DEFAULT = "eco/profile/default";
     public static final String ECO_POINTS_PROFILE_PICTURE_CUSTOM = "eco/profile/custom";
     public static final String ECO_POINTS_PROFILE_PICTURE_USER = "assets/images/profile_pictures/";

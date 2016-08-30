@@ -93,7 +93,7 @@
                     android:layout_marginTop="10dp"
                     android:gravity="center_horizontal|center_vertical"
                     android:text="@string/bus_details_not_available"
-                    android:textColor="@color/text_primary"/>
+                    android:textColor="@color/text_secondary"/>
 
             </android.support.v7.widget.CardView>
 
@@ -157,13 +157,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/bus_details_manufacturer"
-                                android:textColor="@color/text_default"/>
+                                android:textColor="@color/text_primary"/>
 
                             <TextView
                                 android:id="@+id/bus_details_manufacturer"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/text_primary"/>
+                                android:textColor="@color/text_secondary"/>
 
                         </LinearLayout>
 
@@ -186,13 +186,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/bus_details_model"
-                                android:textColor="@color/text_default"/>
+                                android:textColor="@color/text_primary"/>
 
                             <TextView
                                 android:id="@+id/bus_detail_model"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/text_primary"/>
+                                android:textColor="@color/text_secondary"/>
 
                         </LinearLayout>
 
@@ -233,13 +233,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/bus_details_fuel"
-                                android:textColor="@color/text_default"/>
+                                android:textColor="@color/text_primary"/>
 
                             <TextView
                                 android:id="@+id/bus_detail_fuel"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/text_primary"/>
+                                android:textColor="@color/text_secondary"/>
 
                         </LinearLayout>
 
@@ -257,7 +257,7 @@
                         android:clickable="true"
                         android:padding="8dp"
                         android:text="@string/bus_report"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="@color/text_tertiary"
                         android:textSize="12sp"/>
 
                 </LinearLayout>

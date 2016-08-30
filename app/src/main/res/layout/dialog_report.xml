@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/dialog_report_email"
                 android:inputType="textEmailAddress"
-                android:textColor="@color/text_default"
+                android:textColor="@color/text_primary"
                 android:textColorHint="@color/black_400"
                 android:textSize="14sp"/>
 
@@ -72,7 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/dialog_report_content"
-                android:textColor="@color/text_default"
+                android:textColor="@color/text_primary"
                 android:textColorHint="@color/black_400"
                 android:textSize="14sp"/>
 

@@ -43,7 +43,7 @@
         android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="@string/survey_dialog_success_title"
-        android:textColor="@color/text_default"
+        android:textColor="@color/text_primary"
         android:textSize="18sp"/>
 
 
@@ -57,7 +57,7 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="@string/survey_dialog_success_sub"
-        android:textColor="@color/text_primary"
+        android:textColor="@color/text_secondary"
         android:textSize="14sp"/>
 
     <FrameLayout

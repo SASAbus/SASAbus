@@ -76,7 +76,7 @@ public class LinesDrivingAdapter extends ArrayAdapter<LineDriving> {
             location.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f));
             location.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
             location.setTextSize(14);
-            location.setTextColor(ContextCompat.getColor(context, R.color.text_primary));
+            location.setTextColor(ContextCompat.getColor(context, R.color.text_secondary));
 
             parentLayout.addView(location);
 

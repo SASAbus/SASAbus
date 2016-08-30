@@ -197,14 +197,14 @@ public class PlannedTripsAddActivity extends AppCompatActivity implements View.O
                 }
 
                 mSelectLineText.setText(sb.toString());
-                mSelectLineText.setTextColor(ContextCompat.getColor(this, R.color.text_default));
+                mSelectLineText.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
             }
 
             mBusStopId = savedInstanceState.getInt(BUNDLE_BUS_STOP);
 
             mSelectBusStopText.setText(BusStopRealmHelper.getName(mBusStopId) +
                     " (" + BusStopRealmHelper.getMunic(mBusStopId) + ')');
-            mSelectBusStopText.setTextColor(ContextCompat.getColor(this, R.color.text_default));
+            mSelectBusStopText.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
 
             mNotifications = savedInstanceState.getParcelableArrayList(BUNDLE_LIST_NOTIFICATIONS);
 
@@ -428,7 +428,7 @@ public class PlannedTripsAddActivity extends AppCompatActivity implements View.O
 
                     if (count == 0) {
                         mSelectLineText.setText(R.string.planned_trips_add_line);
-                        mSelectLineText.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
+                        mSelectLineText.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
 
                         dialog.dismiss();
                         return;
@@ -443,7 +443,7 @@ public class PlannedTripsAddActivity extends AppCompatActivity implements View.O
                     }
 
                     mSelectLineText.setText(sb.toString());
-                    mSelectLineText.setTextColor(ContextCompat.getColor(this, R.color.text_default));
+                    mSelectLineText.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
 
                     dialog.dismiss();
                 })
@@ -488,7 +488,7 @@ public class PlannedTripsAddActivity extends AppCompatActivity implements View.O
 
                         mSelectBusStopText.setText(BusStopRealmHelper.getName(mBusStopId) +
                                 " (" + BusStopRealmHelper.getMunic(mBusStopId) + ')');
-                        mSelectBusStopText.setTextColor(ContextCompat.getColor(this, R.color.text_default));
+                        mSelectBusStopText.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
                     })
                     .create()
                     .show();

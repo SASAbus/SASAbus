@@ -29,6 +29,7 @@ import it.sasabz.android.sasabus.fcm.command.FcmCommand;
 import it.sasabz.android.sasabus.fcm.command.LogoutCommand;
 import it.sasabz.android.sasabus.fcm.command.NewsCommand;
 import it.sasabz.android.sasabus.fcm.command.NotificationCommand;
+import it.sasabz.android.sasabus.fcm.command.QrCodeCommand;
 import it.sasabz.android.sasabus.fcm.command.SyncCommand;
 import it.sasabz.android.sasabus.fcm.command.TestCommand;
 import it.sasabz.android.sasabus.fcm.command.TrafficLightCommand;
@@ -57,6 +58,7 @@ public class FcmService extends FirebaseMessagingService {
         receivers.put("traffic_light", new TrafficLightCommand());
         receivers.put("config", new ConfigCommand());
         receivers.put("logout", new LogoutCommand());
+        receivers.put("qr_code", new QrCodeCommand());
 
         MESSAGE_RECEIVERS = Collections.unmodifiableMap(receivers);
     }

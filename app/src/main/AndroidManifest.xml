@@ -227,6 +227,19 @@
             android:theme="@style/AppTheme.EcoPoints.Register"/>
 
 
+        <!-- Events -->
+
+        <activity
+            android:name=".ui.ecopoints.event.EventDetailsActivity"
+            android:label="Session details"
+            android:theme="@style/AppTheme.Event.Details"/>
+
+        <activity
+            android:name=".ui.ecopoints.event.QrCodeActivity"
+            android:label="Verify QR code"
+            android:theme="@style/Theme.Event.QrCode"/>
+
+
         <!-- Lines -->
 
         <activity

@@ -72,11 +72,11 @@ public class LineCourseAdapter extends RecyclerView.Adapter<LineCourseAdapter.Vi
         }
 
         if (item.isActive()) {
-            holder.text.setTextColor(ContextCompat.getColor(mContext, R.color.text_default));
-            holder.image.setColorFilter(ContextCompat.getColor(mContext, R.color.text_default));
+            holder.text.setTextColor(ContextCompat.getColor(mContext, R.color.text_primary));
+            holder.image.setColorFilter(ContextCompat.getColor(mContext, R.color.text_primary));
         } else {
-            holder.text.setTextColor(ContextCompat.getColor(mContext, R.color.text_secondary));
-            holder.image.setColorFilter(ContextCompat.getColor(mContext, R.color.text_secondary), PorterDuff.Mode.SRC_IN);
+            holder.text.setTextColor(ContextCompat.getColor(mContext, R.color.text_tertiary));
+            holder.image.setColorFilter(ContextCompat.getColor(mContext, R.color.text_tertiary), PorterDuff.Mode.SRC_IN);
         }
 
         holder.text.setText(item.getTime() + " - " + item.getBusStop() + " (" + item.getMunic() + ')');
