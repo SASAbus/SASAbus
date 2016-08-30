@@ -342,7 +342,7 @@
     <string name="notification_trip_title">Trip saved</string>
     <string name="notification_trip_sub">Click to view trip details</string>
     <string name="notification_survey_title">Survey</string>
-    <string name="notification_survey_subtitle">Click to take survey about your bus ride</string>
+    <string name="notification_survey_subtitle">Click to take a survey about your bus ride</string>
     <string name="notification_expanded_title">Next departures from %1$s</string>
     <string name="notification_heading">Heading to %s</string>
     <string name="notification_planned_trip_departs_at_content">Line %1$s departs at %2$s</string>
