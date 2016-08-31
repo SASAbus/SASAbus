@@ -28,14 +28,17 @@ import it.sasabz.android.sasabus.model.BusStop;
 import it.sasabz.android.sasabus.model.JsonSerializable;
 import it.sasabz.android.sasabus.provider.apis.Trips;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.util.LogUtils;
 
 public class CurrentTrip implements JsonSerializable {
+
+    private static final String TAG = "CurrentTrip";
 
     public BusBeacon beacon;
 
     private transient Context mContext;
 
-    public boolean notificationVisible;
+    boolean notificationVisible;
 
     private final List<BusStop> path;
     private final List<it.sasabz.android.sasabus.provider.model.BusStop> times;
@@ -50,8 +53,15 @@ public class CurrentTrip implements JsonSerializable {
         path = new ArrayList<>();
 
         times = Trips.getPath(mContext, beacon.trip);
-        for (it.sasabz.android.sasabus.provider.model.BusStop busStop : times) {
-            path.add(new BusStop(BusStopRealmHelper.getBusStop(busStop.getId())));
+
+        if (times != null) {
+            for (it.sasabz.android.sasabus.provider.model.BusStop busStop : times) {
+                path.add(new BusStop(BusStopRealmHelper.getBusStop(busStop.getId())));
+            }
+        } else {
+            LogUtils.e(TAG, "Times for trip " + beacon.trip + " are null");
+            beacon.setSuitableForTrip(context, false);
+            notificationVisible = false;
         }
     }
 

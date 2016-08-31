@@ -170,6 +170,10 @@ public final class BusBeaconHandler implements IBeaconHandler {
                         TripNotification.showNotification(mContext, currentTrip);
                     }
 
+                    if (firstBeacon.shouldFetchDelay()) {
+                        fetchBusDelayAndInfo(currentTrip);
+                    }
+
                     mPrefsManager.setCurrentTrip(currentTrip);
                 }
             } else if (mCycleCounter % 5 == 0 && firstBeacon.distance <= MAX_BEACON_DISTANCE) {
@@ -545,6 +549,51 @@ public final class BusBeaconHandler implements IBeaconHandler {
                                 NotificationUtils.cancel(mContext, i);
                             }
                         }
+                    }
+                });
+    }
+
+    private void fetchBusDelayAndInfo(CurrentTrip currentTrip) {
+        LogUtils.e(TAG, "fetchBusDelayAndInfo()");
+
+        if (!NetUtils.isOnline(mContext)) {
+            LogUtils.e(TAG, "No internet connection");
+            return;
+        }
+
+        BusBeacon beacon = currentTrip.beacon;
+        beacon.updateLastDelayFetch();
+
+        RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
+        realtimeApi.vehicleRx(currentTrip.getId())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<RealtimeResponse>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Utils.logException(e);
+                    }
+
+                    @Override
+                    public void onNext(RealtimeResponse response) {
+                        if (response.buses.isEmpty()) {
+                            LogUtils.e(TAG, "Vehicle " + beacon.id + " not driving");
+
+                            return;
+                        }
+
+                        RealtimeBus bus = response.buses.get(0);
+
+                        LogUtils.e(TAG, "Got bus delay for vehicle " + beacon.id + ": " +
+                                bus.delayMin);
+
+                        beacon.setDelay(bus.delayMin);
+
+                        currentTrip.update();
                     }
                 });
     }

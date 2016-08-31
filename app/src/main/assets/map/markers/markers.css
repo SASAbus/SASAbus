@@ -1,0 +1,32 @@
+.vector-marker {
+    width: 3px;
+    height: 5px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+    text-align: center;
+}
+
+.vector-marker path {
+    stroke: black;
+    stroke-opacity: 0.4;
+    stroke-width: 1;
+}
+
+.vector-marker i {
+    position: absolute;
+    top: 8px;
+    left: 0;
+    width: 22px;
+    color: #333;
+    margin: auto;
+    display: inline-block;
+    font-size: 14px;
+}
+
+.vector-marker i.maki-icon {
+    width: 16px;
+    left: 4px;
+    top: 4px;
+}
