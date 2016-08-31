@@ -31,6 +31,7 @@ import it.sasabz.android.sasabus.network.rest.model.CloudTrip;
 import it.sasabz.android.sasabus.network.rest.response.CloudResponsePost;
 import it.sasabz.android.sasabus.network.rest.response.TripUploadResponse;
 import it.sasabz.android.sasabus.realm.UserRealmHelper;
+import it.sasabz.android.sasabus.realm.user.Trip;
 import it.sasabz.android.sasabus.realm.user.TripToDelete;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.NotificationUtils;
@@ -124,6 +125,24 @@ public final class TripSyncHelper {
                                 NotificationUtils.badge(context, badge);
                             }
                         }).start();
+
+                        Realm realm = Realm.getDefaultInstance();
+
+                        for (String rejected : response.rejected) {
+                            Trip trip = realm.where(Trip.class).equalTo("hash", rejected)
+                                    .findFirst();
+
+                            if (trip != null) {
+                                realm.beginTransaction();
+                                trip.deleteFromRealm();
+                                realm.commitTransaction();
+                            } else {
+                                LogUtils.e(TAG, "Rejected trip with hash " + rejected +
+                                        " not found in database");
+                            }
+                        }
+
+                        realm.close();
                     }
                 });
 
