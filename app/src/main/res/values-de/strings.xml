@@ -419,5 +419,18 @@
     <string name="fragment_eco_points_badges">Abzeichen</string>
     <string name="fragment_eco_points_events">Events</string>
     <string name="fragment_eco_points_profile">Profil</string>
+    <string name="badge_event_complete_small_green">Abgeschlossen</string>
+    <string name="eco_points_profile_picture_camera">Kamera</string>
+    <string name="eco_points_profile_picture_gallery">Galerie</string>
+    <string name="eco_points_profile_picture_defaults">Standard-Profilbilder</string>
+    <string name="event_details_claim_prize_button">Geschenk beantragen</string>
+    <string name="event_details_information">Information</string>
+    <string name="event_details_points">Haltepunkte</string>
+    <string name="event_details_subtitle">%1$s in %2$s</string>
+    <string name="event_list_share_button">Details</string>
+    <string name="event_menu_visit_website">Website besuchen</string>
+    <string name="notification_event_beacon_subtitle">Beacon #%d gescannt</string>
+    <string name="qr_code_description">Lasse den QR-Code von einem Mitglied des Personals scannen um ein Geschenk zu bekommen!</string>
+    <string name="snackbar_event_incomplete">Du musst zuerst alle Haltepunkte besuchen!</string>
 
 </resources>

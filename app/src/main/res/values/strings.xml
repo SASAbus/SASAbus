@@ -293,7 +293,7 @@
     <string name="snackbar_timetable_error">Could not download timetables</string>
     <string name="snackbar_retry">Retry</string>
     <string name="snackbar_bus_not_driving">Bus not driving</string>
-    <string name="snackbar_event_incomplete">You need to visit all points first</string>
+    <string name="snackbar_event_incomplete">You need to visit all points first!</string>
 
 
     <!-- =============================== TIMETABLE =============================== -->
@@ -552,19 +552,18 @@
     <string name="event_details_subtitle">%1$s in %2$s</string>
 
     <string name="event_details_information">Information</string>
-    <string name="event_details_claim_prize_button">Claim your prize</string>
+    <string name="event_details_claim_prize_button">Claim your gift</string>
     <string name="event_details_points">Points</string>
     <string name="event_menu_visit_website">Visit website</string>
 
-    <string name="eco_points_profile_picture_defaults">"Select from defaults</string>
+    <string name="eco_points_profile_picture_defaults">Select from defaults</string>
     <string name="eco_points_profile_picture_camera">Take picture</string>
     <string name="eco_points_profile_picture_gallery">Pick from gallery</string>
 
-    <string name="event_list_share_button">details</string>
+    <string name="event_list_share_button">Details</string>
 
-    <string name="qr_code_description">Ask the staff to scan the code on your phone to claim the
-        price. Each user can claim the prize only once. By scanning the code you agree to our terms
-        of service.
+    <string name="qr_code_description">Ask the staff to scan the QR code on your device to claim the
+        gift!
     </string>
 
 
