@@ -135,21 +135,21 @@
         <!-- Credits/Settings/Changelog -->
 
         <activity
-            android:name="it.sasabz.android.sasabus.ui.AboutActivity"
+            android:name="it.sasabz.android.sasabus.ui.about.AboutActivity"
             android:label="@string/about"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.About"/>
 
         <activity
-            android:name="it.sasabz.android.sasabus.ui.CreditsActivity"
+            android:name="it.sasabz.android.sasabus.ui.about.CreditsActivity"
             android:label="@string/activity_credits"
-            android:parentActivityName="it.sasabz.android.sasabus.ui.AboutActivity"
+            android:parentActivityName="it.sasabz.android.sasabus.ui.about.AboutActivity"
             android:theme="@style/AppTheme.Normal"/>
 
         <activity
-            android:name="it.sasabz.android.sasabus.ui.ChangelogActivity"
+            android:name="it.sasabz.android.sasabus.ui.about.ChangelogActivity"
             android:label="@string/changelog"
-            android:parentActivityName="it.sasabz.android.sasabus.ui.AboutActivity"
+            android:parentActivityName="it.sasabz.android.sasabus.ui.about.AboutActivity"
             android:theme="@style/AppTheme.Normal"/>
 
         <activity

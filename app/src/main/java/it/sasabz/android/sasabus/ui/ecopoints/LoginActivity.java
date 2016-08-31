@@ -17,6 +17,8 @@
 
 package it.sasabz.android.sasabus.ui.ecopoints;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -310,6 +312,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             button.animate()
                     .alpha(0)
                     .setDuration(250)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            button.setVisibility(View.GONE);
+                        }
+                    })
                     .start();
 
             loading.setVisibility(View.VISIBLE);

@@ -126,6 +126,11 @@ public class SyncHelper {
             return false;
         }
 
+        if (!NetUtils.isOnline(mContext)) {
+            LogUtils.e(TAG, "Not attempting remote sync because device is OFFLINE");
+            return false;
+        }
+
         boolean dataChanged = false;
 
         // Sync consists of 1 or more of these operations. We try them one by one and tolerate

@@ -39,6 +39,7 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.provider.PlanData;
+import it.sasabz.android.sasabus.ui.about.AboutActivity;
 import it.sasabz.android.sasabus.ui.busstop.BusStopActivity;
 import it.sasabz.android.sasabus.ui.ecopoints.EcoPointsActivity;
 import it.sasabz.android.sasabus.ui.intro.Intro;

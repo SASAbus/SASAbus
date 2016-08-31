@@ -82,6 +82,7 @@ import it.sasabz.android.sasabus.network.rest.response.RealtimeResponse;
 import it.sasabz.android.sasabus.network.rest.response.TrafficLightResponse;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.realm.UserRealmHelper;
+import it.sasabz.android.sasabus.ui.about.AboutActivity;
 import it.sasabz.android.sasabus.ui.widget.OffsetNestedSwipeRefreshLayout;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.AnimUtils;

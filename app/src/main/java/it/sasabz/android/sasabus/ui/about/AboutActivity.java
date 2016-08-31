@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.sasabz.android.sasabus.ui;
+package it.sasabz.android.sasabus.ui.about;
 
 import android.Manifest;
 import android.accounts.AccountManager;

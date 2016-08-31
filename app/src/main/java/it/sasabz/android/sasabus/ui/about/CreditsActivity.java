@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.sasabz.android.sasabus.ui;
+package it.sasabz.android.sasabus.ui.about;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -26,7 +26,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,8 +78,6 @@ public class CreditsActivity extends AppCompatActivity implements View.OnClickLi
 
             Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
             vibrator.vibrate(250);
-
-            AnalyticsHelper.sendEvent(TAG, "Forced sync");
 
             return true;
         });
