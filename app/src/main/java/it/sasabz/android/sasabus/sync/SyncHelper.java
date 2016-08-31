@@ -61,6 +61,7 @@ import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Preconditions;
 import it.sasabz.android.sasabus.util.Utils;
 import retrofit2.Response;
+import rx.schedulers.Schedulers;
 
 /**
  * A helper class for dealing with data synchronization. All operations occur on the
@@ -221,7 +222,8 @@ public class SyncHelper {
             }
 
             if (!serverMissing.isEmpty()) {
-                dataChanged |= TripSyncHelper.upload(mContext, tripToCloudTrip(serverMissing));
+                dataChanged |= TripSyncHelper.upload(mContext, tripToCloudTrip(serverMissing),
+                        Schedulers.immediate());
             }
 
             LogUtils.e(TAG, "Finished trip sync");

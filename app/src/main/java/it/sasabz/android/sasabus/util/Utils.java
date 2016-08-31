@@ -195,6 +195,6 @@ public final class Utils {
             return false;
         }
 
-        return UserRealmHelper.insertTrip(beacon);
+        return UserRealmHelper.insertTrip(context, beacon);
     }
 }

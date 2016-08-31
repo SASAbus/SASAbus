@@ -38,13 +38,14 @@ import it.sasabz.android.sasabus.util.Utils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import rx.Observer;
+import rx.Scheduler;
 
 /**
  * Utility class to help with syncing trips to the server.
  *
  * @author Alex Lardschneider
  */
-final class TripSyncHelper {
+public final class TripSyncHelper {
 
     private static final String TAG = "TripSyncHelper";
 
@@ -97,11 +98,12 @@ final class TripSyncHelper {
      * @param trips the trips to upload.
      * @return {@code true} if one or more trips have been uploaded, {@code false} otherwise.
      */
-    static boolean upload(Context context, List<CloudTrip> trips) {
+    public static boolean upload(Context context, List<CloudTrip> trips, Scheduler scheduler) {
         LogUtils.w(TAG, "Uploading " + trips.size() + " trips");
 
         CloudApi cloudApi = RestClient.ADAPTER.create(CloudApi.class);
         cloudApi.uploadTrips(trips)
+                .subscribeOn(scheduler)
                 .subscribe(new Observer<TripUploadResponse>() {
                     @Override
                     public void onCompleted() {

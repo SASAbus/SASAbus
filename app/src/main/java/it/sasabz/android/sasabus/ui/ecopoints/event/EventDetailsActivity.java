@@ -271,9 +271,9 @@ public class EventDetailsActivity extends RxAppCompatActivity implements View.On
         int upColor = ContextCompat.getColor(this, event.lightStatusBar ?
                 R.color.subtitle_on_primary : R.color.text_primary_light);
 
-        Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material).mutate();
-        upArrow.setColorFilter(upColor, PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+        Drawable up = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_white_24dp).mutate();
+        up.setColorFilter(upColor, PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(up);
 
         int titleColor = ContextCompat.getColor(this, event.lightStatusBar ?
                 R.color.text_on_primary : R.color.text_primary_light);
