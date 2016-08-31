@@ -415,5 +415,18 @@
     <string name="fragment_eco_points_events">Eventi</string>
     <string name="fragment_eco_points_badges">Distintivi</string>
     <string name="fragment_eco_points_profile">Profilo</string>
+    <string name="badge_event_complete_small_green">Completato</string>
+    <string name="eco_points_profile_picture_camera">Fotocamera</string>
+    <string name="eco_points_profile_picture_defaults">Immagini predefiniti</string>
+    <string name="eco_points_profile_picture_gallery">Galleria</string>
+    <string name="event_details_claim_prize_button">Richiedi regalo</string>
+    <string name="event_details_information">Informazioni</string>
+    <string name="event_details_points">Punti di fermata</string>
+    <string name="event_details_subtitle">%1$s a %2$s</string>
+    <string name="event_list_share_button">Dettagli</string>
+    <string name="event_menu_visit_website">Visita sito web</string>
+    <string name="notification_event_beacon_subtitle">Scannerizzato beacon #%s</string>
+    <string name="qr_code_description">Chiedi a un membro dello staff di scannerizzare il codice QR per ottenere il regalo!</string>
+    <string name="snackbar_event_incomplete">Non hai ancora visitato tutti i punti di fermata!</string>
 
 </resources>

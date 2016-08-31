@@ -347,6 +347,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 .setMessage(R.string.register_success_dialog_subtitle)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                     dialogInterface.dismiss();
+                    finish();
                     startActivity(new Intent(this, LoginActivity.class));
                 })
                 .create()

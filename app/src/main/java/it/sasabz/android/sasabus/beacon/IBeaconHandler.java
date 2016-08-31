@@ -23,6 +23,9 @@ import java.util.Collection;
 
 public interface IBeaconHandler {
 
-    void updateBeacons(Collection<Beacon> beacons);
-    void validateBeacon(Beacon beacon, int major);
+    void didRangeBeacons(Collection<Beacon> beacons);
+
+    void validateBeacon(Beacon beacon, int major, int minor);
+
+    void stop();
 }

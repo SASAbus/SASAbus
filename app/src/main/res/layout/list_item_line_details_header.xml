@@ -59,7 +59,7 @@
             android:gravity="center_vertical"
             android:lines="1"
             android:scrollHorizontally="true"
-            android:textColor="@color/text_default"
+            android:textColor="@color/text_primary"
             android:textSize="16sp"/>
 
         <ImageView
@@ -83,7 +83,7 @@
             android:gravity="center_vertical"
             android:lines="1"
             android:scrollHorizontally="true"
-            android:textColor="@color/text_default"
+            android:textColor="@color/text_primary"
             android:textSize="16sp"/>
 
         <ImageView
@@ -107,7 +107,7 @@
             android:gravity="center_vertical"
             android:lines="1"
             android:scrollHorizontally="true"
-            android:textColor="@color/text_default"
+            android:textColor="@color/text_primary"
             android:textSize="16sp"/>
 
         <ImageView
@@ -131,7 +131,7 @@
             android:gravity="center_vertical"
             android:lines="1"
             android:scrollHorizontally="true"
-            android:textColor="@color/text_default"
+            android:textColor="@color/text_primary"
             android:textSize="16sp"/>
 
         <TextView
@@ -143,7 +143,7 @@
             android:fontFamily="sans-serif-condensed"
             android:gravity="center_vertical"
             android:text="@string/additional_info"
-            android:textColor="@color/text_default"
+            android:textColor="@color/text_primary"
             android:textSize="16sp"/>
 
         <TextView
@@ -157,7 +157,7 @@
             android:layout_marginTop="182dp"
             android:fontFamily="sans-serif-condensed"
             android:gravity="center_vertical"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/text_secondary"
             android:textSize="14sp"/>
 
     </RelativeLayout>

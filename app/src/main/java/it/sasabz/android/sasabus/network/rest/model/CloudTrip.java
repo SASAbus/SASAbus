@@ -22,7 +22,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 import it.sasabz.android.sasabus.realm.user.Trip;
-import it.sasabz.android.sasabus.util.Utils;
+import it.sasabz.android.sasabus.util.Strings;
 
 public class  CloudTrip {
 
@@ -95,7 +95,7 @@ public class  CloudTrip {
         destination = trip.getDestination();
         departure = (int) trip.getDeparture();
         arrival = (int) trip.getArrival();
-        path = Utils.stringToList(trip.getPath(), ",");
+        path = Strings.stringToList(trip.getPath(), Strings.DEFAULT_DELIMITER);
     }
 
     @Override

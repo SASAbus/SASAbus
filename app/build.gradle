@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2016 David Dejori, Alex Lardschneider
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 buildscript {
     repositories {
         jcenter()
@@ -44,8 +61,8 @@ android {
         applicationId "it.sasabz.android.sasabus"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 52
-        versionName "2.1.0-beta3"
+        versionCode 53
+        versionName "3.0.0-RC2"
     }
 
     buildTypes {
@@ -119,6 +136,9 @@ dependencies {
     // ButterKnife
     compile 'com.jakewharton:butterknife:8.2.1'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
+
+    // QR-Code generator
+    compile 'com.github.kenglxn.QRGen:android:2.2.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

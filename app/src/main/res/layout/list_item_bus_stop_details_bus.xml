@@ -43,7 +43,7 @@
             android:layout_marginLeft="4dp"
             android:layout_marginStart="4dp"
             android:fontFamily="sans-serif-condensed"
-            android:textColor="@color/text_default"
+            android:textColor="@color/text_primary"
             android:textSize="30sp"/>
 
         <TextView
@@ -73,7 +73,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:fontFamily="sans-serif-condensed"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/text_secondary"
             android:textSize="30sp"/>
 
         <TextView
@@ -84,7 +84,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="38dp"
             android:fontFamily="sans-serif-condensed"
-            android:textColor="@color/text_default"
+            android:textColor="@color/text_primary"
             android:textSize="14sp"/>
 
         <TextView
@@ -97,7 +97,7 @@
             android:layout_marginRight="4dp"
             android:layout_marginTop="38dp"
             android:fontFamily="sans-serif-condensed"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/text_secondary"
             android:textSize="14sp"/>
 
     </RelativeLayout>

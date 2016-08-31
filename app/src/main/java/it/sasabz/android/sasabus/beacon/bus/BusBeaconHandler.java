@@ -39,7 +39,7 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.beacon.BeaconStorage;
 import it.sasabz.android.sasabus.beacon.IBeaconHandler;
 import it.sasabz.android.sasabus.beacon.busstop.BusStopBeaconHandler;
-import it.sasabz.android.sasabus.beacon.notification.TripNotificationAction;
+import it.sasabz.android.sasabus.beacon.notification.TripNotification;
 import it.sasabz.android.sasabus.model.BusStop;
 import it.sasabz.android.sasabus.model.line.Lines;
 import it.sasabz.android.sasabus.network.NetUtils;
@@ -83,9 +83,6 @@ public final class BusBeaconHandler implements IBeaconHandler {
     private final BeaconStorage mPrefsManager;
 
     @SuppressLint("StaticFieldLeak")
-    public static TripNotificationAction notificationAction;
-
-    @SuppressLint("StaticFieldLeak")
     private static BusBeaconHandler sInstance;
 
     private byte mCycleCounter;
@@ -96,8 +93,6 @@ public final class BusBeaconHandler implements IBeaconHandler {
         mContext = context;
         mPrefsManager = BeaconStorage.getInstance(context);
         mBeaconMap.putAll(mPrefsManager.getBeaconMap());
-
-        notificationAction = new TripNotificationAction(context);
 
         Handler handler = new Handler();
         new Timer().schedule(new TimerTask() {
@@ -121,9 +116,9 @@ public final class BusBeaconHandler implements IBeaconHandler {
     }
 
     @Override
-    public void updateBeacons(Collection<Beacon> beacons) {
+    public void didRangeBeacons(Collection<Beacon> beacons) {
         for (Beacon beacon : beacons) {
-            validateBeacon(beacon, beacon.getId2().toInt());
+            validateBeacon(beacon, beacon.getId2().toInt(), beacon.getId3().toInt());
         }
 
         deleteInvisibleBeacons();
@@ -167,12 +162,16 @@ public final class BusBeaconHandler implements IBeaconHandler {
                         }
                     }
 
-                    if (!currentTrip.isNotificationShown && currentTrip.beacon.isSuitableForTrip &&
+                    if (!currentTrip.notificationVisible && currentTrip.beacon.isSuitableForTrip &&
                             SettingsUtils.isBusNotificationEnabled(mContext)) {
 
-                        currentTrip.setNotificationShown(true);
+                        currentTrip.setNotificationVisible(true);
 
-                        notificationAction.showNotification(currentTrip);
+                        TripNotification.showNotification(mContext, currentTrip);
+                    }
+
+                    if (firstBeacon.shouldFetchDelay()) {
+                        fetchBusDelayAndInfo(currentTrip);
                     }
 
                     mPrefsManager.setCurrentTrip(currentTrip);
@@ -189,7 +188,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
     }
 
     @Override
-    public void validateBeacon(Beacon beacon, int major) {
+    public void validateBeacon(Beacon beacon, int major, int minor) {
         BusBeacon busBeacon;
 
         if (mBeaconMap.keySet().contains(major)) {
@@ -212,7 +211,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
                 getBusInformation(busBeacon);
             }
         } else {
-            busBeacon = new BusBeacon(major, HashUtils.getHashForIdentifier(mContext, "trip"));
+            busBeacon = new BusBeacon(major);
 
             mBeaconMap.put(major, busBeacon);
 
@@ -226,8 +225,13 @@ public final class BusBeaconHandler implements IBeaconHandler {
         }
     }
 
+    @Override
+    public void stop() {
+
+    }
+
     public void inspectBeacons() {
-        updateBeacons(Collections.emptyList());
+        didRangeBeacons(Collections.emptyList());
 
         new Thread(() -> {
             synchronized (this) {
@@ -237,7 +241,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
                 }
             }
 
-            updateBeacons(Collections.emptyList());
+            didRangeBeacons(Collections.emptyList());
 
             synchronized (this) {
                 try {
@@ -246,7 +250,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
                 }
             }
 
-            updateBeacons(Collections.emptyList());
+            didRangeBeacons(Collections.emptyList());
         }).start();
     }
 
@@ -332,6 +336,9 @@ public final class BusBeaconHandler implements IBeaconHandler {
 
                         beacon.setTitle(title);
 
+                        String hash = HashUtils.getHashForTrip(mContext, beacon);
+                        beacon.setHash(hash);
+
                         LogUtils.e(TAG, "Got bus info for " + beacon.id +
                                 ", bus stop " + bus.busStop);
 
@@ -365,8 +372,8 @@ public final class BusBeaconHandler implements IBeaconHandler {
                 }
             } else if (beacon.lastSeen + TIMEOUT < System.currentTimeMillis()) {
                 if (mPrefsManager.hasCurrentTrip() && currentTrip.getId() == beacon.id) {
-                    if (currentTrip.isNotificationShown) {
-                        currentTrip.setNotificationShown(false);
+                    if (currentTrip.notificationVisible) {
+                        currentTrip.setNotificationVisible(false);
                         currentTrip.setBeacon(beacon);
 
                         LogUtils.e(TAG, "Dismissing notification for " + currentTrip.getId());
@@ -417,7 +424,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
         if (Utils.insertTripIfValid(mContext, beacon) &&
                 SettingsUtils.isTripNotificationEnabled(mContext)) {
 
-            NotificationUtils.trip(mContext, beacon.hash);
+            NotificationUtils.trip(mContext, beacon.getHash());
 
             LogUtils.e(TAG, "Saved trip " + beacon.id);
 
@@ -462,7 +469,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
 
                 if (showSurvey) {
                     LogUtils.e(TAG, "Showing survey");
-                    NotificationUtils.survey(mContext, beacon.hash);
+                    NotificationUtils.survey(mContext, beacon.getHash());
 
                     SettingsUtils.setLastSurveyMillis(mContext, System.currentTimeMillis());
                 }
@@ -542,6 +549,51 @@ public final class BusBeaconHandler implements IBeaconHandler {
                                 NotificationUtils.cancel(mContext, i);
                             }
                         }
+                    }
+                });
+    }
+
+    private void fetchBusDelayAndInfo(CurrentTrip currentTrip) {
+        LogUtils.e(TAG, "fetchBusDelayAndInfo()");
+
+        if (!NetUtils.isOnline(mContext)) {
+            LogUtils.e(TAG, "No internet connection");
+            return;
+        }
+
+        BusBeacon beacon = currentTrip.beacon;
+        beacon.updateLastDelayFetch();
+
+        RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
+        realtimeApi.vehicleRx(currentTrip.getId())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<RealtimeResponse>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Utils.logException(e);
+                    }
+
+                    @Override
+                    public void onNext(RealtimeResponse response) {
+                        if (response.buses.isEmpty()) {
+                            LogUtils.e(TAG, "Vehicle " + beacon.id + " not driving");
+
+                            return;
+                        }
+
+                        RealtimeBus bus = response.buses.get(0);
+
+                        LogUtils.e(TAG, "Got bus delay for vehicle " + beacon.id + ": " +
+                                bus.delayMin);
+
+                        beacon.setDelay(bus.delayMin);
+
+                        currentTrip.update();
                     }
                 });
     }

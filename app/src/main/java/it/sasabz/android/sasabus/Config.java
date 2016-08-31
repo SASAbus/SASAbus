@@ -47,6 +47,8 @@ public final class Config {
 
     public static final int NOTIFICATION_BADGE = 1 << 13;
 
+    public static final int NOTIFICATION_EVENT = 1 << 10;
+
     /**
      * The delay between the line fragments finishing loading and starting the internet data fetch.
      */

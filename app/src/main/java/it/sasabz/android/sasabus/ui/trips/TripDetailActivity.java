@@ -22,8 +22,6 @@ import android.graphics.PorterDuff;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -166,8 +164,6 @@ public class TripDetailActivity extends AppCompatActivity implements View.OnClic
             return;
         }
 
-        parseVehicleData();
-
         Date startDate = new Date(mTrip.getDeparture() * 1000L);
         Date stopDate = new Date(mTrip.getArrival() * 1000L);
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ITALY);
@@ -193,10 +189,8 @@ public class TripDetailActivity extends AppCompatActivity implements View.OnClic
             mDuration.setText(timeDifference + "'");
         }
 
-        new Handler().postDelayed(() -> {
-            mDistance = parseMapDataAndDistance(mTrip);
-            parseVehicleData();
-        }, 1000);
+        mDistance = parseMapDataAndDistance(mTrip);
+        parseVehicleData();
     }
 
     private float parseMapDataAndDistance(Trip trip) {
@@ -234,10 +228,8 @@ public class TripDetailActivity extends AppCompatActivity implements View.OnClic
 
         if (bus != null) {
             Vehicle vehicle = bus.getVehicle();
+            loadBackdrop(vehicle);
 
-            if (vehicle != null) {
-                loadBackdrop(vehicle);
-            }
             mVehicleBrand.setText(vehicle.getManufacturer());
             mVehicleFuel.setText(vehicle.getFuelString(this));
 
@@ -264,18 +256,13 @@ public class TripDetailActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    /**
-     * Loads the background image into the {@link CollapsingToolbarLayout} and sets the content
-     * scrim and the status bar scrim color. Also colors the card icons.
-     */
     private void loadBackdrop(Vehicle vehicle) {
         ImageView imageView = (ImageView) findViewById(R.id.trip_detail_vehicle_image);
 
         if (imageView != null) {
-            Glide.with(this).load(Uri.parse("file:///android_asset/images/" + vehicle.getCode() + ".jpg"))
-                    .animate(R.anim.fade_in_short)
+            Glide.with(this)
+                    .load(Uri.parse("file:///android_asset/images/" + vehicle.getCode() + ".jpg"))
                     .centerCrop()
-                    .crossFade()
                     .into(imageView);
         }
     }

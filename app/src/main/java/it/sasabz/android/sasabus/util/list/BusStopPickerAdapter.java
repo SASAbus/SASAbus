@@ -72,7 +72,7 @@ public class BusStopPickerAdapter extends ArrayAdapter<BusStop> {
             textView.setText(name + ", " + munic, TextView.BufferType.SPANNABLE);
 
             Spannable span = (Spannable) textView.getText();
-            span.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.text_primary)),
+            span.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.text_secondary)),
                     name.replace("{", "").replace("}", "").length() + 1,
                     span.length(),
                     Spannable.SPAN_INCLUSIVE_EXCLUSIVE);

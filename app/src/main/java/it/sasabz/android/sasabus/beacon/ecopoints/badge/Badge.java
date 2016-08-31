@@ -20,11 +20,20 @@ package it.sasabz.android.sasabus.beacon.ecopoints.badge;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 
+import io.realm.Realm;
 import it.sasabz.android.sasabus.beacon.Beacon;
 import it.sasabz.android.sasabus.network.auth.AuthHelper;
+import it.sasabz.android.sasabus.network.rest.RestClient;
+import it.sasabz.android.sasabus.network.rest.api.EcoPointsApi;
 import it.sasabz.android.sasabus.realm.UserRealmHelper;
+import it.sasabz.android.sasabus.realm.user.EarnedBadge;
+import it.sasabz.android.sasabus.util.LogUtils;
+import it.sasabz.android.sasabus.util.rx.NextObserver;
+import rx.schedulers.Schedulers;
 
 public abstract class Badge {
+
+    private static final String TAG = "Badge";
 
     private final int id;
     private final int title;
@@ -46,6 +55,33 @@ public abstract class Badge {
 
     public void complete() {
         UserRealmHelper.setEarnedBadge(id);
+
+        EcoPointsApi api = RestClient.ADAPTER.create(EcoPointsApi.class);
+        api.sendBadge(id)
+                .subscribeOn(Schedulers.io())
+                .subscribe(new NextObserver<Void>() {
+                    @Override
+                    public void onNext(Void aVoid) {
+                        Realm realm = Realm.getDefaultInstance();
+
+                        EarnedBadge badge = realm.where(EarnedBadge.class)
+                                .equalTo("id", id).findFirst();
+
+                        if (badge == null) {
+                            LogUtils.e(TAG, "Badge with id " + id + " has been inserted into database, " +
+                                    "but cannot be queried.");
+                            return;
+                        }
+
+                        realm.beginTransaction();
+                        badge.setSent(true);
+                        realm.commitTransaction();
+
+                        realm.close();
+
+                        LogUtils.e(TAG, "Uploaded badge " + id);
+                    }
+                });
     }
 
     /**

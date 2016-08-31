@@ -91,14 +91,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/about_changelog_title"
-                                android:textColor="@color/text_default"/>
+                                android:textColor="@color/text_primary"/>
 
                             <TextView
                                 android:id="@+id/about_first_sub"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/about_changelog_subtitle"
-                                android:textColor="@color/text_primary"/>
+                                android:textColor="@color/text_secondary"/>
 
                         </LinearLayout>
 
@@ -143,14 +143,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/about_feedback_title"
-                                android:textColor="@color/text_default"/>
+                                android:textColor="@color/text_primary"/>
 
                             <TextView
                                 android:id="@+id/parking_detail_current_total"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/about_feedback_subtitle"
-                                android:textColor="@color/text_primary"/>
+                                android:textColor="@color/text_secondary"/>
 
                         </LinearLayout>
 
@@ -194,13 +194,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/about_credits_title"
-                                android:textColor="@color/text_default"/>
+                                android:textColor="@color/text_primary"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/about_credits_subtitle"
-                                android:textColor="@color/text_primary"/>
+                                android:textColor="@color/text_secondary"/>
 
                         </LinearLayout>
 
@@ -244,13 +244,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/about_policy_title"
-                                android:textColor="@color/text_default"/>
+                                android:textColor="@color/text_primary"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/about_policy_subtitle"
-                                android:textColor="@color/text_primary"/>
+                                android:textColor="@color/text_secondary"/>
 
                         </LinearLayout>
 
@@ -295,14 +295,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/about_traffic_light_city"
-                                android:textColor="@color/text_default"/>
+                                android:textColor="@color/text_primary"/>
 
                             <TextView
                                 android:id="@+id/about_traffic_light"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/about_traffic_light_loading"
-                                android:textColor="@color/text_primary"/>
+                                android:textColor="@color/text_secondary"/>
 
                         </LinearLayout>
 

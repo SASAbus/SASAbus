@@ -34,8 +34,8 @@
         android:name=".AppApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:supportsRtl="true"
         android:label="@string/app_name"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
         <activity
@@ -56,12 +56,12 @@
         <activity
             android:name="it.sasabz.android.sasabus.beacon.survey.SurveyActivity"
             android:label="@string/survey"
-            android:theme="@style/AppTheme.Teal" />
+            android:theme="@style/AppTheme.Teal"/>
 
         <activity
             android:name="it.sasabz.android.sasabus.beacon.survey.SurveyExitActivity"
-            android:theme="@android:style/Theme.NoDisplay"
-            android:autoRemoveFromRecents="true"/>
+            android:autoRemoveFromRecents="true"
+            android:theme="@android:style/Theme.NoDisplay"/>
 
 
         <!-- Nav drawer activities -->
@@ -135,21 +135,21 @@
         <!-- Credits/Settings/Changelog -->
 
         <activity
-            android:name="it.sasabz.android.sasabus.ui.AboutActivity"
+            android:name="it.sasabz.android.sasabus.ui.about.AboutActivity"
             android:label="@string/about"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.About"/>
 
         <activity
-            android:name="it.sasabz.android.sasabus.ui.CreditsActivity"
+            android:name="it.sasabz.android.sasabus.ui.about.CreditsActivity"
             android:label="@string/activity_credits"
-            android:parentActivityName="it.sasabz.android.sasabus.ui.AboutActivity"
+            android:parentActivityName="it.sasabz.android.sasabus.ui.about.AboutActivity"
             android:theme="@style/AppTheme.Normal"/>
 
         <activity
-            android:name="it.sasabz.android.sasabus.ui.ChangelogActivity"
+            android:name="it.sasabz.android.sasabus.ui.about.ChangelogActivity"
             android:label="@string/changelog"
-            android:parentActivityName="it.sasabz.android.sasabus.ui.AboutActivity"
+            android:parentActivityName="it.sasabz.android.sasabus.ui.about.AboutActivity"
             android:theme="@style/AppTheme.Normal"/>
 
         <activity
@@ -216,15 +216,27 @@
 
         <activity
             android:name=".ui.ecopoints.LoginActivity"
-            android:label="@string/app_name"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.EcoPoints.Login"/>
 
         <activity
             android:name=".ui.ecopoints.RegisterActivity"
-            android:label="@string/eco_points"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.EcoPoints.Register"/>
+            android:theme="@style/AppTheme.EcoPoints.Register"
+            android:windowSoftInputMode="adjustResize"/>
+
+
+        <!-- Events -->
+
+        <activity
+            android:name=".ui.ecopoints.event.EventDetailsActivity"
+            android:label="Session details"
+            android:theme="@style/AppTheme.Event.Details"/>
+
+        <activity
+            android:name=".ui.ecopoints.event.QrCodeActivity"
+            android:label="Verify QR code"
+            android:theme="@style/Theme.Event.QrCode"/>
 
 
         <!-- Lines -->

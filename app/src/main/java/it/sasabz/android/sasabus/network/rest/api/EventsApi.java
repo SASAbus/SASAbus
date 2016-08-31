@@ -18,13 +18,18 @@
 package it.sasabz.android.sasabus.network.rest.api;
 
 import it.sasabz.android.sasabus.network.rest.Endpoint;
-import it.sasabz.android.sasabus.network.rest.response.ValidityResponse;
+import it.sasabz.android.sasabus.network.rest.response.EventBeaconResponse;
+import it.sasabz.android.sasabus.network.rest.response.EventResponse;
+import retrofit2.http.GET;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import rx.Observable;
 
-public interface TokenApi {
+public interface EventsApi {
 
-    @PUT(Endpoint.TOKEN)
-    Observable<ValidityResponse> send(@Path("token") String token);
+    @GET(Endpoint.ECO_POINTS_EVENTS)
+    Observable<EventResponse> getEvents();
+
+    @PUT(Endpoint.EVENT_PUT_BEACON)
+    Observable<EventBeaconResponse> putBeacon(@Path("major") int major, @Path("minor") int minor);
 }

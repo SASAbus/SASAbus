@@ -24,6 +24,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import io.realm.DynamicRealm;
@@ -42,8 +43,11 @@ import it.sasabz.android.sasabus.realm.user.FilterLine;
 import it.sasabz.android.sasabus.realm.user.RecentRoute;
 import it.sasabz.android.sasabus.realm.user.Trip;
 import it.sasabz.android.sasabus.realm.user.UserDataModule;
+import it.sasabz.android.sasabus.sync.TripSyncHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
+import it.sasabz.android.sasabus.util.Strings;
 import it.sasabz.android.sasabus.util.Utils;
+import rx.schedulers.Schedulers;
 
 public final class UserRealmHelper {
 
@@ -257,7 +261,7 @@ public final class UserRealmHelper {
 
     // ======================================= TRIPS ===============================================
 
-    public static boolean insertTrip(BusBeacon beacon) {
+    public static boolean insertTrip(Context context, BusBeacon beacon) {
         int startIndex = beacon.busStops.indexOf(beacon.origin);
 
         if (startIndex == -1) {
@@ -312,7 +316,7 @@ public final class UserRealmHelper {
         realm.beginTransaction();
 
         Trip trip = realm.createObject(Trip.class);
-        trip.setHash(beacon.hash);
+        trip.setHash(beacon.getHash());
         trip.setLine(beacon.lineId);
         trip.setVehicle(beacon.id);
         trip.setVariant(beacon.variant);
@@ -327,7 +331,10 @@ public final class UserRealmHelper {
         realm.commitTransaction();
         realm.close();
 
-        LogUtils.e(TAG, "Inserted trip " + beacon.hash);
+        LogUtils.e(TAG, "Inserted trip " + beacon.getHash());
+
+        CloudTrip cloudTrip = new CloudTrip(trip);
+        TripSyncHelper.upload(context, Collections.singletonList(cloudTrip), Schedulers.io());
 
         return true;
     }
@@ -346,7 +353,7 @@ public final class UserRealmHelper {
         trip.setDestination(cloudTrip.getDestination());
         trip.setDeparture(cloudTrip.getDeparture());
         trip.setArrival(cloudTrip.getArrival());
-        trip.setPath(Utils.listToString(cloudTrip.getPath(), ","));
+        trip.setPath(Strings.listToString(cloudTrip.getPath(), Strings.DEFAULT_DELIMITER));
         trip.setFuelPrice(cloudTrip.getDieselPrice());
 
         realm.commitTransaction();

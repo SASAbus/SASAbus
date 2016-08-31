@@ -66,6 +66,7 @@ import it.sasabz.android.sasabus.ui.widget.RecyclerItemClickListener;
 import it.sasabz.android.sasabus.util.AlarmUtils;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.HashUtils;
+import it.sasabz.android.sasabus.util.Strings;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.list.PlannedTripsNotificationAdapter;
 import it.sasabz.android.sasabus.util.recycler.CircleLinesAdapter;
@@ -196,14 +197,14 @@ public class PlannedTripsAddActivity extends AppCompatActivity implements View.O
                 }
 
                 mSelectLineText.setText(sb.toString());
-                mSelectLineText.setTextColor(ContextCompat.getColor(this, R.color.text_default));
+                mSelectLineText.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
             }
 
             mBusStopId = savedInstanceState.getInt(BUNDLE_BUS_STOP);
 
             mSelectBusStopText.setText(BusStopRealmHelper.getName(mBusStopId) +
                     " (" + BusStopRealmHelper.getMunic(mBusStopId) + ')');
-            mSelectBusStopText.setTextColor(ContextCompat.getColor(this, R.color.text_default));
+            mSelectBusStopText.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
 
             mNotifications = savedInstanceState.getParcelableArrayList(BUNDLE_LIST_NOTIFICATIONS);
 
@@ -427,7 +428,7 @@ public class PlannedTripsAddActivity extends AppCompatActivity implements View.O
 
                     if (count == 0) {
                         mSelectLineText.setText(R.string.planned_trips_add_line);
-                        mSelectLineText.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
+                        mSelectLineText.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
 
                         dialog.dismiss();
                         return;
@@ -442,7 +443,7 @@ public class PlannedTripsAddActivity extends AppCompatActivity implements View.O
                     }
 
                     mSelectLineText.setText(sb.toString());
-                    mSelectLineText.setTextColor(ContextCompat.getColor(this, R.color.text_default));
+                    mSelectLineText.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
 
                     dialog.dismiss();
                 })
@@ -487,7 +488,7 @@ public class PlannedTripsAddActivity extends AppCompatActivity implements View.O
 
                         mSelectBusStopText.setText(BusStopRealmHelper.getName(mBusStopId) +
                                 " (" + BusStopRealmHelper.getMunic(mBusStopId) + ')');
-                        mSelectBusStopText.setTextColor(ContextCompat.getColor(this, R.color.text_default));
+                        mSelectBusStopText.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
                     })
                     .create()
                     .show();
@@ -625,12 +626,12 @@ public class PlannedTripsAddActivity extends AppCompatActivity implements View.O
 
         Calendar time = Calendar.getInstance();
 
-            /*
-             * Sets the unique trip hash consisting of the android device id and
-             * the start date of this trip. The hash consists of the 8 first chars of the md5
-             * hash.
-             */
-        trip.setHash(HashUtils.getHashForIdentifier(this, "planned_trip"));
+        /*
+         * Sets the unique trip hash consisting of the android device id and
+         * the start date of this trip. The hash consists of the 8 first chars of the md5
+         * hash.
+         */
+        trip.setHash(HashUtils.getRandomString(16));
 
         time.set(Calendar.DAY_OF_MONTH, mDateCalendar.get(Calendar.DAY_OF_MONTH));
         time.set(Calendar.MONTH, mDateCalendar.get(Calendar.MONTH));
@@ -677,8 +678,9 @@ public class PlannedTripsAddActivity extends AppCompatActivity implements View.O
         plannedTrip.setTimeStamp(trip.getTimestamp());
         plannedTrip.setRepeatDays(trip.getRepeatDays());
         plannedTrip.setRepeatWeeks(trip.getRepeatWeeks());
-        plannedTrip.setLines(Utils.listToString(trip.getLines(), ","));
-        plannedTrip.setNotifications(Utils.listToString(trip.getNotifications(), ","));
+        plannedTrip.setLines(Strings.listToString(trip.getLines(), Strings.DEFAULT_DELIMITER));
+        plannedTrip.setNotifications(Strings.listToString(trip.getNotifications(),
+                Strings.DEFAULT_DELIMITER));
 
         realm.commitTransaction();
         realm.close();

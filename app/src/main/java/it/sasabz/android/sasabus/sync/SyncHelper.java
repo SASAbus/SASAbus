@@ -49,26 +49,19 @@ import it.sasabz.android.sasabus.network.rest.api.BeaconsApi;
 import it.sasabz.android.sasabus.network.rest.api.CloudApi;
 import it.sasabz.android.sasabus.network.rest.api.EcoPointsApi;
 import it.sasabz.android.sasabus.network.rest.api.SurveyApi;
-import it.sasabz.android.sasabus.network.rest.api.ValidityApi;
-import it.sasabz.android.sasabus.network.rest.model.CloudPlannedTrip;
 import it.sasabz.android.sasabus.network.rest.model.CloudTrip;
 import it.sasabz.android.sasabus.network.rest.model.ScannedBeacon;
 import it.sasabz.android.sasabus.network.rest.response.CloudResponseGet;
-import it.sasabz.android.sasabus.network.rest.response.ValidityResponse;
-import it.sasabz.android.sasabus.provider.PlanData;
 import it.sasabz.android.sasabus.realm.user.Beacon;
 import it.sasabz.android.sasabus.realm.user.EarnedBadge;
-import it.sasabz.android.sasabus.realm.user.PlannedTrip;
 import it.sasabz.android.sasabus.realm.user.Survey;
 import it.sasabz.android.sasabus.realm.user.Trip;
 import it.sasabz.android.sasabus.realm.user.TripToDelete;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Preconditions;
-import it.sasabz.android.sasabus.util.SettingsUtils;
 import it.sasabz.android.sasabus.util.Utils;
-import okhttp3.ResponseBody;
 import retrofit2.Response;
-import rx.Observer;
+import rx.schedulers.Schedulers;
 
 /**
  * A helper class for dealing with data synchronization. All operations occur on the
@@ -133,21 +126,22 @@ public class SyncHelper {
             return false;
         }
 
+        if (!NetUtils.isOnline(mContext)) {
+            LogUtils.e(TAG, "Not attempting remote sync because device is OFFLINE");
+            return false;
+        }
+
         boolean dataChanged = false;
 
         // Sync consists of 1 or more of these operations. We try them one by one and tolerate
         // individual failures on each.
         final int OP_TRIP_DATA_SYNC = 0;
-        final int OP_PLANNED_TRIP_DATA_SYNC = 1;
-        final int OP_PLAN_DATA_SYNC = 2;
         final int OP_SURVEY_SYNC = 3;
         final int OP_BEACON_SYNC = 4;
         final int OP_BADGE_SYNC = 5;
 
         int[] opsToPerform = {
                 OP_TRIP_DATA_SYNC,
-                OP_PLANNED_TRIP_DATA_SYNC,
-                OP_PLAN_DATA_SYNC,
                 OP_SURVEY_SYNC,
                 OP_BADGE_SYNC,
         };
@@ -157,12 +151,6 @@ public class SyncHelper {
                 switch (op) {
                     case OP_TRIP_DATA_SYNC:
                         dataChanged |= doTripSync();
-                        break;
-                    case OP_PLANNED_TRIP_DATA_SYNC:
-                        dataChanged |= doPlannedTripSync();
-                        break;
-                    case OP_PLAN_DATA_SYNC:
-                        dataChanged |= doPlanDataSync();
                         break;
                     case OP_SURVEY_SYNC:
                         dataChanged |= doSurveySync();
@@ -239,7 +227,8 @@ public class SyncHelper {
             }
 
             if (!serverMissing.isEmpty()) {
-                dataChanged |= TripSyncHelper.upload(mContext, tripToCloudTrip(serverMissing));
+                dataChanged |= TripSyncHelper.upload(mContext, tripToCloudTrip(serverMissing),
+                        Schedulers.immediate());
             }
 
             LogUtils.e(TAG, "Finished trip sync");
@@ -256,138 +245,6 @@ public class SyncHelper {
         }
 
         return dataChanged;
-    }
-
-    /**
-     * Syncs planned trips to the server. The sync process is split into two parts: upload and
-     * download. All the planned trips which are not on the server will be uploaded.
-     * All the planned trips which are on the server but not saved locally will be downloaded.
-     *
-     * @return {@code true} if at least one planned trip was downloaded or uploaded, {@code false}
-     * otherwise.
-     * @throws IOException if contacting the server failed.
-     */
-    private boolean doPlannedTripSync() throws IOException {
-        LogUtils.e(TAG, "Starting planned trip sync");
-
-        RealmResults<PlannedTrip> trips = realm.where(PlannedTrip.class).findAll();
-
-        CloudApi cloudApi = RestClient.ADAPTER.create(CloudApi.class);
-        Response<CloudResponseGet> response = cloudApi.comparePlannedTrips().execute();
-
-        boolean dataChanged = false;
-
-        if (response.body() != null) {
-            List<PlannedTrip> serverMissing = new ArrayList<>(trips);
-            List<String> clientMissing = new ArrayList<>();
-            List<String> onServer = response.body().plannedHashes;
-
-            // Check which trips are missing on the app
-            for (String uuid : onServer) {
-                if (!containsPTrip(trips, uuid)) {
-                    clientMissing.add(uuid);
-                }
-            }
-
-            // Check which trips are missing on the server
-            for (int i = serverMissing.size() - 1; i >= 0; i--) {
-                PlannedTrip trip = serverMissing.get(i);
-                if (onServer.contains(trip.getHash())) {
-                    serverMissing.remove(trip);
-                }
-            }
-
-            LogUtils.d(TAG, "clientMissing: " + Arrays.toString(clientMissing.toArray()));
-            LogUtils.d(TAG, "serverMissing: " + Arrays.toString(serverMissing.toArray()));
-
-            if (!clientMissing.isEmpty()) {
-                dataChanged = TripSyncHelper.downloadPlanned(clientMissing);
-            }
-
-            if (!serverMissing.isEmpty()) {
-                dataChanged |= TripSyncHelper.uploadPlanned(tripToCloudPTrip(serverMissing));
-            }
-
-            LogUtils.e(TAG, "Finished planned trip sync");
-        } else {
-            LogUtils.e(TAG, "Error downloading planned trips: " + response.errorBody().string());
-        }
-
-        // Delete planned trips which might not have been deleted on the server
-        RealmResults<TripToDelete> tripsToDelete = realm.where(TripToDelete.class)
-                .equalTo("type", TripToDelete.TYPE_PLANNED_TRIP).findAll();
-
-        for (TripToDelete tripToDelete : tripsToDelete) {
-            dataChanged |= TripSyncHelper.deletePlanned(tripToDelete.getHash());
-        }
-
-        return dataChanged;
-    }
-
-    /**
-     * Checks if the plan data exists and is valid. If it does not exist or is not valid,
-     * attempt to download it.
-     *
-     * @return {@code true} if the plan data download attempt has been made (does not mean that
-     * it was successful), {@code false} if the data is up to date.
-     * @throws IOException if there is an error checking for a plan data update.
-     */
-    private boolean doPlanDataSync() throws IOException {
-        LogUtils.e(TAG, "Starting plan data sync");
-
-        boolean shouldDownloadData = false;
-
-        // Check if plan data exists. If not, we should immediately download it, else check if an
-        // update is available and download it.
-        if (!PlanData.planDataExists(mContext)) {
-            LogUtils.e(TAG, "Plan data does not exist");
-
-            shouldDownloadData = true;
-        } else {
-            String date = SettingsUtils.getDataDate(mContext);
-
-            ValidityApi validityApi = RestClient.ADAPTER.create(ValidityApi.class);
-            Response<ValidityResponse> response = validityApi.data(date).execute();
-
-            if (response.body() != null) {
-                if (!response.body().isValid) {
-                    LogUtils.e(TAG, "Plan data update available");
-
-                    SettingsUtils.markDataUpdateAvailable(mContext, true);
-
-                    shouldDownloadData = true;
-                } else {
-                    LogUtils.e(TAG, "No plan data update available");
-                }
-            } else {
-                ResponseBody body = response.errorBody();
-                LogUtils.e(TAG, "Error while checking for plan data update: " + body.string());
-            }
-        }
-
-        // Plan data does not exist or an update is available, download it now.
-        if (shouldDownloadData) {
-            LogUtils.e(TAG, "Downloading plan data");
-
-            PlanData.downloadPlanData(mContext).subscribe(new Observer<Void>() {
-                @Override
-                public void onCompleted() {
-
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                    Utils.logException(e);
-                }
-
-                @Override
-                public void onNext(Void aVoid) {
-                    LogUtils.e(TAG, "Downloaded plan data");
-                }
-            });
-        }
-
-        return shouldDownloadData;
     }
 
     /**
@@ -585,22 +442,6 @@ public class SyncHelper {
     }
 
     /**
-     * Check if a given {@link List} contains a {@link PlannedTrip} with a given
-     * {@link PlannedTrip#hash}.
-     *
-     * @param trips all the trips
-     * @param hash  the hash to search for
-     * @return a boolean value indicating whether the list containsTrip the uuid.
-     */
-    private static boolean containsPTrip(Iterable<PlannedTrip> trips, String hash) {
-        for (PlannedTrip trip : trips) {
-            if (trip.getHash().equals(hash)) return true;
-        }
-
-        return false;
-    }
-
-    /**
      * Converts a {@link Iterable} containing {@link Trip trips} to a {@link Iterable} containing
      * {@link CloudTrip cloud trips}.
      *
@@ -612,23 +453,6 @@ public class SyncHelper {
 
         for (Trip trip : trips) {
             list.add(new CloudTrip(trip));
-        }
-
-        return list;
-    }
-
-    /**
-     * Converts a {@link Iterable} containing {@link PlannedTrip planned trips} to a
-     * {@link Iterable} containing {@link CloudPlannedTrip cloud planned trips}.
-     *
-     * @param trips the trips to convert.
-     * @return a {@link Iterable} containing the converted trips.
-     */
-    private List<CloudPlannedTrip> tripToCloudPTrip(Iterable<PlannedTrip> trips) {
-        List<CloudPlannedTrip> list = new ArrayList<>();
-
-        for (PlannedTrip trip : trips) {
-            list.add(new CloudPlannedTrip(trip));
         }
 
         return list;

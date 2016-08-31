@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:textColor="@color/text_primary"/>
+        android:textColor="@color/text_secondary"/>
 
     <TextView
         android:id="@+id/partial_route_results_content_time"
@@ -42,6 +42,6 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:textColor="@color/text_primary"/>
+        android:textColor="@color/text_secondary"/>
 
 </RelativeLayout>

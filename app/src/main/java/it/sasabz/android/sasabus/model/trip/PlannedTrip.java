@@ -23,7 +23,7 @@ import android.os.Parcelable;
 import java.util.List;
 
 import it.sasabz.android.sasabus.network.rest.model.CloudPlannedTrip;
-import it.sasabz.android.sasabus.util.Utils;
+import it.sasabz.android.sasabus.util.Strings;
 
 public class PlannedTrip implements Parcelable {
 
@@ -91,8 +91,8 @@ public class PlannedTrip implements Parcelable {
         timestamp = plannedTrip.getTimestamp();
         title = plannedTrip.getTitle();
         hash = plannedTrip.getHash();
-        lines = Utils.stringToList(plannedTrip.getLines(), ",");
-        notifications = Utils.stringToList(plannedTrip.getNotifications(), ",");
+        lines = Strings.stringToList(plannedTrip.getLines(), Strings.DEFAULT_DELIMITER);
+        notifications = Strings.stringToList(plannedTrip.getNotifications(), Strings.DEFAULT_DELIMITER);
         repeatDays = plannedTrip.getRepeatDays();
         repeatWeeks = plannedTrip.getRepeatWeeks();
     }

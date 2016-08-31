@@ -27,12 +27,11 @@ import io.realm.Realm;
 import it.sasabz.android.sasabus.network.rest.RestClient;
 import it.sasabz.android.sasabus.network.rest.api.CloudApi;
 import it.sasabz.android.sasabus.network.rest.model.Badge;
-import it.sasabz.android.sasabus.network.rest.model.CloudPlannedTrip;
 import it.sasabz.android.sasabus.network.rest.model.CloudTrip;
 import it.sasabz.android.sasabus.network.rest.response.CloudResponsePost;
 import it.sasabz.android.sasabus.network.rest.response.TripUploadResponse;
 import it.sasabz.android.sasabus.realm.UserRealmHelper;
-import it.sasabz.android.sasabus.realm.user.PlannedTrip;
+import it.sasabz.android.sasabus.realm.user.Trip;
 import it.sasabz.android.sasabus.realm.user.TripToDelete;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.NotificationUtils;
@@ -40,21 +39,19 @@ import it.sasabz.android.sasabus.util.Utils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import rx.Observer;
+import rx.Scheduler;
 
 /**
  * Utility class to help with syncing trips to the server.
  *
  * @author Alex Lardschneider
  */
-final class TripSyncHelper {
+public final class TripSyncHelper {
 
     private static final String TAG = "TripSyncHelper";
 
     private TripSyncHelper() {
     }
-
-
-    // ======================================= TRIPS ===============================================
 
     /**
      * Attempts to download the trips defined by {@code trips}.
@@ -102,11 +99,12 @@ final class TripSyncHelper {
      * @param trips the trips to upload.
      * @return {@code true} if one or more trips have been uploaded, {@code false} otherwise.
      */
-    static boolean upload(Context context, List<CloudTrip> trips) {
+    public static boolean upload(Context context, List<CloudTrip> trips, Scheduler scheduler) {
         LogUtils.w(TAG, "Uploading " + trips.size() + " trips");
 
         CloudApi cloudApi = RestClient.ADAPTER.create(CloudApi.class);
         cloudApi.uploadTrips(trips)
+                .subscribeOn(scheduler)
                 .subscribe(new Observer<TripUploadResponse>() {
                     @Override
                     public void onCompleted() {
@@ -127,6 +125,24 @@ final class TripSyncHelper {
                                 NotificationUtils.badge(context, badge);
                             }
                         }).start();
+
+                        Realm realm = Realm.getDefaultInstance();
+
+                        for (String rejected : response.rejected) {
+                            Trip trip = realm.where(Trip.class).equalTo("hash", rejected)
+                                    .findFirst();
+
+                            if (trip != null) {
+                                realm.beginTransaction();
+                                trip.deleteFromRealm();
+                                realm.commitTransaction();
+                            } else {
+                                LogUtils.e(TAG, "Rejected trip with hash " + rejected +
+                                        " not found in database");
+                            }
+                        }
+
+                        realm.close();
                     }
                 });
 
@@ -163,126 +179,6 @@ final class TripSyncHelper {
             return true;
         } else {
             LogUtils.e(TAG, "Error removing trip " + hash);
-            return false;
-        }
-    }
-
-
-    // =================================== PLANNED TRIPS ===========================================
-
-    /**
-     * Attempts to download the planned trips defined by {@code trips}.
-     *
-     * @param trips the planned trips to download. Each trip will be requested from the
-     *              server by its id.
-     * @return {@code true} if one or more planned trips have been downloaded,
-     * {@code false} otherwise.
-     * @throws IOException if downloading the planned trips failed.
-     */
-    static boolean downloadPlanned(List<String> trips) throws IOException {
-        LogUtils.w(TAG, "Downloading " + trips.size() + " planned trips");
-
-        CloudApi cloudApi = RestClient.ADAPTER.create(CloudApi.class);
-        Response<CloudResponsePost> response = cloudApi.downloadPlannedTrips(trips).execute();
-
-        if (response.body() != null) {
-            LogUtils.w(TAG, "Download: " + response.body());
-
-            Realm realm = Realm.getDefaultInstance();
-
-            Collection<CloudPlannedTrip> plannedTrips = response.body().plannedTrips;
-
-            for (CloudPlannedTrip trip : plannedTrips) {
-                realm.beginTransaction();
-
-                PlannedTrip plannedTrip = realm.createObject(PlannedTrip.class);
-                plannedTrip.setHash(trip.getHash());
-                plannedTrip.setTitle(trip.getTitle());
-                plannedTrip.setBusStop(trip.getBusStop());
-                plannedTrip.setTimeStamp(trip.getTimeStamp());
-                plannedTrip.setLines(Utils.listToString(trip.getLines(), ","));
-                plannedTrip.setNotifications(Utils.listToString(trip.getNotifications(), ","));
-                plannedTrip.setRepeatDays(trip.getRepeatDays());
-                plannedTrip.setRepeatWeeks(trip.getRepeatWeeks());
-
-                realm.commitTransaction();
-            }
-
-            realm.close();
-
-            if (plannedTrips.size() != trips.size()) {
-                LogUtils.e(TAG, "Downloaded " + plannedTrips.size() + " planned trips, " +
-                        "should have been " + trips.size());
-            } else {
-                LogUtils.w(TAG, "Downloaded " + plannedTrips.size() + " planned trips");
-            }
-        } else {
-            ResponseBody body = response.errorBody();
-            LogUtils.e(TAG, "Error while downloading planned trips: " +
-                    (body != null ? body.string() : null));
-
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Attempts to upload the planned trips defined by {@code trips}.
-     * All the planned trips will be serialized into a json array by using retrofit and gson.
-     *
-     * @param trips the trips to upload.
-     * @return {@code true} if one or more planned trips have been uploaded,
-     * {@code false} otherwise.
-     * @throws IOException if downloading the planned trips failed.
-     */
-    static boolean uploadPlanned(List<CloudPlannedTrip> trips) throws IOException {
-        LogUtils.w(TAG, "Uploading " + trips.size() + " planned trips");
-
-        CloudApi cloudApi = RestClient.ADAPTER.create(CloudApi.class);
-        Response<Void> response = cloudApi.uploadPlannedTrips(trips).execute();
-
-        if (response.body() == null) {
-            ResponseBody body = response.errorBody();
-            LogUtils.e(TAG, "Error while uploading planned trips: " +
-                    (body != null ? body.string() : null));
-
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Deletes a planned trip from the cloud. This method it used to remove a planned trip from
-     * the cloud which could not have been deleted on the cloud when the user deleted if
-     * from the app, usually because of a connection error.
-     *
-     * @param hash the hash of the planned trip to delete
-     * @return {@code true} if the planned trip has been deleted, {@code false} otherwise.
-     * @throws IOException if removing the planned trip failed.
-     */
-    static boolean deletePlanned(String hash) throws IOException {
-        CloudApi cloudApi = RestClient.ADAPTER.create(CloudApi.class);
-        Response<Void> response = cloudApi.deletePlannedTrip(hash).execute();
-
-        // Sending the request to delete the planned trip succeeded so we can remove
-        // the entry from the database.
-        if (response.isSuccessful()) {
-            LogUtils.w(TAG, "Removed planned trip " + hash);
-
-            Realm realm = Realm.getDefaultInstance();
-
-            realm.beginTransaction();
-            realm.where(TripToDelete.class)
-                    .equalTo("type", TripToDelete.TYPE_PLANNED_TRIP)
-                    .equalTo("hash", hash)
-                    .findFirst().deleteFromRealm();
-            realm.commitTransaction();
-
-            return true;
-        } else {
-            LogUtils.e(TAG, "Error removing planned trip " + hash);
             return false;
         }
     }

@@ -30,10 +30,12 @@ public final class AnswersHelper {
     }
 
     public static void logProfileAction(String action) {
-        CustomEvent event = new CustomEvent("EcoPointsProfile")
-                .putCustomAttribute("Category", action);
+        if (!BuildConfig.DEBUG) {
+            CustomEvent event = new CustomEvent("EcoPointsProfile")
+                    .putCustomAttribute("Category", action);
 
-        Answers.getInstance().logCustom(event);
+            Answers.getInstance().logCustom(event);
+        }
     }
 
     public static void logLoginSuccess() {

@@ -22,7 +22,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 import it.sasabz.android.sasabus.realm.user.PlannedTrip;
-import it.sasabz.android.sasabus.util.Utils;
+import it.sasabz.android.sasabus.util.Strings;
 
 public class CloudPlannedTrip {
 
@@ -49,8 +49,8 @@ public class CloudPlannedTrip {
         title = trip.getTitle();
         timeStamp = trip.getTimestamp();
         busStop = trip.getBusStop();
-        lines = Utils.stringToList(trip.getLines(), ",");
-        notifications = Utils.stringToList(trip.getNotifications(), ",");
+        lines = Strings.stringToList(trip.getLines(), Strings.DEFAULT_DELIMITER);
+        notifications = Strings.stringToList(trip.getNotifications(), Strings.DEFAULT_DELIMITER);
         repeatDays = trip.getRepeatDays();
         repeatWeeks = trip.getRepeatWeeks();
     }

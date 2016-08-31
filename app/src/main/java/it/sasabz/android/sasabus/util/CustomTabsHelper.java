@@ -58,7 +58,7 @@ public class CustomTabsHelper {
         start(ContextCompat.getColor(activity, R.color.primary));
     }
 
-    private void start(int toolbarColor) {
+    public void start(int toolbarColor) {
         mCustomTabsServiceConnection = new CustomTabsServiceConnection() {
             @Override
             public void onCustomTabsServiceConnected(ComponentName componentName, CustomTabsClient customTabsClient) {

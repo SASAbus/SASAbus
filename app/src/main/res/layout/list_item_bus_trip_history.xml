@@ -64,7 +64,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:textColor="@color/text_default"/>
+                android:textColor="@color/text_primary"/>
 
         </LinearLayout>
 
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
                 android:layout_marginStart="40dp"
-                android:textColor="@color/text_default"/>
+                android:textColor="@color/text_primary"/>
 
             <ImageView
                 android:layout_width="20dp"
@@ -112,7 +112,7 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="22dp"
-                android:textColor="@color/text_default"/>
+                android:textColor="@color/text_primary"/>
 
             <ImageView
                 android:layout_width="20dp"
@@ -130,7 +130,7 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="44dp"
-                android:textColor="@color/text_default"/>
+                android:textColor="@color/text_primary"/>
 
         </RelativeLayout>
 

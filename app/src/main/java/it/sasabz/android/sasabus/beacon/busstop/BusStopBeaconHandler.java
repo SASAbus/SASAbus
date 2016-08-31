@@ -172,17 +172,19 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
      * @param beacons beaconMap to update
      */
     @Override
-    public void updateBeacons(Collection<Beacon> beacons) {
+    public void didRangeBeacons(Collection<Beacon> beacons) {
 
         boolean found = false;
         for (Beacon beacon : beacons) {
             int major = beacon.getId2().toInt();
+            int minor = beacon.getId3().toInt();
 
-            if (major == 1 && beacon.getId3().toInt() != 1) {
+            if (major == 1 && minor != 1) {
                 major = beacon.getId3().toInt();
+                minor = beacon.getId2().toInt();
             }
 
-            validateBeacon(beacon, major);
+            validateBeacon(beacon, major, minor);
 
             if (currentBusStop != null && currentBusStop.second.getId() == major) {
                 found = true;
@@ -190,7 +192,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
         }
 
         if (currentBusStop != null && !found) {
-            LogUtils.e(TAG, "Removed current bus stop " +
+            LogUtils.i(TAG, "Removed current bus stop " +
                     currentBusStop.second.getId());
 
             BusBeaconHandler.getInstance(mContext)
@@ -224,7 +226,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
      * @param major  station id
      */
     @Override
-    public void validateBeacon(Beacon beacon, int major) {
+    public void validateBeacon(Beacon beacon, int major, int minor) {
         if (mBeaconMap.containsKey(major)) {
             BusStopBeacon beaconInfo = mBeaconMap.get(major);
 
@@ -235,7 +237,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
                 NotificationUtils.cancel(mContext, major);
             }
 
-            LogUtils.w(TAG, "Beacon " + major + ", seen: " + beaconInfo.seenSeconds +
+            LogUtils.i(TAG, "Beacon " + major + ", seen: " + beaconInfo.seenSeconds +
                     ", distance: " + beaconInfo.distance);
         } else {
             mBeaconMap.put(major, new BusStopBeacon(major));
@@ -262,7 +264,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
                 BusStopRealmHelper.getBusStopOrNull(major);
 
         if (busStop != null) {
-            LogUtils.e(TAG, "Set " + major + " as current bus stop");
+            LogUtils.i(TAG, "Set " + major + " as current bus stop");
             currentBusStop = new Pair<>(BusBeacon.TYPE_BEACON, new BusStop(busStop));
         }
     }
@@ -299,7 +301,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
         TIMER.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                LogUtils.w(TAG, "Running timer");
+                LogUtils.i(TAG, "Running timer");
 
                 for (Map.Entry<Integer, BusStopBeacon> entry : mBeaconMap.entrySet()) {
                     BusStopBeacon beacon = entry.getValue();
@@ -412,15 +414,6 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
                 break;
             }
         }
-    }
-
-    /**
-     * Get all station beaconMap in range
-     *
-     * @return station beaconMap in range
-     */
-    public Collection<BusStopBeacon> getBeaconList() {
-        return mBeaconMap.values();
     }
 
     /**

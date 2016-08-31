@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.sasabz.android.sasabus.ui;
+package it.sasabz.android.sasabus.ui.about;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

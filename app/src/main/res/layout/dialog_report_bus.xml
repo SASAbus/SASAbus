@@ -51,7 +51,7 @@
                 android:hint="@string/dialog_report_email"
                 android:textSize="14sp"
                 android:textColorHint="@color/black_400"
-                android:textColor="@color/text_default"
+                android:textColor="@color/text_primary"
                 android:inputType="textEmailAddress"/>
 
         </android.support.design.widget.TextInputLayout>
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/dialog_report_bus_content"
                 android:textSize="14sp"
-                android:textColor="@color/text_default"
+                android:textColor="@color/text_primary"
                 android:textColorHint="@color/black_400"/>
 
         </android.support.design.widget.TextInputLayout>

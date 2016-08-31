@@ -20,31 +20,27 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/primary_light_blue">
 
-    <ImageView
-        android:id="@+id/intro_background"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@color/primary_light_blue"/>
+        android:clipToPadding="false"
+        android:scrollbars="none"
+        android:paddingBottom="32dp"
+        android:paddingTop="48dp">
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        app:cardBackgroundColor="@color/card_background">
-
-        <ScrollView
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginStart="32dp"
+            card_view:cardBackgroundColor="@color/card_background">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -173,7 +169,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/register_form_male"
-                        android:textColor="@color/text_default"/>
+                        android:textColor="@color/text_primary"/>
 
                 </LinearLayout>
 
@@ -194,7 +190,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/register_form_female"
-                        android:textColor="@color/text_default"/>
+                        android:textColor="@color/text_primary"/>
 
                 </LinearLayout>
 
@@ -228,8 +224,8 @@
 
             </LinearLayout>
 
-        </ScrollView>
+        </android.support.v7.widget.CardView>
 
-    </android.support.v7.widget.CardView>
+    </ScrollView>
 
 </FrameLayout>

@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/text_default"
+                android:textColor="@color/text_primary"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
 
@@ -64,7 +64,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="4dp"
                 android:gravity="center"
-                android:textColor="@color/text_primary"/>
+                android:textColor="@color/text_secondary"/>
 
             <TextView
                 android:id="@+id/dialog_badge_points"
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="24dp"
-                android:textColor="@color/text_primary"/>
+                android:textColor="@color/text_secondary"/>
 
             <TextView
                 android:id="@+id/dialog_badge_users"
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="2dp"
-                android:textColor="@color/text_primary"/>
+                android:textColor="@color/text_secondary"/>
 
             <TextView
                 android:id="@+id/dialog_badge_progress_text"
@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="24dp"
-                android:textColor="@color/text_primary"/>
+                android:textColor="@color/text_secondary"/>
 
             <ProgressBar
                 android:id="@+id/dialog_badge_progress"
@@ -96,7 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:secondaryProgressTint="@color/text_primary"/>
+                android:secondaryProgressTint="@color/text_secondary"/>
 
         </LinearLayout>
 

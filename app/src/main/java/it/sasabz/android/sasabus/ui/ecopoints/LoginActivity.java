@@ -307,6 +307,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void animateViews(boolean showProgress) {
         if (showProgress) {
+            button.animate().cancel();
+            loading.animate().cancel();
+
             button.animate()
                     .alpha(0)
                     .setDuration(250)
@@ -324,6 +327,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             emailLayout.setError(null);
             passwordLayout.setError(null);
         } else {
+            loading.animate().cancel();
+            button.animate().cancel();
+
             loading.animate()
                     .alpha(0)
                     .setDuration(250)

@@ -97,7 +97,7 @@ public final class ReportHelper {
 
         if (screenshotUri != null) {
             RequestBody image = RequestBody.create(MediaType.parse("image/png"),
-                    new File(Utils.getPathFromUri(mActivity, screenshotUri)));
+                    new File(IOUtils.getPathFromUri(mActivity, screenshotUri)));
 
             observable = reportApi.send(mType, body, image);
         } else {

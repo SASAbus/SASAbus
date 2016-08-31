@@ -40,6 +40,7 @@ import it.sasabz.android.sasabus.model.trip.PlannedTripNotification;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
+import it.sasabz.android.sasabus.util.Strings;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.list.PlannedTripsNotificationAdapter;
 
@@ -102,7 +103,7 @@ public class PlannedTripsViewActivity extends AppCompatActivity {
         }
 
         TextView line = (TextView) findViewById(R.id.planned_trips_view_line);
-        line.setText(getString(R.string.line_format, Utils.arrayToString(lines, ", ")));
+        line.setText(getString(R.string.line_format, Strings.arrayToString(lines, ", ")));
 
         TextView stop = (TextView) findViewById(R.id.planned_trips_view_stop);
         stop.setText(BusStopRealmHelper.getName(plannedTrip.getBusStop()));

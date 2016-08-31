@@ -61,14 +61,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/trip_details_line"
-                        android:textColor="@color/text_primary"/>
+                        android:textColor="@color/text_secondary"/>
 
                     <TextView
                         android:id="@+id/trip_detail_line"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:textColor="@color/text_default"
+                        android:textColor="@color/text_primary"
                         android:textSize="24sp"/>
 
                     <TextView
@@ -76,7 +76,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="@string/trip_details_from"
-                        android:textColor="@color/text_primary"/>
+                        android:textColor="@color/text_secondary"/>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -92,7 +92,7 @@
                             android:layout_marginRight="32dp"
                             android:ellipsize="end"
                             android:lines="1"
-                            android:textColor="@color/text_default"
+                            android:textColor="@color/text_primary"
                             android:textSize="24sp"/>
 
                         <TextView
@@ -103,7 +103,7 @@
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center_vertical|end"
-                            android:textColor="@color/text_primary"
+                            android:textColor="@color/text_secondary"
                             android:textSize="16sp"/>
 
                     </RelativeLayout>
@@ -113,7 +113,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="@string/trip_details_to"
-                        android:textColor="@color/text_primary"/>
+                        android:textColor="@color/text_secondary"/>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -129,7 +129,7 @@
                             android:layout_marginRight="32dp"
                             android:ellipsize="end"
                             android:lines="1"
-                            android:textColor="@color/text_default"
+                            android:textColor="@color/text_primary"
                             android:textSize="24sp"/>
 
                         <TextView
@@ -140,7 +140,7 @@
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center_vertical|end"
-                            android:textColor="@color/text_primary"
+                            android:textColor="@color/text_secondary"
                             android:textSize="16sp"/>
 
                     </RelativeLayout>
@@ -150,14 +150,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="@string/trip_details_duration"
-                        android:textColor="@color/text_primary"/>
+                        android:textColor="@color/text_secondary"/>
 
                     <TextView
                         android:id="@+id/trip_detail_duration"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:textColor="@color/text_default"
+                        android:textColor="@color/text_primary"
                         android:textSize="24sp"/>
 
                 </LinearLayout>
@@ -204,14 +204,14 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
                             android:text="@string/trip_details_distance"
-                            android:textColor="@color/text_primary"/>
+                            android:textColor="@color/text_secondary"/>
 
                         <TextView
                             android:id="@+id/trip_detail_distance"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:textColor="@color/text_default"
+                            android:textColor="@color/text_primary"
                             android:textSize="24sp"/>
 
                     </LinearLayout>
@@ -264,7 +264,7 @@
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:lines="1"
-                            android:textColor="@color/text_primary"/>
+                            android:textColor="@color/text_secondary"/>
 
                         <TextView
                             android:id="@+id/trip_detail_vehicle_name"
@@ -272,7 +272,7 @@
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:lines="1"
-                            android:textColor="@color/text_default"
+                            android:textColor="@color/text_primary"
                             android:textSize="24sp"/>
 
                     </LinearLayout>
@@ -291,7 +291,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
                             android:text="@string/trip_details_error"
-                            android:textColor="@color/text_primary"/>
+                            android:textColor="@color/text_secondary"/>
 
                     </LinearLayout>
 
@@ -336,14 +336,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/trip_details_co2_emission"
-                        android:textColor="@color/text_primary"/>
+                        android:textColor="@color/text_secondary"/>
 
                     <TextView
                         android:id="@+id/trip_detail_co2_emission"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:textColor="@color/text_default"
+                        android:textColor="@color/text_primary"
                         android:textSize="24sp"/>
 
                     <TextView
@@ -351,14 +351,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="@string/trip_details_co2_emission_car"
-                        android:textColor="@color/text_primary"/>
+                        android:textColor="@color/text_secondary"/>
 
                     <TextView
                         android:id="@+id/trip_detail_co2_emission_car"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:textColor="@color/text_default"
+                        android:textColor="@color/text_primary"
                         android:textSize="24sp"/>
 
                     <TextView
@@ -366,14 +366,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="@string/trip_details_fuel_price"
-                        android:textColor="@color/text_primary"/>
+                        android:textColor="@color/text_secondary"/>
 
                     <TextView
                         android:id="@+id/trip_detail_fuel_price"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:textColor="@color/text_default"
+                        android:textColor="@color/text_primary"
                         android:textSize="24sp"/>
 
                 </LinearLayout>

@@ -70,7 +70,7 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/text_secondary"
                     android:textSize="16sp"
                     android:textStyle="bold"/>
 
@@ -82,7 +82,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/text_secondary"
                     android:textSize="16sp"/>
 
                 <TextView
@@ -94,7 +94,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/text_secondary"
                     android:textSize="16sp"
                     android:textStyle="bold"/>
 

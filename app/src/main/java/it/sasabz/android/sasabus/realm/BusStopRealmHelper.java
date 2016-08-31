@@ -41,7 +41,7 @@ public final class BusStopRealmHelper {
 
     private static final String TAG = "BusStopRealmHelper";
 
-    private static final int DB_VERSION = 2016060801; // YY MM DD Rev.
+    private static final int DB_VERSION = 2016082901; // YY MM DD Rev.
     private static final String DB_NAME = "busstops.realm";
 
     public static RealmConfiguration CONFIG;
@@ -221,8 +221,7 @@ public final class BusStopRealmHelper {
 
     public static Collection<BusStop> getBusStopsFromGroup(int group) {
         Realm realm = Realm.getInstance(CONFIG);
-        RealmResults<BusStop> results = realm.where(BusStop.class)
-                .equalTo("family", group).findAll();
+        RealmResults<BusStop> results = realm.where(BusStop.class).equalTo("family", group).findAll();
         Collection<BusStop> busStops = new ArrayList<>();
 
         for (BusStop busStop : results) {
@@ -236,7 +235,7 @@ public final class BusStopRealmHelper {
 
     public static List<Integer> getBusStopIdsFromGroup(int group) {
         Realm realm = Realm.getInstance(CONFIG);
-        RealmResults<BusStop> results = realm.where(BusStop.class).equalTo("group", group).findAll();
+        RealmResults<BusStop> results = realm.where(BusStop.class).equalTo("family", group).findAll();
         realm.close();
 
         List<Integer> resultIds = new ArrayList<>();

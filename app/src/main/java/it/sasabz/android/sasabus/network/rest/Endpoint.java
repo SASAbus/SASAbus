@@ -40,7 +40,6 @@ public final class Endpoint {
     public static final String PARKING_ID = "parking/{language}/id/{id}";
     public static final String PATHS = "paths/{id}";
     public static final String ROUTE = "route/{language}/from/{from}/to/{to}/on/{date}/at/{time}/walk/{walk}/results/{results}";
-    public static final String TOKEN = "gcm/tokens/{token}";
     public static final String BEACONS = "beacons";
     public static final String TRAFFIC_LIGHT = "traffic_light/{language}/{city}";
 
@@ -61,6 +60,9 @@ public final class Endpoint {
     public static final String ECO_POINTS_PROFILE = "eco/profile";
     public static final String ECO_POINTS_PROFILE_ID = "eco/profile/{id}";
 
+    public static final String ECO_POINTS_EVENTS = "eco/events";
+    public static final String EVENT_PUT_BEACON = "eco/events/beacon/{major}/{minor}";
+
     public static final String ECO_POINTS_PROFILE_PICTURE_DEFAULT = "eco/profile/default";
     public static final String ECO_POINTS_PROFILE_PICTURE_CUSTOM = "eco/profile/custom";
     public static final String ECO_POINTS_PROFILE_PICTURE_USER = "assets/images/profile_pictures/";
@@ -80,8 +82,6 @@ public final class Endpoint {
 
     public static final String CLOUD_TRIPS = "sync/trips";
     public static final String CLOUD_TRIPS_DELETE = "sync/trips/{hash}";
-    public static final String CLOUD_PLANNED_TRIPS = "sync/planned_trips";
-    public static final String CLOUD_PLANNED_TRIPS_DELETE = "sync/planned_trips/{hash}";
 
     private Endpoint() {
     }

@@ -109,7 +109,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="64dp"
-                    android:textColor="@color/text_default"
+                    android:textColor="@color/text_primary"
                     android:layout_gravity="center_vertical"
                     android:textSize="16sp"
                     android:text="@string/planned_trips_add_date"
@@ -128,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="64dp"
                     android:layout_gravity="center_vertical"
-                    android:textColor="@color/text_default"
+                    android:textColor="@color/text_primary"
                     android:textSize="16sp"
                     android:layout_marginStart="64dp"/>
 
@@ -138,7 +138,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="16dp"
                     android:layout_gravity="center_vertical|end"
-                    android:textColor="@color/text_default"
+                    android:textColor="@color/text_primary"
                     android:textSize="16sp"
                     android:layout_marginEnd="16dp"/>
 
@@ -172,7 +172,7 @@
                     android:layout_marginStart="64dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginEnd="16dp"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/text_secondary"
                     android:gravity="center_vertical"
                     android:textSize="16sp"
                     android:text="@string/planned_trips_add_line"/>
@@ -208,7 +208,7 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginEnd="16dp"
                     android:gravity="center_vertical"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/text_secondary"
                     android:textSize="16sp"
                     android:text="@string/planned_trips_add_location"/>
 
@@ -256,7 +256,7 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginEnd="16dp"
                     android:gravity="center_vertical"
-                    android:textColor="@color/text_default"
+                    android:textColor="@color/text_primary"
                     android:textSize="16sp"
                     android:text="@string/planned_trips_add_repeat_day_long"/>
 

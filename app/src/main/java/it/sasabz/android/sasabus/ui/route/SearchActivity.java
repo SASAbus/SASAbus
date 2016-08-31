@@ -49,6 +49,7 @@ import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.realm.busstop.SadBusStop;
 import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
+import it.sasabz.android.sasabus.util.Strings;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.list.BusStopPickerAdapter;
 import rx.android.schedulers.AndroidSchedulers;
@@ -297,10 +298,10 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
                         List<BusStop> list = new ArrayList<>();
 
                         for (BusStop busStop : busStops) {
-                            String nameDe = Utils.formatQuery(busStop.getNameDe(), query, "{", "}");
-                            String nameIt = Utils.formatQuery(busStop.getNameIt(), query, "{", "}");
-                            String municDe = Utils.formatQuery(busStop.getMunicDe(), query, "{", "}");
-                            String municIt = Utils.formatQuery(busStop.getMunicIt(), query, "{", "}");
+                            String nameDe = Strings.formatQuery(busStop.getNameDe(), query, "{", "}");
+                            String nameIt = Strings.formatQuery(busStop.getNameIt(), query, "{", "}");
+                            String municDe = Strings.formatQuery(busStop.getMunicDe(), query, "{", "}");
+                            String municIt = Strings.formatQuery(busStop.getMunicIt(), query, "{", "}");
 
                             list.add(new BusStop(busStop.getId(), nameDe, nameIt, municDe,
                                     municIt, busStop.getLat(), busStop.getLng(), 0));

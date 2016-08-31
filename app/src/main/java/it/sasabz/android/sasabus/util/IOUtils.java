@@ -19,6 +19,9 @@ package it.sasabz.android.sasabus.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 
 import java.io.BufferedInputStream;
@@ -220,5 +223,34 @@ public final class IOUtils {
     @NonNull
     public static File getTimetablesDir(Context context) {
         return new File(findStorageDir(context), "/timetables/");
+    }
+
+    /**
+     * Converts a {@link Uri} into a {@code String} representing the absolute path
+     * to the image.
+     *
+     * @param context Context to access the {@link android.content.ContentResolver}.
+     * @param uri     the uri of the image.
+     * @return the file path of the image.
+     */
+    static String getPathFromUri(Context context, Uri uri) {
+        Cursor cursor = null;
+
+        try {
+            String[] proj = {MediaStore.Images.Media.DATA};
+            cursor = context.getContentResolver().query(uri, proj, null, null, null);
+
+            if (cursor != null) {
+                int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                cursor.moveToFirst();
+                return cursor.getString(index);
+            }
+
+            return "";
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
     }
 }

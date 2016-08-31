@@ -96,12 +96,12 @@
                                 android:id="@+id/parking_details_location"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/text_default"/>
+                                android:textColor="@color/text_primary"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/text_primary"
+                                android:textColor="@color/text_secondary"
                                 android:text="@string/bolzano"/>
 
                         </LinearLayout>
@@ -142,13 +142,13 @@
                                 android:id="@+id/parking_detail_current_free"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/text_default"/>
+                                android:textColor="@color/text_primary"/>
 
                             <TextView
                                 android:id="@+id/parking_detail_current_total"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/text_primary"/>
+                                android:textColor="@color/text_secondary"/>
 
                         </LinearLayout>
 
@@ -193,7 +193,7 @@
                                 android:id="@+id/parking_detail_station_name_1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/text_default"/>
+                                android:textColor="@color/text_primary"/>
 
                             <TextView
                                 android:id="@+id/parking_detail_station_distance_1"
@@ -201,7 +201,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:layout_marginEnd="10dp"
-                                android:textColor="@color/text_primary"
+                                android:textColor="@color/text_secondary"
                                 android:lines="1"
                                 android:ellipsize="end"/>
 
@@ -228,7 +228,7 @@
                                 android:id="@+id/parking_detail_station_name_2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/text_default"/>
+                                android:textColor="@color/text_primary"/>
 
                             <TextView
                                 android:id="@+id/parking_detail_station_distance_2"
@@ -236,7 +236,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:layout_marginEnd="10dp"
-                                android:textColor="@color/text_primary"
+                                android:textColor="@color/text_secondary"
                                 android:lines="1"
                                 android:ellipsize="end"/>
 
@@ -264,7 +264,7 @@
                                 android:id="@+id/parking_detail_station_name_3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/text_default"/>
+                                android:textColor="@color/text_primary"/>
 
                             <TextView
                                 android:id="@+id/parking_detail_station_distance_3"
@@ -272,7 +272,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:layout_marginEnd="10dp"
-                                android:textColor="@color/text_primary"
+                                android:textColor="@color/text_secondary"
                                 android:lines="1"
                                 android:ellipsize="end"/>
 

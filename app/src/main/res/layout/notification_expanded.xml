@@ -29,7 +29,7 @@
         android:id="@+id/notification_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/text_primary"/>
+        android:textColor="@color/text_secondary"/>
 
     <RelativeLayout
         android:id="@+id/notification_departure_1"
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/text_secondary"
             android:fontFamily="sans-serif-condensed"/>
 
         <TextView
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/text_secondary"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:fontFamily="sans-serif-condensed"/>
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:layout_marginTop="32dp"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/text_secondary"
             android:fontFamily="sans-serif-condensed"/>
 
     </RelativeLayout>
@@ -88,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/text_secondary"
             android:fontFamily="sans-serif-condensed"/>
 
         <TextView
@@ -105,7 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/text_secondary"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:fontFamily="sans-serif-condensed"/>
@@ -116,7 +116,7 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:layout_marginTop="32dp"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/text_secondary"
             android:fontFamily="sans-serif-condensed"/>
 
     </RelativeLayout>

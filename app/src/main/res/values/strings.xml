@@ -293,6 +293,7 @@
     <string name="snackbar_timetable_error">Could not download timetables</string>
     <string name="snackbar_retry">Retry</string>
     <string name="snackbar_bus_not_driving">Bus not driving</string>
+    <string name="snackbar_event_incomplete">You need to visit all points first!</string>
 
 
     <!-- =============================== TIMETABLE =============================== -->
@@ -342,7 +343,7 @@
     <string name="notification_trip_title">Trip saved</string>
     <string name="notification_trip_sub">Click to view trip details</string>
     <string name="notification_survey_title">Survey</string>
-    <string name="notification_survey_subtitle">Click to take survey about your bus ride</string>
+    <string name="notification_survey_subtitle">Click to take a survey about your bus ride</string>
     <string name="notification_expanded_title">Next departures from %1$s</string>
     <string name="notification_heading">Heading to %s</string>
     <string name="notification_planned_trip_departs_at_content">Line %1$s departs at %2$s</string>
@@ -351,6 +352,8 @@
     <string name="notification_planned_trip_departs_in_content_2">Line %1$s departs in %2$d‘ with
         %3$d’ delay
     </string>
+    <string name="notification_event_beacon_subtitle">Scanned beacon #%d</string>
+
 
     <!-- =============================== INTRO =============================== -->
 
@@ -546,6 +549,23 @@
 
     <string name="eco_points_badge_dialog_progress">Your progress: %d%%</string>
 
+    <string name="event_details_subtitle">%1$s in %2$s</string>
+
+    <string name="event_details_information">Information</string>
+    <string name="event_details_claim_prize_button">Claim your gift</string>
+    <string name="event_details_points">Points</string>
+    <string name="event_menu_visit_website">Visit website</string>
+
+    <string name="eco_points_profile_picture_defaults">Select from defaults</string>
+    <string name="eco_points_profile_picture_camera">Take picture</string>
+    <string name="eco_points_profile_picture_gallery">Pick from gallery</string>
+
+    <string name="event_list_share_button">Details</string>
+
+    <string name="qr_code_description">Ask the staff to scan the QR code on your device to claim the
+        gift!
+    </string>
+
 
     <!-- ================================= ECO POINTS LOGIN ==================================== -->
 
@@ -613,6 +633,8 @@
 
     <string name="register_form_male">Male</string>
     <string name="register_form_female">Female</string>
+
+    <string name="badge_event_complete_small_green">Complete</string>
 
 
     <!-- ====================================== BADGES ========================================= -->

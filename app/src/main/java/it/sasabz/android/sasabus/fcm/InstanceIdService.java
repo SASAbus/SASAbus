@@ -46,7 +46,6 @@ public class InstanceIdService extends FirebaseInstanceIdService {
 
         LogUtils.e(TAG, "Got token: " + token);
 
-        FcmUtils.sendTokenToServer(this, token);
         FcmSettings.setGcmToken(this, token);
 
         FirebaseMessaging.getInstance().subscribeToTopic("general");

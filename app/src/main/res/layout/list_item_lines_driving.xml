@@ -67,7 +67,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:textColor="@color/text_primary" />
+                    android:textColor="@color/text_secondary"/>
 
             </LinearLayout>
 
@@ -90,7 +90,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/list_lines_station"
-                    android:textColor="@color/text_default"
+                    android:textColor="@color/text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -100,7 +100,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:text="@string/list_lines_delay"
-                    android:textColor="@color/text_default"
+                    android:textColor="@color/text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 

@@ -29,4 +29,7 @@ public class TripUploadResponse {
 
     @SerializedName("earned_badges")
     public List<Badge> badges;
+
+    @SerializedName("rejected_trips")
+    public List<String> rejected;
 }

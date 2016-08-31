@@ -46,9 +46,7 @@ import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.ui.MapActivity;
 import it.sasabz.android.sasabus.util.UIUtils;
 
-public class TripNotificationAction {
-
-    private final Context context;
+public class TripNotification {
 
     private static final int[] BIG_VIEW_ROW_IDS = {
             R.id.notification_busstop_row0,
@@ -94,17 +92,13 @@ public class TripNotificationAction {
             R.id.txt_bus_stop_name_7
     };
 
-    public TripNotificationAction(Context context) {
-        this.context = context;
-    }
-
-    public void showNotification(CurrentTrip trip) {
+    public static void showNotification(Context context, CurrentTrip trip) {
         Intent intent = new Intent(context, MapActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                .setContent(getBaseNotificationView(trip))
+                .setContent(getBaseNotificationView(context, trip))
                 .setSmallIcon(R.drawable.ic_bus)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.icon))
                 .setOngoing(true)
@@ -124,7 +118,7 @@ public class TripNotificationAction {
         Notification notification = builder.build();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            notification.bigContentView = getBigNotificationView(trip);
+            notification.bigContentView = getBigNotificationView(context, trip);
         }
 
         NotificationManager notificationManager = (NotificationManager) context
@@ -133,11 +127,11 @@ public class TripNotificationAction {
         notificationManager.notify(Config.NOTIFICATION_BUS, notification);
     }
 
-    private void setCommonNotification(RemoteViews remoteViews, CurrentTrip trip) {
+    private static void setCommonNotification(Context context, RemoteViews remoteViews, CurrentTrip trip) {
         remoteViews.setTextViewText(R.id.notification_bus_line,
                 Lines.lidToName(trip.beacon.lineId));
 
-        remoteViews.setImageViewBitmap(R.id.notification_bus_image, getNotificationIcon(
+        remoteViews.setImageViewBitmap(R.id.notification_bus_image, getNotificationIcon(context,
                 Color.parseColor('#' + Lines.getColorForId(trip.beacon.lineId))));
 
         int delay = trip.getDelay();
@@ -156,11 +150,11 @@ public class TripNotificationAction {
                 UIUtils.getColorForDelay(context, delay));
     }
 
-    private RemoteViews getBaseNotificationView(CurrentTrip trip) {
+    private static RemoteViews getBaseNotificationView(Context context, CurrentTrip trip) {
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
                 R.layout.notification_current_trip_base);
 
-        setCommonNotification(remoteViews, trip);
+        setCommonNotification(context, remoteViews, trip);
 
         List<BusStop> path = trip.getPath();
         List<it.sasabz.android.sasabus.provider.model.BusStop> times = trip.getTimes();
@@ -196,11 +190,11 @@ public class TripNotificationAction {
         return remoteViews;
     }
 
-    private RemoteViews getBigNotificationView(CurrentTrip trip) {
+    private static RemoteViews getBigNotificationView(Context context, CurrentTrip trip) {
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
                 R.layout.notification_current_trip_big);
 
-        setCommonNotification(remoteViews, trip);
+        setCommonNotification(context, remoteViews, trip);
 
         List<BusStop> path = trip.getPath();
         List<it.sasabz.android.sasabus.provider.model.BusStop> times = trip.getTimes();
@@ -314,7 +308,7 @@ public class TripNotificationAction {
         return remoteViews;
     }
 
-    private Bitmap getNotificationIcon(int color) {
+    private static Bitmap getNotificationIcon(Context context, int color) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         GradientDrawable circularImage = (GradientDrawable) ContextCompat.getDrawable(context,
                 R.drawable.circle_image);
