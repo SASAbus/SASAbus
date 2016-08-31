@@ -17,8 +17,6 @@
 
 package it.sasabz.android.sasabus.ui.ecopoints;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -309,15 +307,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void animateViews(boolean showProgress) {
         if (showProgress) {
+            button.animate().cancel();
+            loading.animate().cancel();
+
             button.animate()
                     .alpha(0)
                     .setDuration(250)
-                    .setListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            button.setVisibility(View.GONE);
-                        }
-                    })
                     .start();
 
             loading.setVisibility(View.VISIBLE);
@@ -332,6 +327,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             emailLayout.setError(null);
             passwordLayout.setError(null);
         } else {
+            loading.animate().cancel();
+            button.animate().cancel();
+
             loading.animate()
                     .alpha(0)
                     .setDuration(250)
