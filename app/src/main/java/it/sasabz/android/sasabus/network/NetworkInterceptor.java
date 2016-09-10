@@ -17,6 +17,7 @@
 
 package it.sasabz.android.sasabus.network;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.provider.Settings;
@@ -84,6 +85,7 @@ public class NetworkInterceptor implements Interceptor {
         return chain.proceed(request);
     }
 
+    @SuppressLint("HardwareIds")
     private String getAndroidId() {
         if (mAndroidId != null) {
             return mAndroidId;
