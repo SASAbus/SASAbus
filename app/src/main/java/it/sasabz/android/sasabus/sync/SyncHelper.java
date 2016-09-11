@@ -44,6 +44,7 @@ import io.realm.RealmResults;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.beacon.survey.SurveyActivity;
 import it.sasabz.android.sasabus.network.NetUtils;
+import it.sasabz.android.sasabus.network.auth.AuthHelper;
 import it.sasabz.android.sasabus.network.rest.RestClient;
 import it.sasabz.android.sasabus.network.rest.api.BeaconsApi;
 import it.sasabz.android.sasabus.network.rest.api.CloudApi;
@@ -140,11 +141,16 @@ public class SyncHelper {
         final int OP_BEACON_SYNC = 4;
         final int OP_BADGE_SYNC = 5;
 
-        int[] opsToPerform = {
+        // Only sync trips and badges if the user is logged in, as that requires the
+        // authentication header with the JWT.
+        int[] opsToPerform = AuthHelper.isLoggedIn() ? new int[]{
                 OP_TRIP_DATA_SYNC,
                 OP_SURVEY_SYNC,
                 OP_BADGE_SYNC,
+        } : new int[]{
+                OP_SURVEY_SYNC,
         };
+
 
         for (int op : opsToPerform) {
             try {

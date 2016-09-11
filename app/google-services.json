@@ -15,51 +15,19 @@
       },
       "oauth_client": [
         {
+          "client_id": "505998734927-nha24pofuu97oip8og69jfmu77ba48qf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "it.sasabz.android.sasabus",
+            "certificate_hash": "76B0586C7EA99BF10CCEFE5D0E25F5B7EC6024FA"
+          }
+        },
+        {
           "client_id": "505998734927-uvheu0akkvafcs2kk3v0ffq7kavgiiko.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "it.sasabz.android.sasabus",
             "certificate_hash": "1C5331CBE893B49D989E29C23BCB8BED23F35355"
-          }
-        },
-        {
-          "client_id": "505998734927-d3fcod3tb4l7mgafuahehpdtfe55s4nd.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "it.sasabz.android.sasabus",
-            "certificate_hash": "311658444273CAC7FC8B1CD7A10A28078A2AB065"
-          }
-        },
-        {
-          "client_id": "505998734927-e0o44ppfcf55423vuamn0afdk4bra1t4.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "it.sasabz.android.sasabus",
-            "certificate_hash": "009F0ECDBA2B5B8203070430F4D1770BD424A0E7"
-          }
-        },
-        {
-          "client_id": "505998734927-lhlbss7rhdiuel3i1j37uon73ct266n7.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "it.sasabz.android.sasabus",
-            "certificate_hash": "465C9E99D005F462E986EE4208F9A433BCC1D82D"
-          }
-        },
-        {
-          "client_id": "505998734927-dmurj0gkrjnpqblu0kng01s1101on9rd.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "it.sasabz.android.sasabus",
-            "certificate_hash": "F827D61E55FD213E5274D2279A2B451F0A626951"
-          }
-        },
-        {
-          "client_id": "505998734927-h11udd4b7r1bedj2apj4h9mp4rchm6oq.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "it.sasabz.android.sasabus",
-            "certificate_hash": "7249219400D223CC9CF548CC1526DC13EBBB9ADD"
           }
         },
         {
