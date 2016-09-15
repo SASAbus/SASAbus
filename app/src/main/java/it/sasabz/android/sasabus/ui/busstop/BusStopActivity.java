@@ -50,9 +50,12 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import it.sasabz.android.sasabus.Config;
@@ -62,7 +65,6 @@ import it.sasabz.android.sasabus.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.realm.user.FavoriteBusStop;
 import it.sasabz.android.sasabus.ui.BaseActivity;
-import it.sasabz.android.sasabus.ui.widget.NestedSwipeRefreshLayout;
 import it.sasabz.android.sasabus.ui.widget.adapter.TabsAdapter;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.DeviceUtils;
@@ -388,13 +390,12 @@ public class BusStopActivity extends BaseActivity {
      */
     public static class ListFragment extends Fragment {
 
+        private static final Pattern WHITESPACE = Pattern.compile(" ", Pattern.LITERAL);
+
         private RecyclerView mRecyclerView;
         private BusStopListAdapter mAdapter;
 
-        private NestedSwipeRefreshLayout mSwipeRefreshLayout;
-
-        private List<BusStop> mSearchItems;
-        private List<BusStop> mItems;
+        private List<BusStop> mAdapterItems;
 
         final Realm realm = Realm.getInstance(BusStopRealmHelper.CONFIG);
 
@@ -402,26 +403,20 @@ public class BusStopActivity extends BaseActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_bus_stop_list, container, false);
 
-            mItems = new ArrayList<>(900);
-            mSearchItems = new ArrayList<>(900);
+            mAdapterItems = new ArrayList<>(900);
 
-            mAdapter = new BusStopListAdapter(getActivity(), mSearchItems);
+            mAdapter = new BusStopListAdapter(getActivity(), mAdapterItems);
 
             mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler);
             mRecyclerView.setHasFixedSize(true);
 
             if (DeviceUtils.isTablet(getActivity())) {
-                GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
-
-                mRecyclerView.setLayoutManager(layoutManager);
+                mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
             } else {
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             }
 
             mRecyclerView.setAdapter(mAdapter);
-
-            mSwipeRefreshLayout = (NestedSwipeRefreshLayout) view.findViewById(R.id.refresh);
-            mSwipeRefreshLayout.setColorSchemeResources(R.color.primary);
 
             return view;
         }
@@ -430,9 +425,7 @@ public class BusStopActivity extends BaseActivity {
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
 
-            mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
-
-            new Handler().postDelayed(this::parseData, Config.BUS_STOP_FRAGMENTS_POST_DELAY);
+            parseData();
         }
 
         @Override
@@ -443,54 +436,48 @@ public class BusStopActivity extends BaseActivity {
         }
 
         public void parseData() {
-            mItems.clear();
-
             String locale = Utils.locale(getActivity());
             String sort = locale.contains("de") ? "nameDe" : "nameIt";
 
             realm.where(BusStop.class).findAllSortedAsync(sort).asObservable()
+                    .filter(RealmResults::isLoaded)
                     .map((Func1<RealmResults<BusStop>, List<BusStop>>) busStops -> new ArrayList<>(
                             new LinkedHashSet<>(busStops)))
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(stations -> {
-                        mItems.addAll(stations);
-                        mSearchItems.addAll(mItems);
+                        mAdapterItems.clear();
+                        mAdapterItems.addAll(stations);
 
                         mAdapter.notifyDataSetChanged();
-
-                        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
                     });
         }
 
         private void search(String string) {
-            string = string.toLowerCase().replace(" ", "");
-
-            mSearchItems.clear();
-
-            if (string.isEmpty()) {
-                mSearchItems.addAll(mItems);
-            } else {
-                for (BusStop station : mItems) {
-                    if (station.getNameDe() == null && station.getMunicDe() == null) continue;
-
-                    String nameDe = station.getNameDe().toLowerCase().replace(" ", "");
-                    String municDe = station.getMunicDe().toLowerCase().replace(" ", "");
-
-                    String nameIt = station.getNameIt().toLowerCase().replace(" ", "");
-                    String municIt = station.getMunicIt().toLowerCase().replace(" ", "");
-
-                    if (nameDe.contains(string) ||
-                            municDe.contains(string) ||
-                            nameIt.contains(string) ||
-                            municIt.contains(string) ||
-                            String.valueOf(station.getId()).contains(string)) {
-                        mSearchItems.add(station);
-                    }
-                }
-
+            if (mAdapterItems == null || mAdapter == null) {
+                return;
             }
 
-            mAdapter.notifyDataSetChanged();
+            string = WHITESPACE.matcher(string).replaceAll(Matcher.quoteReplacement(""));
+
+            String locale = Utils.locale(getActivity());
+            String sort = locale.contains("de") ? "nameDe" : "nameIt";
+
+            realm.where(BusStop.class)
+                    .contains("nameDe", string, Case.INSENSITIVE).or()
+                    .contains("nameIt", string, Case.INSENSITIVE).or()
+                    .contains("municDe", string, Case.INSENSITIVE).or()
+                    .contains("municIt", string, Case.INSENSITIVE)
+                    .findAllSorted(sort).asObservable()
+                    .filter(RealmResults::isLoaded)
+                    .map((Func1<RealmResults<BusStop>, List<BusStop>>) busStops -> new ArrayList<>(
+                            new LinkedHashSet<>(busStops)))
+                    .subscribe(result -> {
+                        mAdapterItems.clear();
+                        mAdapterItems.addAll(result);
+
+                        mAdapter.notifyDataSetChanged();
+                    });
+
         }
     }
 
