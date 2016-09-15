@@ -20,13 +20,12 @@ package it.sasabz.android.sasabus.beacon;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.RemoteException;
-import android.support.v4.content.ContextCompat;
 
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
@@ -39,6 +38,9 @@ import org.altbeacon.beacon.startup.RegionBootstrap;
 import it.sasabz.android.sasabus.beacon.bus.BusBeaconHandler;
 import it.sasabz.android.sasabus.beacon.busstop.BusStopBeaconHandler;
 import it.sasabz.android.sasabus.beacon.event.EventBeaconHandler;
+import it.sasabz.android.sasabus.provider.API;
+import it.sasabz.android.sasabus.provider.PlanData;
+import it.sasabz.android.sasabus.util.DeviceUtils;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
 
@@ -76,6 +78,10 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
     @SuppressLint("StaticFieldLeak")
     private static BeaconHandler sInstance;
 
+    private boolean isBeaconHandlerBound;
+
+    public static boolean isListening;
+
     /**
      * Creates a new instance of {@code BeaconHandler} used to listen for beacons and display
      * bus and station information in the app
@@ -112,6 +118,11 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
         LogUtils.e(TAG, "onBeaconServiceConnect()");
 
         mBeaconManager.setRangeNotifier((beacons, region) -> {
+            if (!isListening) {
+                LogUtils.e(TAG, "didRangeBeaconsInRegion: not listening");
+                return;
+            }
+
             if (region.getUniqueId().equals(BusBeaconHandler.IDENTIFIER)) {
                 mBusBeaconHandler.didRangeBeacons(beacons);
             }
@@ -210,9 +221,44 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
      * Starts listening for available beacons
      */
     void startListening() {
-        if (ContextCompat.checkSelfPermission(mContext,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (isListening) {
+            LogUtils.e(TAG, "Already listening for beacons");
+            return;
+        }
+
+        if (!DeviceUtils.hasPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)) {
             LogUtils.e(TAG, "Missing location permission");
+            return;
+        }
+
+        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        if (adapter == null) {
+            LogUtils.e(TAG, "Unable to find a valid bluetooth adapter");
+            return;
+        }
+
+        if (!adapter.isEnabled()) {
+            LogUtils.e(TAG, "Bluetooth adapter is disabled");
+            return;
+        }
+
+        if (adapter.getState() == BluetoothAdapter.STATE_TURNING_OFF) {
+            LogUtils.e(TAG, "Bluetooth adapter is turning off");
+            return;
+        }
+
+        if (adapter.getState() != BluetoothAdapter.STATE_ON) {
+            LogUtils.e(TAG, "Bluetooth adapter is not in state STATE_ON");
+            return;
+        }
+
+        if (!PlanData.planDataExists(mContext)) {
+            LogUtils.e(TAG, "Plan data is missing");
+            return;
+        }
+
+        if (!API.todayExists(mContext)) {
+            LogUtils.e(TAG, "No plan data for this day");
             return;
         }
 
@@ -238,6 +284,9 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
             mRegionEventBootstrap = new RegionBootstrap(this, mRegionEvent);
 
             mBeaconManager.bind(this);
+
+            isBeaconHandlerBound = true;
+            isListening = true;
         }
     }
 
@@ -245,17 +294,22 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
      * Stops listening for beacons and cancels all currently displayed notifications.
      */
     public void stopListening() {
+        if (!isListening) {
+            LogUtils.e(TAG, "Not listening, call to stopListening() will be ignored");
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             if (mBusStopBeaconHandler != null) {
                 mBusStopBeaconHandler.stop();
             }
 
-            if (mBeaconManager != null) {
-                mBeaconManager.unbind(this);
-            }
-
             if (mEventBeaconHandler != null) {
                 mEventBeaconHandler.stop();
+            }
+
+            if (mBeaconManager != null && isBeaconHandlerBound) {
+                isBeaconHandlerBound = false;
+                mBeaconManager.unbind(this);
             }
 
             NotificationManager notificationManager =
