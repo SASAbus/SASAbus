@@ -236,33 +236,15 @@ public final class BusStopRealmHelper {
     public static List<Integer> getBusStopIdsFromGroup(int group) {
         Realm realm = Realm.getInstance(CONFIG);
         RealmResults<BusStop> results = realm.where(BusStop.class).equalTo("family", group).findAll();
-        realm.close();
 
         List<Integer> resultIds = new ArrayList<>();
         for (BusStop busStop : results) {
             resultIds.add(busStop.getId());
         }
 
-        return resultIds;
-    }
-
-    public static int getBusStopGroup(int id) {
-        Realm realm = Realm.getInstance(CONFIG);
-        BusStop busStop = realm.where(BusStop.class).equalTo("id", id).findFirst();
-
-        int result;
-
-        if (busStop == null) {
-            AnalyticsHelper.sendEvent(TAG, "Missing SASA station: " + id);
-            Utils.logException(new Throwable("getBusStopGroup SASA station = 0"));
-
-            result = 0;
-        } else {
-            result = busStop.getFamily();
-        }
-
         realm.close();
-        return result;
+
+        return resultIds;
     }
 
     /**

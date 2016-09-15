@@ -67,7 +67,7 @@ class MapDownloadHelper {
     }
 
     void checkMapFirstTime() {
-        if (rootFolder.listFiles().length < 2) {
+        if (rootFolder.listFiles() == null || rootFolder.listFiles().length < 2) {
 
             LogUtils.e(TAG, "Missing map");
 
