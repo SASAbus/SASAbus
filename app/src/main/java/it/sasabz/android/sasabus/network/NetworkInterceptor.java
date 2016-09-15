@@ -61,7 +61,7 @@ public class NetworkInterceptor implements Interceptor {
         Request.Builder newRequest = originalRequest
                 .newBuilder()
                 .header("User-Agent", "SASAbus Android")
-                .addHeader("X-Android-Id", getAndroidId())
+                .addHeader("X-Device-Id", getAndroidId())
                 .addHeader("X-Device", Build.MODEL)
                 .addHeader("X-Language", Utils.locale(mContext))
                 .addHeader("X-Serial", Build.SERIAL)
