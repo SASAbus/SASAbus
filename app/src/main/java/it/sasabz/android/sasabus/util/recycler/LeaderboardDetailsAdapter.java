@@ -53,7 +53,7 @@ public class LeaderboardDetailsAdapter extends RecyclerView.Adapter<RecyclerView
     private boolean loading;
     public final LoadMoreListener mListener;
 
-    private boolean noMoreItems = false;
+    private boolean noMoreItems;
 
     public LeaderboardDetailsAdapter(Context context, List<LeaderboardPlayer> items,
                                      RecyclerView recyclerView, LoadMoreListener listener) {
@@ -171,7 +171,7 @@ public class LeaderboardDetailsAdapter extends RecyclerView.Adapter<RecyclerView
 
     private static class ProgressViewHolder extends RecyclerView.ViewHolder {
 
-        public ProgressViewHolder(View v) {
+        ProgressViewHolder(View v) {
             super(v);
         }
     }

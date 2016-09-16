@@ -113,11 +113,6 @@ public final class SettingsUtils {
     private static final String PREF_HAS_RATED = "pref_has_rated";
 
     /**
-     * Auto switch of day/night theme.
-     */
-    public static final String PREF_NIGHT_MODE = "pref_night_mode";
-
-    /**
      * Determines when to load bus stop images.
      */
     private static final String PREF_FETCH_IMAGES = "pref_fetch_images";

@@ -216,7 +216,7 @@
     <string name="error_data_title">Aggiornamento dei dati necessario</string>
     <string name="error_data_sub">Per favore riavvia l\'app</string>
     <string name="bus_report">Riporta un problema di questo autobus</string>
-    <string name="dialog_changelog_dont_show_again">Mostra mai più</string>
+    <string name="dialog_button_dont_show_again">Mostra mai più</string>
     <string name="dialog_report_bus_content">Spiega il problema</string>
     <string name="dialog_report_bus_photo">Aggiungi foto</string>
     <string name="done_button">Vai</string>

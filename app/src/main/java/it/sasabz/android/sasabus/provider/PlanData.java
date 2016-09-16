@@ -27,6 +27,7 @@ import it.sasabz.android.sasabus.network.rest.Endpoint;
 import it.sasabz.android.sasabus.util.IOUtils;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Preconditions;
+import it.sasabz.android.sasabus.util.SettingsUtils;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -68,7 +69,7 @@ public final class PlanData {
     /**
      * Sets that the plan data is valid.
      */
-    public static void setDataValid() {
+    private static void setDataValid() {
         if (result == null) {
             result = new DataResult(true);
         } else {
@@ -125,30 +126,34 @@ public final class PlanData {
         }
     }
 
-    public static Observable<Void> downloadPlanData(Context context) {
+    public static Observable<Void> download(Context context) {
         return Observable.create(new Observable.OnSubscribe<Void>() {
             @Override
             public void call(Subscriber<? super Void> subscriber) {
                 try {
-                    LogUtils.e(TAG, "Starting plan data download");
+                    LogUtils.e(TAG, "Starting download of planned data (JSON file)");
 
                     File file = new File(IOUtils.getDataDir(context), FILENAME_OFFLINE);
 
-                    if (!file.getParentFile().exists() && !file.getParentFile().mkdirs()) {
-                        subscriber.onError(new Throwable("Cannot create directory file"));
+                    if (file.getParentFile().exists() || file.getParentFile().mkdirs()) {
+                        downloadFile(file);
+
+                        IOUtils.unzipFile(FILENAME_OFFLINE, file.getParent());
+
+                        //noinspection ResultOfMethodCallIgnored
+                        file.delete();
+
+                        SettingsUtils.markDataUpdateAvailable(context, false);
+                        SettingsUtils.setDataDate(context);
+                        setDataValid();
+
+                        // Call onNext with null as return type is Void
+                        subscriber.onNext(null);
+                        subscriber.onCompleted();
                         return;
                     }
 
-                    downloadFile(file);
-
-                    IOUtils.unzipFile(FILENAME_OFFLINE, file.getParent());
-
-                    //noinspection ResultOfMethodCallIgnored
-                    file.delete();
-
-                    // Call onNext with null as return type is Void
-                    subscriber.onNext(null);
-                    subscriber.onCompleted();
+                    subscriber.onError(new Throwable("Cannot create directory file"));
                 } catch (IOException e) {
                     subscriber.onError(e);
                 }

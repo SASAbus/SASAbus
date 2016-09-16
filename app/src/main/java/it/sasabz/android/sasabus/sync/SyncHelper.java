@@ -49,9 +49,12 @@ import it.sasabz.android.sasabus.network.rest.api.BeaconsApi;
 import it.sasabz.android.sasabus.network.rest.api.CloudApi;
 import it.sasabz.android.sasabus.network.rest.api.EcoPointsApi;
 import it.sasabz.android.sasabus.network.rest.api.SurveyApi;
+import it.sasabz.android.sasabus.network.rest.api.ValidityApi;
 import it.sasabz.android.sasabus.network.rest.model.CloudTrip;
 import it.sasabz.android.sasabus.network.rest.model.ScannedBeacon;
 import it.sasabz.android.sasabus.network.rest.response.CloudResponseGet;
+import it.sasabz.android.sasabus.network.rest.response.ValidityResponse;
+import it.sasabz.android.sasabus.provider.PlanData;
 import it.sasabz.android.sasabus.realm.user.Beacon;
 import it.sasabz.android.sasabus.realm.user.EarnedBadge;
 import it.sasabz.android.sasabus.realm.user.Survey;
@@ -59,8 +62,11 @@ import it.sasabz.android.sasabus.realm.user.Trip;
 import it.sasabz.android.sasabus.realm.user.TripToDelete;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Preconditions;
+import it.sasabz.android.sasabus.util.SettingsUtils;
 import it.sasabz.android.sasabus.util.Utils;
+import okhttp3.ResponseBody;
 import retrofit2.Response;
+import rx.Observer;
 import rx.schedulers.Schedulers;
 
 /**
@@ -139,15 +145,21 @@ public class SyncHelper {
         final int OP_SURVEY_SYNC = 3;
         final int OP_BEACON_SYNC = 4;
         final int OP_BADGE_SYNC = 5;
+        final int OP_PLAN_DATA_SYNC = 2;
 
         // Only sync trips and badges if the user is logged in, as that requires the
         // authentication header with the JWT.
         int[] opsToPerform = AuthHelper.isLoggedIn() ? new int[]{
                 OP_TRIP_DATA_SYNC,
                 OP_SURVEY_SYNC,
+
                 OP_BADGE_SYNC,
+                OP_PLAN_DATA_SYNC,
+                OP_BEACON_SYNC
         } : new int[]{
                 OP_SURVEY_SYNC,
+                OP_PLAN_DATA_SYNC,
+                OP_BEACON_SYNC
         };
 
 
@@ -159,6 +171,9 @@ public class SyncHelper {
                         break;
                     case OP_SURVEY_SYNC:
                         dataChanged |= doSurveySync();
+                        break;
+                    case OP_PLAN_DATA_SYNC:
+                        dataChanged |= doPlanDataSync();
                         break;
                     case OP_BEACON_SYNC:
                         dataChanged |= doBeaconSync();
@@ -380,6 +395,73 @@ public class SyncHelper {
         LogUtils.e(TAG, "Uploaded " + size + " badges");
 
         return dataChanged[0];
+    }
+
+    /**
+     * Checks if the plan data exists and is valid. If it does not exist or is not valid,
+     * attempt to download it.
+     *
+     * @return {@code true} if the plan data download attempt has been made (does not mean that
+     * it was successful), {@code false} if the data is up to date.
+     * @throws IOException if there is an error checking for a plan data update.
+     */
+    private boolean doPlanDataSync() throws IOException {
+        LogUtils.e(TAG, "Starting plan data sync");
+
+        boolean shouldDownloadData = false;
+
+        // Check if plan data exists. If not, we should immediately download it, else check if an
+        // update is available and download it.
+        if (!PlanData.planDataExists(mContext)) {
+            LogUtils.e(TAG, "Plan data does not exist");
+
+            shouldDownloadData = true;
+        } else {
+            String date = SettingsUtils.getDataDate(mContext);
+
+            ValidityApi validityApi = RestClient.ADAPTER.create(ValidityApi.class);
+            Response<ValidityResponse> response = validityApi.data(date).execute();
+
+            if (response.body() != null) {
+                if (!response.body().isValid) {
+                    LogUtils.e(TAG, "Plan data update available");
+
+                    SettingsUtils.markDataUpdateAvailable(mContext, true);
+
+                    shouldDownloadData = true;
+                } else {
+                    LogUtils.e(TAG, "No plan data update available");
+                }
+            } else {
+                ResponseBody body = response.errorBody();
+                LogUtils.e(TAG, "Error while checking for plan data update: " + body.string());
+            }
+        }
+
+        // Plan data does not exist or an update is available, download it now.
+        if (shouldDownloadData) {
+            LogUtils.e(TAG, "Downloading plan data");
+
+            PlanData.download(mContext)
+                    .subscribe(new Observer<Void>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Utils.logException(e);
+                        }
+
+                        @Override
+                        public void onNext(Void aVoid) {
+                            LogUtils.e(TAG, "Downloaded plan data");
+                        }
+                    });
+        }
+
+        return shouldDownloadData;
     }
 
     /**
