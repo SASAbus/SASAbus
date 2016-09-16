@@ -17,8 +17,10 @@
 
 package it.sasabz.android.sasabus.network.rest.api;
 
-import it.sasabz.android.sasabus.beacon.survey.SurveyActivity;
+import android.content.Context;
+
 import it.sasabz.android.sasabus.network.rest.Endpoint;
+import it.sasabz.android.sasabus.realm.user.Trip;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import rx.Observable;
@@ -26,5 +28,29 @@ import rx.Observable;
 public interface SurveyApi {
 
     @POST(Endpoint.SURVEY)
-    Observable<Void> send(@Body SurveyActivity.ReportBody body);
+    Observable<Void> send(@Body ReportBody body);
+
+
+    class ReportBody extends ReportApi.ReportBody {
+
+        private final it.sasabz.android.sasabus.model.trip.Trip trip;
+        private final int rating;
+        private int id;
+
+        public ReportBody(Context context, String email, String message, int vehicle,
+                          int rating, Trip trip) {
+            super(context, email, message, vehicle);
+
+            this.trip = new it.sasabz.android.sasabus.model.trip.Trip(trip);
+            this.rating = rating;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+    }
 }

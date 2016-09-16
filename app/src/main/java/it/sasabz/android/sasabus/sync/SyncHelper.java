@@ -42,7 +42,6 @@ import java.util.concurrent.TimeUnit;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import it.sasabz.android.sasabus.Config;
-import it.sasabz.android.sasabus.beacon.survey.SurveyActivity;
 import it.sasabz.android.sasabus.network.NetUtils;
 import it.sasabz.android.sasabus.network.auth.AuthHelper;
 import it.sasabz.android.sasabus.network.rest.RestClient;
@@ -278,7 +277,7 @@ public class SyncHelper {
 
         for (Survey survey : surveys) {
             SurveyApi surveyApi = RestClient.ADAPTER.create(SurveyApi.class);
-            surveyApi.send(gson.fromJson(survey.getData(), SurveyActivity.ReportBody.class))
+            surveyApi.send(gson.fromJson(survey.getData(), SurveyApi.ReportBody.class))
                     .subscribe(aVoid -> {
                         realm.beginTransaction();
                         survey.deleteFromRealm();

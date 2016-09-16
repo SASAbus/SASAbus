@@ -64,7 +64,7 @@ public class LeaderboardDetailsAdapter extends RecyclerView.Adapter<RecyclerView
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                totalItemCount = linearLayoutManager.getItemCount();
+                totalItemCount = getItemCount();
                 lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
 
                 if (!loading && totalItemCount <= lastVisibleItem + visibleThreshold) {

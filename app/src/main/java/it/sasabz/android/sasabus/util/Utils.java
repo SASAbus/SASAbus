@@ -153,7 +153,7 @@ public final class Utils {
      * @see ConnectionResult#SUCCESS
      * @see ConnectionResult#API_UNAVAILABLE
      */
-    static int getPlayServicesStatus(Context context) {
+    public static int getPlayServicesStatus(Context context) {
         return GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context);
     }
 

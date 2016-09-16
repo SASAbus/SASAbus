@@ -76,7 +76,7 @@ public final class DeviceUtils {
      * @param context AppApplication context
      * @return screen height in pixels
      */
-    static int getScreenHeight(Context context) {
+    public static int getScreenHeight(Context context) {
         Preconditions.checkNotNull(context, "getScreenHeight() context == null");
 
         return context.getResources().getDisplayMetrics().heightPixels;
