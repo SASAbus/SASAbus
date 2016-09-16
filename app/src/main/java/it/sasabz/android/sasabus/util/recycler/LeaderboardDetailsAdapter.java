@@ -38,6 +38,8 @@ import it.sasabz.android.sasabus.network.rest.model.LeaderboardPlayer;
 
 public class LeaderboardDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    public static final int PAGE_SIZE = 20;
+
     private static final int VIEW_ITEM = 1;
     private static final int VIEW_PROGRESS = 0;
 
@@ -45,12 +47,13 @@ public class LeaderboardDetailsAdapter extends RecyclerView.Adapter<RecyclerView
 
     private final List<LeaderboardPlayer> mItems;
 
-    private static final int visibleThreshold = 5;
     private int lastVisibleItem;
     private int totalItemCount;
 
     private boolean loading;
     public final LoadMoreListener mListener;
+
+    private boolean noMoreItems = false;
 
     public LeaderboardDetailsAdapter(Context context, List<LeaderboardPlayer> items,
                                      RecyclerView recyclerView, LoadMoreListener listener) {
@@ -64,12 +67,30 @@ public class LeaderboardDetailsAdapter extends RecyclerView.Adapter<RecyclerView
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                // Check for scroll down
+                if (dy <= 0) {
+                    return;
+                }
+
+                // We already fetched all available items, don't fetch new ones.
+                if (noMoreItems) {
+                    return;
+                }
+
                 totalItemCount = getItemCount();
                 lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
 
-                if (!loading && totalItemCount <= lastVisibleItem + visibleThreshold) {
-                    mListener.loadMore();
-                    loading = true;
+                if (!loading && lastVisibleItem == totalItemCount - 5) {
+                    // Cannot run this method directly as RecyclerView is still computing
+                    // scroll offset, which will lead to IllegalStateException when updating the
+                    // underlying data.
+                    recyclerView.post(() -> {
+                        mListener.loadMore();
+                        loading = true;
+
+                        mItems.add(null);
+                        notifyItemInserted(mItems.size() - 1);
+                    });
                 }
             }
         });
@@ -122,6 +143,10 @@ public class LeaderboardDetailsAdapter extends RecyclerView.Adapter<RecyclerView
 
     public void setLoading(boolean loading) {
         this.loading = loading;
+    }
+
+    public void setNoMoreItems(boolean noMoreItems) {
+        this.noMoreItems = noMoreItems;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
