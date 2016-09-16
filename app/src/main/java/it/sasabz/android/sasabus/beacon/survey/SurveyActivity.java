@@ -19,7 +19,6 @@ package it.sasabz.android.sasabus.beacon.survey;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
@@ -36,7 +35,6 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.jakewharton.rxbinding.widget.RxRatingBar;
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -177,7 +175,7 @@ public class SurveyActivity extends AppCompatActivity {
         String email = formEmail.getText().toString();
         String message = formMessage.getText().toString();
 
-        ReportBody reportBody = new ReportBody(this, email, message,
+        SurveyApi.ReportBody reportBody = new SurveyApi.ReportBody(this, email, message,
                 trip.getVehicle(), (int) ratingBar.getRating(), trip);
 
         LogUtils.e(TAG, new Gson().toJson(reportBody));
@@ -268,34 +266,5 @@ public class SurveyActivity extends AppCompatActivity {
             error.dismiss();
             SurveyExitActivity.exit(this);
         });
-    }
-
-
-    public static class ReportBody extends ReportHelper.ReportBody {
-
-        private final it.sasabz.android.sasabus.model.trip.Trip trip;
-        private final int rating;
-        private int id;
-
-        ReportBody(Context context, String email, String message, int vehicle,
-                   int rating, Trip trip) {
-            super(context, email, message, vehicle);
-
-            this.trip = new it.sasabz.android.sasabus.model.trip.Trip(trip);
-            this.rating = rating;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        @Override
-        public boolean shouldSkipField(FieldAttributes f) {
-            return f.getName().equals("id");
-        }
     }
 }

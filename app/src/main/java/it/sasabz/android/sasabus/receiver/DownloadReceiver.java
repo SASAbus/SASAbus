@@ -29,6 +29,7 @@ import java.io.IOException;
 import it.sasabz.android.sasabus.util.IOUtils;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
+import it.sasabz.android.sasabus.util.map.MapDownloadHelper;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -61,7 +62,7 @@ public class DownloadReceiver extends BroadcastReceiver {
             if (downloadId == this.downloadId) {
                 context.unregisterReceiver(this);
 
-                downloadObservable()
+                extractZipObservable()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<Void>() {
@@ -77,6 +78,9 @@ public class DownloadReceiver extends BroadcastReceiver {
 
                             @Override
                             public void onNext(Void aBoolean) {
+                                IOUtils.deleteOldMapZipFiles(zipFile.getParentFile());
+
+                                MapDownloadHelper.mapExists = true;
                                 webView.loadUrl("javascript:reloadMap();");
                             }
                         });
@@ -84,7 +88,7 @@ public class DownloadReceiver extends BroadcastReceiver {
         }
     }
 
-    private Observable<Void> downloadObservable() {
+    private Observable<Void> extractZipObservable() {
         return Observable.create(new Observable.OnSubscribe<Void>() {
             @Override
             public void call(Subscriber<? super Void> subscriber) {

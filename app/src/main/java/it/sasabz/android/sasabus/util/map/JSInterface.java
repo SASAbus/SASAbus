@@ -32,6 +32,7 @@ import it.sasabz.android.sasabus.ui.line.LineCourseActivity;
 import it.sasabz.android.sasabus.ui.line.LineDetailActivity;
 import it.sasabz.android.sasabus.ui.route.RouteMapPickerActivity;
 import it.sasabz.android.sasabus.util.LogUtils;
+import it.sasabz.android.sasabus.util.SettingsUtils;
 
 import static it.sasabz.android.sasabus.ui.busstop.BusStopActivity.INTENT_DISPLAY_FAVORITES;
 
@@ -119,5 +120,10 @@ class JSInterface {
     @JavascriptInterface
     public String getSelectString() {
         return context.getString(R.string.station_select).toUpperCase();
+    }
+
+    @JavascriptInterface
+    public boolean shouldUseOnlineMap() {
+        return !MapDownloadHelper.mapExists || !SettingsUtils.shouldShowMapDialog(context);
     }
 }

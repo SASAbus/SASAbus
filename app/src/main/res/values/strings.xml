@@ -423,7 +423,6 @@
     <string name="dialog_permission_allow">Allow</string>
     <string name="dialog_permission_deny">Deny</string>
     <string name="dialog_changelog_title">What\'s new</string>
-    <string name="dialog_changelog_dont_show_again">Don\'t show again</string>
     <string name="dialog_route_number_title">Select result amount</string>
     <string name="dialog_route_number_negative">Cancel</string>
     <string name="dialog_trips_delete_message">Delete this trip?</string>
@@ -479,6 +478,7 @@
     <string name="dialog_map_download_negative">Later</string>
 
     <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_button_dont_show_again">Don\'t show again</string>
 
 
     <!-- =============================== INTRO =============================== -->

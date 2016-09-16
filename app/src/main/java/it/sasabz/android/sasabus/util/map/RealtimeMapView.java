@@ -50,7 +50,7 @@ public class RealtimeMapView {
         this.webView.getSettings().setDomStorageEnabled(true);
 
         JSInterface bridge = new JSInterface(context);
-        new MapDownloadHelper(context, webView).checkMapFirstTime();
+        new MapDownloadHelper(context, webView, this).checkForMap();
 
         this.webView.addJavascriptInterface(bridge, "Android");
         this.webView.loadUrl("file:///android_asset/map/realtime.html");

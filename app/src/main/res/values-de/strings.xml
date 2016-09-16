@@ -221,7 +221,7 @@
     </string>
     <string name="error_data_title">Aktualisierung der Daten nötig</string>
     <string name="error_data_sub">Bitte starte die App neu</string>
-    <string name="dialog_changelog_dont_show_again">Nicht erneut anzeigen</string>
+    <string name="dialog_button_dont_show_again">Nicht erneut anzeigen</string>
     <string name="bus_report">Ein Problem in diesem Bus melden</string>
     <string name="dialog_report_bus_content">Beschreibe das Problem</string>
     <string name="dialog_report_bus_photo">Foto hinzufügen</string>

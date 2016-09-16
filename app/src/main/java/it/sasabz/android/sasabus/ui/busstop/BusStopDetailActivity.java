@@ -89,12 +89,12 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
         View.OnLongClickListener, AppBarLayout.OnOffsetChangedListener {
 
     private static final String TAG = "BusStopDetailActivity";
-    private static final String SCREEN_LABEL = "BusMarker stop details";
+    private static final String SCREEN_LABEL = "BusStopDetails";
 
     private static final String BUNDLE_POSITION = "POSITION";
     private static final String BUNDLE_LIST = "LIST";
 
-    private final ArrayList<BusStopDetail> mItems = new ArrayList<>();
+    private ArrayList<BusStopDetail> mItems;
 
     private BusStopDetailsAdapter mAdapter;
 
@@ -106,10 +106,6 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
     @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout mCollapsingToolbar;
 
     private boolean mIsInFavorites;
-
-    private int mBusStopId;
-
-    private int mBusStopGroup;
 
     private BusStop busStop;
 
@@ -130,17 +126,15 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        mBusStopId = intent.getExtras().getInt(Config.EXTRA_STATION_ID);
-        mBusStopGroup = BusStopRealmHelper.getBusStopGroup(mBusStopId);
+        int busStopId = intent.getExtras().getInt(Config.EXTRA_STATION_ID);
+        busStop = BusStopRealmHelper.getBusStop(busStopId);
 
         mCollapsingToolbar.setExpandedTitleTextAppearance(R.style.CollapsingToolbar);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_amber, R.color.primary_red, R.color.primary_green, R.color.primary_indigo);
-        mSwipeRefreshLayout.setOnRefreshListener(() -> parseData(mBusStopGroup, mBusStopId));
-
-        busStop = BusStopRealmHelper.getBusStop(mBusStopId);
+        mSwipeRefreshLayout.setOnRefreshListener(() -> parseData(busStop.getFamily(), busStop.getId()));
 
         AnalyticsHelper.sendScreenView(TAG);
-        AnalyticsHelper.sendEvent(SCREEN_LABEL, "Bus stop " + mBusStopId);
+        AnalyticsHelper.sendEvent(SCREEN_LABEL, "Bus stop " + busStop.getId());
 
         mCollapsingToolbar.setTitle(busStop.getName(this));
 
@@ -157,34 +151,27 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
         mFavoritesFab.setOnClickListener(this);
         mFavoritesFab.setOnLongClickListener(this);
 
-        if (UserRealmHelper.hasFavoriteBusStop(mBusStopGroup)) {
+        if (UserRealmHelper.hasFavoriteBusStop(busStop.getFamily())) {
             mIsInFavorites = true;
         }
 
         setFavoritesFabIcon(mIsInFavorites);
 
-        mItems.clear();
-
-        mAdapter = new BusStopDetailsAdapter(this, mBusStopGroup, mItems);
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setAdapter(mAdapter);
 
         if (savedInstanceState != null) {
-            ArrayList<BusStopDetail> temp = savedInstanceState.getParcelableArrayList(BUNDLE_LIST);
-
-            if (temp != null && !temp.isEmpty()) {
-                mItems.addAll(temp);
-                mAdapter.notifyDataSetChanged();
-                mRecyclerView.getLayoutManager().scrollToPosition(savedInstanceState.getInt(BUNDLE_POSITION));
-
-                return;
-            }
+            mItems = savedInstanceState.getParcelableArrayList(BUNDLE_LIST);
+            mRecyclerView.getLayoutManager().scrollToPosition(savedInstanceState.getInt(BUNDLE_POSITION));
+        } else {
+            mItems = new ArrayList<>();
         }
 
+        mAdapter = new BusStopDetailsAdapter(this, busStop.getFamily(), mItems);
+        mRecyclerView.setAdapter(mAdapter);
+
         if (PlanData.planDataExists(this)) {
-            parseData(mBusStopGroup, mBusStopId);
+            parseData(busStop.getFamily(), busStop.getId());
         } else {
             SettingsUtils.markDataUpdateAvailable(this, true);
             mItems.add(new BusStopDetail(0, 0, null, null, null, 0, "data"));
@@ -195,7 +182,7 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
 
         int fetchImages = SettingsUtils.getFetchImages(this);
         if (fetchImages == 1 || fetchImages == 2 && NetUtils.isWifiConnected(this)) {
-            Glide.with(this).load(Endpoint.API + "assets/images/bus_stops/" + mBusStopId)
+            Glide.with(this).load(Endpoint.API + "assets/images/bus_stops/" + busStop.getId())
                     .centerCrop()
                     .into(background);
         }
@@ -217,14 +204,14 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
         switch (v.getId()) {
             case R.id.bus_stop_details_favorites:
                 if (mIsInFavorites) {
-                    UserRealmHelper.removeFavoriteBusStop(mBusStopId);
+                    UserRealmHelper.removeFavoriteBusStop(busStop.getFamily());
                     Snackbar.make(coordinatorLayout, getString(R.string.bus_stop_favorites_remove,
                             busStop.getName(this)), Snackbar.LENGTH_SHORT).show();
 
                     setFavoritesFabIcon(false);
                     mIsInFavorites = false;
                 } else {
-                    UserRealmHelper.addFavoriteBusStop(mBusStopId);
+                    UserRealmHelper.addFavoriteBusStop(busStop.getFamily());
                     Snackbar.make(coordinatorLayout, getString(R.string.bus_stop_favorites_add,
                             busStop.getName(this)), Snackbar.LENGTH_SHORT).show();
 
@@ -330,7 +317,7 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
 
                 String stop = BusStopRealmHelper.getMunic(stationId);
                 String lines = ApiUtils.implode(", ",
-                        API.getPassingLines(BusStopDetailActivity.this, mBusStopGroup), getString(R.string.station_no_lines));
+                        API.getPassingLines(BusStopDetailActivity.this, busStop.getFamily()), getString(R.string.station_no_lines));
 
                 items.add(new BusStopDetail(0, 0, null, null, null, 0, stop + '#' + lines));
 

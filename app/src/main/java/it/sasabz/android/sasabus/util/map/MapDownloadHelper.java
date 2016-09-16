@@ -28,11 +28,13 @@ import java.io.File;
 
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.receiver.DownloadReceiver;
+import it.sasabz.android.sasabus.util.IOUtils;
 import it.sasabz.android.sasabus.util.LogUtils;
+import it.sasabz.android.sasabus.util.SettingsUtils;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 
-class MapDownloadHelper {
+public class MapDownloadHelper {
 
     private final String TAG = "MapDownloadHelper";
 
@@ -44,6 +46,8 @@ class MapDownloadHelper {
     private static File rootFolder;
 
     private final WebView webView;
+
+    public static boolean mapExists;
 
     static File getRootFolder(Context context) {
         if (rootFolder == null) {
@@ -59,16 +63,21 @@ class MapDownloadHelper {
         return rootFolder;
     }
 
-    MapDownloadHelper(Context context, WebView webView) {
+    MapDownloadHelper(Context context, WebView webView, RealtimeMapView mapView) {
         this.context = context;
         this.webView = webView;
 
         getRootFolder(context);
     }
 
-    void checkMapFirstTime() {
-        if (rootFolder.listFiles().length < 2) {
+    void checkForMap() {
+        IOUtils.deleteOldMapZipFiles(rootFolder);
 
+        if (!SettingsUtils.shouldShowMapDialog(context)) {
+            return;
+        }
+
+        if (rootFolder.listFiles() == null || rootFolder.listFiles().length < 2) {
             LogUtils.e(TAG, "Missing map");
 
             new AlertDialog.Builder(context, R.style.DialogStyle)
@@ -76,11 +85,18 @@ class MapDownloadHelper {
                     .setMessage(R.string.dialog_map_download_message)
                     .setCancelable(false)
                     .setPositiveButton(android.R.string.ok, (dialog, which) -> downloadMap())
-                    .setNegativeButton(R.string.dialog_map_download_negative, (dialog, which) -> dialog.dismiss())
+                    .setNeutralButton(R.string.dialog_map_download_negative, (dialog, which) -> {
+                        dialog.dismiss();
+                    })
+                    .setNegativeButton(R.string.dialog_button_dont_show_again, (dialog, which) -> {
+                        SettingsUtils.disableMapDialog(context);
+                        dialog.dismiss();
+                    })
                     .create()
                     .show();
         } else {
             LogUtils.e(TAG, "Map exists");
+            mapExists = true;
         }
     }
 

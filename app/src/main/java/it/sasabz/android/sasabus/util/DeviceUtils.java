@@ -19,7 +19,9 @@ package it.sasabz.android.sasabus.util;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.support.v4.app.ActivityCompat;
 
 /**
  * Utility class to help with identifying the current device and to get info about it
@@ -35,33 +37,9 @@ public final class DeviceUtils {
     /**
      * Gets the devices bluetooth name
      *
-     * @return bluetooth name, or {@code unknown} when no adapter is available
-     */
-    // TODO: 24/03/16 Remove try/catch block as soon as reason for crash is found.
-    public static String getDeviceName() {
-        try {
-            BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-            if (bluetoothAdapter != null) {
-                String bluetoothName = bluetoothAdapter.getName();
-
-                if (bluetoothName != null) {
-                    return bluetoothName;
-                }
-            }
-        } catch (Exception e) {
-            Utils.logException(e, "Exception: %s", "getDeviceName");
-        }
-
-        return "unknown";
-    }
-
-    /**
-     * Gets the devices bluetooth name
-     *
      * @return bluetooth name, or {@code none} when no adapter is available
      */
-    public static boolean isBluetoothEnabled() {
+    static boolean isBluetoothEnabled() {
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
     }
@@ -98,9 +76,13 @@ public final class DeviceUtils {
      * @param context AppApplication context
      * @return screen height in pixels
      */
-    static int getScreenHeight(Context context) {
+    public static int getScreenHeight(Context context) {
         Preconditions.checkNotNull(context, "getScreenHeight() context == null");
 
         return context.getResources().getDisplayMetrics().heightPixels;
+    }
+
+    public static boolean hasPermission(Context context, String permission) {
+        return ActivityCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
     }
 }

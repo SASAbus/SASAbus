@@ -37,7 +37,6 @@ import it.sasabz.android.sasabus.network.NetUtils;
 import it.sasabz.android.sasabus.provider.PlanData;
 import it.sasabz.android.sasabus.ui.intro.AppIntro;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.SettingsUtils;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 import rx.Subscription;
@@ -197,10 +196,6 @@ public class IntroFragmentData extends Fragment implements Observer<Void>, View.
                 .start();
 
         ((AppIntro) getActivity()).setNextPageSwipeLock(false);
-
-        SettingsUtils.markDataUpdateAvailable(getActivity(), false);
-        SettingsUtils.setDataDate(getActivity());
-        PlanData.setDataValid();
     }
 
     @Override
@@ -240,7 +235,7 @@ public class IntroFragmentData extends Fragment implements Observer<Void>, View.
             return;
         }
 
-        subscription = PlanData.downloadPlanData(getActivity())
+        subscription = PlanData.download(getActivity())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this);

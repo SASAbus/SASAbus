@@ -23,11 +23,7 @@ import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
-import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
@@ -39,13 +35,8 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
-
 import java.io.File;
-import java.util.Map;
 
-import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.network.rest.RestClient;
 import it.sasabz.android.sasabus.network.rest.api.ReportApi;
@@ -55,7 +46,6 @@ import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import tslamic.github.io.adn.DeviceNames;
 
 /**
  * Helper class to send reports for either app errors or problems in a vehicle.
@@ -91,7 +81,7 @@ public final class ReportHelper {
         barProgressDialog.show();
 
         ReportApi reportApi = RestClient.ADAPTER.create(ReportApi.class);
-        ReportBody body = new ReportBody(mActivity, email, message, vehicle);
+        ReportApi.ReportBody body = new ReportApi.ReportBody(mActivity, email, message, vehicle);
 
         Observable<Void> observable;
 
@@ -203,80 +193,5 @@ public final class ReportHelper {
 
     public static boolean isEmailValid(CharSequence email) {
         return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches();
-    }
-
-    public static class ReportBody implements ExclusionStrategy {
-
-        final int androidVersionCode;
-        final int playServicesStatus;
-        final int appVersionCode;
-        final int vehicle;
-
-        final String androidVersionName;
-        final String deviceName;
-        final String deviceModel;
-        final String screenSize;
-        final String androidId;
-        final String serial;
-        final String locale;
-        final String appVersionName;
-
-        final String email;
-        final String message;
-
-        boolean hasBle;
-        final boolean locationPermission;
-        final boolean storagePermission;
-
-        final Map<String, ?> preferences;
-
-        protected ReportBody(Context context, String email, String message, int vehicle) {
-            this.email = email;
-            this.message = message;
-            this.vehicle = vehicle;
-
-            androidVersionName = Build.VERSION.RELEASE;
-            androidVersionCode = Build.VERSION.SDK_INT;
-
-            deviceName = DeviceNames.getCurrentDeviceName("Unknown Device");
-            deviceModel = Build.MODEL;
-
-            serial =  Build.SERIAL;
-            androidId = Settings.Secure.getString(context.getContentResolver(),
-                    Settings.Secure.ANDROID_ID);
-
-            screenSize = DeviceUtils.getScreenWidth(context) + "x" +
-                    DeviceUtils.getScreenHeight(context);
-
-            locale = Utils.locale(context);
-
-            playServicesStatus = Utils.getPlayServicesStatus(context);
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                hasBle = context.getPackageManager()
-                        .hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);
-            }
-
-            appVersionCode = BuildConfig.VERSION_CODE;
-            appVersionName = BuildConfig.VERSION_NAME;
-
-            locationPermission = ContextCompat.checkSelfPermission(context,
-                    Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-
-            storagePermission = ContextCompat.checkSelfPermission(context,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-
-            preferences = PreferenceManager.getDefaultSharedPreferences(context).getAll();
-        }
-
-        @Override
-        public boolean shouldSkipField(FieldAttributes f) {
-            return vehicle == 0 && f.getName().equals("vehicle");
-        }
-
-        @Override
-        public boolean shouldSkipClass(Class<?> clazz) {
-            return false;
-        }
     }
 }

@@ -48,6 +48,10 @@ public class BluetoothReceiver extends WakefulBroadcastReceiver {
         if (!Utils.isBeaconEnabled(context)) {
             LogUtils.e(TAG, "Beacon scanning not available or enabled");
 
+            if (BeaconHandler.isListening) {
+                BeaconHandler.get(context).stopListening();
+            }
+
             NotificationUtils.cancelBus(context);
             context.stopService(new Intent(context, BeaconService.class));
 

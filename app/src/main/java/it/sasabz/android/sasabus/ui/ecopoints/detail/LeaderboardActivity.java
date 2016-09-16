@@ -95,11 +95,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         });
 
         mAdapter = new LeaderboardDetailsAdapter(this, mItems, recyclerView, () -> {
-            mItems.add(null);
-            mAdapter.notifyItemInserted(mItems.size() - 1);
-
             pageIndex++;
-
             parseData();
         });
 
@@ -139,13 +135,17 @@ public class LeaderboardActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onNext(LeaderboardResponse leaderboardResponse) {
+                    public void onNext(LeaderboardResponse response) {
                         mItems.removeAll(Collections.singleton((LeaderboardPlayer) null));
 
                         mAdapter.notifyDataSetChanged();
 
-                        mItems.addAll(leaderboardResponse.leaderboard);
+                        mItems.addAll(response.leaderboard);
                         mAdapter.notifyDataSetChanged();
+
+                        if (response.leaderboard.size() < LeaderboardDetailsAdapter.PAGE_SIZE) {
+                            mAdapter.setNoMoreItems(true);
+                        }
 
                         mAdapter.setLoading(false);
                     }
