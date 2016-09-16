@@ -17,6 +17,7 @@
 
 package it.sasabz.android.sasabus.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -140,6 +141,8 @@ public final class SettingsUtils {
 
     private static final String PREF_TRAFFIC_LIGHT_CITY = "pref_traffic_light_city_is_bz";
 
+    private static final String PREF_SHOW_MAP_DOWNLOAD_DIALOG = "pref_show_map_download_dialog";
+
     /**
      * Save the parking id of the widget
      */
@@ -165,16 +168,6 @@ public final class SettingsUtils {
 
     public static void setWidgetParking(Context context, int parkingId) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(PREF_WIDGET_PARKING_ID, parkingId).apply();
-    }
-
-    // ========================================= FAVORITES =========================================
-
-    public static String getFavoriteLines(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_FAVORITE_LINES, null);
-    }
-
-    public static String getFavoriteBusStops(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_FAVORITE_BUS_STOPS, null);
     }
 
 
@@ -542,6 +535,17 @@ public final class SettingsUtils {
     static void disableChangelog(Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         sp.edit().putBoolean(PREF_SHOULD_SHOW_CHANGELOG, false).apply();
+    }
+
+    public static boolean shouldShowMapDialog(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(PREF_SHOW_MAP_DOWNLOAD_DIALOG, true);
+    }
+
+    @SuppressLint("CommitPrefEdits")
+    public static void disableMapDialog(Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putBoolean(PREF_SHOW_MAP_DOWNLOAD_DIALOG, false).commit();
     }
 }
 

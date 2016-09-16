@@ -29,6 +29,7 @@ import java.io.IOException;
 import it.sasabz.android.sasabus.util.IOUtils;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
+import it.sasabz.android.sasabus.util.map.MapDownloadHelper;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -77,6 +78,7 @@ public class DownloadReceiver extends BroadcastReceiver {
 
                             @Override
                             public void onNext(Void aBoolean) {
+                                MapDownloadHelper.mapExists = true;
                                 webView.loadUrl("javascript:reloadMap();");
                             }
                         });

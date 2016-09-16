@@ -46,7 +46,6 @@ public class EventMapView {
         this.webView.getSettings().setDomStorageEnabled(true);
 
         JSInterface bridge = new JSInterface(context);
-        new MapDownloadHelper(context, webView).checkMapFirstTime();
 
         this.webView.addJavascriptInterface(bridge, "Android");
         this.webView.loadUrl("file:///android_asset/map/event_details.html");

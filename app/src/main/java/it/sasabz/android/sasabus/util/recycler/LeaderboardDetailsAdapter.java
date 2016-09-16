@@ -80,7 +80,7 @@ public class LeaderboardDetailsAdapter extends RecyclerView.Adapter<RecyclerView
                 totalItemCount = getItemCount();
                 lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
 
-                if (!loading && lastVisibleItem == totalItemCount - 5) {
+                if (!loading && lastVisibleItem >= totalItemCount - 5) {
                     // Cannot run this method directly as RecyclerView is still computing
                     // scroll offset, which will lead to IllegalStateException when updating the
                     // underlying data.
