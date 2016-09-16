@@ -253,4 +253,21 @@ public final class IOUtils {
             }
         }
     }
+
+    public static void deleteOldMapZipFiles(File location) {
+        if (!location.exists() || location.listFiles() == null) {
+            LogUtils.e(TAG, "Location does not exist");
+            return;
+        }
+
+        for (File file : location.listFiles()) {
+            if (file.getName().endsWith(".zip")) {
+                LogUtils.e(TAG, "Deleting file " + file.getName());
+
+                if (!file.delete()) {
+                    LogUtils.e(TAG, "Couldn't delete file " + file.getName());
+                }
+            }
+        }
+    }
 }

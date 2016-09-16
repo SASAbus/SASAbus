@@ -28,6 +28,7 @@ import java.io.File;
 
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.receiver.DownloadReceiver;
+import it.sasabz.android.sasabus.util.IOUtils;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.SettingsUtils;
 
@@ -70,6 +71,8 @@ public class MapDownloadHelper {
     }
 
     void checkForMap() {
+        IOUtils.deleteOldMapZipFiles(rootFolder);
+
         if (!SettingsUtils.shouldShowMapDialog(context)) {
             return;
         }

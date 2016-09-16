@@ -62,7 +62,7 @@ public class DownloadReceiver extends BroadcastReceiver {
             if (downloadId == this.downloadId) {
                 context.unregisterReceiver(this);
 
-                downloadObservable()
+                extractZipObservable()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<Void>() {
@@ -78,6 +78,8 @@ public class DownloadReceiver extends BroadcastReceiver {
 
                             @Override
                             public void onNext(Void aBoolean) {
+                                IOUtils.deleteOldMapZipFiles(zipFile.getParentFile());
+
                                 MapDownloadHelper.mapExists = true;
                                 webView.loadUrl("javascript:reloadMap();");
                             }
@@ -86,7 +88,7 @@ public class DownloadReceiver extends BroadcastReceiver {
         }
     }
 
-    private Observable<Void> downloadObservable() {
+    private Observable<Void> extractZipObservable() {
         return Observable.create(new Observable.OnSubscribe<Void>() {
             @Override
             public void call(Subscriber<? super Void> subscriber) {
