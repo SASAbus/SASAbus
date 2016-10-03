@@ -101,7 +101,7 @@ public final class Config {
     /**
      * Static constant for a trip hash intent extra
      */
-    public static final String EXTRA_TRIP_HASH = "EXTRA_TRIP_HASH";
+    public static final String EXTRA_TRIP = "EXTRA_TRIP";
 
     /**
      * Static constant for a planned trip hash intent extra

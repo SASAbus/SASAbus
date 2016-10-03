@@ -425,7 +425,7 @@
     <string name="event_details_subtitle">%1$s a %2$s</string>
     <string name="event_list_share_button">Dettagli</string>
     <string name="event_menu_visit_website">Visita sito web</string>
-    <string name="notification_event_beacon_subtitle">Scannerizzato beacon #%s</string>
+    <string name="notification_event_beacon_subtitle">Scannerizzato beacon #%d</string>
     <string name="qr_code_description">Chiedi a un membro dello staff di scannerizzare il codice QR per ottenere il regalo!</string>
     <string name="snackbar_event_incomplete">Non hai ancora visitato tutti i punti di fermata!</string>
 

@@ -29,11 +29,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.WorkerThread;
 
-import com.google.gson.Gson;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -46,20 +43,13 @@ import it.sasabz.android.sasabus.network.NetUtils;
 import it.sasabz.android.sasabus.network.auth.AuthHelper;
 import it.sasabz.android.sasabus.network.rest.RestClient;
 import it.sasabz.android.sasabus.network.rest.api.BeaconsApi;
-import it.sasabz.android.sasabus.network.rest.api.CloudApi;
 import it.sasabz.android.sasabus.network.rest.api.EcoPointsApi;
-import it.sasabz.android.sasabus.network.rest.api.SurveyApi;
 import it.sasabz.android.sasabus.network.rest.api.ValidityApi;
-import it.sasabz.android.sasabus.network.rest.model.CloudTrip;
 import it.sasabz.android.sasabus.network.rest.model.ScannedBeacon;
-import it.sasabz.android.sasabus.network.rest.response.CloudResponseGet;
 import it.sasabz.android.sasabus.network.rest.response.ValidityResponse;
 import it.sasabz.android.sasabus.provider.PlanData;
 import it.sasabz.android.sasabus.realm.user.Beacon;
 import it.sasabz.android.sasabus.realm.user.EarnedBadge;
-import it.sasabz.android.sasabus.realm.user.Survey;
-import it.sasabz.android.sasabus.realm.user.Trip;
-import it.sasabz.android.sasabus.realm.user.TripToDelete;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Preconditions;
 import it.sasabz.android.sasabus.util.SettingsUtils;
@@ -67,7 +57,6 @@ import it.sasabz.android.sasabus.util.Utils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import rx.Observer;
-import rx.schedulers.Schedulers;
 
 /**
  * A helper class for dealing with data synchronization. All operations occur on the
@@ -141,8 +130,6 @@ public class SyncHelper {
 
         // Sync consists of 1 or more of these operations. We try them one by one and tolerate
         // individual failures on each.
-        final int OP_TRIP_DATA_SYNC = 0;
-        final int OP_SURVEY_SYNC = 3;
         final int OP_BEACON_SYNC = 4;
         final int OP_BADGE_SYNC = 5;
         final int OP_PLAN_DATA_SYNC = 2;
@@ -150,14 +137,10 @@ public class SyncHelper {
         // Only sync trips and badges if the user is logged in, as that requires the
         // authentication header with the JWT.
         int[] opsToPerform = AuthHelper.isLoggedIn() ? new int[]{
-                OP_TRIP_DATA_SYNC,
-                OP_SURVEY_SYNC,
-
                 OP_BADGE_SYNC,
                 OP_PLAN_DATA_SYNC,
                 OP_BEACON_SYNC
         } : new int[]{
-                OP_SURVEY_SYNC,
                 OP_PLAN_DATA_SYNC,
                 OP_BEACON_SYNC
         };
@@ -166,12 +149,6 @@ public class SyncHelper {
         for (int op : opsToPerform) {
             try {
                 switch (op) {
-                    case OP_TRIP_DATA_SYNC:
-                        dataChanged |= doTripSync();
-                        break;
-                    case OP_SURVEY_SYNC:
-                        dataChanged |= doSurveySync();
-                        break;
                     case OP_PLAN_DATA_SYNC:
                         dataChanged |= doPlanDataSync();
                         break;
@@ -200,112 +177,6 @@ public class SyncHelper {
         }
 
         return dataChanged;
-    }
-
-    /**
-     * Syncs trips to the server. The sync process is split into two parts: upload and
-     * download. All the trips which are not on the server will be uploaded.
-     * All the trips which are on the server but not saved locally will be downloaded.
-     *
-     * @return {@code true} if at least one trip was downloaded or uploaded, {@code false}
-     * otherwise.
-     * @throws IOException if contacting the server failed.
-     */
-    private boolean doTripSync() throws Exception {
-        LogUtils.e(TAG, "Starting trip sync");
-
-        RealmResults<Trip> trips = realm.where(Trip.class).findAll();
-
-        CloudApi cloudApi = RestClient.ADAPTER.create(CloudApi.class);
-        Response<CloudResponseGet> response = cloudApi.compareTrips().execute();
-
-        boolean dataChanged = false;
-
-        if (response.body() != null) {
-            List<Trip> serverMissing = new ArrayList<>(trips);
-            List<String> clientMissing = new ArrayList<>();
-            List<String> onServer = response.body().hashes;
-
-            for (String uuid : onServer) {
-                if (!containsTrip(trips, uuid)) {
-                    clientMissing.add(uuid);
-                }
-            }
-
-            for (int i = serverMissing.size() - 1; i >= 0; i--) {
-                Trip trip = serverMissing.get(i);
-                if (onServer.contains(trip.getHash())) {
-                    serverMissing.remove(trip);
-                }
-            }
-
-            LogUtils.d(TAG, "clientMissing: " + Arrays.toString(clientMissing.toArray()));
-            LogUtils.d(TAG, "serverMissing: " + Arrays.toString(serverMissing.toArray()));
-
-            if (!clientMissing.isEmpty()) {
-                dataChanged = TripSyncHelper.download(clientMissing);
-            }
-
-            if (!serverMissing.isEmpty()) {
-                dataChanged |= TripSyncHelper.upload(mContext, tripToCloudTrip(serverMissing),
-                        Schedulers.immediate());
-            }
-
-            LogUtils.e(TAG, "Finished trip sync");
-        } else {
-            LogUtils.e(TAG, "Error downloading trips: " + response.errorBody().string());
-        }
-
-        // Delete trips which might not have been deleted on the server
-        RealmResults<TripToDelete> tripsToDelete = realm.where(TripToDelete.class)
-                .equalTo("type", TripToDelete.TYPE_TRIP).findAll();
-
-        for (TripToDelete tripToDelete : tripsToDelete) {
-            dataChanged |= TripSyncHelper.delete(tripToDelete.getHash());
-        }
-
-        return dataChanged;
-    }
-
-    /**
-     * Uploads all batched surveys, those being surveys which could not be sent at the time
-     * the user took the surveys.
-     *
-     * @return {@code true} if there were one or more surveys to upload, {@code false} otherwise.
-     */
-    private boolean doSurveySync() {
-        LogUtils.e(TAG, "Starting survey sync");
-
-        RealmResults<Survey> surveys = realm.where(Survey.class).findAll();
-
-        if (surveys.isEmpty()) {
-            LogUtils.e(TAG, "No surveys to upload");
-            return false;
-        }
-
-        Gson gson = new Gson();
-
-        LogUtils.e(TAG, "Uploading " + surveys.size() + " surveys");
-
-        boolean[] dataChanged = {false};
-        int[] surveyCount = {0};
-
-        for (Survey survey : surveys) {
-            SurveyApi surveyApi = RestClient.ADAPTER.create(SurveyApi.class);
-            surveyApi.send(gson.fromJson(survey.getData(), SurveyApi.ReportBody.class))
-                    .subscribe(aVoid -> {
-                        realm.beginTransaction();
-                        survey.deleteFromRealm();
-                        realm.commitTransaction();
-
-                        dataChanged[0] |= true;
-                        surveyCount[0]++;
-                    });
-        }
-
-        LogUtils.e(TAG, "Uploaded " + surveyCount[0] + " surveys");
-
-        return dataChanged[0];
     }
 
     /**
@@ -511,37 +382,5 @@ public class SyncHelper {
 
             LogUtils.w(TAG, "Sync will run at " + calendar.getTime());
         }
-    }
-
-    /**
-     * Check if a given {@link List} contains a {@link Trip} with a given {@link Trip#hash}.
-     *
-     * @param trips all the trips
-     * @param hash  the hash to search for
-     * @return a boolean value indicating whether the list containsTrip the uuid.
-     */
-    private static boolean containsTrip(Iterable<Trip> trips, String hash) {
-        for (Trip trip : trips) {
-            if (trip.getHash().equals(hash)) return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Converts a {@link Iterable} containing {@link Trip trips} to a {@link Iterable} containing
-     * {@link CloudTrip cloud trips}.
-     *
-     * @param trips the trips to convert.
-     * @return a {@link Iterable} containing the converted trips.
-     */
-    private List<CloudTrip> tripToCloudTrip(Iterable<Trip> trips) {
-        List<CloudTrip> list = new ArrayList<>();
-
-        for (Trip trip : trips) {
-            list.add(new CloudTrip(trip));
-        }
-
-        return list;
     }
 }

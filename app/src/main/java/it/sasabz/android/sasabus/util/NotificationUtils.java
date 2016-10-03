@@ -51,7 +51,6 @@ import it.sasabz.android.sasabus.ui.NewsActivity;
 import it.sasabz.android.sasabus.ui.busstop.BusStopDetailActivity;
 import it.sasabz.android.sasabus.ui.ecopoints.EcoPointsActivity;
 import it.sasabz.android.sasabus.ui.plannedtrip.PlannedTripsViewActivity;
-import it.sasabz.android.sasabus.ui.trips.TripDetailActivity;
 
 /**
  * Utility class to display notifications. Also handles scheduling planned trip notifications.
@@ -270,8 +269,8 @@ public final class NotificationUtils {
                 .setVibrate(new long[]{VIBRATION_TIME_MILLIS, VIBRATION_TIME_MILLIS})
                 .setCategory(NotificationCompat.CATEGORY_EVENT);
 
-        Intent resultIntent = new Intent(context, TripDetailActivity.class);
-        resultIntent.putExtra(Config.EXTRA_TRIP_HASH, hash);
+        Intent resultIntent = new Intent(context, EcoPointsActivity.class);
+        resultIntent.putExtra(Config.EXTRA_TRIP, hash);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context,
                 Config.NOTIFICATION_TRIP_SUCCESS,
@@ -330,7 +329,7 @@ public final class NotificationUtils {
                 .setCategory(NotificationCompat.CATEGORY_EVENT);
 
         Intent resultIntent = new Intent(context, SurveyActivity.class);
-        resultIntent.putExtra(Config.EXTRA_TRIP_HASH, hash);
+        resultIntent.putExtra(Config.EXTRA_TRIP, hash);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context,
                 Config.NOTIFICATION_SURVEY,

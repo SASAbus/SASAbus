@@ -21,9 +21,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import it.sasabz.android.sasabus.realm.user.Trip;
-import it.sasabz.android.sasabus.util.Strings;
-
 public class  CloudTrip {
 
     private final String hash;
@@ -36,6 +33,21 @@ public class  CloudTrip {
     private final int departure;
     private final int arrival;
     private final List<Integer> path;
+
+    public CloudTrip(String hash, int line, int variant, int trip, int vehicle, int origin,
+                     int destination, int departure, int arrival, List<Integer> path) {
+
+        this.hash = hash;
+        this.line = line;
+        this.variant = variant;
+        this.trip = trip;
+        this.vehicle = vehicle;
+        this.origin = origin;
+        this.destination = destination;
+        this.departure = departure;
+        this.arrival = arrival;
+        this.path = path;
+    }
 
     // TODO: 08/05/16 Use the diesel price when starting a trip
     @SerializedName("diesel_price")
@@ -83,19 +95,6 @@ public class  CloudTrip {
 
     public float getDieselPrice() {
         return dieselPrice;
-    }
-
-    public CloudTrip(Trip trip) {
-        hash = trip.getHash();
-        line = trip.getLine();
-        variant = trip.getVariant();
-        this.trip = trip.getTrip();
-        vehicle = trip.getVehicle();
-        origin = trip.getOrigin();
-        destination = trip.getDestination();
-        departure = (int) trip.getDeparture();
-        arrival = (int) trip.getArrival();
-        path = Strings.stringToList(trip.getPath(), Strings.DEFAULT_DELIMITER);
     }
 
     @Override

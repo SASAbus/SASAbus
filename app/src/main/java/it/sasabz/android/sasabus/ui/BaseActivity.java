@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
@@ -48,7 +49,6 @@ import it.sasabz.android.sasabus.ui.line.LinesActivity;
 import it.sasabz.android.sasabus.ui.parking.ParkingActivity;
 import it.sasabz.android.sasabus.ui.plannedtrip.PlannedTripsActivity;
 import it.sasabz.android.sasabus.ui.route.RouteActivity;
-import it.sasabz.android.sasabus.ui.trips.TripsActivity;
 import it.sasabz.android.sasabus.util.Changelog;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.SettingsUtils;
@@ -93,7 +93,6 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Naviga
     protected static final int NAVDRAWER_ITEM_BUS_STOPS = R.id.nav_stations;
     protected static final int NAVDRAWER_ITEM_ROUTE = R.id.nav_route;
     protected static final int NAVDRAWER_ITEM_ECO_POINTS = R.id.nav_eco_points;
-    protected static final int NAVDRAWER_ITEM_TRIPS = R.id.nav_trips;
     static final int NAVDRAWER_ITEM_TIMETABLES = R.id.nav_timetables;
     static final int NAVDRAWER_ITEM_NEWS = R.id.nav_news;
     protected static final int NAVDRAWER_ITEM_PARKING = R.id.nav_parking;
@@ -219,7 +218,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Naviga
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem menuItem) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         mDrawerLayout.closeDrawers();
 
         onNavDrawerItemClicked(menuItem.getItemId());
@@ -312,9 +311,6 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Naviga
                 break;
             case NAVDRAWER_ITEM_ECO_POINTS:
                 createBackStack(new Intent(this, EcoPointsActivity.class));
-                break;
-            case NAVDRAWER_ITEM_TRIPS:
-                createBackStack(new Intent(this, TripsActivity.class));
                 break;
             case NAVDRAWER_ITEM_TIMETABLES:
                 createBackStack(new Intent(this, TimetableActivity.class));

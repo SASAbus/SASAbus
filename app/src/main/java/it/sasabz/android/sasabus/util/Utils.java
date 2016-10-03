@@ -37,11 +37,9 @@ import java.util.Locale;
 
 import javax.net.ssl.SSLException;
 
-import io.realm.Realm;
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
 import it.sasabz.android.sasabus.realm.UserRealmHelper;
-import it.sasabz.android.sasabus.realm.user.Trip;
 
 /**
  * Utility class which holds various methods to help with things like logging exceptions.
@@ -181,17 +179,6 @@ public final class Utils {
                 beacon.lastSeen - beacon.getStartDate().getTime() < 600000) {
             throwTripError(context, "Trip " + beacon.id + " invalid -> getOrigin == getStopStation: " +
                     beacon.origin + ", " + beacon.destination);
-            return false;
-        }
-
-        Realm realm = Realm.getDefaultInstance();
-
-        Trip trip = realm.where(Trip.class).equalTo("hash", beacon.getHash()).findFirst();
-
-        //noinspection SimplifiableIfStatement
-        if (trip != null) {
-            // Trip is already in db.
-            // We do not care about this error so do not show an error notification
             return false;
         }
 

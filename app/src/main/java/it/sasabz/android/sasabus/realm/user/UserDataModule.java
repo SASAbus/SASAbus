@@ -33,9 +33,6 @@ import io.realm.annotations.RealmModule;
         FilterLine.class,
         PlannedTrip.class,
         RecentRoute.class,
-        Survey.class,
-        Trip.class,
-        TripToDelete.class
 })
 public class UserDataModule {
 }

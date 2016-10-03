@@ -41,11 +41,9 @@ import it.sasabz.android.sasabus.realm.user.FavoriteBusStop;
 import it.sasabz.android.sasabus.realm.user.FavoriteLine;
 import it.sasabz.android.sasabus.realm.user.FilterLine;
 import it.sasabz.android.sasabus.realm.user.RecentRoute;
-import it.sasabz.android.sasabus.realm.user.Trip;
 import it.sasabz.android.sasabus.realm.user.UserDataModule;
 import it.sasabz.android.sasabus.sync.TripSyncHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.Strings;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.schedulers.Schedulers;
 
@@ -56,7 +54,7 @@ public final class UserRealmHelper {
     /**
      * Version should not be in YY MM DD Rev. format as it makes upgrading harder.
      */
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
     private static final String DB_NAME = "default.realm";
 
     @SuppressLint("StaticFieldLeak")
@@ -92,13 +90,17 @@ public final class UserRealmHelper {
 
             RealmSchema schema = realm.getSchema();
 
-            // Version 3 adds the EarnedBadge class, which saves the ids of the earned badges.
             if (oldVersion == 1) {
-                schema.create("EarnedBadge")
-                        .addField("id", int.class)
-                        .addField("sent", boolean.class);
+                schema.remove("Trip");
+                schema.remove("TripToDelete");
+                schema.remove("Survey");
 
                 oldVersion++;
+            }
+
+            if (oldVersion < newVersion) {
+                throw new IllegalStateException(String.format("Missing upgrade from %s to %s",
+                        oldVersion, newVersion));
             }
         }
     }
@@ -295,15 +297,7 @@ public final class UserRealmHelper {
         int endIndex = stopIndex + 1 > stops.size() ? stops.size() : stopIndex + 1;
         List<Integer> stopList = stops.subList(0, endIndex);
 
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < stopList.size(); i++) {
-            sb.append(stopList.get(i)).append(',');
-        }
-
-        if (sb.length() > 0) {
-            sb.setLength(sb.length() - 1);
-        } else {
+        if (stopList.isEmpty()) {
             Utils.throwTripError(sContext, "Trip " + beacon.id + " invalid -> sb.length() == 0\n\n" +
                     "list: " + Arrays.toString(beacon.busStops.toArray()) + "\n\n" +
                     "start: " + beacon.origin + '\n' +
@@ -312,54 +306,23 @@ public final class UserRealmHelper {
             return false;
         }
 
-        Realm realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-
-        Trip trip = realm.createObject(Trip.class);
-        trip.setHash(beacon.getHash());
-        trip.setLine(beacon.lineId);
-        trip.setVehicle(beacon.id);
-        trip.setVariant(beacon.variant);
-        trip.setTrip(beacon.trip);
-        trip.setOrigin(beacon.origin);
-        trip.setDestination(beacon.destination);
-        trip.setDeparture(beacon.getStartDate().getTime() / 1000);
-        trip.setArrival(beacon.lastSeen / 1000);
-        trip.setPath(sb.toString());
-        trip.setFuelPrice(beacon.fuelPrice);
-
-        realm.commitTransaction();
-        realm.close();
-
         LogUtils.e(TAG, "Inserted trip " + beacon.getHash());
 
-        CloudTrip cloudTrip = new CloudTrip(trip);
+        CloudTrip cloudTrip = new CloudTrip(
+                beacon.getHash(),
+                beacon.lineId,
+                beacon.variant,
+                beacon.trip,
+                beacon.id,
+                beacon.origin,
+                beacon.destination,
+                (int) beacon.getStartDate().getTime() / 1000,
+                (int) beacon.lastSeen / 1000, stopList
+        );
+
         TripSyncHelper.upload(context, Collections.singletonList(cloudTrip), Schedulers.io());
 
         return true;
-    }
-
-    public static void insertTrip(CloudTrip cloudTrip) {
-        Realm realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-
-        Trip trip = realm.createObject(Trip.class);
-        trip.setHash(cloudTrip.getHash());
-        trip.setLine(cloudTrip.getLine());
-        trip.setVehicle(cloudTrip.getVehicle());
-        trip.setVariant(cloudTrip.getVariant());
-        trip.setTrip(cloudTrip.getTrip());
-        trip.setOrigin(cloudTrip.getOrigin());
-        trip.setDestination(cloudTrip.getDestination());
-        trip.setDeparture(cloudTrip.getDeparture());
-        trip.setArrival(cloudTrip.getArrival());
-        trip.setPath(Strings.listToString(cloudTrip.getPath(), Strings.DEFAULT_DELIMITER));
-        trip.setFuelPrice(cloudTrip.getDieselPrice());
-
-        realm.commitTransaction();
-        realm.close();
-
-        LogUtils.e(TAG, "Inserted trip " + cloudTrip.getHash());
     }
 
 

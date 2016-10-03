@@ -17,6 +17,9 @@
 
 package it.sasabz.android.sasabus.model.trip;
 
+import it.sasabz.android.sasabus.network.rest.model.CloudTrip;
+import it.sasabz.android.sasabus.util.Strings;
+
 public class Trip {
 
     private final int line;
@@ -29,14 +32,12 @@ public class Trip {
     private final long stopTime;
     private final String tripList;
     private final String hash;
-    private final float fuelPrice;
 
     private String origin;
     private String destination;
 
     public Trip(String hash, int lineId, int variant, int tripId, int vehicle,
-                int startStation, int stopStation, long startTime, long stopTime, String tripList,
-                float fuelPrice) {
+                int startStation, int stopStation, long startTime, long stopTime, String tripList) {
 
         line = lineId;
         this.variant = variant;
@@ -48,10 +49,9 @@ public class Trip {
         this.stopTime = stopTime;
         this.tripList = tripList;
         this.hash = hash;
-        this.fuelPrice = fuelPrice;
     }
 
-    public Trip(it.sasabz.android.sasabus.realm.user.Trip trip) {
+    public Trip(CloudTrip trip) {
         line = trip.getLine();
         variant = trip.getVariant();
         this.trip = trip.getTrip();
@@ -60,9 +60,8 @@ public class Trip {
         stopStation = trip.getDestination();
         startTime = trip.getDeparture();
         stopTime = trip.getArrival();
-        tripList = trip.getPath();
+        tripList = Strings.listToString(trip.getPath(), Strings.DEFAULT_DELIMITER);
         hash = trip.getHash();
-        fuelPrice = trip.getFuelPrice();
     }
 
     public int getLine() {
@@ -103,10 +102,6 @@ public class Trip {
 
     public String getHash() {
         return hash;
-    }
-
-    public float getFuelPrice() {
-        return fuelPrice;
     }
 
     public CharSequence getOrigin() {
