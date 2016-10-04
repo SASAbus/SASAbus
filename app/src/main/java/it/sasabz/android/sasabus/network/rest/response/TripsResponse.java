@@ -63,7 +63,6 @@ public class TripsResponse {
 
         @SerializedName("bus_stop")
         private int busStop;
-
         @SerializedName("path")
         private List<Integer> path;
 

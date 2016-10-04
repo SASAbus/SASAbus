@@ -45,11 +45,6 @@
             android:title="@string/eco_points"/>
 
         <item
-            android:id="@+id/nav_planned_trips"
-            android:icon="@drawable/ic_event_white_48dp"
-            android:title="@string/planned_trips"/>
-
-        <item
             android:id="@+id/nav_news"
             android:icon="@drawable/ic_event_note_white_48dp"
             android:title="@string/news"/>

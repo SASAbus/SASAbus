@@ -47,7 +47,6 @@ import it.sasabz.android.sasabus.ui.intro.Intro;
 import it.sasabz.android.sasabus.ui.intro.data.IntroData;
 import it.sasabz.android.sasabus.ui.line.LinesActivity;
 import it.sasabz.android.sasabus.ui.parking.ParkingActivity;
-import it.sasabz.android.sasabus.ui.plannedtrip.PlannedTripsActivity;
 import it.sasabz.android.sasabus.ui.route.RouteActivity;
 import it.sasabz.android.sasabus.util.Changelog;
 import it.sasabz.android.sasabus.util.LogUtils;
@@ -96,7 +95,6 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Naviga
     static final int NAVDRAWER_ITEM_TIMETABLES = R.id.nav_timetables;
     static final int NAVDRAWER_ITEM_NEWS = R.id.nav_news;
     protected static final int NAVDRAWER_ITEM_PARKING = R.id.nav_parking;
-    protected static final int NAVDRAWER_ITEM_PLANNED_TRIPS = R.id.nav_planned_trips;
     protected static final int NAVDRAWER_ITEM_INVALID = -1;
 
     /**
@@ -320,9 +318,6 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Naviga
                 break;
             case NAVDRAWER_ITEM_PARKING:
                 createBackStack(new Intent(this, ParkingActivity.class));
-                break;
-            case NAVDRAWER_ITEM_PLANNED_TRIPS:
-                createBackStack(new Intent(this, PlannedTripsActivity.class));
                 break;
             default:
                 throw new IllegalStateException("Unknown nav drawer item id " + item);

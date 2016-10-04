@@ -37,17 +37,11 @@ public final class Config {
 
     public static final int NOTIFICATION_BUS = 1 << 18;
 
-    public static final int NOTIFICATION_TRIP_DEPARTURE = 1 << 17;
+    public static final int SYNC_ALARM_ID = 1 << 17;
 
-    public static final int NOTIFICATION_PLANNED_TRIP_DEPARTURE_AT = 1 << 16;
+    public static final int NOTIFICATION_BADGE = 1 << 16;
 
-    public static final int NOTIFICATION_PLANNED_TRIP_DEPARTURE_IN = 1 << 15;
-
-    public static final int SYNC_ALARM_ID = 1 << 14;
-
-    public static final int NOTIFICATION_BADGE = 1 << 13;
-
-    public static final int NOTIFICATION_EVENT = 1 << 10;
+    public static final int NOTIFICATION_EVENT = 1 << 15;
 
     /**
      * The delay between the line fragments finishing loading and starting the internet data fetch.
@@ -77,11 +71,6 @@ public final class Config {
     public static final String EXTRA_VEHICLE = "EXTRA_VEHICLE";
 
     /**
-     * Static constant for intent extras
-     */
-    public static final String EXTRA_DISPLAY_BUS = "EXTRA_DISPLAY_BUS";
-
-    /**
      * Static constant for route departure id used to pass
      * the station id to route results
      */
@@ -102,11 +91,6 @@ public final class Config {
      * Static constant for a trip hash intent extra
      */
     public static final String EXTRA_TRIP = "EXTRA_TRIP";
-
-    /**
-     * Static constant for a planned trip hash intent extra
-     */
-    public static final String EXTRA_PLANNED_TRIP_HASH = "EXTRA_PLANNED_TRIP_HASH";
 
     /**
      * Static constant for a news notification intent extra

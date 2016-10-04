@@ -44,13 +44,11 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.beacon.ecopoints.badge.Badge;
 import it.sasabz.android.sasabus.beacon.survey.SurveyActivity;
 import it.sasabz.android.sasabus.model.BusStopDetail;
-import it.sasabz.android.sasabus.model.line.Lines;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.ui.MapActivity;
 import it.sasabz.android.sasabus.ui.NewsActivity;
 import it.sasabz.android.sasabus.ui.busstop.BusStopDetailActivity;
 import it.sasabz.android.sasabus.ui.ecopoints.EcoPointsActivity;
-import it.sasabz.android.sasabus.ui.plannedtrip.PlannedTripsViewActivity;
 
 /**
  * Utility class to display notifications. Also handles scheduling planned trip notifications.
@@ -445,97 +443,6 @@ public final class NotificationUtils {
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(new Random().nextInt(100) + 10000, mBuilder.build());
     }
-
-    /**
-     * Shows a brief information about when a planned trip line will depart at the selected bus stop.
-     * As does not have to depart exactly at the time the user selected, telling him when the line
-     * will actually depart is important.
-     *
-     * @param context Context to access the {@link NotificationManager}.
-     * @param hash    Planned trip hash.
-     * @param line    The selected line.
-     * @param title   The title the user chose
-     * @param time    the time when the line will depart at the selected bus stop.
-     */
-    public static void plannedTripDepartureAt(Context context, String hash, int line,
-                                              CharSequence title, String time) {
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-                .setContentTitle(title)
-                .setContentText(context.getString(R.string.notification_planned_trip_departs_at_content,
-                        Lines.lidToName(line), time))
-                .setSmallIcon(R.drawable.ic_bus)
-                .setAutoCancel(true)
-                .setLights(ContextCompat.getColor(context, R.color.primary_teal), 500, 5000)
-                .setColor(ContextCompat.getColor(context, R.color.primary_teal))
-                .setPriority(NotificationCompat.PRIORITY_LOW)
-                .setVibrate(new long[]{VIBRATION_TIME_MILLIS, VIBRATION_TIME_MILLIS})
-                .setCategory(NotificationCompat.CATEGORY_EVENT);
-
-        Intent resultIntent = new Intent(context, PlannedTripsViewActivity.class);
-        resultIntent.putExtra(Config.EXTRA_PLANNED_TRIP_HASH, hash);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,
-                Config.NOTIFICATION_PLANNED_TRIP_DEPARTURE_AT * hash.hashCode(),
-                resultIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-
-        mBuilder.setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager =
-                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(Config.NOTIFICATION_TRIP_DEPARTURE, mBuilder.build());
-    }
-
-    /**
-     * Shows a reminder that a planned trip will depart soon.
-     *
-     * @param context Context to access the {@link NotificationManager}.
-     * @param id      Planned trip id.
-     * @param line    The selected line.
-     * @param delay   The current delay of the bus.
-     * @param vehicle Vehicle id to allow the user to view the bus on the map.
-     * @param title   The title the user chose
-     * @param minutes The minutes when the bus will depart.
-     */
-    public static void plannedTripDepartureIn(Context context, int id, int line, int delay,
-                                              int vehicle, CharSequence title, int minutes) {
-
-        String text;
-        if (delay == 0 && vehicle == 0) {
-            text = context.getString(R.string.notification_planned_trip_departs_in_content_1,
-                    Lines.lidToName(line), minutes);
-        } else {
-            text = context.getString(R.string.notification_planned_trip_departs_in_content_2,
-                    Lines.lidToName(line), minutes, delay);
-        }
-
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-                .setContentTitle(title)
-                .setContentText(text)
-                .setSmallIcon(R.drawable.ic_bus)
-                .setAutoCancel(true)
-                .setLights(ContextCompat.getColor(context, R.color.primary_teal), 500, 5000)
-                .setColor(ContextCompat.getColor(context, R.color.primary_teal))
-                .setPriority(NotificationCompat.PRIORITY_LOW)
-                .setVibrate(new long[]{VIBRATION_TIME_MILLIS, VIBRATION_TIME_MILLIS})
-                .setCategory(NotificationCompat.CATEGORY_EVENT);
-
-        Intent resultIntent = new Intent(context, MapActivity.class);
-        resultIntent.putExtra(Config.EXTRA_VEHICLE, vehicle);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,
-                Config.NOTIFICATION_PLANNED_TRIP_DEPARTURE_IN * id,
-                resultIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-
-        mBuilder.setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager =
-                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(Config.NOTIFICATION_TRIP_DEPARTURE, mBuilder.build());
-    }
-
 
     /**
      * Cancels a shown notification.
