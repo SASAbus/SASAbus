@@ -81,7 +81,6 @@ public final class Endpoint {
     public static final String VALIDITY_TIMETABLES = "validity/timetables/{date}";
 
     public static final String CLOUD_TRIPS = "sync/trips";
-    public static final String CLOUD_TRIPS_DELETE = "sync/trips/{hash}";
 
     private Endpoint() {
     }

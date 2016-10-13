@@ -101,6 +101,22 @@ class JSInterface {
     }
 
     @JavascriptInterface
+    public String getNowAtString(String stop) {
+        return context.getString(R.string.line_current_stop, stop);
+    }
+
+
+    @JavascriptInterface
+    public String getLineString(int line) {
+        return context.getString(R.string.line_format, String.valueOf(line));
+    }
+
+    @JavascriptInterface
+    public String getHeadingToString(String stop) {
+        return context.getString(R.string.line_heading, stop);
+    }
+
+    @JavascriptInterface
     public void onBusStopDetailsClick(int id) {
         Intent intent = new Intent(context, BusStopDetailActivity.class);
         intent.putExtra(Config.EXTRA_STATION_ID, id);
