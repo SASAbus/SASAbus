@@ -45,6 +45,7 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.beacon.BeaconService;
 import it.sasabz.android.sasabus.receiver.BluetoothReceiver;
 import it.sasabz.android.sasabus.receiver.LocationReceiver;
+import it.sasabz.android.sasabus.ui.busstop.BusStopActivity;
 import it.sasabz.android.sasabus.ui.widget.PreferenceFragment;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
@@ -151,7 +152,7 @@ public class PreferenceActivity extends AppCompatActivity {
             position = 0;
         } else {
             if (update) {
-                Intent intent = new Intent(this, MapActivity.class);
+                Intent intent = new Intent(this, BusStopActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

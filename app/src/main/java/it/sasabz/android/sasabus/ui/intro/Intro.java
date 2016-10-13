@@ -35,6 +35,7 @@ import it.sasabz.android.sasabus.network.NetUtils;
 import it.sasabz.android.sasabus.sync.SyncHelper;
 import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.ui.MapActivity;
+import it.sasabz.android.sasabus.ui.busstop.BusStopActivity;
 import it.sasabz.android.sasabus.ui.intro.data.IntroFragmentData;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.CustomTabsHelper;
@@ -144,7 +145,7 @@ public class Intro extends AppIntro {
 
         SettingsUtils.markIntroAsShown(this);
 
-        Intent intent = new Intent(this, MapActivity.class);
+        Intent intent = new Intent(this, BusStopActivity.class);
         intent.setAction(BaseActivity.ACTION_NO_CHANGELOG);
         startActivity(intent);
 
