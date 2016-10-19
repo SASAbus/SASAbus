@@ -40,7 +40,6 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.model.BusStopDetail;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.ui.line.LineCourseActivity;
-import it.sasabz.android.sasabus.ui.line.LineDetailActivity;
 import it.sasabz.android.sasabus.util.Utils;
 
 /**

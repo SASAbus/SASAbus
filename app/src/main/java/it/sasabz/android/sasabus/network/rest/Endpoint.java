@@ -29,19 +29,19 @@ public final class Endpoint {
 
     public static final String API = NetUtils.HOST + "/v1/";
 
-    public static final String REALTIME = "realtime/{language}";
+    public static final String REALTIME = "realtime";
     public static final String REALTIME_VEHICLE = "realtime/vehicle/{id}";
     public static final String REALTIME_DELAYS = "realtime/delays";
     public static final String REALTIME_LINE = "realtime/line/{id}";
     public static final String REALTIME_TRIP = "realtime/trip/{id}";
 
-    public static final String NEWS = "news/{language}";
-    public static final String PARKING = "parking/{language}";
-    public static final String PARKING_ID = "parking/{language}/id/{id}";
+    public static final String NEWS = "news";
+    public static final String PARKING = "parking";
+    public static final String PARKING_ID = "parking/id/{id}";
     public static final String PATHS = "paths/{id}";
-    public static final String ROUTE = "route/{language}/from/{from}/to/{to}/on/{date}/at/{time}/walk/{walk}/results/{results}";
+    public static final String ROUTE = "route/from/{from}/to/{to}/on/{date}/at/{time}/walk/{walk}/results/{results}";
     public static final String BEACONS = "beacons";
-    public static final String TRAFFIC_LIGHT = "traffic_light/{language}/{city}";
+    public static final String TRAFFIC_LIGHT = "traffic_light/{city}";
 
     public static final String USER_LOGIN = "auth/login";
     public static final String USER_REGISTER = "auth/register";
@@ -72,10 +72,10 @@ public final class Endpoint {
 
     public static final String TRIPS_VEHICLE = "vehicles/id/{id}/trips";
 
-    public static final String LINES_ALL = "lines/{language}";
+    public static final String LINES_ALL = "lines";
     public static final String LINES_HYDROGEN = "realtime/h2";
-    public static final String LINES_FILTER = "lines/{language}/line/{lines}";
-    public static final String LINES = "lines/{language}/line/{id}";
+    public static final String LINES_FILTER = "lines/line/{lines}";
+    public static final String LINES = "lines/line/{id}";
 
     public static final String VALIDITY_DATA = "validity/data/{date}";
     public static final String VALIDITY_TIMETABLES = "validity/timetables/{date}";

@@ -22,15 +22,15 @@ import android.os.Parcelable;
 
 public final class Line implements Parcelable {
 
-    private final int id;
-    private final int days;
+    public final int id;
+    public final int days;
 
-    private final String name;
-    private final String origin;
-    private final String destination;
-    private final String city;
-    private final String info;
-    private final String zone;
+    public final String name;
+    public final String origin;
+    public final String destination;
+    public final String city;
+    public final String info;
+    public final String zone;
 
     private Line(Parcel in) {
         id = in.readInt();

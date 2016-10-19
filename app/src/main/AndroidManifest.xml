@@ -217,7 +217,7 @@
         <!-- Lines -->
 
         <activity
-            android:name="it.sasabz.android.sasabus.ui.line.LineDetailActivity"
+            android:name="it.sasabz.android.sasabus.ui.line.LineDetailsActivity"
             android:label="@string/lines_detail"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.Indigo"/>
@@ -230,7 +230,7 @@
         <activity
             android:name="it.sasabz.android.sasabus.ui.line.LinePathActivity"
             android:label="@string/lines_path"
-            android:parentActivityName="it.sasabz.android.sasabus.ui.line.LineDetailActivity"
+            android:parentActivityName="it.sasabz.android.sasabus.ui.line.LineDetailsActivity"
             android:theme="@style/AppTheme.Indigo"/>
 
 

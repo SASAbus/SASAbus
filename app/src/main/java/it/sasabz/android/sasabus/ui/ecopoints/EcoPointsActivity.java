@@ -99,7 +99,7 @@ public class EcoPointsActivity extends BaseActivity {
 
         AnalyticsHelper.sendScreenView(TAG);
 
-        TabsAdapter mAdapter = new TabsAdapter(getSupportFragmentManager(), false);
+        TabsAdapter mAdapter = new TabsAdapter(getSupportFragmentManager());
 
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.white));

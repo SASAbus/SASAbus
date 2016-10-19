@@ -116,9 +116,11 @@ public class BusStopActivity extends BaseActivity {
         setContentView(R.layout.activity_bus_stops);
         ButterKnife.bind(this);
 
+        getSupportActionBar().setTitle(R.string.stations);
+
         AnalyticsHelper.sendScreenView(TAG);
 
-        mAdapter = new TabsAdapter(getSupportFragmentManager(), true);
+        mAdapter = new TabsAdapter(getSupportFragmentManager());
 
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.white));
@@ -171,9 +173,9 @@ public class BusStopActivity extends BaseActivity {
             mMapFragment = new MapFragment();
         }
 
-        mAdapter.addFragment(mFavoritesFragment, getString(R.string.favorites));
-        mAdapter.addFragment(mListFragment, getString(R.string.station_tab_list));
-        mAdapter.addFragment(mMapFragment, getString(R.string.map));
+        mAdapter.addFragment(mFavoritesFragment, null);
+        mAdapter.addFragment(mListFragment, null);
+        mAdapter.addFragment(mMapFragment, null);
 
         mViewPager.setAdapter(mAdapter);
 

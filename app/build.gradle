@@ -143,6 +143,9 @@ dependencies {
 
     // QR-Code generator
     compile 'com.github.kenglxn.QRGen:android:2.2.0'
+
+    // Timber
+    compile 'com.jakewharton.timber:timber:4.3.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

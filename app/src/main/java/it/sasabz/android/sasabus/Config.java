@@ -31,6 +31,11 @@ public final class Config {
     private Config() {
     }
 
+    public static final int[] REFRESH_COLORS = {
+            R.color.primary_amber, R.color.primary_red,
+            R.color.primary_green, R.color.primary_indigo
+    };
+
     public static final int NOTIFICATION_SURVEY = 1 << 20;
 
     public static final int NOTIFICATION_TRIP_SUCCESS = 1 << 19;

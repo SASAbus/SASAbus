@@ -449,7 +449,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
             mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
 
             RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
-            realtimeApi.get(locale())
+            realtimeApi.get()
                     .compose(bindToLifecycle())
                     .subscribeOn(Schedulers.newThread())
                     .map(realtimeResponse -> {
@@ -475,7 +475,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
                     .subscribe(this);
 
             TrafficLightApi trafficLightApi = RestClient.ADAPTER.create(TrafficLightApi.class);
-            trafficLightApi.trafficLight(locale(), SettingsUtils.getTrafficLightCity(MapActivity.this))
+            trafficLightApi.trafficLight(SettingsUtils.getTrafficLightCity(MapActivity.this))
                     .compose(bindToLifecycle())
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())

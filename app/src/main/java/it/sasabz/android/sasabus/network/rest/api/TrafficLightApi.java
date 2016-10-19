@@ -26,5 +26,5 @@ import rx.Observable;
 public interface TrafficLightApi {
 
     @GET(Endpoint.TRAFFIC_LIGHT)
-    Observable<TrafficLightResponse> trafficLight(@Path("language") String language, @Path("city") String city);
+    Observable<TrafficLightResponse> trafficLight(@Path("city") String city);
 }

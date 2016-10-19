@@ -78,10 +78,10 @@ import rx.schedulers.Schedulers;
  * @author Alex Lardschneider
  * @author David Dejori
  */
-public class LineDetailActivity extends RxAppCompatActivity implements OnClickListener,
+public class LineDetailsActivity extends RxAppCompatActivity implements OnClickListener,
         OnLongClickListener {
 
-    private static final String TAG = "LineDetailActivity";
+    private static final String TAG = "LineDetailsActivity";
     private static final String SCREEN_LABEL = "Line details";
 
     private final ArrayList<LineDetail> mItems = new ArrayList<>();
@@ -291,10 +291,9 @@ public class LineDetailActivity extends RxAppCompatActivity implements OnClickLi
                 }
             });
         } else {
-            String locale = Utils.locale(this);
             LinesApi linesApi = RestClient.ADAPTER.create(LinesApi.class);
 
-            return linesApi.line(locale, lineId)
+            return linesApi.line(lineId)
                     .map(linesAllResponse -> {
                         List<Line> lines = linesAllResponse.lines;
 
@@ -329,7 +328,7 @@ public class LineDetailActivity extends RxAppCompatActivity implements OnClickLi
                     return;
                 }
 
-                if (!NetUtils.isOnline(LineDetailActivity.this) && LineDetailActivity.this.line != null) {
+                if (!NetUtils.isOnline(LineDetailsActivity.this) && LineDetailsActivity.this.line != null) {
                     items.add(new LineDetail(null, 0, null, null, "nointernet", 0, false));
 
                     subscriber.onNext(items);
@@ -349,7 +348,7 @@ public class LineDetailActivity extends RxAppCompatActivity implements OnClickLi
 
                             String lastStationName = BusStopRealmHelper.getName(lastStationID);
 
-                            List<BusStop> path = Trips.getPath(LineDetailActivity.this, bus.trip);
+                            List<BusStop> path = Trips.getPath(LineDetailsActivity.this, bus.trip);
 
                             if (path != null && !path.isEmpty()) {
                                 String lastTime = path.get(path.size() - 1).getTime();

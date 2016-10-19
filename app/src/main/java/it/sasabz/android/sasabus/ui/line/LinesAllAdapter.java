@@ -15,11 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.sasabz.android.sasabus.util.recycler;
+package it.sasabz.android.sasabus.ui.line;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Vibrator;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
@@ -35,11 +36,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.model.line.Lines;
 import it.sasabz.android.sasabus.network.rest.model.Line;
 import it.sasabz.android.sasabus.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.ui.BaseActivity;
-import it.sasabz.android.sasabus.ui.line.LineDetailActivity;
-import it.sasabz.android.sasabus.ui.line.LinesActivity;
 
 /**
  * @author Alex Lardschneider
@@ -55,19 +55,22 @@ public class LinesAllAdapter extends RecyclerView.Adapter<LinesAllAdapter.ViewHo
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item_lines_general, viewGroup, false);
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int type) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(
+                R.layout.list_item_lines_general, viewGroup, false);
+
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         Line item = mItems.get(position);
 
-        viewHolder.title.setText(mContext.getString(R.string.line_format, item.getName()));
-        viewHolder.location.setText(item.getCity());
-        viewHolder.departure.setText(item.getOrigin());
-        viewHolder.arrival.setText(item.getDestination());
+        holder.title.setText(item.name);
+        holder.departure.setText(item.origin);
+        holder.arrival.setText(item.destination);
+
+        holder.title.setTextColor(Color.parseColor('#' + Lines.getColorForId(item.id)));
     }
 
     @Override
@@ -80,7 +83,6 @@ public class LinesAllAdapter extends RecyclerView.Adapter<LinesAllAdapter.ViewHo
 
         @BindView(R.id.list_item_lines_all_card) CardView cardView;
         @BindView(R.id.list_lines_all_title) TextView title;
-        @BindView(R.id.list_lines_all_location) TextView location;
         @BindView(R.id.list_lines_all_departure) TextView departure;
         @BindView(R.id.list_lines_all_arrival) TextView arrival;
 
@@ -100,8 +102,8 @@ public class LinesAllAdapter extends RecyclerView.Adapter<LinesAllAdapter.ViewHo
 
             Line item = mItems.get(position);
 
-            Intent intent = new Intent(mContext, LineDetailActivity.class);
-            intent.putExtra(Config.EXTRA_LINE_ID, item.getId());
+            Intent intent = new Intent(mContext, LineDetailsActivity.class);
+            intent.putExtra(Config.EXTRA_LINE_ID, item.id);
             intent.putExtra(Config.EXTRA_LINE, item);
 
             ((Activity) mContext).startActivityForResult(intent, LinesActivity.INTENT_DISPLAY_FAVORITES);
@@ -114,14 +116,14 @@ public class LinesAllAdapter extends RecyclerView.Adapter<LinesAllAdapter.ViewHo
 
             Line item = mItems.get(position);
 
-            if (UserRealmHelper.hasFavoriteLine(item.getId())) {
-                UserRealmHelper.removeFavoriteLine(item.getId());
+            if (UserRealmHelper.hasFavoriteLine(item.id)) {
+                UserRealmHelper.removeFavoriteLine(item.id);
                 Snackbar.make(((BaseActivity) mContext).getMainContent(), mContext.getString(R.string.line_favorites_remove,
-                        item.getName()), Snackbar.LENGTH_SHORT).show();
+                        item.name), Snackbar.LENGTH_SHORT).show();
             } else {
-                UserRealmHelper.addFavoriteLine(item.getId());
+                UserRealmHelper.addFavoriteLine(item.id);
                 Snackbar.make(((BaseActivity) mContext).getMainContent(), mContext.getString(R.string.line_favorites_add,
-                        item.getName()), Snackbar.LENGTH_SHORT).show();
+                        item.name), Snackbar.LENGTH_SHORT).show();
             }
 
             ((LinesActivity) mContext).invalidateFavorites();
@@ -130,6 +132,11 @@ public class LinesAllAdapter extends RecyclerView.Adapter<LinesAllAdapter.ViewHo
             vibrator.vibrate(100);
 
             return true;
+        }
+
+        @Override
+        public String toString() {
+            return "LinesAllAdapter.ViewHolder{} " + super.toString();
         }
     }
 }

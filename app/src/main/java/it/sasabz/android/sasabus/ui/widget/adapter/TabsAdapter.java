@@ -25,14 +25,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TabsAdapter extends FragmentPagerAdapter {
+
     private final List<Fragment> fragments;
     private final List<String> titles;
-    private final boolean displayIcon;
 
-    public TabsAdapter(FragmentManager fragmentManager, boolean displayIcon) {
+    public TabsAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
 
-        this.displayIcon = displayIcon;
         fragments = new ArrayList<>();
         titles = new ArrayList<>();
     }
@@ -54,6 +53,6 @@ public class TabsAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return displayIcon ? null : titles.get(position);
+        return titles.get(position);
     }
 }

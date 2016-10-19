@@ -27,7 +27,7 @@ import rx.Observable;
 public interface RealtimeApi {
 
     @GET(Endpoint.REALTIME)
-    Observable<RealtimeResponse> get(@Path("language") String language);
+    Observable<RealtimeResponse> get();
 
     @GET(Endpoint.REALTIME_VEHICLE)
     Call<RealtimeResponse> vehicle(@Path("id") int vehicle);

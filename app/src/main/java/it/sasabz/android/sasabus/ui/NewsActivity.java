@@ -111,7 +111,7 @@ public class NewsActivity extends BaseActivity {
 
         AnalyticsHelper.sendScreenView(TAG);
 
-        mAdapter = new TabsAdapter(getSupportFragmentManager(), false);
+        mAdapter = new TabsAdapter(getSupportFragmentManager());
 
         Intent intent = getIntent();
 

@@ -29,7 +29,7 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.ui.bus.BusDetailActivity;
 import it.sasabz.android.sasabus.ui.busstop.BusStopDetailActivity;
 import it.sasabz.android.sasabus.ui.line.LineCourseActivity;
-import it.sasabz.android.sasabus.ui.line.LineDetailActivity;
+import it.sasabz.android.sasabus.ui.line.LineDetailsActivity;
 import it.sasabz.android.sasabus.ui.route.RouteMapPickerActivity;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.SettingsUtils;
@@ -66,7 +66,7 @@ class JSInterface {
 
     @JavascriptInterface
     public void onLineClick(int lineId) {
-        Intent intent = new Intent(context, LineDetailActivity.class);
+        Intent intent = new Intent(context, LineDetailsActivity.class);
         intent.putExtra(Config.EXTRA_LINE_ID, lineId);
         context.startActivity(intent);
     }

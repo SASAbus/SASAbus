@@ -33,13 +33,8 @@ public final class RealtimeBus implements Parcelable {
     @SerializedName("line_id")
     public final int lineId;
 
-    @SerializedName("variant")
     public final int variant;
-
-    @SerializedName("vehicle")
     public final int vehicle;
-
-    @SerializedName("trip")
     public final int trip;
 
     @SerializedName("bus_stop")
@@ -48,16 +43,12 @@ public final class RealtimeBus implements Parcelable {
     @SerializedName("delay_min")
     public final int delayMin;
 
-    @SerializedName("departure")
     private final int departure;
 
     @SerializedName("updated_min_ago")
     private final int updatedMinAgo;
 
-    @SerializedName("latitude")
     public final double latitude;
-
-    @SerializedName("longitude")
     public final double longitude;
 
     @SerializedName("color_hue")
@@ -66,19 +57,14 @@ public final class RealtimeBus implements Parcelable {
     @SerializedName("color_hex")
     public final String colorHex;
 
-    @SerializedName("destination")
     public final int destination;
 
-    @SerializedName("path")
     public final List<Integer> path = new ArrayList<>();
 
-    @SerializedName("zone")
-    public final String zone;
+    private final String zone;
 
     public String group;
-
     public String currentStopName;
-
     public String lastStopName;
 
     private RealtimeBus(Parcel in) {
