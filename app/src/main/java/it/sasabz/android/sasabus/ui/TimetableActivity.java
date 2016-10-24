@@ -32,11 +32,11 @@ import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.line.Lines;
-import it.sasabz.android.sasabus.network.rest.Endpoint;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.ValidityApi;
-import it.sasabz.android.sasabus.network.rest.response.ValidityResponse;
+import it.sasabz.android.sasabus.data.model.line.Lines;
+import it.sasabz.android.sasabus.data.network.rest.Endpoint;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.ValidityApi;
+import it.sasabz.android.sasabus.data.network.rest.response.ValidityResponse;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.IOUtils;
 import it.sasabz.android.sasabus.util.LogUtils;

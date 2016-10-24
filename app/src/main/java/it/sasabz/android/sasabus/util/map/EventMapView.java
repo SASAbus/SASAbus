@@ -23,8 +23,8 @@ import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
-import it.sasabz.android.sasabus.network.rest.model.Event;
-import it.sasabz.android.sasabus.network.rest.model.EventPoint;
+import it.sasabz.android.sasabus.data.network.rest.model.Event;
+import it.sasabz.android.sasabus.data.network.rest.model.EventPoint;
 
 public class EventMapView {
 

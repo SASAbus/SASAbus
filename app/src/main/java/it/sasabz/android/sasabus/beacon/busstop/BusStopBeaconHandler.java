@@ -38,18 +38,18 @@ import it.sasabz.android.sasabus.beacon.IBeaconHandler;
 import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
 import it.sasabz.android.sasabus.beacon.bus.BusBeaconHandler;
 import it.sasabz.android.sasabus.beacon.ecopoints.BadgeHelper;
+import it.sasabz.android.sasabus.data.model.BusStop;
+import it.sasabz.android.sasabus.data.model.Departure;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.RealtimeApi;
+import it.sasabz.android.sasabus.data.network.rest.model.RealtimeBus;
+import it.sasabz.android.sasabus.data.network.rest.response.RealtimeResponse;
+import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.data.vdv.DepartureMonitor;
 import it.sasabz.android.sasabus.data.vdv.model.VdvDeparture;
-import it.sasabz.android.sasabus.model.BusStop;
-import it.sasabz.android.sasabus.model.Departure;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.RealtimeApi;
-import it.sasabz.android.sasabus.network.rest.model.RealtimeBus;
-import it.sasabz.android.sasabus.network.rest.response.RealtimeResponse;
-import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
-import it.sasabz.android.sasabus.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.NotificationUtils;
+import it.sasabz.android.sasabus.util.Notifications;
 import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
@@ -133,7 +133,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
         }
 
         for (int i = 0; i < 6000; i++) {
-            NotificationUtils.cancel(mContext, i);
+            Notifications.cancel(mContext, i);
         }
 
         mBeaconMap.clear();
@@ -230,7 +230,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
             beaconInfo.setDistance(beacon.getDistance());
 
             if (beaconInfo.distance > BEACON_NOTIFICATION_DISTANCE) {
-                NotificationUtils.cancel(mContext, major);
+                Notifications.cancel(mContext, major);
             }
 
             LogUtils.i(TAG, "Beacon " + major + ", seen: " + beaconInfo.seenSeconds +
@@ -241,7 +241,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
             LogUtils.e(TAG, "Added beacon " + major);
 
             UserRealmHelper.addBeacon(beacon,
-                    it.sasabz.android.sasabus.realm.user.Beacon.TYPE_BUS_STOP);
+                    it.sasabz.android.sasabus.data.realm.user.Beacon.TYPE_BUS_STOP);
         }
     }
 
@@ -256,7 +256,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
             return;
         }
 
-        it.sasabz.android.sasabus.realm.busstop.BusStop busStop =
+        it.sasabz.android.sasabus.data.realm.busstop.BusStop busStop =
                 BusStopRealmHelper.getBusStopOrNull(major);
 
         if (busStop != null) {
@@ -303,7 +303,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
                     BusStopBeacon beacon = entry.getValue();
 
                     if (beacon.lastSeen < System.currentTimeMillis() - BEACON_REMOVAL_TIME) {
-                        NotificationUtils.cancel(mContext, beacon.id);
+                        Notifications.cancel(mContext, beacon.id);
 
                         if (currentBusStop != null && beacon.id == currentBusStop.second.getId()) {
                             BusBeaconHandler.getInstance(mContext)
@@ -332,7 +332,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
         Collections.sort(beacons, (lhs, rhs) -> (int) (lhs.distance - rhs.distance));
 
         for (BusStopBeacon beacon : beacons) {
-            it.sasabz.android.sasabus.realm.busstop.BusStop busStop = BusStopRealmHelper
+            it.sasabz.android.sasabus.data.realm.busstop.BusStop busStop = BusStopRealmHelper
                     .getBusStopOrNull(beacon.id);
 
             if (busStop != null) {
@@ -371,7 +371,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
                             public void onError(Throwable e) {
                                 Utils.logException(e);
 
-                                NotificationUtils.busStop(mContext, beacon.id, departures);
+                                Notifications.busStop(mContext, beacon.id, departures);
                                 beacon.setNotificationShown();
                             }
 
@@ -390,7 +390,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
                                     }
                                 }
 
-                                NotificationUtils.busStop(mContext, beacon.id, departures);
+                                Notifications.busStop(mContext, beacon.id, departures);
                                 beacon.setNotificationShown();
                             }
                         });

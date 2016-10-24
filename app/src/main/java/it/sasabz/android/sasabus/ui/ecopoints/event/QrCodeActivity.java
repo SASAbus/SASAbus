@@ -47,7 +47,7 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.network.rest.model.Event;
+import it.sasabz.android.sasabus.data.network.rest.model.Event;
 import it.sasabz.android.sasabus.util.HashUtils;
 import it.sasabz.android.sasabus.util.LogUtils;
 

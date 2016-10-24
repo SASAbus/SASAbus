@@ -47,10 +47,10 @@ import com.bumptech.glide.Glide;
 
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.Bus;
-import it.sasabz.android.sasabus.model.Buses;
-import it.sasabz.android.sasabus.model.Vehicle;
-import it.sasabz.android.sasabus.network.rest.api.ReportApi;
+import it.sasabz.android.sasabus.data.model.Bus;
+import it.sasabz.android.sasabus.data.model.Buses;
+import it.sasabz.android.sasabus.data.model.Vehicle;
+import it.sasabz.android.sasabus.data.network.rest.api.ReportApi;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.ReportHelper;
 import it.sasabz.android.sasabus.util.Utils;

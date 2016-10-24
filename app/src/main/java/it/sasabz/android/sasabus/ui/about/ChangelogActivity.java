@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.Changelog;
+import it.sasabz.android.sasabus.data.model.Changelog;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.DeviceUtils;
 import it.sasabz.android.sasabus.util.Utils;

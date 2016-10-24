@@ -59,17 +59,17 @@ import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.beacon.BeaconHandler;
 import it.sasabz.android.sasabus.beacon.busstop.BusStopBeaconHandler;
+import it.sasabz.android.sasabus.data.model.Departure;
+import it.sasabz.android.sasabus.data.network.NetUtils;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.RealtimeApi;
+import it.sasabz.android.sasabus.data.network.rest.model.RealtimeBus;
+import it.sasabz.android.sasabus.data.network.rest.response.RealtimeResponse;
+import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
+import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.data.vdv.DepartureMonitor;
 import it.sasabz.android.sasabus.data.vdv.model.VdvDeparture;
-import it.sasabz.android.sasabus.model.Departure;
-import it.sasabz.android.sasabus.network.NetUtils;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.RealtimeApi;
-import it.sasabz.android.sasabus.network.rest.model.RealtimeBus;
-import it.sasabz.android.sasabus.network.rest.response.RealtimeResponse;
-import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
-import it.sasabz.android.sasabus.realm.UserRealmHelper;
-import it.sasabz.android.sasabus.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.ui.widget.RecyclerItemDivider;
 import it.sasabz.android.sasabus.util.AnimUtils;
@@ -362,7 +362,8 @@ public class DepartureActivity extends BaseActivity implements View.OnClickListe
 
             Timber.i("Beacons are enabled, trying to get nearby bus stop");
 
-            Pair<Integer, it.sasabz.android.sasabus.model.BusStop> nearbyBusStop = BusStopBeaconHandler.getInstance(this).getCurrentBusStop();
+            Pair<Integer, it.sasabz.android.sasabus.data.model.BusStop> nearbyBusStop =
+                    BusStopBeaconHandler.getInstance(this).getCurrentBusStop();
             if (nearbyBusStop != null) {
                 Timber.i("Got beacon bus stop %s", nearbyBusStop.second.getId());
 

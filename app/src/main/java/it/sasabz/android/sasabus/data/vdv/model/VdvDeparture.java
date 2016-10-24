@@ -17,11 +17,11 @@
 
 package it.sasabz.android.sasabus.data.vdv.model;
 
+import it.sasabz.android.sasabus.data.model.Departure;
+import it.sasabz.android.sasabus.data.model.line.Lines;
+import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.data.vdv.Api;
-import it.sasabz.android.sasabus.model.Departure;
-import it.sasabz.android.sasabus.model.line.Lines;
-import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
-import it.sasabz.android.sasabus.realm.busstop.BusStop;
 
 /**
  * Represents a tripId identifiable by an unique ID, in JSON format described with the parameter

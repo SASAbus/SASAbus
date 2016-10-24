@@ -23,10 +23,10 @@ import android.content.Context;
 import android.widget.RemoteViews;
 
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.Parking;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.ParkingApi;
-import it.sasabz.android.sasabus.network.rest.response.ParkingResponse;
+import it.sasabz.android.sasabus.data.model.Parking;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.ParkingApi;
+import it.sasabz.android.sasabus.data.network.rest.response.ParkingResponse;
 import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;

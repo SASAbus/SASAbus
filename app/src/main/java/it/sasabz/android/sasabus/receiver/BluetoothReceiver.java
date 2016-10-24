@@ -27,7 +27,7 @@ import org.altbeacon.beacon.BeaconManager;
 import it.sasabz.android.sasabus.beacon.BeaconHandler;
 import it.sasabz.android.sasabus.beacon.BeaconService;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.NotificationUtils;
+import it.sasabz.android.sasabus.util.Notifications;
 import it.sasabz.android.sasabus.util.Utils;
 
 /**
@@ -52,7 +52,7 @@ public class BluetoothReceiver extends WakefulBroadcastReceiver {
                 BeaconHandler.get(context).stopListening();
             }
 
-            NotificationUtils.cancelBus(context);
+            Notifications.cancelBus(context);
             context.stopService(new Intent(context, BeaconService.class));
 
             return;
@@ -69,7 +69,7 @@ public class BluetoothReceiver extends WakefulBroadcastReceiver {
             } else {
                 context.stopService(new Intent(context, BeaconService.class));
 
-                NotificationUtils.cancelBus(context);
+                Notifications.cancelBus(context);
             }
         } catch (Exception e) {
             Utils.logException(e);

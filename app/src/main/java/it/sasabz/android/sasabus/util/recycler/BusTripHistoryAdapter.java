@@ -31,8 +31,8 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.data.model.ExecutedTrip;
 import it.sasabz.android.sasabus.data.vdv.Api;
-import it.sasabz.android.sasabus.model.ExecutedTrip;
 
 /**
  * @author Alex Lardschneider

@@ -25,16 +25,14 @@ import android.webkit.WebView;
 
 import java.util.List;
 
-import it.sasabz.android.sasabus.network.rest.model.RealtimeBus;
-import it.sasabz.android.sasabus.network.rest.response.RealtimeResponse;
+import it.sasabz.android.sasabus.data.network.rest.model.RealtimeBus;
+import it.sasabz.android.sasabus.data.network.rest.response.RealtimeResponse;
 
 public class RealtimeMapView {
 
     private final String TAG = "RealtimeMapView";
 
     private final WebView webView;
-
-    private MapDownloadHelper downloadHelper;
 
     public RealtimeMapView(Context context, WebView webView) {
         this.webView = webView;

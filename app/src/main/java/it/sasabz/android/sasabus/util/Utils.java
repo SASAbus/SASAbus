@@ -39,7 +39,7 @@ import javax.net.ssl.SSLException;
 
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
-import it.sasabz.android.sasabus.realm.UserRealmHelper;
+import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
 
 /**
  * Utility class which holds various methods to help with things like logging exceptions.
@@ -164,7 +164,7 @@ public final class Utils {
      */
     public static void throwTripError(Context context, String text) {
         if (BuildConfig.DEBUG) {
-            NotificationUtils.error(context, new IllegalTripException(text));
+            Notifications.error(context, new IllegalTripException(text));
             LogUtils.e("Utils", "Trip error: " + text);
         }
     }

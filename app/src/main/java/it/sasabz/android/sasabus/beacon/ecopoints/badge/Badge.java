@@ -22,11 +22,11 @@ import android.support.annotation.StringRes;
 
 import io.realm.Realm;
 import it.sasabz.android.sasabus.beacon.Beacon;
-import it.sasabz.android.sasabus.network.auth.AuthHelper;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.EcoPointsApi;
-import it.sasabz.android.sasabus.realm.UserRealmHelper;
-import it.sasabz.android.sasabus.realm.user.EarnedBadge;
+import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.EcoPointsApi;
+import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
+import it.sasabz.android.sasabus.data.realm.user.EarnedBadge;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.rx.NextObserver;
 import rx.schedulers.Schedulers;

@@ -35,7 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.network.rest.model.Line;
+import it.sasabz.android.sasabus.data.network.rest.model.Line;
 import it.sasabz.android.sasabus.ui.line.LinesActivity;
 import it.sasabz.android.sasabus.ui.line.LinesAllAdapter;
 import it.sasabz.android.sasabus.util.DeviceUtils;

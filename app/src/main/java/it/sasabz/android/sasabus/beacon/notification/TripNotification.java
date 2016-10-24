@@ -39,11 +39,12 @@ import java.util.List;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.beacon.bus.CurrentTrip;
+import it.sasabz.android.sasabus.data.model.BusStop;
+import it.sasabz.android.sasabus.data.model.line.Lines;
+import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.vdv.model.VdvBusStop;
-import it.sasabz.android.sasabus.model.BusStop;
-import it.sasabz.android.sasabus.model.line.Lines;
-import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.ui.MapActivity;
+import it.sasabz.android.sasabus.util.Notifications;
 import it.sasabz.android.sasabus.util.UIUtils;
 
 public class TripNotification {
@@ -124,7 +125,7 @@ public class TripNotification {
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(Config.NOTIFICATION_BUS, notification);
+        notificationManager.notify(Notifications.NOTIFICATION_BUS, notification);
     }
 
     private static void setCommonNotification(Context context, RemoteViews remoteViews, CurrentTrip trip) {

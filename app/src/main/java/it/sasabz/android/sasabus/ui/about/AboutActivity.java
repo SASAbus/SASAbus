@@ -45,10 +45,10 @@ import com.bumptech.glide.Glide;
 
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.ReportApi;
-import it.sasabz.android.sasabus.network.rest.api.TrafficLightApi;
-import it.sasabz.android.sasabus.network.rest.response.TrafficLightResponse;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.ReportApi;
+import it.sasabz.android.sasabus.data.network.rest.api.TrafficLightApi;
+import it.sasabz.android.sasabus.data.network.rest.response.TrafficLightResponse;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.CustomTabsHelper;
 import it.sasabz.android.sasabus.util.ReportHelper;

@@ -46,9 +46,9 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
-import it.sasabz.android.sasabus.realm.busstop.BusStop;
-import it.sasabz.android.sasabus.realm.user.FavoriteBusStop;
+import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
+import it.sasabz.android.sasabus.data.realm.user.FavoriteBusStop;
 import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.Strings;
@@ -77,7 +77,7 @@ public class DepartureSearchActivity extends BaseActivity implements AdapterView
 
     private SearchView mSearchView;
     private BusStopPickerAdapter mAdapter;
-    private ArrayList<it.sasabz.android.sasabus.model.BusStop> mItems;
+    private ArrayList<it.sasabz.android.sasabus.data.model.BusStop> mItems;
 
     private final int[] mDefaultBusStops = {
             61,  // Casanova
@@ -165,7 +165,7 @@ public class DepartureSearchActivity extends BaseActivity implements AdapterView
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        it.sasabz.android.sasabus.model.BusStop busStop = mItems.get(position);
+        it.sasabz.android.sasabus.data.model.BusStop busStop = mItems.get(position);
 
         // "No results" item has a munic with value "null", check for that.
         if (busStop.getMunic() != null) {
@@ -300,7 +300,7 @@ public class DepartureSearchActivity extends BaseActivity implements AdapterView
                     .compose(bindToLifecycle())
                     .filter(RealmResults::isLoaded)
                     .map(favoriteBusStops -> {
-                        List<it.sasabz.android.sasabus.model.BusStop> busStops = new ArrayList<>();
+                        List<it.sasabz.android.sasabus.data.model.BusStop> busStops = new ArrayList<>();
 
                         if (favoriteBusStops.isEmpty()) {
                             return busStops;
@@ -311,7 +311,7 @@ public class DepartureSearchActivity extends BaseActivity implements AdapterView
                                     .equalTo("family", busStop.getGroup()).findFirst();
 
                             if (stop != null) {
-                                busStops.add(new it.sasabz.android.sasabus.model.BusStop(stop));
+                                busStops.add(new it.sasabz.android.sasabus.data.model.BusStop(stop));
                             }
                         }
 
@@ -323,7 +323,7 @@ public class DepartureSearchActivity extends BaseActivity implements AdapterView
                         mItems.addAll(stops);
 
                         if (mItems.isEmpty()) {
-                            mItems.add(new it.sasabz.android.sasabus.model.BusStop(0,
+                            mItems.add(new it.sasabz.android.sasabus.data.model.BusStop(0,
                                     getString(R.string.empty_state_bus_stop_favorites_title), null, 0, 0, 0));
                         }
 
@@ -342,10 +342,10 @@ public class DepartureSearchActivity extends BaseActivity implements AdapterView
                     .map((Func1<RealmResults<BusStop>, List<BusStop>>) busStops -> new ArrayList<>(
                             new LinkedHashSet<>(busStops)))
                     .map(busStops -> {
-                        List<it.sasabz.android.sasabus.model.BusStop> list = new ArrayList<>();
+                        List<it.sasabz.android.sasabus.data.model.BusStop> list = new ArrayList<>();
 
                         for (BusStop busStop : busStops) {
-                            list.add(new it.sasabz.android.sasabus.model.BusStop(busStop));
+                            list.add(new it.sasabz.android.sasabus.data.model.BusStop(busStop));
 
                         }
                         return list;
@@ -372,25 +372,25 @@ public class DepartureSearchActivity extends BaseActivity implements AdapterView
                 .map((Func1<RealmResults<BusStop>, List<BusStop>>) busStops -> new ArrayList<>(
                         new LinkedHashSet<>(busStops)))
                 .map(stops -> {
-                    List<it.sasabz.android.sasabus.model.BusStop> list = new ArrayList<>();
+                    List<it.sasabz.android.sasabus.data.model.BusStop> list = new ArrayList<>();
 
                     for (BusStop busStop : stops) {
-                        list.add(new it.sasabz.android.sasabus.model.BusStop(busStop));
+                        list.add(new it.sasabz.android.sasabus.data.model.BusStop(busStop));
 
                     }
                     return list;
                 })
                 .map(busStops -> {
                     if (!query.isEmpty()) {
-                        List<it.sasabz.android.sasabus.model.BusStop> list = new ArrayList<>();
+                        List<it.sasabz.android.sasabus.data.model.BusStop> list = new ArrayList<>();
 
-                        for (it.sasabz.android.sasabus.model.BusStop busStop : busStops) {
+                        for (it.sasabz.android.sasabus.data.model.BusStop busStop : busStops) {
                             String nameDe = Strings.formatQuery(busStop.getNameDe(), query, "{", "}");
                             String nameIt = Strings.formatQuery(busStop.getNameIt(), query, "{", "}");
                             String municDe = Strings.formatQuery(busStop.getMunicDe(), query, "{", "}");
                             String municIt = Strings.formatQuery(busStop.getMunicIt(), query, "{", "}");
 
-                            list.add(new it.sasabz.android.sasabus.model.BusStop(busStop.getId(), nameDe,
+                            list.add(new it.sasabz.android.sasabus.data.model.BusStop(busStop.getId(), nameDe,
                                     nameIt, municDe, municIt, busStop.getLat(), busStop.getLng(),
                                     busStop.getGroup()));
                         }
@@ -406,7 +406,7 @@ public class DepartureSearchActivity extends BaseActivity implements AdapterView
                     mItems.addAll(stations);
 
                     if (mItems.isEmpty()) {
-                        mItems.add(new it.sasabz.android.sasabus.model.BusStop(0,
+                        mItems.add(new it.sasabz.android.sasabus.data.model.BusStop(0,
                                 getString(R.string.search_no_results), null, 0, 0, 0));
                     }
 

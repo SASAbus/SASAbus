@@ -24,8 +24,8 @@ import java.io.IOException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import it.sasabz.android.sasabus.data.network.rest.Endpoint;
 import it.sasabz.android.sasabus.data.vdv.data.VdvHandler;
-import it.sasabz.android.sasabus.network.rest.Endpoint;
 import it.sasabz.android.sasabus.util.IOUtils;
 import it.sasabz.android.sasabus.util.Preconditions;
 import it.sasabz.android.sasabus.util.Settings;

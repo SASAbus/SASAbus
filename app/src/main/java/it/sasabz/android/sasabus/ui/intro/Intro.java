@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 import it.sasabz.android.sasabus.AppApplication;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.network.NetUtils;
+import it.sasabz.android.sasabus.data.network.NetUtils;
 import it.sasabz.android.sasabus.sync.SyncHelper;
 import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.ui.MapActivity;

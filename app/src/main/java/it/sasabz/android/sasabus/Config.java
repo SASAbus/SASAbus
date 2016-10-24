@@ -36,23 +36,6 @@ public final class Config {
             R.color.primary_green, R.color.primary_indigo
     };
 
-    public static final int NOTIFICATION_SURVEY = 1 << 20;
-
-    public static final int NOTIFICATION_TRIP_SUCCESS = 1 << 19;
-
-    public static final int NOTIFICATION_BUS = 1 << 18;
-
-    public static final int SYNC_ALARM_ID = 1 << 17;
-
-    public static final int NOTIFICATION_BADGE = 1 << 16;
-
-    public static final int NOTIFICATION_EVENT = 1 << 15;
-
-    /**
-     * The delay between the line fragments finishing loading and starting the internet data fetch.
-     */
-    public static final int LINE_FRAGMENTS_POST_DELAY = 500;
-
     public static final int BUS_STOP_FRAGMENTS_POST_DELAY = 500;
 
     /**

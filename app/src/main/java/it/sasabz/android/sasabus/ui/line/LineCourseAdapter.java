@@ -35,8 +35,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.line.LineCourse;
-import it.sasabz.android.sasabus.realm.busstop.BusStop;
+import it.sasabz.android.sasabus.data.model.line.LineCourse;
+import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.ui.departure.DepartureActivity;
 
 /**

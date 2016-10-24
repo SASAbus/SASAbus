@@ -28,7 +28,7 @@ import it.sasabz.android.sasabus.beacon.ecopoints.badge.Badge;
 import it.sasabz.android.sasabus.beacon.ecopoints.badge.FirstStepBadge;
 import it.sasabz.android.sasabus.beacon.ecopoints.badge.VeryBeginningBadge;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.NotificationUtils;
+import it.sasabz.android.sasabus.util.Notifications;
 
 public final class BadgeHelper {
 
@@ -54,7 +54,7 @@ public final class BadgeHelper {
 
                 badge.complete();
 
-                NotificationUtils.badge(context, badge);
+                Notifications.badge(context, badge);
             }
         }
     }

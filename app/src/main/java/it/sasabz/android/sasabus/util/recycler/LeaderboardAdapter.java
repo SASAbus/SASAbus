@@ -32,8 +32,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.network.rest.Endpoint;
-import it.sasabz.android.sasabus.network.rest.model.LeaderboardPlayer;
+import it.sasabz.android.sasabus.data.network.rest.Endpoint;
+import it.sasabz.android.sasabus.data.network.rest.model.LeaderboardPlayer;
 
 /**
  * @author Alex Lardschneider

@@ -26,7 +26,7 @@ import android.webkit.WebView;
 
 import java.util.List;
 
-import it.sasabz.android.sasabus.realm.busstop.BusStop;
+import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
 
 public class BusStopsMapView {
 

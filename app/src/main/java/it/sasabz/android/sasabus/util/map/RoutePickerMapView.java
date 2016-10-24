@@ -24,7 +24,7 @@ import android.webkit.WebView;
 
 import java.util.List;
 
-import it.sasabz.android.sasabus.realm.busstop.SadBusStop;
+import it.sasabz.android.sasabus.data.realm.busstop.SadBusStop;
 import it.sasabz.android.sasabus.ui.route.RouteMapPickerActivity;
 
 public class RoutePickerMapView {

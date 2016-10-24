@@ -33,8 +33,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.data.network.NetUtils;
 import it.sasabz.android.sasabus.data.vdv.PlannedData;
-import it.sasabz.android.sasabus.network.NetUtils;
 import it.sasabz.android.sasabus.ui.intro.AppIntro;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;

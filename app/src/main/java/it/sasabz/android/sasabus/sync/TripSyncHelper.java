@@ -21,13 +21,13 @@ import android.content.Context;
 
 import java.util.List;
 
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.CloudApi;
-import it.sasabz.android.sasabus.network.rest.model.Badge;
-import it.sasabz.android.sasabus.network.rest.model.CloudTrip;
-import it.sasabz.android.sasabus.network.rest.response.TripUploadResponse;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.CloudApi;
+import it.sasabz.android.sasabus.data.network.rest.model.Badge;
+import it.sasabz.android.sasabus.data.network.rest.model.CloudTrip;
+import it.sasabz.android.sasabus.data.network.rest.response.TripUploadResponse;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.NotificationUtils;
+import it.sasabz.android.sasabus.util.Notifications;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 import rx.Scheduler;
@@ -74,7 +74,7 @@ public final class TripSyncHelper {
 
                         new Thread(() -> {
                             for (Badge badge : response.badges) {
-                                NotificationUtils.badge(context, badge);
+                                Notifications.badge(context, badge);
                             }
                         }).start();
                     }

@@ -32,7 +32,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.News;
+import it.sasabz.android.sasabus.data.model.News;
 
 /**
  * @author Alex Lardschneider

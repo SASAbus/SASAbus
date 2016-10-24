@@ -32,8 +32,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.line.LineDriving;
-import it.sasabz.android.sasabus.model.line.LineDrivingContent;
+import it.sasabz.android.sasabus.data.model.line.LineDriving;
+import it.sasabz.android.sasabus.data.model.line.LineDrivingContent;
 
 /**
  * @author Alex Lardschneider

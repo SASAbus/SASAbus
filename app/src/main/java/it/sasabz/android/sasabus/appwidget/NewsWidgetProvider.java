@@ -24,10 +24,10 @@ import android.text.Html;
 import android.widget.RemoteViews;
 
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.News;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.NewsApi;
-import it.sasabz.android.sasabus.network.rest.response.NewsResponse;
+import it.sasabz.android.sasabus.data.model.News;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.NewsApi;
+import it.sasabz.android.sasabus.data.network.rest.response.NewsResponse;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;

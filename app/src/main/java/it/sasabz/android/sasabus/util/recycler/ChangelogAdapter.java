@@ -28,7 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.Changelog;
+import it.sasabz.android.sasabus.data.model.Changelog;
 
 /**
  * @author Alex Lardschneider

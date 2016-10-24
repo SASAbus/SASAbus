@@ -34,7 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.appwidget.ParkingWidgetProvider;
-import it.sasabz.android.sasabus.model.Parking;
+import it.sasabz.android.sasabus.data.model.Parking;
 import it.sasabz.android.sasabus.util.Settings;
 
 import static android.app.Activity.RESULT_OK;

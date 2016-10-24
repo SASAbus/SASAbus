@@ -27,7 +27,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
-import it.sasabz.android.sasabus.network.auth.AuthHelper;
+import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
 
 /**
  * Utility class to form weak hashes like md5 identifier for trips or app signatures.

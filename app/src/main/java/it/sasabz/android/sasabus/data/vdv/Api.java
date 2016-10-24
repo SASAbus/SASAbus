@@ -26,14 +26,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import it.sasabz.android.sasabus.data.model.line.Lines;
+import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.vdv.data.VdvCalendar;
 import it.sasabz.android.sasabus.data.vdv.data.VdvHandler;
 import it.sasabz.android.sasabus.data.vdv.data.VdvPaths;
 import it.sasabz.android.sasabus.data.vdv.data.VdvTrips;
 import it.sasabz.android.sasabus.data.vdv.model.VdvBusStop;
 import it.sasabz.android.sasabus.data.vdv.model.VdvTrip;
-import it.sasabz.android.sasabus.model.line.Lines;
-import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
 import rx.Observable;
 import timber.log.Timber;
 
