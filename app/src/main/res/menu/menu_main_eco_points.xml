@@ -21,17 +21,17 @@
 
     <item
         android:id="@+id/action_account_settings"
-        android:title="@string/account_settings"
+        android:title="@string/title_account_settings"
         android:icon="@drawable/ic_settings_white_24dp"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_settings"
-        android:title="@string/settings"/>
+        android:title="@string/title_settings"/>
 
     <item
         android:id="@+id/action_about"
-        android:title="@string/about"/>
+        android:title="@string/title_about"/>
 
 
 </menu>

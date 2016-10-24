@@ -23,6 +23,7 @@ import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import io.realm.DynamicRealm;
@@ -30,6 +31,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.data.vdv.model.VdvBusStop;
 import it.sasabz.android.sasabus.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.realm.busstop.BusStopModule;
 import it.sasabz.android.sasabus.realm.busstop.SadBusStop;
@@ -233,6 +235,21 @@ public final class BusStopRealmHelper {
         return busStops;
     }
 
+    public static BusStop getBusStopOrNullFromGroup(int family) {
+        Realm realm = Realm.getInstance(CONFIG);
+        BusStop busStop = realm.where(BusStop.class).equalTo("family", family).findFirst();
+
+        if (busStop == null) {
+            return null;
+        }
+
+        busStop = realm.copyFromRealm(busStop);
+
+        realm.close();
+
+        return busStop;
+    }
+
     public static List<Integer> getBusStopIdsFromGroup(int group) {
         Realm realm = Realm.getInstance(CONFIG);
         RealmResults<BusStop> results = realm.where(BusStop.class).equalTo("family", group).findAll();
@@ -247,25 +264,45 @@ public final class BusStopRealmHelper {
         return resultIds;
     }
 
+    public static int getBusStopGroup(int id) {
+        Realm realm = Realm.getInstance(CONFIG);
+        BusStop busStop = realm.where(BusStop.class).equalTo("id", id).findFirst();
+
+        int result;
+
+        if (busStop == null) {
+            result = 0;
+        } else {
+            result = busStop.getFamily();
+        }
+
+        realm.close();
+
+        return result;
+    }
+
     /**
      * Returns all stations in the same family (having the same name and municipality).
      *
      * @return all stations having the same name and municipality in an {@link ArrayList}
      */
-    public static Collection<it.sasabz.android.sasabus.provider.model.BusStop> getBusStopsFromFamily(int family) {
+    /**
+     * Returns all stations in the same family (having the same title and municipality).
+     *
+     * @return all stations having the same title and municipality in an {@link ArrayList}
+     */
+    public static Collection<VdvBusStop> getBusStopsFromFamily(int family) {
         Realm realm = Realm.getInstance(CONFIG);
         List<BusStop> busStops = realm.where(BusStop.class).equalTo("family", family).findAll();
 
         if (busStops.isEmpty()) {
-            LogUtils.e(TAG, "Invalid family id: " + family);
-            Utils.logException(new Throwable("getBusStopsFromFamily: invalid family id"));
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
 
-        ArrayList<it.sasabz.android.sasabus.provider.model.BusStop> stops = new ArrayList<>();
+        Collection<VdvBusStop> stops = new ArrayList<>();
 
         for (BusStop busStop : busStops) {
-            stops.add(new it.sasabz.android.sasabus.provider.model.BusStop(busStop.getId()));
+            stops.add(new VdvBusStop(busStop.getId()));
         }
 
         realm.close();

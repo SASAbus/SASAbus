@@ -33,28 +33,24 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
-import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.beacon.BeaconStorage;
 import it.sasabz.android.sasabus.beacon.IBeaconHandler;
 import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
 import it.sasabz.android.sasabus.beacon.bus.BusBeaconHandler;
 import it.sasabz.android.sasabus.beacon.ecopoints.BadgeHelper;
+import it.sasabz.android.sasabus.data.vdv.DepartureMonitor;
+import it.sasabz.android.sasabus.data.vdv.model.VdvDeparture;
 import it.sasabz.android.sasabus.model.BusStop;
-import it.sasabz.android.sasabus.model.BusStopDetail;
-import it.sasabz.android.sasabus.model.line.Lines;
+import it.sasabz.android.sasabus.model.Departure;
 import it.sasabz.android.sasabus.network.rest.RestClient;
 import it.sasabz.android.sasabus.network.rest.api.RealtimeApi;
 import it.sasabz.android.sasabus.network.rest.model.RealtimeBus;
 import it.sasabz.android.sasabus.network.rest.response.RealtimeResponse;
-import it.sasabz.android.sasabus.provider.API;
-import it.sasabz.android.sasabus.provider.ApiUtils;
-import it.sasabz.android.sasabus.provider.PlanData;
-import it.sasabz.android.sasabus.provider.model.Trip;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.NotificationUtils;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 import rx.schedulers.Schedulers;
@@ -348,30 +344,18 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
 
                 LogUtils.e(TAG, "Notification station beacon " + beacon.id);
 
-                if (!PlanData.planDataExists(mContext) || !API.todayExists(mContext)) return;
+                Collection<VdvDeparture> vdvDepartures = new DepartureMonitor()
+                        .atBusStop(beacon.id)
+                        .includePastDepartures(180)
+                        .maxElements(2)
+                        .collect();
 
-                List<Trip> departures = API.getDepartures(mContext, beacon.id);
-                List<BusStopDetail> items = new ArrayList<>();
+                List<Departure> departures = new ArrayList<>();
 
-                int i = 0;
-                for (Trip trip : departures) {
-                    String line = Lines.lidToName(trip.getLine());
-                    String departure = ApiUtils.getTime(trip.getSecondsAtStation(beacon.id));
-
-                    String lastStationName = BusStopRealmHelper
-                            .getName(trip.getPath().get(trip.getPath().size() - 1).getId());
-
-                    items.add(new BusStopDetail(
-                            trip.getLine(),
-                            trip.getTrip(),
-                            line,
-                            departure,
-                            lastStationName,
-                            Config.BUS_STOP_DETAILS_NO_DELAY,
-                            null
-                    ));
-
-                    if (++i > 2) break;
+                for (VdvDeparture vdvDeparture : vdvDepartures) {
+                    Departure departure = vdvDeparture.asDeparture(beacon.id);
+                    departure.delay = Departure.NO_DELAY;
+                    departures.add(departure);
                 }
 
                 RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
@@ -387,7 +371,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
                             public void onError(Throwable e) {
                                 Utils.logException(e);
 
-                                NotificationUtils.busStop(mContext, beacon.id, items);
+                                NotificationUtils.busStop(mContext, beacon.id, departures);
                                 beacon.setNotificationShown();
                             }
 
@@ -396,17 +380,17 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
                                 List<RealtimeBus> list = realtimeResponse.buses;
 
                                 for (RealtimeBus bus : list) {
-                                    for (BusStopDetail item : items) {
-                                        if (item.getTrip() == bus.trip) {
-                                            item.setDelay(bus.delayMin);
-                                            item.setVehicle(bus.vehicle);
+                                    for (Departure item : departures) {
+                                        if (item.trip == bus.trip) {
+                                            item.delay = bus.delayMin;
+                                            item.vehicle = bus.vehicle;
 
                                             break;
                                         }
                                     }
                                 }
 
-                                NotificationUtils.busStop(mContext, beacon.id, items);
+                                NotificationUtils.busStop(mContext, beacon.id, departures);
                                 beacon.setNotificationShown();
                             }
                         });
@@ -424,7 +408,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
      * {@code false} otherwise.
      */
     private boolean canShowNotification(BusStopBeacon beacon) {
-        return SettingsUtils.isBusStopNotificationEnabled(mContext) &&
+        return Settings.isBusStopNotificationEnabled(mContext) &&
                 !beacon.isNotificationShown &&
                 !BeaconStorage.getInstance(mContext).hasCurrentTrip() &&
                 beacon.seenSeconds >= BEACON_NOTIFICATION_TIME_DELTA;

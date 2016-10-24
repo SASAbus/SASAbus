@@ -24,9 +24,10 @@ import java.util.List;
 
 import it.sasabz.android.sasabus.beacon.ecopoints.BadgeHelper;
 import it.sasabz.android.sasabus.beacon.notification.TripNotification;
+import it.sasabz.android.sasabus.data.vdv.Api;
+import it.sasabz.android.sasabus.data.vdv.model.VdvBusStop;
 import it.sasabz.android.sasabus.model.BusStop;
 import it.sasabz.android.sasabus.model.JsonSerializable;
-import it.sasabz.android.sasabus.provider.apis.Trips;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
 
@@ -41,7 +42,7 @@ public class CurrentTrip implements JsonSerializable {
     boolean notificationVisible;
 
     private final List<BusStop> path;
-    private final List<it.sasabz.android.sasabus.provider.model.BusStop> times;
+    private List<VdvBusStop> times;
 
     CurrentTrip(Context context, BusBeacon beacon) {
         this.mContext = context;
@@ -52,10 +53,16 @@ public class CurrentTrip implements JsonSerializable {
 
         path = new ArrayList<>();
 
-        times = Trips.getPath(mContext, beacon.trip);
-
         if (times != null) {
-            for (it.sasabz.android.sasabus.provider.model.BusStop busStop : times) {
+            times.clear();
+        }
+
+        List<VdvBusStop> newTimes = Api.getTrip(beacon.trip).calcTimedPath();
+
+        if (newTimes != null) {
+            times = new ArrayList<>(newTimes);
+
+            for (VdvBusStop busStop : times) {
                 path.add(new BusStop(BusStopRealmHelper.getBusStop(busStop.getId())));
             }
         } else {
@@ -91,7 +98,7 @@ public class CurrentTrip implements JsonSerializable {
         notificationVisible = visible;
     }
 
-    public List<it.sasabz.android.sasabus.provider.model.BusStop> getTimes() {
+    public List<VdvBusStop> getTimes() {
         return times;
     }
 

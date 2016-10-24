@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.ui.MapActivity;
-import it.sasabz.android.sasabus.ui.busstop.BusStopActivity;
+import it.sasabz.android.sasabus.ui.departure.DepartureActivity;
 import it.sasabz.android.sasabus.ui.intro.AppIntro;
 
 /**
@@ -55,7 +55,7 @@ public class IntroData extends AppIntro {
      * Finishes the intro screen and navigates to {@link MapActivity}.
      */
     private void finishIntro() {
-        Intent intent = new Intent(this, BusStopActivity.class);
+        Intent intent = new Intent(this, DepartureActivity.class);
         startActivity(intent);
 
         finish();

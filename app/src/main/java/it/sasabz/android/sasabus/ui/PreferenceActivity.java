@@ -45,11 +45,11 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.beacon.BeaconService;
 import it.sasabz.android.sasabus.receiver.BluetoothReceiver;
 import it.sasabz.android.sasabus.receiver.LocationReceiver;
-import it.sasabz.android.sasabus.ui.busstop.BusStopActivity;
+import it.sasabz.android.sasabus.ui.departure.DepartureActivity;
 import it.sasabz.android.sasabus.ui.widget.PreferenceFragment;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 
 /**
@@ -88,7 +88,7 @@ public class PreferenceActivity extends AppCompatActivity {
         AnalyticsHelper.sendScreenView(TAG);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.settings);
+        toolbar.setTitle(R.string.title_settings);
         setSupportActionBar(toolbar);
 
         assert getSupportActionBar() != null;
@@ -152,7 +152,7 @@ public class PreferenceActivity extends AppCompatActivity {
             position = 0;
         } else {
             if (update) {
-                Intent intent = new Intent(this, BusStopActivity.class);
+                Intent intent = new Intent(this, DepartureActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -345,13 +345,13 @@ public class PreferenceActivity extends AppCompatActivity {
 
             addPreferencesFromResource(R.xml.preferences_map);
 
-            SwitchPreference mapUpdate = (SwitchPreference) findPreference(SettingsUtils.PREF_AUTO_UPDATE);
+            SwitchPreference mapUpdate = (SwitchPreference) findPreference(Settings.PREF_AUTO_UPDATE);
             mapUpdate.setOnPreferenceChangeListener((preference, newValue) -> {
                 update = true;
                 return true;
             });
 
-            ListPreference mapInterval = (ListPreference) findPreference(SettingsUtils.PREF_AUTO_UPDATE_INTERVAL);
+            ListPreference mapInterval = (ListPreference) findPreference(Settings.PREF_AUTO_UPDATE_INTERVAL);
             mapInterval.setOnPreferenceChangeListener((preference, newValue) -> {
                 update = true;
                 return true;
@@ -385,7 +385,7 @@ public class PreferenceActivity extends AppCompatActivity {
 
             addPreferencesFromResource(R.xml.preferences_beacons);
 
-            beaconsEnable = (SwitchPreference) findPreference(SettingsUtils.PREF_BEACONS_ENABLED);
+            beaconsEnable = (SwitchPreference) findPreference(Settings.PREF_BEACONS_ENABLED);
             beaconsEnable.setOnPreferenceChangeListener((preference, newValue) -> {
                 boolean value = (boolean) newValue;
 

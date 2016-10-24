@@ -39,9 +39,9 @@ import android.view.View;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.provider.PlanData;
+import it.sasabz.android.sasabus.data.vdv.PlannedData;
 import it.sasabz.android.sasabus.ui.about.AboutActivity;
-import it.sasabz.android.sasabus.ui.busstop.BusStopActivity;
+import it.sasabz.android.sasabus.ui.departure.DepartureActivity;
 import it.sasabz.android.sasabus.ui.ecopoints.EcoPointsActivity;
 import it.sasabz.android.sasabus.ui.intro.Intro;
 import it.sasabz.android.sasabus.ui.intro.data.IntroData;
@@ -50,7 +50,7 @@ import it.sasabz.android.sasabus.ui.parking.ParkingActivity;
 import it.sasabz.android.sasabus.ui.route.RouteActivity;
 import it.sasabz.android.sasabus.util.Changelog;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 
 /**
@@ -88,8 +88,9 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Naviga
      * The menu item ids for the navigation drawer.
      */
     static final int NAVDRAWER_ITEM_MAP = R.id.nav_map;
+    protected static final int NAVDRAWER_ITEM_DEPARTURES = R.id.nav_departures;
     protected static final int NAVDRAWER_ITEM_LINES = R.id.nav_lines;
-    protected static final int NAVDRAWER_ITEM_BUS_STOPS = R.id.nav_stations;
+    //protected static final int NAVDRAWER_ITEM_BUS_STOPS = R.id.nav_stations;
     protected static final int NAVDRAWER_ITEM_ROUTE = R.id.nav_route;
     protected static final int NAVDRAWER_ITEM_ECO_POINTS = R.id.nav_eco_points;
     static final int NAVDRAWER_ITEM_TIMETABLES = R.id.nav_timetables;
@@ -125,14 +126,14 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Naviga
         super.onCreate(savedInstanceState);
 
         // Check if the Intro screen has been showed; if not, show it.
-        if (SettingsUtils.shouldShowIntro(this)) {
+        if (Settings.shouldShowIntro(this)) {
             Intent intent = new Intent(this, Intro.class);
             startActivity(intent);
 
             finish();
 
             return;
-        } else if (SettingsUtils.isDataUpdateAvailable(this) || !PlanData.planDataExists(this)) {
+        } else if (Settings.isDataUpdateAvailable(this) || !PlannedData.planDataExists(this)) {
             Intent intent = new Intent(this, IntroData.class);
             startActivity(intent);
 
@@ -140,7 +141,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Naviga
 
             return;
         } else if (!ACTION_NO_CHANGELOG.equals(getIntent().getAction()) &&
-                SettingsUtils.shouldShowChangelog(this)) {
+                Settings.shouldShowChangelog(this)) {
             Changelog.showDialog(this);
         }
 
@@ -205,7 +206,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Naviga
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (getNavItem() == NAVDRAWER_ITEM_INVALID ||
-                getNavItem() == NAVDRAWER_ITEM_BUS_STOPS ||
+                /*getNavItem() == NAVDRAWER_ITEM_BUS_STOPS ||*/
                 getNavItem() == NAVDRAWER_ITEM_MAP ||
                 getNavItem() == NAVDRAWER_ITEM_ECO_POINTS) {
             return false;
@@ -298,12 +299,15 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Naviga
             case NAVDRAWER_ITEM_MAP:
                 createBackStack(new Intent(this, MapActivity.class));
                 break;
+            case NAVDRAWER_ITEM_DEPARTURES:
+                createBackStack(new Intent(this, DepartureActivity.class));
+                break;
             case NAVDRAWER_ITEM_LINES:
                 createBackStack(new Intent(this, LinesActivity.class));
                 break;
-            case NAVDRAWER_ITEM_BUS_STOPS:
+            /*case NAVDRAWER_ITEM_BUS_STOPS:
                 createBackStack(new Intent(this, BusStopActivity.class));
-                break;
+                break;*/
             case NAVDRAWER_ITEM_ROUTE:
                 createBackStack(new Intent(this, RouteActivity.class));
                 break;

@@ -49,7 +49,7 @@ public final class Changelog {
                 .setView(webView)
                 .setPositiveButton(context.getResources().getString(android.R.string.ok), (dialog, which) -> dialog.dismiss())
                 .setNegativeButton(context.getResources().getString(R.string.dialog_button_dont_show_again), (dialog, which) -> {
-                    SettingsUtils.disableChangelog(context);
+                    Settings.disableChangelog(context);
                     dialog.dismiss();
                 })
                 .create()

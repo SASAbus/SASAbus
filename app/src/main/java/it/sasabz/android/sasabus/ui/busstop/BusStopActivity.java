@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.sasabz.android.sasabus.ui.busstop;
+/*package it.sasabz.android.sasabus.ui.busstop;
 
 import android.app.Activity;
 import android.content.Context;
@@ -83,7 +83,7 @@ import rx.functions.Func1;
  *
  * @author Alex Lardschneider
  * @author David Dejori
- */
+ *
 public class BusStopActivity extends BaseActivity {
 
     private static final String TAG = "BusStopActivity";
@@ -217,7 +217,7 @@ public class BusStopActivity extends BaseActivity {
 
     @Override
     public int getNavItem() {
-        return NAVDRAWER_ITEM_BUS_STOPS;
+        return 0/*NAVDRAWER_ITEM_BUS_STOPS;
     }
 
     @Override
@@ -253,7 +253,7 @@ public class BusStopActivity extends BaseActivity {
     /**
      * Reloads the favorite bus stops after the user added/removed some by either long clicking
      * a bus stop on the list or adding it via {@link BusStopDetailActivity}.
-     */
+     *
     public void invalidateFavorites() {
         if (mFavoritesFragment != null) {
             mFavoritesFragment.parseData();
@@ -296,7 +296,7 @@ public class BusStopActivity extends BaseActivity {
 
     /**
      * Holds all the favorite bus stops in a list.
-     */
+     *
     public static class FavoritesFragment extends RxFragment {
 
         private RecyclerView mRecyclerView;
@@ -389,7 +389,7 @@ public class BusStopActivity extends BaseActivity {
     /**
      * Holds all bus stops in a list. Allows the user to search through the list by using
      * the header search bar.
-     */
+     *
     public static class ListFragment extends Fragment {
 
         private static final Pattern WHITESPACE = Pattern.compile(" ", Pattern.LITERAL);
@@ -485,7 +485,7 @@ public class BusStopActivity extends BaseActivity {
 
     /**
      * Displays all the bus stops on map
-     */
+     *
     public static class MapFragment extends RxFragment {
 
         private View view;
@@ -539,4 +539,4 @@ public class BusStopActivity extends BaseActivity {
                     });
         }
     }
-}
+}*/

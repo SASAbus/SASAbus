@@ -130,6 +130,8 @@ public final class Config {
      */
     public static final String BUNDLE_ERROR_GENERAL = "BUNDLE_ERROR_GENERAL";
 
+    public static final String EXTRA_TRIP_ID = "com.davale.sasabus.EXTRA_TRIP_ID";
+
     /**
      * Integer constant to define a bus stop detail item which has no delay, so the adapter
      * can hide the delay {@link android.widget.TextView}.
@@ -141,4 +143,9 @@ public final class Config {
      * from the internet.
      */
     public static final int BUS_STOP_DETAILS_OPERATION_RUNNING = 1 << 9;
+
+    public static final String BUNDLE_EMPTY_STATE_VISIBILITY =
+            "com.davale.sasabus.BUNDLE_EMPTY_STATE_VISIBILITY";
+
+    public static final String EXTRA_BUS_STOP_GROUP = "com.davale.sasabus.EXTRA_BUS_STOP_GROUP";
 }

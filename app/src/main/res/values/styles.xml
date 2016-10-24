@@ -322,7 +322,7 @@
 
     <style name="NavigationOverlay">
         <item name="android:textSize">14sp</item>
-        <item name="colorPrimary">@color/default_icon_color2</item>
+        <item name="colorPrimary">@color/default_icon_color_inverted</item>
 
         <item name="android:textColorSecondary">@color/icon_grey</item>
         <item name="android:textStyle">bold</item>

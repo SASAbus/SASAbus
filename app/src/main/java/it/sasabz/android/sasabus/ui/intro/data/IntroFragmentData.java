@@ -33,8 +33,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.data.vdv.PlannedData;
 import it.sasabz.android.sasabus.network.NetUtils;
-import it.sasabz.android.sasabus.provider.PlanData;
 import it.sasabz.android.sasabus.ui.intro.AppIntro;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
@@ -235,7 +235,7 @@ public class IntroFragmentData extends Fragment implements Observer<Void>, View.
             return;
         }
 
-        subscription = PlanData.download(getActivity())
+        subscription = PlannedData.download(getActivity())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this);

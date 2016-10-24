@@ -53,7 +53,7 @@ import it.sasabz.android.sasabus.util.HashUtils;
 import it.sasabz.android.sasabus.util.IllegalTripException;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.NotificationUtils;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 import rx.schedulers.Schedulers;
@@ -163,7 +163,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
                     }
 
                     if (!currentTrip.notificationVisible && currentTrip.beacon.isSuitableForTrip &&
-                            SettingsUtils.isBusNotificationEnabled(mContext)) {
+                            Settings.isBusNotificationEnabled(mContext)) {
 
                         currentTrip.setNotificationVisible(true);
 
@@ -422,19 +422,19 @@ public final class BusBeaconHandler implements IBeaconHandler {
         }
 
         if (Utils.insertTripIfValid(mContext, beacon) &&
-                SettingsUtils.isTripNotificationEnabled(mContext)) {
+                Settings.isTripNotificationEnabled(mContext)) {
 
             NotificationUtils.trip(mContext, beacon.getHash());
 
             LogUtils.e(TAG, "Saved trip " + beacon.id);
 
-            if (SettingsUtils.isSurveyEnabled(mContext)) {
+            if (Settings.isSurveyEnabled(mContext)) {
                 LogUtils.e(TAG, "Survey is enabled");
 
-                long lastSurvey = SettingsUtils.getLastSurveyMillis(mContext);
+                long lastSurvey = Settings.getLastSurveyMillis(mContext);
                 boolean showSurvey = false;
 
-                switch (SettingsUtils.getSurveyInterval(mContext)) {
+                switch (Settings.getSurveyInterval(mContext)) {
                     // Show every time
                     case 0:
                         LogUtils.e(TAG, "Survey interval: every time");
@@ -471,7 +471,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
                     LogUtils.e(TAG, "Showing survey");
                     NotificationUtils.survey(mContext, beacon.getHash());
 
-                    SettingsUtils.setLastSurveyMillis(mContext, System.currentTimeMillis());
+                    Settings.setLastSurveyMillis(mContext, System.currentTimeMillis());
                 }
             }
         } else {

@@ -39,10 +39,10 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="it.sasabz.android.sasabus.ui.busstop.BusStopActivity"
+            android:name=".ui.departure.DepartureActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme.BusStop">
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustNothing">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -55,33 +55,33 @@
 
         <activity
             android:name="it.sasabz.android.sasabus.ui.MapActivity"
-            android:label="@string/map"
+            android:label="@string/title_map"
             android:launchMode="singleTop"/>
 
         <activity
             android:name="it.sasabz.android.sasabus.ui.line.LinesActivity"
-            android:label="@string/lines"
+            android:label="@string/title_lines"
             android:launchMode="singleTop"/>
 
         <activity
             android:name="it.sasabz.android.sasabus.ui.route.RouteActivity"
-            android:label="@string/route"
+            android:label="@string/title_route"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustNothing"/>
 
         <activity
             android:name="it.sasabz.android.sasabus.ui.TimetableActivity"
-            android:label="@string/timetables"
+            android:label="@string/title_timetables"
             android:launchMode="singleTop"/>
 
         <activity
             android:name="it.sasabz.android.sasabus.ui.NewsActivity"
-            android:label="@string/news"
+            android:label="@string/title_news"
             android:launchMode="singleTop"/>
 
         <activity
             android:name="it.sasabz.android.sasabus.ui.parking.ParkingActivity"
-            android:label="@string/parking"
+            android:label="@string/title_parking"
             android:launchMode="singleTop"/>
 
 
@@ -107,29 +107,48 @@
             android:theme="@style/AppTheme.Intro"/>
 
 
+        <!-- Departures -->
+
+        <activity
+            android:name=".ui.departure.DepartureSearchActivity"
+            android:exported="false"
+            android:label="@string/title_search"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.Search">
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+
+        </activity>
+
+
         <!-- Credits/Settings/Changelog -->
 
         <activity
             android:name="it.sasabz.android.sasabus.ui.about.AboutActivity"
-            android:label="@string/about"
+            android:label="@string/title_about"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.About"/>
 
         <activity
             android:name="it.sasabz.android.sasabus.ui.about.CreditsActivity"
-            android:label="@string/activity_credits"
+            android:label="@string/title_credits"
             android:parentActivityName="it.sasabz.android.sasabus.ui.about.AboutActivity"
             android:theme="@style/AppTheme.Normal"/>
 
         <activity
             android:name="it.sasabz.android.sasabus.ui.about.ChangelogActivity"
-            android:label="@string/changelog"
+            android:label="@string/title_changelog"
             android:parentActivityName="it.sasabz.android.sasabus.ui.about.AboutActivity"
             android:theme="@style/AppTheme.Normal"/>
 
         <activity
             android:name="it.sasabz.android.sasabus.ui.PreferenceActivity"
-            android:label="@string/settings"
+            android:label="@string/title_settings"
             android:theme="@style/AppTheme.Settings"/>
 
 
@@ -137,13 +156,13 @@
 
         <activity
             android:name="it.sasabz.android.sasabus.ui.route.RouteMapPickerActivity"
-            android:label="@string/pick_stations"
+            android:label="@string/title_pick_bus_stops"
             android:parentActivityName="it.sasabz.android.sasabus.ui.route.RouteActivity"
             android:theme="@style/AppTheme.Normal"/>
 
         <activity
             android:name="it.sasabz.android.sasabus.ui.route.RouteResultActivity"
-            android:label="@string/route_results"
+            android:label="@string/title_route_results"
             android:launchMode="singleTop"
             android:parentActivityName="it.sasabz.android.sasabus.ui.route.RouteActivity"
             android:theme="@style/AppTheme.Green"/>
@@ -168,7 +187,7 @@
 
         <activity
             android:name=".ui.ecopoints.EcoPointsActivity"
-            android:label="@string/eco_points"
+            android:label="@string/title_eco_points"
             android:launchMode="singleTop"/>
 
         <activity
@@ -218,18 +237,18 @@
 
         <activity
             android:name="it.sasabz.android.sasabus.ui.line.LineDetailsActivity"
-            android:label="@string/lines_detail"
+            android:label="@string/title_line_details"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.Indigo"/>
 
         <activity
             android:name="it.sasabz.android.sasabus.ui.line.LineCourseActivity"
-            android:label="@string/course_details"
+            android:label="@string/title_course_details"
             android:theme="@style/AppTheme.Teal"/>
 
         <activity
             android:name="it.sasabz.android.sasabus.ui.line.LinePathActivity"
-            android:label="@string/lines_path"
+            android:label="@string/title_line_path"
             android:parentActivityName="it.sasabz.android.sasabus.ui.line.LineDetailsActivity"
             android:theme="@style/AppTheme.Indigo"/>
 
@@ -261,7 +280,7 @@
 
         <activity
             android:name="it.sasabz.android.sasabus.beacon.survey.SurveyActivity"
-            android:label="@string/survey"
+            android:label="@string/title_survey"
             android:theme="@style/AppTheme.Teal"/>
 
         <activity

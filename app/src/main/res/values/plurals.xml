@@ -34,6 +34,11 @@
         <item quantity="other">%d points</item>
     </plurals>
 
+    <plurals name="line_plural_format">
+        <item quantity="one">Line %s</item>
+        <item quantity="other">Lines %s</item>
+    </plurals>
+
     <plurals name="eco_points_badge_dialog_points">
         <item quantity="one">This badge gives you %d points.</item>
         <item quantity="other">This badge gives you %d points.</item>

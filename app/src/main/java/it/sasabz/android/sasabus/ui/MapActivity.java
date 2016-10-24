@@ -88,7 +88,7 @@ import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.AnimUtils;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Preconditions;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.map.RealtimeMapView;
 import rx.Observer;
@@ -217,7 +217,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
         setContentView(R.layout.activity_map);
 
-        getSupportActionBar().setTitle(R.string.map);
+        getSupportActionBar().setTitle(R.string.title_map);
 
         ButterKnife.bind(this);
 
@@ -234,8 +234,8 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
         setupFilter();
 
-        mAutoRefresh = SettingsUtils.isMapAutoEnabled(this);
-        mRefreshInterval = SettingsUtils.getMapAutoInterval(this);
+        mAutoRefresh = Settings.isMapAutoEnabled(this);
+        mRefreshInterval = Settings.getMapAutoInterval(this);
 
         mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_amber, R.color.primary_red,
                 R.color.primary_green, R.color.primary_indigo);
@@ -285,7 +285,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
         showAnnouncementDialogIfNeeded(getIntent());
 
-        if (SettingsUtils.isMapAutoEnabled(this)) {
+        if (Settings.isMapAutoEnabled(this)) {
             parseData();
         }
     }
@@ -294,7 +294,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_refresh:
-                if (!SettingsUtils.isMapAutoEnabled(this)) {
+                if (!Settings.isMapAutoEnabled(this)) {
                     parseData();
                 }
                 return true;
@@ -475,7 +475,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
                     .subscribe(this);
 
             TrafficLightApi trafficLightApi = RestClient.ADAPTER.create(TrafficLightApi.class);
-            trafficLightApi.trafficLight(SettingsUtils.getTrafficLightCity(MapActivity.this))
+            trafficLightApi.trafficLight(Settings.getTrafficLightCity(MapActivity.this))
                     .compose(bindToLifecycle())
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -497,13 +497,6 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
                         }
                     });
         }
-    }
-
-    /**
-     * Updates the marker visibility according to the filter settings
-     */
-    private void updateFilterMarkers() {
-        mapView.filter(mFilter);
     }
 
     /**
@@ -949,7 +942,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
                 }
             }
 
-            updateFilterMarkers();
+            mapView.filter(mFilter);
         }
     }
 
@@ -958,9 +951,9 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
      * the app for more than 20 times it displays the rating card.
      */
     private void setupRating() {
-        SettingsUtils.incrementStartupCount(this);
+        Settings.incrementStartupCount(this);
 
-        if (SettingsUtils.canAskForRating(this) && SettingsUtils.getStartupCount(this) >= 20) {
+        if (Settings.canAskForRating(this) && Settings.getStartupCount(this) >= 20) {
             FrameLayout rating = (FrameLayout) findViewById(R.id.rating_popup);
             TextView title = (TextView) findViewById(R.id.rating_title);
             Button positive = (Button) findViewById(R.id.rating_positive);
@@ -977,7 +970,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
                 if (mNegativeClick) {
                     AnimUtils.fadeOut(rating, AnimUtils.DURATION_MEDIUM);
 
-                    SettingsUtils.setRatingDisabled(this);
+                    Settings.setRatingDisabled(this);
 
                     startActivity(new Intent(this, AboutActivity.class).putExtra("dialog_report", true));
 
@@ -992,8 +985,8 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
                     AnimUtils.fadeOut(rating, AnimUtils.DURATION_MEDIUM);
 
-                    SettingsUtils.setRatingDisabled(this);
-                    SettingsUtils.markAsRated(this);
+                    Settings.setRatingDisabled(this);
+                    Settings.markAsRated(this);
 
                     AnalyticsHelper.sendEvent("Rating", "Rate click");
                 } else {
@@ -1007,7 +1000,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
             negative.setOnClickListener(v -> {
                 if (mPositiveClick || mNegativeClick) {
-                    SettingsUtils.setRatingDisabled(this);
+                    Settings.setRatingDisabled(this);
 
                     AnimUtils.fadeOut(rating, AnimUtils.DURATION_MEDIUM);
 

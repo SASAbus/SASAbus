@@ -26,7 +26,7 @@
 
         <SwitchPreference
             android:key="pref_news_push_enabled"
-            android:title="@string/news"
+            android:title="@string/title_news"
             android:summary="@string/settings_news_push_sub"
             android:defaultValue="true"/>
 

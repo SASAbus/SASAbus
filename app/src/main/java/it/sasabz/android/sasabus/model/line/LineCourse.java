@@ -20,31 +20,50 @@ package it.sasabz.android.sasabus.model.line;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class LineCourse implements Parcelable {
-    private final int id;
-    private final String busStop;
-    private final String munic;
-    private final String time;
-    private final boolean isActive;
-    private final boolean dot;
+import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.realm.busstop.BusStop;
 
-    public LineCourse(int id, String busStop, String munic, String time, boolean isActive, boolean dot) {
+public class LineCourse implements Parcelable {
+
+    private final int id;
+
+    public final BusStop busStop;
+    public final String time;
+
+    public final boolean active;
+    public final boolean dot;
+    public final boolean bus;
+
+    public String lineText;
+
+    public LineCourse(int id, BusStop busStop, String time, boolean active, boolean dot, boolean bus) {
         this.id = id;
         this.busStop = busStop;
-        this.munic = munic;
         this.time = time;
-        this.isActive = isActive;
+        this.active = active;
         this.dot = dot;
+        this.bus = bus;
     }
 
     private LineCourse(Parcel in) {
         id = in.readInt();
-        busStop = in.readString();
-        munic = in.readString();
         time = in.readString();
-
-        isActive = in.readByte() != 0;
+        active = in.readByte() != 0;
         dot = in.readByte() != 0;
+        bus = in.readByte() != 0;
+        lineText = in.readString();
+
+        busStop = BusStopRealmHelper.getBusStop(id);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(time);
+        dest.writeByte((byte) (active ? 1 : 0));
+        dest.writeByte((byte) (dot ? 1 : 0));
+        dest.writeByte((byte) (bus ? 1 : 0));
+        dest.writeString(lineText);
     }
 
     @Override
@@ -52,43 +71,7 @@ public class LineCourse implements Parcelable {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(busStop);
-        dest.writeString(munic);
-        dest.writeString(time);
-
-        dest.writeByte((byte) (isActive ? 1 : 0));
-        dest.writeByte((byte) (dot ? 1 : 0));
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getBusStop() {
-        return busStop;
-    }
-
-    public String getMunic() {
-        return munic;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public boolean isDot() {
-        return dot;
-    }
-
-    public static final Parcelable.Creator<LineCourse> CREATOR = new Parcelable.Creator<LineCourse>() {
-
+    public static final Creator<LineCourse> CREATOR = new Creator<LineCourse>() {
         @Override
         public LineCourse createFromParcel(Parcel in) {
             return new LineCourse(in);

@@ -19,6 +19,9 @@ package it.sasabz.android.sasabus.model.line;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.util.LogUtils;
 
@@ -26,6 +29,50 @@ import it.sasabz.android.sasabus.util.LogUtils;
  * @author David Dejori
  */
 public final class Lines {
+
+    public static final List<Integer> ORDER = new ArrayList<>();
+
+    static {
+        ORDER.add(1001);
+        ORDER.add(1003);
+        ORDER.add(1005);
+        ORDER.add(1006);
+        ORDER.add(1071);
+        ORDER.add(1072);
+        ORDER.add(1008);
+        ORDER.add(1009);
+        ORDER.add(1101);
+        ORDER.add(1102);
+        ORDER.add(1011);
+        ORDER.add(1012);
+        ORDER.add(1014);
+        ORDER.add(110);
+        ORDER.add(111);
+        ORDER.add(112);
+        ORDER.add(116);
+        ORDER.add(117);
+        ORDER.add(1153);
+        ORDER.add(183);
+        ORDER.add(201);
+        ORDER.add(202);
+        ORDER.add(1);
+        ORDER.add(2);
+        ORDER.add(3);
+        ORDER.add(4);
+        ORDER.add(6);
+        ORDER.add(146);
+        ORDER.add(211);
+        ORDER.add(212);
+        ORDER.add(213);
+        ORDER.add(214);
+        ORDER.add(215);
+        ORDER.add(221);
+        ORDER.add(222);
+        ORDER.add(223);
+        ORDER.add(224);
+        ORDER.add(225);
+        ORDER.add(248);
+    }
 
     private Lines() {
     }

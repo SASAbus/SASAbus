@@ -27,7 +27,7 @@ import it.sasabz.android.sasabus.model.Parking;
 import it.sasabz.android.sasabus.network.rest.RestClient;
 import it.sasabz.android.sasabus.network.rest.api.ParkingApi;
 import it.sasabz.android.sasabus.network.rest.response.ParkingResponse;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -45,7 +45,7 @@ public class ParkingWidgetProvider extends AppWidgetProvider {
         for (int widgetId : appWidgetIds) {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_parking);
 
-            int id = SettingsUtils.getWidgetParking(context);
+            int id = Settings.getWidgetParking(context);
 
             if (id == 0) return;
 

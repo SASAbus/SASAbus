@@ -40,7 +40,7 @@ import it.sasabz.android.sasabus.network.rest.response.ValidityResponse;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.IOUtils;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.recycler.TimetableAdapter;
 import okhttp3.OkHttpClient;
@@ -140,7 +140,7 @@ public class TimetableActivity extends BaseActivity implements Observer<Integer>
     public void onCompleted() {
         LogUtils.e(TAG, "onCompleted()");
 
-        SettingsUtils.setTimetableDate(this);
+        Settings.setTimetableDate(this);
 
         progressBar.dismiss();
         parseData();
@@ -171,7 +171,7 @@ public class TimetableActivity extends BaseActivity implements Observer<Integer>
         Collections.addAll(mItems, lines);
         mAdapter.notifyDataSetChanged();
 
-        String date = SettingsUtils.getTimetableDate(this);
+        String date = Settings.getTimetableDate(this);
 
         ValidityApi validityApi = RestClient.ADAPTER.create(ValidityApi.class);
         validityApi.timetables(date)
@@ -193,7 +193,7 @@ public class TimetableActivity extends BaseActivity implements Observer<Integer>
                     public void onNext(ValidityResponse validityResponse) {
                         if (!validityResponse.isValid) {
                             LogUtils.e(TAG, "Timetable update available");
-                            SettingsUtils.markDataUpdateAvailable(TimetableActivity.this, true);
+                            Settings.markDataUpdateAvailable(TimetableActivity.this, true);
 
                             mSnackbar = Snackbar.make(getMainContent(), R.string.timetable_update_text, Snackbar.LENGTH_INDEFINITE);
                             mSnackbar.setActionTextColor(ContextCompat.getColor(TimetableActivity.this, R.color.snackbar_action_text));

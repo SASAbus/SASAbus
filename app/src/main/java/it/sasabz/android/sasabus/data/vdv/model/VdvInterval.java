@@ -15,23 +15,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.sasabz.android.sasabus.provider.model;
+package it.sasabz.android.sasabus.data.vdv.model;
 
 /**
  * Represents a time interval between two bus stops.
  *
  * @author David Dejori
  */
-public class Interval {
+public class VdvInterval {
 
-    private final int fgr;
-    private final int busStop1;
-    private final int busStop2;
+    private final int timeGroup;
+    private final int origin;
+    private final int destination;
 
-    public Interval(int fgr, int busStop1, int busStop2) {
-        this.fgr = fgr;
-        this.busStop1 = busStop1;
-        this.busStop2 = busStop2;
+    public VdvInterval(int timeGroup, int origin, int destination) {
+        this.timeGroup = timeGroup;
+        this.origin = origin;
+        this.destination = destination;
     }
 
     @Override
@@ -39,15 +39,18 @@ public class Interval {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Interval interval = (Interval) o;
-        return fgr == interval.fgr && busStop1 == interval.busStop1 && busStop2 == interval.busStop2;
+        VdvInterval interval = (VdvInterval) o;
+
+        if (timeGroup != interval.timeGroup) return false;
+        if (origin != interval.origin) return false;
+        return destination == interval.destination;
     }
 
     @Override
     public int hashCode() {
-        int result = fgr;
-        result = 31 * result + busStop1;
-        result = 31 * result + busStop2;
+        int result = timeGroup;
+        result = 31 * result + origin;
+        result = 31 * result + destination;
         return result;
     }
 }

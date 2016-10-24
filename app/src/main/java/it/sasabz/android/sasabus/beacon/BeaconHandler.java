@@ -38,8 +38,6 @@ import org.altbeacon.beacon.startup.RegionBootstrap;
 import it.sasabz.android.sasabus.beacon.bus.BusBeaconHandler;
 import it.sasabz.android.sasabus.beacon.busstop.BusStopBeaconHandler;
 import it.sasabz.android.sasabus.beacon.event.EventBeaconHandler;
-import it.sasabz.android.sasabus.provider.API;
-import it.sasabz.android.sasabus.provider.PlanData;
 import it.sasabz.android.sasabus.util.DeviceUtils;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
@@ -249,16 +247,6 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
 
         if (adapter.getState() != BluetoothAdapter.STATE_ON) {
             LogUtils.e(TAG, "Bluetooth adapter is not in state STATE_ON");
-            return;
-        }
-
-        if (!PlanData.planDataExists(mContext)) {
-            LogUtils.e(TAG, "Plan data is missing");
-            return;
-        }
-
-        if (!API.todayExists(mContext)) {
-            LogUtils.e(TAG, "No plan data for this day");
             return;
         }
 

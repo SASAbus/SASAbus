@@ -17,13 +17,17 @@
 
 package it.sasabz.android.sasabus.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import it.sasabz.android.sasabus.R;
+import timber.log.Timber;
 
 public final class UIUtils {
 
@@ -50,5 +54,18 @@ public final class UIUtils {
                 .setPositiveButton(android.R.string.ok, listener)
                 .create()
                 .show();
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        View focus = activity.getCurrentFocus();
+
+        if (focus == null) {
+            Timber.e("Tried to hide keyboard but there is no focused window");
+            return;
+        }
+
+        InputMethodManager inputMethodManager = (InputMethodManager)
+                activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(focus.getWindowToken(), 0);
     }
 }

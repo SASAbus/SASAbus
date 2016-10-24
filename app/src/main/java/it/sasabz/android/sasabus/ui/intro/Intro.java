@@ -35,12 +35,12 @@ import it.sasabz.android.sasabus.network.NetUtils;
 import it.sasabz.android.sasabus.sync.SyncHelper;
 import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.ui.MapActivity;
-import it.sasabz.android.sasabus.ui.busstop.BusStopActivity;
+import it.sasabz.android.sasabus.ui.departure.DepartureActivity;
 import it.sasabz.android.sasabus.ui.intro.data.IntroFragmentData;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.CustomTabsHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Settings;
 
 /**
  * The actual intro activity where all the intro fragments are attached. Handles permission
@@ -143,9 +143,9 @@ public class Intro extends AppIntro {
     private void finishIntro() {
         new SyncHelper(this).performSyncAsync();
 
-        SettingsUtils.markIntroAsShown(this);
+        Settings.markIntroAsShown(this);
 
-        Intent intent = new Intent(this, BusStopActivity.class);
+        Intent intent = new Intent(this, DepartureActivity.class);
         intent.setAction(BaseActivity.ACTION_NO_CHANGELOG);
         startActivity(intent);
 

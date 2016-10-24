@@ -43,7 +43,7 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.receiver.NotificationReceiver;
 import it.sasabz.android.sasabus.ui.MapActivity;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 
 /**
@@ -215,8 +215,8 @@ public class TrafficLightCommand extends NotificationCommand implements FcmComma
         }
 
         // check city
-        if (!command.city.equals(SettingsUtils.getTrafficLightCity(context))) {
-            LogUtils.w(TAG, "City is wrong, is " + command.city + " but setting is " + SettingsUtils.getTrafficLightCity(context));
+        if (!command.city.equals(Settings.getTrafficLightCity(context))) {
+            LogUtils.w(TAG, "City is wrong, is " + command.city + " but setting is " + Settings.getTrafficLightCity(context));
             return;
         }
 

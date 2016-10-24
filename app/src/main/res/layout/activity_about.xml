@@ -57,7 +57,7 @@
                         android:layout_marginLeft="@dimen/padding_normal"
                         android:layout_marginStart="@dimen/padding_normal"
                         android:layout_marginTop="12dp"
-                        android:text="@string/about"
+                        android:text="@string/title_about"
                         android:textColor="@color/accent"
                         android:textStyle="bold"/>
 

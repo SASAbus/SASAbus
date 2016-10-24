@@ -20,30 +20,30 @@
 <resources>
 
     <string name="app_name">SASAbus</string>
-    <string name="about">Chi siamo</string>
-    <string name="settings">Impostazioni</string>
-    <string name="changelog">Changelog</string>
+    <string name="title_about">Chi siamo</string>
+    <string name="title_settings">Impostazioni</string>
+    <string name="title_changelog">Changelog</string>
     <string name="about_changelog_title">Cambiamenti</string>
     <string name="about_changelog_subtitle">Versione</string>
     <string name="settings_general">Lingua</string>
     <string name="settings_language_title">Lingua</string>
     <string name="settings_language_sub">Cambia lingua</string>
-    <string name="map">Mappa</string>
-    <string name="route">Percorsi</string>
-    <string name="refresh">Aggiorna</string>
+    <string name="title_map">Mappa</string>
+    <string name="title_route">Percorsi</string>
+    <string name="action_refresh">Aggiorna</string>
     <string name="route_arrival">Arrivo</string>
     <string name="route_departure">Partenza</string>
-    <string name="stations">Fermate</string>
-    <string name="route_results">Autobus trovati</string>
-    <string name="pick_stations">Seleziona una fermata</string>
+    <string name="title_bus_stops">Fermate</string>
+    <string name="title_route_results">Autobus trovati</string>
+    <string name="title_pick_bus_stops">Seleziona una fermata</string>
     <string name="route_recent">Ricerche recenti</string>
-    <string name="bus_lines">Linee autobus</string>
+    <string name="title_bus_lines">Linee autobus</string>
     <string name="list_lines_delay">Ritardo</string>
     <string name="list_lines_station">Fermata</string>
     <string name="bolzano">Bolzano</string>
     <string name="merano">Merano</string>
     <string name="line">Linea</string>
-    <string name="lines_detail">Dettagli linea</string>
+    <string name="title_line_details">Dettagli linea</string>
     <string name="monday_long">Lunedì</string>
     <string name="saturday_long">Sabato</string>
     <string name="sunday_long">Domenica</string>
@@ -57,26 +57,26 @@
     <string name="additional_info">Ulteriori informazioni:</string>
     <string name="lines_all">Tutte</string>
     <string name="lines_driving">In servizio</string>
-    <string name="news">Novità</string>
+    <string name="title_news">Novità</string>
     <string name="toast_route_enter_arrival">Prego inserisci la fermate d\'arrivo</string>
     <string name="toast_route_enter_departure">Prego inserisci la fermata di partenza</string>
     <string name="toast_route_station_match">Partenza e arrivo non possono coincidere</string>
-    <string name="delete">Rimuovere</string>
+    <string name="action_delete">Rimuovere</string>
     <string name="station_details">Dettagli fermata</string>
-    <string name="activity_credits">Credits</string>
+    <string name="title_credits">Credits</string>
     <string name="error_route_title">Nessun risultati</string>
     <string name="error_route_sub">Nessun percorsi trovati</string>
     <string name="dialog_route_number_title">Numero di risultati</string>
-    <string name="lines_path">Percorso linea</string>
+    <string name="title_line_path">Percorso linea</string>
     <string name="dialog_route_number_negative">Anulla</string>
     <string name="route_result_default">3 risultati</string>
     <string name="parking_navigate">Navigare</string>
     <string name="parking_call">Chiamare</string>
-    <string name="parking">Parcheggi</string>
+    <string name="title_parking">Parcheggi</string>
     <string name="parking_detail_current_free">posti liberi</string>
     <string name="parking_detail_slots_total">posti in totale</string>
     <string name="parking_detail_station_distance">m dal parcheggio</string>
-    <string name="bus_details">Dettagli autobus</string>
+    <string name="title_bus_details">Dettagli autobus</string>
     <string name="bus_details_color">Colore</string>
     <string name="bus_details_fuel">Carburante</string>
     <string name="bus_details_manufacturer">Produttore</string>
@@ -103,7 +103,7 @@
         vietare questo diritto?
     </string>
     <string name="search">Cerca</string>
-    <string name="course_details">Dettagli corso</string>
+    <string name="title_course_details">Dettagli corso</string>
     <string name="about_policy_subtitle">Apri nel browser</string>
     <string name="about_policy_title">Informativa sulla privacy</string>
     <string name="all">Tutte</string>
@@ -139,8 +139,8 @@
     </string>
     <string name="settings_beacons_station_enabled_title">Fermate</string>
     <string name="snackbar_retry">Riprova</string>
-    <string name="trips">Viaggi</string>
-    <string name="trip_details">Dettagli viaggio</string>
+    <string name="title_trips">Viaggi</string>
+    <string name="title_trip_details">Dettagli viaggio</string>
     <string name="trip_details_distance">Distanza</string>
     <string name="trip_details_duration">Durata</string>
     <string name="trip_details_error">Impossibile caricare i dati</string>
@@ -154,7 +154,7 @@
     <string name="timetable_download">Scarico orari…</string>
     <string name="timetable_map_bolzano">Rete Bolzano</string>
     <string name="timetable_map_merano">Rete Merano</string>
-    <string name="timetables">Orari</string>
+    <string name="title_timetables">Orari</string>
     <string name="timetable_open">Apri orario</string>
     <string name="timetable_update_action">Scarica</string>
     <string name="timetable_update_text">Nuovi orari disponibili</string>
@@ -234,7 +234,7 @@
     <string name="bottom_sheet_delayed">%d\' di ritardo</string>
     <string name="bottom_sheet_early">%d\' prematuro</string>
     <string name="bottom_sheet_punctual">Puntuale</string>
-    <string name="lines">Linee</string>
+    <string name="title_lines">Linee</string>
     <string name="line_current_stop">Adesso: %s</string>
     <string name="line_heading">Destinazione: %s</string>
     <string name="station_heading">Destinazione: %s</string>
@@ -296,12 +296,12 @@
     <string name="survey_title_form">Per favore inserisci la tua e-mail, così ti potremo contattare.</string>
     <string name="survey_title_header">Sondaggi ci aiutano a migliorare il servizio autobus tramite l\'analisi di opinioni e reclami dalla parte dei nostri clienti. Per favore descrivi problemi e respettivamente cosa non ti è piaciuto. Grazie!</string>
     <string name="survey_title_rate">Come valutesresti il tuo viaggio sull\'autobus?</string>
-    <string name="survey">Sondaggio</string>
+    <string name="title_survey">Sondaggio</string>
     <string name="about_feedback_subtitle">Communicai problemi, errori e proposte</string>
     <string name="timetable_extract">Estrago orari…</string>
     <string name="about_traffic_light_loading">Carico…</string>
     <string name="about_traffic_light_city">Status per %s</string>
-    <string name="eco_points">Punti eco</string>
+    <string name="title_eco_points">Punti eco</string>
     <string name="error_gps_title">Servizi di localizzazione non attivi</string>
     <string name="parking_pick">Seleziona un parcheggio</string>
     <string name="activity_title_eco_points_badges">Distintivi</string>
@@ -408,7 +408,7 @@
     <string name="register_form_male">Maschile</string>
     <string name="register_password_no_match">Password non corrispondono</string>
     <string name="register_password_repeat">Ripeti password</string>
-    <string name="account_settings">Impostazioni account</string>
+    <string name="title_account_settings">Impostazioni account</string>
     <string name="dialog_map_download_negative">Più tardi</string>
     <string name="dialog_map_download_title">Download della mappa</string>
     <string name="dialog_map_download_message">L\'app deve scaricare 60MByte di dati per visulizzare la mappa. Vorresti scaricare la cartina adesso?</string>

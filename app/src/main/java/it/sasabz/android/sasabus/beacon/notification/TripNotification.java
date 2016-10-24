@@ -39,9 +39,9 @@ import java.util.List;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.beacon.bus.CurrentTrip;
+import it.sasabz.android.sasabus.data.vdv.model.VdvBusStop;
 import it.sasabz.android.sasabus.model.BusStop;
 import it.sasabz.android.sasabus.model.line.Lines;
-import it.sasabz.android.sasabus.provider.ApiUtils;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.ui.MapActivity;
 import it.sasabz.android.sasabus.util.UIUtils;
@@ -157,7 +157,7 @@ public class TripNotification {
         setCommonNotification(context, remoteViews, trip);
 
         List<BusStop> path = trip.getPath();
-        List<it.sasabz.android.sasabus.provider.model.BusStop> times = trip.getTimes();
+        List<VdvBusStop> times = trip.getTimes();
 
         BusStop currentBusStop = trip.beacon.busStop;
 
@@ -171,7 +171,7 @@ public class TripNotification {
         }
 
         remoteViews.setTextViewText(R.id.notification_bus_stop_time,
-                ApiUtils.getTime(times.get(index).getSeconds()));
+                times.get(index).getTime());
 
         String busStationName = BusStopRealmHelper.getName(
                 trip.beacon.busStop.getId());
@@ -197,7 +197,7 @@ public class TripNotification {
         setCommonNotification(context, remoteViews, trip);
 
         List<BusStop> path = trip.getPath();
-        List<it.sasabz.android.sasabus.provider.model.BusStop> times = trip.getTimes();
+        List<VdvBusStop> times = trip.getTimes();
 
         BusStop currentBusStop = trip.beacon.busStop;
 

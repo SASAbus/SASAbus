@@ -39,6 +39,7 @@ import java.util.concurrent.TimeUnit;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import it.sasabz.android.sasabus.Config;
+import it.sasabz.android.sasabus.data.vdv.PlannedData;
 import it.sasabz.android.sasabus.network.NetUtils;
 import it.sasabz.android.sasabus.network.auth.AuthHelper;
 import it.sasabz.android.sasabus.network.rest.RestClient;
@@ -47,12 +48,11 @@ import it.sasabz.android.sasabus.network.rest.api.EcoPointsApi;
 import it.sasabz.android.sasabus.network.rest.api.ValidityApi;
 import it.sasabz.android.sasabus.network.rest.model.ScannedBeacon;
 import it.sasabz.android.sasabus.network.rest.response.ValidityResponse;
-import it.sasabz.android.sasabus.provider.PlanData;
 import it.sasabz.android.sasabus.realm.user.Beacon;
 import it.sasabz.android.sasabus.realm.user.EarnedBadge;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Preconditions;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -283,12 +283,12 @@ public class SyncHelper {
 
         // Check if plan data exists. If not, we should immediately download it, else check if an
         // update is available and download it.
-        if (!PlanData.planDataExists(mContext)) {
+        if (!PlannedData.planDataExists(mContext)) {
             LogUtils.e(TAG, "Plan data does not exist");
 
             shouldDownloadData = true;
         } else {
-            String date = SettingsUtils.getDataDate(mContext);
+            String date = Settings.getDataDate(mContext);
 
             ValidityApi validityApi = RestClient.ADAPTER.create(ValidityApi.class);
             Response<ValidityResponse> response = validityApi.data(date).execute();
@@ -297,7 +297,7 @@ public class SyncHelper {
                 if (!response.body().isValid) {
                     LogUtils.e(TAG, "Plan data update available");
 
-                    SettingsUtils.markDataUpdateAvailable(mContext, true);
+                    Settings.markDataUpdateAvailable(mContext, true);
 
                     shouldDownloadData = true;
                 } else {
@@ -313,7 +313,7 @@ public class SyncHelper {
         if (shouldDownloadData) {
             LogUtils.e(TAG, "Downloading plan data");
 
-            PlanData.download(mContext)
+            PlannedData.download(mContext)
                     .subscribe(new Observer<Void>() {
                         @Override
                         public void onCompleted() {

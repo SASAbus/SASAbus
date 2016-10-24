@@ -15,13 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.sasabz.android.sasabus.util.recycler;
+package it.sasabz.android.sasabus.ui.line;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,20 +34,20 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.model.line.LineCourse;
-import it.sasabz.android.sasabus.ui.busstop.BusStopDetailActivity;
+import it.sasabz.android.sasabus.realm.busstop.BusStop;
+import it.sasabz.android.sasabus.ui.departure.DepartureActivity;
 
 /**
  * @author Alex Lardschneider
  */
-public class LineCourseAdapter extends RecyclerView.Adapter<LineCourseAdapter.ViewHolder> {
+class LineCourseAdapter extends RecyclerView.Adapter<LineCourseAdapter.ViewHolder> {
 
     private final Context mContext;
     private final List<LineCourse> mItems;
 
-    public LineCourseAdapter(Context context, List<LineCourse> items) {
+    LineCourseAdapter(Context context, List<LineCourse> items) {
         mItems = items;
         mContext = context;
     }
@@ -58,20 +59,29 @@ public class LineCourseAdapter extends RecyclerView.Adapter<LineCourseAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int i) {
-        LineCourse item = mItems.get(i);
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        LineCourse item = mItems.get(position);
 
-        if (i == 0 || i == mItems.size() - 1) {
+        int padding = (int) mContext.getResources().getDimension(
+                R.dimen.line_course_big_circle_padding);
+
+        if (position == 0 || position == mItems.size() - 1) {
             holder.image.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.dot));
+            holder.image.setPadding(padding, padding, padding, padding);
         } else {
-            holder.image.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.dots));
+            holder.image.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_dots_5));
+            holder.image.setPadding(0, 0, 0, 0);
         }
 
-        if (i >= 1 && !mItems.get(i - 1).isActive() && item.isActive() || item.isDot()) {
+        if (item.dot) {
             holder.image.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.dot));
+            holder.image.setPadding(padding, padding, padding, padding);
+        } else if (item.bus) {
+            holder.image.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_bus));
+            holder.image.setPadding(padding, padding, padding, padding);
         }
 
-        if (item.isActive()) {
+        if (item.active) {
             holder.text.setTextColor(ContextCompat.getColor(mContext, R.color.text_primary));
             holder.image.setColorFilter(ContextCompat.getColor(mContext, R.color.text_primary));
         } else {
@@ -79,7 +89,10 @@ public class LineCourseAdapter extends RecyclerView.Adapter<LineCourseAdapter.Vi
             holder.image.setColorFilter(ContextCompat.getColor(mContext, R.color.text_tertiary), PorterDuff.Mode.SRC_IN);
         }
 
-        holder.text.setText(item.getTime() + " - " + item.getBusStop() + " (" + item.getMunic() + ')');
+        BusStop busStop = item.busStop;
+        holder.text.setText(item.time + " - " + busStop.getName(mContext) + " (" + busStop.getMunic(mContext) + ')');
+        holder.lines.setText(Html.fromHtml(item.lineText));
+        holder.lines.setSelected(true);
     }
 
     @Override
@@ -89,7 +102,8 @@ public class LineCourseAdapter extends RecyclerView.Adapter<LineCourseAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.list_lines_course_layout) LinearLayout layout;
+        @BindView(R.id.list_line_course_layout) LinearLayout layout;
+        @BindView(R.id.list_line_course_lines) TextView lines;
         @BindView(R.id.list_line_course_image) ImageView image;
         @BindView(R.id.list_line_course_text) TextView text;
 
@@ -108,9 +122,13 @@ public class LineCourseAdapter extends RecyclerView.Adapter<LineCourseAdapter.Vi
 
             LineCourse item = mItems.get(position);
 
-            Intent intent = new Intent(v.getContext(), BusStopDetailActivity.class);
-            intent.putExtra(Config.EXTRA_STATION_ID, item.getId());
+            Intent intent = DepartureActivity.intent(v.getContext(), item.busStop.getFamily());
             v.getContext().startActivity(intent);
+        }
+
+        @Override
+        public String toString() {
+            return "LineCourseAdapter.ViewHolder{} " + super.toString();
         }
     }
 }

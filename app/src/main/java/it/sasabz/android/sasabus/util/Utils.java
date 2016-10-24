@@ -66,7 +66,7 @@ public final class Utils {
 
         Locale locale = Locale.getDefault();
 
-        String language = SettingsUtils.getLanguage(context).toLowerCase();
+        String language = Settings.getLanguage(context).toLowerCase();
         if (!language.equals("system")) {
             locale = new Locale(language);
         }
@@ -96,7 +96,7 @@ public final class Utils {
      * @return a boolean value indicating whether the beacon handler can be started.
      */
     public static boolean isBeaconEnabled(Context context) {
-        return SettingsUtils.isBeaconEnabled(context) &&
+        return Settings.isBeaconEnabled(context) &&
                 DeviceUtils.isBluetoothEnabled() &&
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2 &&
                 context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);
@@ -183,5 +183,16 @@ public final class Utils {
         }
 
         return UserRealmHelper.insertTrip(context, beacon);
+    }
+
+    public static boolean isBrokenSamsungDevice() {
+        return Build.MANUFACTURER.equalsIgnoreCase("samsung")
+                && isBetweenAndroidVersions(
+                Build.VERSION_CODES.LOLLIPOP,
+                Build.VERSION_CODES.LOLLIPOP_MR1);
+    }
+
+    private static boolean isBetweenAndroidVersions(int min, int max) {
+        return Build.VERSION.SDK_INT >= min && Build.VERSION.SDK_INT <= max;
     }
 }

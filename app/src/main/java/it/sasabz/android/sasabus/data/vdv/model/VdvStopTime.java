@@ -15,54 +15,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.sasabz.android.sasabus.provider.model;
-
-import it.sasabz.android.sasabus.provider.ApiUtils;
+package it.sasabz.android.sasabus.data.vdv.model;
 
 /**
- * Represents a bus stop.
+ * Represents the stop time of a bus at a specific stop.
  *
  * @author David Dejori
  */
-public class BusStop {
+public class VdvStopTime {
 
     private final int id;
-    private int seconds;
-    private String time;
+    private final int stop;
 
-    public BusStop(int id) {
+    public VdvStopTime(int id, int stop) {
         this.id = id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public int getSeconds() {
-        return seconds;
-    }
-
-    public void setSeconds(int seconds) {
-        this.seconds = seconds;
-        time = ApiUtils.getTime(seconds);
-    }
-
-    public String getTime() {
-        return time;
+        this.stop = stop;
     }
 
     @Override
     public boolean equals(Object o) {
-        return this == o || !(o == null || getClass() != o.getClass()) && id == ((BusStop) o).id;
-    }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-    @Override
-    public int hashCode() {
-        return id;
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(id);
+        VdvStopTime stopTime = (VdvStopTime) o;
+        return id == stopTime.id && stop == stopTime.stop;
     }
 }

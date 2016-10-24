@@ -43,6 +43,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.data.vdv.Api;
+import it.sasabz.android.sasabus.data.vdv.model.VdvBusStop;
 import it.sasabz.android.sasabus.model.line.LineDetail;
 import it.sasabz.android.sasabus.model.line.Lines;
 import it.sasabz.android.sasabus.network.NetUtils;
@@ -52,8 +54,6 @@ import it.sasabz.android.sasabus.network.rest.api.RealtimeApi;
 import it.sasabz.android.sasabus.network.rest.model.Line;
 import it.sasabz.android.sasabus.network.rest.model.RealtimeBus;
 import it.sasabz.android.sasabus.network.rest.response.RealtimeResponse;
-import it.sasabz.android.sasabus.provider.apis.Trips;
-import it.sasabz.android.sasabus.provider.model.BusStop;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
@@ -348,7 +348,7 @@ public class LineDetailsActivity extends RxAppCompatActivity implements OnClickL
 
                             String lastStationName = BusStopRealmHelper.getName(lastStationID);
 
-                            List<BusStop> path = Trips.getPath(LineDetailsActivity.this, bus.trip);
+                            List<VdvBusStop> path = Api.getTrip(bus.trip).calcTimedPath();
 
                             if (path != null && !path.isEmpty()) {
                                 String lastTime = path.get(path.size() - 1).getTime();

@@ -34,9 +34,9 @@ import it.sasabz.android.sasabus.ui.intro.Intro;
  *
  * @author Alex Lardschneider
  */
-public final class SettingsUtils {
+public final class Settings {
 
-    private static final String TAG = "SettingsUtils";
+    private static final String TAG = "Settings";
 
     /**
      * Boolean indicating whether ToS has been accepted.
@@ -156,7 +156,7 @@ public final class SettingsUtils {
 
     private static boolean wasUpgrade;
 
-    private SettingsUtils() {
+    private Settings() {
     }
 
 

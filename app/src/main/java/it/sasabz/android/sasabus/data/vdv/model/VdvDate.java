@@ -15,37 +15,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.sasabz.android.sasabus.provider.model;
+package it.sasabz.android.sasabus.data.vdv.model;
+
+import java.util.Date;
 
 /**
- * Represents the stop time of a bus at a specific stop.
- *
  * @author David Dejori
  */
-public class StopTime {
+public class VdvDate {
 
     private final int id;
-    private final int stop;
+    private final Date date;
 
-    public StopTime(int id, int stop) {
+    public VdvDate(int id, Date date) {
         this.id = id;
-        this.stop = stop;
+        this.date = date;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        StopTime stopTime = (StopTime) o;
-        return id == stopTime.id && stop == stopTime.stop;
-
+    public int getId() {
+        return id;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + stop;
-        return result;
+    public Date getDate() {
+        return date;
     }
 }

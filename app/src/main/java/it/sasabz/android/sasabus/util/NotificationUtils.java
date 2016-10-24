@@ -44,6 +44,7 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.beacon.ecopoints.badge.Badge;
 import it.sasabz.android.sasabus.beacon.survey.SurveyActivity;
 import it.sasabz.android.sasabus.model.BusStopDetail;
+import it.sasabz.android.sasabus.model.Departure;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.ui.MapActivity;
 import it.sasabz.android.sasabus.ui.NewsActivity;
@@ -104,15 +105,15 @@ public final class NotificationUtils {
      *
      * @param context   application context
      * @param busStopId id of the bus stop to display
-     * @param items     the {@link List} which contains the {@link BusStopDetail} items which are
+     * @param departures     the {@link List} which contains the {@link BusStopDetail} departures which are
      *                  displayed in the expanded notification.
      */
-    public static void busStop(Context context, int busStopId, List<BusStopDetail> items) {
+    public static void busStop(Context context, int busStopId, List<Departure> departures) {
         Preconditions.checkNotNull(context, "busStop() context == null");
 
         String stationName = BusStopRealmHelper.getName(busStopId);
 
-        String contentText = context.getString(items.isEmpty() ?
+        String contentText = context.getString(departures.isEmpty() ?
                 R.string.notification_bus_stop_sub_click : R.string.notification_bus_stop_sub_pull);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
@@ -125,7 +126,7 @@ public final class NotificationUtils {
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setCategory(NotificationCompat.CATEGORY_EVENT);
 
-        if (SettingsUtils.isBusStopVibrationEnabled(context)) {
+        if (Settings.isBusStopVibrationEnabled(context)) {
             mBuilder.setVibrate(new long[]{VIBRATION_TIME_MILLIS, VIBRATION_TIME_MILLIS});
         } else {
             mBuilder.setVibrate(null);
@@ -148,47 +149,47 @@ public final class NotificationUtils {
 
             expandedView.setTextViewText(R.id.notification_title, context.getString(R.string.notification_expanded_title, stationName));
 
-            if (!items.isEmpty()) {
-                BusStopDetail stopDetail = items.get(0);
+            if (!departures.isEmpty()) {
+                Departure stopDetail = departures.get(0);
 
                 expandedView.setViewVisibility(R.id.notification_departure_1, View.VISIBLE);
-                expandedView.setTextViewText(R.id.notification_departure_1_line, stopDetail.getLine());
-                expandedView.setTextViewText(R.id.notification_departure_1_time, stopDetail.getTime());
-                expandedView.setTextViewText(R.id.notification_departure_1_last, context.getString(R.string.notification_heading, stopDetail.getLastStation()));
+                expandedView.setTextViewText(R.id.notification_departure_1_line, stopDetail.line);
+                expandedView.setTextViewText(R.id.notification_departure_1_time, stopDetail.time);
+                expandedView.setTextViewText(R.id.notification_departure_1_last, context.getString(R.string.notification_heading, stopDetail.destination));
 
-                if (stopDetail.getDelay() > 3) {
+                if (stopDetail.delay > 3) {
                     expandedView.setTextColor(R.id.notification_departure_1_delay, ContextCompat.getColor(context, R.color.primary_red));
-                } else if (stopDetail.getDelay() > 0) {
+                } else if (stopDetail.delay > 0) {
                     expandedView.setTextColor(R.id.notification_departure_1_delay, ContextCompat.getColor(context, R.color.primary_amber_dark));
                 }
 
-                if (stopDetail.getDelay() != Config.BUS_STOP_DETAILS_NO_DELAY) {
-                    expandedView.setTextViewText(R.id.notification_departure_1_delay, stopDetail.getDelay() + "'");
+                if (stopDetail.delay != Config.BUS_STOP_DETAILS_NO_DELAY) {
+                    expandedView.setTextViewText(R.id.notification_departure_1_delay, stopDetail.delay + "'");
                 }
             }
 
-            if (items.size() > 1) {
-                BusStopDetail stopDetail = items.get(1);
+            if (departures.size() > 1) {
+                Departure stopDetail = departures.get(1);
 
                 expandedView.setViewVisibility(R.id.notification_departure_2, View.VISIBLE);
-                expandedView.setTextViewText(R.id.notification_departure_2_line, stopDetail.getLine());
-                expandedView.setTextViewText(R.id.notification_departure_2_time, stopDetail.getTime());
-                expandedView.setTextViewText(R.id.notification_departure_2_last, context.getString(R.string.notification_heading, stopDetail.getLastStation()));
+                expandedView.setTextViewText(R.id.notification_departure_2_line, stopDetail.line);
+                expandedView.setTextViewText(R.id.notification_departure_2_time, stopDetail.time);
+                expandedView.setTextViewText(R.id.notification_departure_2_last, context.getString(R.string.notification_heading, stopDetail.destination));
 
-                if (stopDetail.getDelay() > 3) {
+                if (stopDetail.delay > 3) {
                     expandedView.setTextColor(R.id.notification_departure_2_delay, ContextCompat.getColor(context, R.color.primary_red));
-                } else if (stopDetail.getDelay() > 0) {
+                } else if (stopDetail.delay > 0) {
                     expandedView.setTextColor(R.id.notification_departure_2_delay, ContextCompat.getColor(context, R.color.primary_amber_dark));
                 }
 
-                if (stopDetail.getDelay() != Config.BUS_STOP_DETAILS_NO_DELAY) {
-                    expandedView.setTextViewText(R.id.notification_departure_2_delay, stopDetail.getDelay() + "'");
+                if (stopDetail.delay != Config.BUS_STOP_DETAILS_NO_DELAY) {
+                    expandedView.setTextViewText(R.id.notification_departure_2_delay, stopDetail.delay + "'");
                 }
             }
 
             notification = mBuilder.build();
 
-            if (!items.isEmpty()) {
+            if (!departures.isEmpty()) {
                 notification.bigContentView = expandedView;
             }
         } else {

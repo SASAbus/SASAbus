@@ -19,10 +19,15 @@ package it.sasabz.android.sasabus;
 
 import android.app.Application;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 import io.fabric.sdk.android.Fabric;
+import it.sasabz.android.sasabus.data.vdv.data.VdvHandler;
 import it.sasabz.android.sasabus.network.auth.AuthHelper;
 import it.sasabz.android.sasabus.network.rest.RestClient;
 import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
@@ -30,8 +35,10 @@ import it.sasabz.android.sasabus.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.receiver.BluetoothReceiver;
 import it.sasabz.android.sasabus.sync.SyncHelper;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
+import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * Main application which handles common app functionality like exception logging and
@@ -41,13 +48,17 @@ import it.sasabz.android.sasabus.util.Utils;
  */
 public class AppApplication extends Application {
 
+    private GoogleApiClient mApiClient;
+
     @Override
     public void onCreate() {
         super.onCreate();
 
         // Set up Crashlytics so in case the app crashes we get a detailed stacktrace
         // and device info.
-        if (!BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        } else {
             Fabric.with(this, new Crashlytics());
         }
 
@@ -78,7 +89,38 @@ public class AppApplication extends Application {
         SyncHelper.scheduleSync(this);
 
         // Check if the user upgraded the app and perform various operation if necessary.
-        SettingsUtils.checkUpgrade(this);
+        Settings.checkUpgrade(this);
+
+        // Load plan data
+        VdvHandler.load(this)
+                .subscribeOn(Schedulers.io())
+                .subscribe();
+
+        //noinspection CodeBlock2Expr
+        mApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+                    @Override
+                    public void onConnected(@Nullable Bundle bundle) {
+                        Timber.i("Connected to google api");
+                    }
+
+                    @Override
+                    public void onConnectionSuspended(int i) {
+                        Timber.e("Connection to google api suspended");
+
+                    }
+                })
+                .addOnConnectionFailedListener(connectionResult -> {
+                    Timber.e("Connection to google api failed: %s", connectionResult);
+                })
+                .addApi(LocationServices.API)
+                .build();
+
+        mApiClient.connect();
+    }
+
+    public GoogleApiClient getGoogleApiClient() {
+        return mApiClient;
     }
 
     /**
