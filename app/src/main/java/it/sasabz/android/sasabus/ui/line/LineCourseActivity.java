@@ -20,18 +20,11 @@ package it.sasabz.android.sasabus.ui.line;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
@@ -39,7 +32,6 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,7 +48,6 @@ import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.data.vdv.Api;
 import it.sasabz.android.sasabus.data.vdv.data.VdvCalendar;
 import it.sasabz.android.sasabus.data.vdv.model.VdvBusStop;
-import it.sasabz.android.sasabus.ui.widget.adapter.TabsAdapter;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.DeviceUtils;
 import it.sasabz.android.sasabus.util.Settings;
@@ -90,26 +81,22 @@ public class LineCourseActivity extends RxAppCompatActivity {
     private static int mBusStopGroup;
     private static int mCurrentBusStop;
     private static int vehicle;
-    private static int lineId;
 
-    /**
-     * The fragments holding the different categories of news.
-     */
-    private ListFragment mListFragment;
-    private ListFragment mMapFragment;
+    @BindView(R.id.error_general) RelativeLayout mErrorGeneral;
+    @BindView(R.id.error_wifi) RelativeLayout mErrorWifi;
+    @BindView(R.id.error_data) RelativeLayout mErrorData;
 
-    @BindView(R.id.viewpager) ViewPager mViewPager;
-    @BindView(R.id.tabs) TabLayout mTabLayout;
+    @BindView(R.id.refresh) SwipeRefreshLayout mRefresh;
+    @BindView(R.id.lines_course_recycler) RecyclerView mRecyclerView;
 
-    private static int loadedCount;
+    private ArrayList<LineCourse> mItems;
+    private LineCourseAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_line_course);
-
-        loadedCount = 0;
 
         ButterKnife.bind(this);
         AnalyticsHelper.sendScreenView(TAG);
@@ -122,54 +109,52 @@ public class LineCourseActivity extends RxAppCompatActivity {
         toolbar.setNavigationOnClickListener(v -> finish());
 
         Intent intent = getIntent();
-        lineId = intent.getIntExtra(Config.EXTRA_LINE_ID, -1);
         mTripId = intent.getIntExtra(Config.EXTRA_TRIP_ID, -1);
         mBusStopGroup = intent.getIntExtra(Config.EXTRA_BUS_STOP_GROUP, -1);
         vehicle = intent.getIntExtra(Config.EXTRA_VEHICLE, -1);
         mCurrentBusStop = intent.getIntExtra(EXTRA_CURRENT_BUS_STOP, -1);
 
-        toolbar.setSubtitle(getString(R.string.line_format, Lines.lidToName(lineId)));
-
-        TabsAdapter mAdapter = new TabsAdapter(getSupportFragmentManager());
+        mRefresh.setColorSchemeResources(Config.REFRESH_COLORS);
+        mRefresh.setOnRefreshListener(() -> parsePlanData(false));
 
         if (savedInstanceState != null) {
-            mListFragment = (ListFragment) getSupportFragmentManager()
-                    .getFragment(savedInstanceState, ListFragment.class.getName());
+            int errorDataVisibility = savedInstanceState.getInt("ERROR_DATA");
+            int errorWifiVisibility = savedInstanceState.getInt(Config.BUNDLE_ERROR_WIFI);
+            int errorGeneralVisibility = savedInstanceState.getInt(Config.BUNDLE_ERROR_GENERAL);
 
-            mMapFragment = (ListFragment) getSupportFragmentManager()
-                    .getFragment(savedInstanceState, ListFragment.class.getName());
+            //noinspection ResourceType
+            mErrorData.setVisibility(errorDataVisibility);
+            //noinspection ResourceType
+            mErrorWifi.setVisibility(errorWifiVisibility);
+            //noinspection ResourceType
+            mErrorGeneral.setVisibility(errorGeneralVisibility);
+
+            mItems = savedInstanceState
+                    .getParcelableArrayList(Config.BUNDLE_LIST);
+        } else {
+            mItems = new ArrayList<>();
+            mRefresh.setRefreshing(true);
         }
 
-        if (mListFragment == null) {
-            mListFragment = new ListFragment();
-        }
+        mAdapter = new LineCourseAdapter(this, mItems);
 
-        if (mMapFragment == null) {
-            mMapFragment = new ListFragment();
-        }
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setAdapter(mAdapter);
 
-        mAdapter.addFragment(mListFragment, "LIST");
-        mAdapter.addFragment(mMapFragment, "MAP");
-
-        mViewPager.setAdapter(mAdapter);
-        mViewPager.setOffscreenPageLimit(3);
-
-        mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.white));
+        parsePlanData(true);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        try {
-            getSupportFragmentManager().putFragment(outState, ListFragment.class.getName(), mListFragment);
-            getSupportFragmentManager().putFragment(outState, ListFragment.class.getName(), mMapFragment);
-        } catch (IllegalStateException e) {
-            Utils.logException(e);
-        }
-    }
+        outState.putParcelableArrayList(Config.BUNDLE_LIST, mItems);
 
+        outState.putInt("ERROR_DATA", mErrorData.getVisibility());
+        outState.putInt(Config.BUNDLE_ERROR_WIFI, mErrorWifi.getVisibility());
+        outState.putInt(Config.BUNDLE_ERROR_GENERAL, mErrorGeneral.getVisibility());
+    }
 
     /**
      * Parses the line course from the plan data. This is used to get the course of a non
@@ -199,16 +184,59 @@ public class LineCourseActivity extends RxAppCompatActivity {
                             Utils.logException(e);
                         }
 
-                        mListFragment.onError(e);
-                        mMapFragment.onError(e);
+                        LineCourseActivity.this.onError(e);
                     }
 
                     @Override
                     public void onNext(List<LineCourse> items) {
-                        mListFragment.onResult(items, animate);
-                        mMapFragment.onResult(items, animate);
+                        onResult(items, animate);
                     }
                 });
+    }
+
+    private void onResult(Collection<LineCourse> lines, boolean animate) {
+        mItems.clear();
+        mItems.addAll(lines);
+
+        if (animate) {
+            mAdapter.notifyItemRangeInserted(0, mItems.size());
+        } else {
+            mAdapter.notifyDataSetChanged();
+        }
+
+        mErrorGeneral.setVisibility(View.GONE);
+        mErrorWifi.setVisibility(View.GONE);
+        mErrorData.setVisibility(View.GONE);
+
+        for (int i = 0; i < mItems.size(); i++) {
+            LineCourse item = mItems.get(i);
+
+            if (item.active && (item.dot || item.bus)) {
+                int offset = DeviceUtils.getScreenHeight(this) / 3;
+
+                ((LinearLayoutManager) mRecyclerView.getLayoutManager())
+                        .scrollToPositionWithOffset(i, offset);
+
+                break;
+            }
+        }
+
+        mRefresh.setRefreshing(false);
+    }
+
+    private void onError(Throwable throwable) {
+        mItems.clear();
+        mAdapter.notifyDataSetChanged();
+
+        if ("data".equals(throwable.getMessage())) {
+            mErrorData.setVisibility(View.VISIBLE);
+        } else if ("internet".equals(throwable.getMessage())) {
+            mErrorWifi.setVisibility(View.VISIBLE);
+        } else {
+            mErrorGeneral.setVisibility(View.VISIBLE);
+        }
+
+        mRefresh.setRefreshing(false);
     }
 
     /**
@@ -223,72 +251,69 @@ public class LineCourseActivity extends RxAppCompatActivity {
      * @param tripId         the ID of a trip
      */
     private Observable<List<LineCourse>> parseFromPlanData(int vehicle, int busStopGroup, int currentBusStop, int tripId) {
-        return Observable.fromCallable(new Callable<List<LineCourse>>() {
-            @Override
-            public List<LineCourse> call() throws Exception {
-                int currentBusStopNew = currentBusStop;
+        return Observable.fromCallable(() -> {
+            int currentBusStopNew = currentBusStop;
 
-                if (!Api.todayExists()) {
-                    Settings.markDataUpdateAvailable(LineCourseActivity.this, true);
+            if (!Api.todayExists()) {
+                Settings.markDataUpdateAvailable(LineCourseActivity.this, true);
 
-                    throw new VdvCalendar.VdvCalendarException(ERROR_DATA);
-                }
-
-                if (vehicle != 0) {
-                    Timber.w("Getting bus position for %s", vehicle);
-
-                    RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
-                    Call<RealtimeResponse> call = realtimeApi.vehicle(vehicle);
-                    Response<RealtimeResponse> response = call.execute();
-
-                    if (response.isSuccessful() && response.body() != null) {
-                        RealtimeResponse body = response.body();
-
-                        if (!body.buses.isEmpty()) {
-                            RealtimeBus bus = body.buses.get(0);
-                            currentBusStopNew = bus.busStop;
-
-                            Timber.w("Got bus position for %s: %s", vehicle, currentBusStopNew);
-                        } else {
-                            Timber.w("Bus %s is not in service", vehicle);
-                        }
-                    } else {
-                        Timber.w("Could not get bus position: %s, %s", response.code(),
-                                response.errorBody());
-                    }
-                }
-
-                List<LineCourse> items = new ArrayList<>();
-                List<VdvBusStop> path;
-
-                path = Api.getTrip(tripId).calcTimedPath();
-
-                boolean active = currentBusStopNew == 0;
-
-                for (VdvBusStop stop : path) {
-                    BusStop busStop = BusStopRealmHelper.getBusStop(stop.getId());
-
-                    boolean dot = false;
-                    boolean bus = false;
-
-                    // Iterate all times to see at which bus stop the bus currently is, and mark it
-                    // to make it stand out in the list (by either a dot or a bus depending if it
-                    // currently is in service).
-
-                    if (busStop.getId() == currentBusStopNew) {
-                        active = true;
-                        bus = true;
-                    }
-
-                    if (busStop.getFamily() == busStopGroup) {
-                        dot = true;
-                    }
-
-                    items.add(new LineCourse(stop.getId(), busStop, stop.getTime(), active, dot, bus));
-                }
-
-                return items;
+                throw new VdvCalendar.VdvCalendarException(ERROR_DATA);
             }
+
+            if (vehicle != 0) {
+                Timber.w("Getting bus position for %s", vehicle);
+
+                RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
+                Call<RealtimeResponse> call = realtimeApi.vehicle(vehicle);
+                Response<RealtimeResponse> response = call.execute();
+
+                if (response.isSuccessful() && response.body() != null) {
+                    RealtimeResponse body = response.body();
+
+                    if (!body.buses.isEmpty()) {
+                        RealtimeBus bus = body.buses.get(0);
+                        currentBusStopNew = bus.busStop;
+
+                        Timber.w("Got bus position for %s: %s", vehicle, currentBusStopNew);
+                    } else {
+                        Timber.w("Bus %s is not in service", vehicle);
+                    }
+                } else {
+                    Timber.w("Could not get bus position: %s, %s", response.code(),
+                            response.errorBody());
+                }
+            }
+
+            List<LineCourse> items = new ArrayList<>();
+            List<VdvBusStop> path;
+
+            path = Api.getTrip(tripId).calcTimedPath();
+
+            boolean active = currentBusStopNew == 0;
+
+            for (VdvBusStop stop : path) {
+                BusStop busStop = BusStopRealmHelper.getBusStop(stop.getId());
+
+                boolean dot = false;
+                boolean bus = false;
+
+                // Iterate all times to see at which bus stop the bus currently is, and mark it
+                // to make it stand out in the list (by either a dot or a bus depending if it
+                // currently is in service).
+
+                if (busStop.getId() == currentBusStopNew) {
+                    active = true;
+                    bus = true;
+                }
+
+                if (busStop.getFamily() == busStopGroup) {
+                    dot = true;
+                }
+
+                items.add(new LineCourse(stop.getId(), busStop, stop.getTime(), active, dot, bus));
+            }
+
+            return items;
         });
     }
 
@@ -322,132 +347,14 @@ public class LineCourseActivity extends RxAppCompatActivity {
         };
     }
 
-    public static Intent intent(Context context, int lineId, int tripId, int busStopGroup,
+    public static Intent intent(Context context, int tripId, int busStopGroup,
                                 int currentBusStop, int vehicle) {
 
         Intent intent = new Intent(context, LineCourseActivity.class);
-        intent.putExtra(Config.EXTRA_LINE_ID, lineId);
         intent.putExtra(Config.EXTRA_TRIP_ID, tripId);
         intent.putExtra(Config.EXTRA_BUS_STOP_GROUP, busStopGroup);
         intent.putExtra(Config.EXTRA_VEHICLE, vehicle);
         intent.putExtra(EXTRA_CURRENT_BUS_STOP, currentBusStop);
         return intent;
-    }
-
-
-    public static class ListFragment extends Fragment {
-
-        private ArrayList<LineCourse> mItems;
-        private LineCourseAdapter mAdapter;
-
-        @BindView(R.id.error_general) RelativeLayout mErrorGeneral;
-        @BindView(R.id.error_wifi) RelativeLayout mErrorWifi;
-        @BindView(R.id.error_data) RelativeLayout mErrorData;
-
-        @BindView(R.id.refresh) SwipeRefreshLayout mRefresh;
-        @BindView(R.id.lines_course_recycler) RecyclerView mRecyclerView;
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.fragment_line_course_list, container, false);
-
-            ButterKnife.bind(this, view);
-
-            return view;
-        }
-
-        @Override
-        public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
-
-            mRefresh.setColorSchemeResources(Config.REFRESH_COLORS);
-            mRefresh.setOnRefreshListener(() -> ((LineCourseActivity) getActivity()).parsePlanData(false));
-
-            if (savedInstanceState != null) {
-                int errorDataVisibility = savedInstanceState.getInt("ERROR_DATA");
-                int errorWifiVisibility = savedInstanceState.getInt(Config.BUNDLE_ERROR_WIFI);
-                int errorGeneralVisibility = savedInstanceState.getInt(Config.BUNDLE_ERROR_GENERAL);
-
-                //noinspection ResourceType
-                mErrorData.setVisibility(errorDataVisibility);
-                //noinspection ResourceType
-                mErrorWifi.setVisibility(errorWifiVisibility);
-                //noinspection ResourceType
-                mErrorGeneral.setVisibility(errorGeneralVisibility);
-
-                mItems = savedInstanceState
-                        .getParcelableArrayList(Config.BUNDLE_LIST);
-            } else {
-                mItems = new ArrayList<>();
-                mRefresh.setRefreshing(true);
-
-                loadedCount++;
-                if (loadedCount > 1) {
-                    ((LineCourseActivity) getActivity()).parsePlanData(true);
-                }
-            }
-
-            mAdapter = new LineCourseAdapter(getActivity(), mItems);
-
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            mRecyclerView.setHasFixedSize(true);
-            mRecyclerView.setAdapter(mAdapter);
-        }
-
-        @Override
-        public void onSaveInstanceState(Bundle outState) {
-            super.onSaveInstanceState(outState);
-
-            outState.putParcelableArrayList(Config.BUNDLE_LIST, mItems);
-
-            outState.putInt("ERROR_DATA", mErrorData.getVisibility());
-            outState.putInt(Config.BUNDLE_ERROR_WIFI, mErrorWifi.getVisibility());
-            outState.putInt(Config.BUNDLE_ERROR_GENERAL, mErrorGeneral.getVisibility());
-        }
-
-        void onResult(Collection<LineCourse> lines, boolean animate) {
-            mItems.clear();
-            mItems.addAll(lines);
-
-            if (animate) {
-                mAdapter.notifyItemRangeInserted(0, mItems.size());
-            } else {
-                mAdapter.notifyDataSetChanged();
-            }
-
-            mErrorGeneral.setVisibility(View.GONE);
-            mErrorWifi.setVisibility(View.GONE);
-            mErrorData.setVisibility(View.GONE);
-
-            for (int i = 0; i < mItems.size(); i++) {
-                LineCourse item = mItems.get(i);
-
-                if (item.active && (item.dot || item.bus)) {
-                    int offset = DeviceUtils.getScreenHeight(getActivity()) / 3;
-
-                    ((LinearLayoutManager) mRecyclerView.getLayoutManager())
-                            .scrollToPositionWithOffset(i, offset);
-
-                    break;
-                }
-            }
-
-            mRefresh.setRefreshing(false);
-        }
-
-        public void onError(Throwable throwable) {
-            mItems.clear();
-            mAdapter.notifyDataSetChanged();
-
-            if ("data".equals(throwable.getMessage())) {
-                mErrorData.setVisibility(View.VISIBLE);
-            } else if ("internet".equals(throwable.getMessage())) {
-                mErrorWifi.setVisibility(View.VISIBLE);
-            } else {
-                mErrorGeneral.setVisibility(View.VISIBLE);
-            }
-
-            mRefresh.setRefreshing(false);
-        }
     }
 }

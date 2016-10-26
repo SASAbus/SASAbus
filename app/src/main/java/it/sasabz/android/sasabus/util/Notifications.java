@@ -63,9 +63,9 @@ public final class Notifications {
 
     public static final int NOTIFICATION_BUS = 1 << 18;
 
-    private static final int NOTIFICATION_BADGE = 1 << 16;
+    private static final int NOTIFICATION_BADGE = 1 << 17;
 
-    private static final int NOTIFICATION_EVENT = 1 << 15;
+    private static final int NOTIFICATION_EVENT = 1 << 16;
 
     private static final int VIBRATION_TIME_MILLIS = 500;
 

@@ -69,12 +69,9 @@ class JSInterface {
     }
 
     @JavascriptInterface
-    public void onLineCourseClick(int vehicle, int lineId, int busStop) {
-        Intent intent = new Intent(context, LineCourseActivity.class);
-        intent.putExtra(Config.EXTRA_VEHICLE, vehicle);
-        intent.putExtra(Config.EXTRA_STATION_ID, new int[]{busStop});
-        intent.putExtra(Config.EXTRA_LINE_ID, lineId);
-        context.startActivity(intent);
+    public void onLineCourseClick(int vehicle, int busStop, int tripId) {
+        context.startActivity(LineCourseActivity.intent(context, tripId,
+                0, busStop, vehicle));
     }
 
     @JavascriptInterface

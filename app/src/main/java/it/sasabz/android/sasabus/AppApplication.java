@@ -101,17 +101,17 @@ public class AppApplication extends Application {
                 .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
                     @Override
                     public void onConnected(@Nullable Bundle bundle) {
-                        Timber.i("Connected to google api");
+                        Timber.i("Connected to Google API");
                     }
 
                     @Override
                     public void onConnectionSuspended(int i) {
-                        Timber.e("Connection to google api suspended");
+                        Timber.e("Connection to Google API suspended");
 
                     }
                 })
                 .addOnConnectionFailedListener(connectionResult -> {
-                    Timber.e("Connection to google api failed: %s", connectionResult);
+                    Timber.e("Connection to Google API failed: %s", connectionResult);
                 })
                 .addApi(LocationServices.API)
                 .build();

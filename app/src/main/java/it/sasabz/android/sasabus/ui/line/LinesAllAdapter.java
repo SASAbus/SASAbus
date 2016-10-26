@@ -82,9 +82,9 @@ public class LinesAllAdapter extends RecyclerView.Adapter<LinesAllAdapter.ViewHo
             View.OnLongClickListener {
 
         @BindView(R.id.list_item_lines_all_card) CardView cardView;
-        @BindView(R.id.list_lines_all_title) TextView title;
-        @BindView(R.id.list_lines_all_departure) TextView departure;
-        @BindView(R.id.list_lines_all_arrival) TextView arrival;
+        @BindView(R.id.list_lines_all_line) TextView title;
+        @BindView(R.id.list_lines_all_origin) TextView departure;
+        @BindView(R.id.list_lines_all_destination) TextView arrival;
 
         ViewHolder(View view) {
             super(view);

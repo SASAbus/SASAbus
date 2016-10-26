@@ -119,8 +119,8 @@ dependencies {
 
     // Play services & Firebase
     compile "com.google.android.gms:play-services-analytics:$PLAY_SERVICES_VERSION"
-    compile "com.google.firebase:firebase-messaging:$PLAY_SERVICES_VERSION"
     compile "com.google.android.gms:play-services-location:$PLAY_SERVICES_VERSION"
+    compile "com.google.firebase:firebase-messaging:$PLAY_SERVICES_VERSION"
 
     // Beacon
     compile 'org.altbeacon:android-beacon-library:2.7.1'

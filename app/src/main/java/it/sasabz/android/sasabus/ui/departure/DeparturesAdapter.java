@@ -40,7 +40,7 @@ import it.sasabz.android.sasabus.util.UIUtils;
  * @author Alex Lardschneider
  * @author David Dejori
  */
-public class DeparturesAdapter extends RecyclerView.Adapter<DeparturesAdapter.ViewHolder> {
+class DeparturesAdapter extends RecyclerView.Adapter<DeparturesAdapter.ViewHolder> {
 
     private final Context mContext;
     private final List<Departure> mItems;
@@ -123,7 +123,7 @@ public class DeparturesAdapter extends RecyclerView.Adapter<DeparturesAdapter.Vi
 
             Departure item = mItems.get(position);
 
-            Intent intent = LineCourseActivity.intent(v.getContext(), item.lineId, item.trip,
+            Intent intent = LineCourseActivity.intent(v.getContext(), item.trip,
                     item.busStopGroup, item.currentBusStop, item.vehicle);
 
             v.getContext().startActivity(intent);

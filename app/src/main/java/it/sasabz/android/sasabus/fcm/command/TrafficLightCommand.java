@@ -62,7 +62,7 @@ public class TrafficLightCommand extends NotificationCommand implements FcmComma
 
     private static final String TAG = "TrafficLightCommand";
 
-    private static class TraficLightCommandModel extends NotificationCommand.NotificationCommandModel {
+    private static class TrafficLightCommandModel extends NotificationCommand.NotificationCommandModel {
         String city;
     }
 
@@ -82,10 +82,10 @@ public class TrafficLightCommand extends NotificationCommand implements FcmComma
         }
 
         Gson gson = new Gson();
-        TraficLightCommandModel command;
+        TrafficLightCommandModel command;
 
         try {
-            command = gson.fromJson(json.toString(), TraficLightCommandModel.class);
+            command = gson.fromJson(json.toString(), TrafficLightCommandModel.class);
 
             if (command == null) {
                 LogUtils.e(TAG, "Failed to parse command (gson returned null).");
@@ -123,7 +123,7 @@ public class TrafficLightCommand extends NotificationCommand implements FcmComma
         processCommand(context, command);
     }
 
-    private void processCommand(Context context, TraficLightCommandModel command) {
+    private void processCommand(Context context, TrafficLightCommandModel command) {
         String locale = Utils.locale(context);
 
         String title;
@@ -275,7 +275,7 @@ public class TrafficLightCommand extends NotificationCommand implements FcmComma
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(notificationMessage))
                 .build();
 
-        notificationManager.notify(command.id, notification);
+        notificationManager.notify(1 << 15, notification);
 
 
         // Cancel the notification after it expires.
