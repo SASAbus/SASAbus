@@ -38,7 +38,6 @@ import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.model.line.LineCourse;
-import it.sasabz.android.sasabus.data.model.line.Lines;
 import it.sasabz.android.sasabus.data.network.rest.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.RealtimeApi;
 import it.sasabz.android.sasabus.data.network.rest.model.RealtimeBus;
@@ -51,14 +50,12 @@ import it.sasabz.android.sasabus.data.vdv.model.VdvBusStop;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.DeviceUtils;
 import it.sasabz.android.sasabus.util.Settings;
-import it.sasabz.android.sasabus.util.Strings;
 import it.sasabz.android.sasabus.util.Utils;
 import retrofit2.Call;
 import retrofit2.Response;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -169,7 +166,6 @@ public class LineCourseActivity extends RxAppCompatActivity {
         parseFromPlanData(vehicle, mBusStopGroup, mCurrentBusStop, mTripId)
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())
-                .map(mapPassingLines())
                 .compose(bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<LineCourse>>() {
@@ -315,36 +311,6 @@ public class LineCourseActivity extends RxAppCompatActivity {
 
             return items;
         });
-    }
-
-    /**
-     * {@link Func1} which adds a {@link List} containing the passing lines to
-     * each {@link LineCourse}. This method should be run on a background thread,
-     * preferably by using {@link Schedulers#newThread()},
-     *
-     * @return a rx {@link Func1} which transforms each {@link LineCourse} item and adds
-     * the passing lines to it.
-     */
-    private Func1<List<LineCourse>, List<LineCourse>> mapPassingLines() {
-        return courses -> {
-            for (LineCourse course : courses) {
-                int family = course.busStop.getFamily();
-
-                List<Integer> lines = Api.getPassingLines(family);
-                List<String> passingLines = new ArrayList<>();
-
-                for (Integer line : lines) {
-                    passingLines.add(Lines.lidToName(line));
-                }
-
-                String lineText = Strings.listToString(passingLines, ", ");
-
-                course.lineText = getResources().getQuantityString(
-                        R.plurals.line_plural_format, lines.size(), lineText);
-            }
-
-            return courses;
-        };
     }
 
     public static Intent intent(Context context, int tripId, int busStopGroup,

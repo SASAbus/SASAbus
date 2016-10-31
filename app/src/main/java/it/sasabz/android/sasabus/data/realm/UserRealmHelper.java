@@ -72,7 +72,7 @@ public final class UserRealmHelper {
     public static void init(Context context) {
         sContext = context;
 
-        RealmConfiguration config = new RealmConfiguration.Builder(context)
+        RealmConfiguration config = new RealmConfiguration.Builder()
                 .name(DB_NAME)
                 .schemaVersion(DB_VERSION)
                 .modules(new UserDataModule())

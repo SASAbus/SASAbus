@@ -68,10 +68,10 @@ public final class BusStopRealmHelper {
     public static void init(Context context) {
         sContext = context;
 
-        CONFIG = new RealmConfiguration.Builder(context)
+        CONFIG = new RealmConfiguration.Builder()
                 .name(DB_NAME)
                 .schemaVersion(DB_VERSION)
-                .assetFile(context, DB_NAME)
+                .assetFile(DB_NAME)
                 .modules(new BusStopModule())
                 .migration((realm, oldVersion, newVersion) -> {
                     // Provide no migration.
@@ -221,20 +221,6 @@ public final class BusStopRealmHelper {
         return busStop;
     }
 
-    public static Collection<BusStop> getBusStopsFromGroup(int group) {
-        Realm realm = Realm.getInstance(CONFIG);
-        RealmResults<BusStop> results = realm.where(BusStop.class).equalTo("family", group).findAll();
-        Collection<BusStop> busStops = new ArrayList<>();
-
-        for (BusStop busStop : results) {
-            busStops.add(realm.copyFromRealm(busStop));
-        }
-
-        realm.close();
-
-        return busStops;
-    }
-
     public static BusStop getBusStopOrNullFromGroup(int family) {
         Realm realm = Realm.getInstance(CONFIG);
         BusStop busStop = realm.where(BusStop.class).equalTo("family", family).findFirst();
@@ -281,11 +267,6 @@ public final class BusStopRealmHelper {
         return result;
     }
 
-    /**
-     * Returns all stations in the same family (having the same name and municipality).
-     *
-     * @return all stations having the same name and municipality in an {@link ArrayList}
-     */
     /**
      * Returns all stations in the same family (having the same title and municipality).
      *

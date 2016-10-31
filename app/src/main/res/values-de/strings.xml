@@ -37,7 +37,7 @@
     <string name="title_route_results">Gefundene Busse</string>
     <string name="title_pick_bus_stops">Wähle eine Haltestelle</string>
     <string name="route_recent">Kürzlich gesucht</string>
-    <string name="title_bus_lines">Buslinien</string>
+    <string name="title_bus_lines">Linien</string>
     <string name="list_lines_station">Haltestelle</string>
     <string name="list_lines_delay">Verspätung</string>
     <string name="bolzano">Bozen</string>

@@ -34,8 +34,6 @@ public class LineCourse implements Parcelable {
     public final boolean dot;
     public final boolean bus;
 
-    public String lineText;
-
     public LineCourse(int id, BusStop busStop, String time, boolean active, boolean dot, boolean bus) {
         this.id = id;
         this.busStop = busStop;
@@ -51,7 +49,6 @@ public class LineCourse implements Parcelable {
         active = in.readByte() != 0;
         dot = in.readByte() != 0;
         bus = in.readByte() != 0;
-        lineText = in.readString();
 
         busStop = BusStopRealmHelper.getBusStop(id);
     }
@@ -63,7 +60,6 @@ public class LineCourse implements Parcelable {
         dest.writeByte((byte) (active ? 1 : 0));
         dest.writeByte((byte) (dot ? 1 : 0));
         dest.writeByte((byte) (bus ? 1 : 0));
-        dest.writeString(lineText);
     }
 
     @Override

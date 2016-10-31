@@ -27,6 +27,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
 import io.fabric.sdk.android.Fabric;
+import io.realm.Realm;
 import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
 import it.sasabz.android.sasabus.data.network.rest.RestClient;
 import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
@@ -75,6 +76,7 @@ public class AppApplication extends Application {
         RestClient.init(this);
 
         // Initialize realms.
+        Realm.init(this);
         BusStopRealmHelper.init(this);
         UserRealmHelper.init(this);
 

@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,8 +90,6 @@ class LineCourseAdapter extends RecyclerView.Adapter<LineCourseAdapter.ViewHolde
 
         BusStop busStop = item.busStop;
         holder.text.setText(item.time + " - " + busStop.getName(mContext) + " (" + busStop.getMunic(mContext) + ')');
-        holder.lines.setText(Html.fromHtml(item.lineText));
-        holder.lines.setSelected(true);
     }
 
     @Override
@@ -103,7 +100,6 @@ class LineCourseAdapter extends RecyclerView.Adapter<LineCourseAdapter.ViewHolde
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.list_line_course_layout) LinearLayout layout;
-        @BindView(R.id.list_line_course_lines) TextView lines;
         @BindView(R.id.list_line_course_image) ImageView image;
         @BindView(R.id.list_line_course_text) TextView text;
 

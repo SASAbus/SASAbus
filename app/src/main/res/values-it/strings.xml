@@ -37,7 +37,7 @@
     <string name="title_route_results">Autobus trovati</string>
     <string name="title_pick_bus_stops">Seleziona una fermata</string>
     <string name="route_recent">Ricerche recenti</string>
-    <string name="title_bus_lines">Linee autobus</string>
+    <string name="title_bus_lines">Linee</string>
     <string name="list_lines_delay">Ritardo</string>
     <string name="list_lines_station">Fermata</string>
     <string name="bolzano">Bolzano</string>
