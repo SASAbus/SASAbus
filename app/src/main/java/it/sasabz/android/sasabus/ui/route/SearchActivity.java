@@ -54,6 +54,8 @@ import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.list.BusStopPickerAdapter;
 import rx.android.schedulers.AndroidSchedulers;
 
+import static io.realm.Case.INSENSITIVE;
+
 /**
  * Allows the user to pick a departure/arrival bus stop by searching it by either name or
  * municipality. When starting this activity it shows a nice reveal animation.
@@ -66,8 +68,8 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
     private static final String SCREEN_LABEL = "Search";
 
     private SearchView mSearchView;
-    private BusStopPickerAdapter mResultsAdapter;
-    private ArrayList<BusStop> mRowItems;
+    private BusStopPickerAdapter mAdapter;
+    private ArrayList<BusStop> mItems;
 
     private final int[] mStations = {
             66000468, // Stazione Bolzano
@@ -99,11 +101,11 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
         mSearchView = (SearchView) findViewById(R.id.search_view);
         setupSearchView();
 
-        mRowItems = new ArrayList<>();
-        mResultsAdapter = new BusStopPickerAdapter(this, mRowItems);
+        mItems = new ArrayList<>();
+        mAdapter = new BusStopPickerAdapter(this, mItems);
 
         ListView listView = (ListView) findViewById(R.id.search_results);
-        listView.setAdapter(mResultsAdapter);
+        listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(this);
 
         Drawable up = DrawableCompat.wrap(ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_black_24dp));
@@ -135,8 +137,8 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(stations -> {
-                    mRowItems.addAll(stations);
-                    mResultsAdapter.notifyDataSetChanged();
+                    mItems.addAll(stations);
+                    mAdapter.notifyDataSetChanged();
                 });
 
         overridePendingTransition(0, 0);
@@ -163,7 +165,7 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        BusStop station = mRowItems.get(position);
+        BusStop station = mItems.get(position);
 
         // "No results" item has a munic with value "null", check for that.
         if (station.getMunic() != null) {
@@ -279,10 +281,10 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
         String order = Utils.locale(this).contains("de") ? "nameDe" : "nameIt";
 
         mRealm.where(SadBusStop.class)
-                .contains("nameDe", query).or().contains("nameDe", query.toLowerCase()).or()
-                .contains("nameIt", query).or().contains("nameIt", query.toLowerCase()).or()
-                .contains("municDe", query).or().contains("municDe", query.toLowerCase()).or()
-                .contains("municIt", query).or().contains("municIt", query.toLowerCase())
+                .contains("nameDe", query, INSENSITIVE).or()
+                .contains("nameIt", query, INSENSITIVE).or()
+                .contains("municDe", query, INSENSITIVE).or()
+                .contains("municIt", query, INSENSITIVE).or()
                 .findAllSorted(order).asObservable()
                 .map(sadBusStops -> {
                     List<BusStop> list = new ArrayList<>();
@@ -314,14 +316,14 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(stations -> {
-                    mRowItems.clear();
-                    mRowItems.addAll(stations);
+                    mItems.clear();
+                    mItems.addAll(stations);
 
-                    if (mRowItems.isEmpty()) {
-                        mRowItems.add(new BusStop(0, "No results", null, 0, 0, 0));
+                    if (mItems.isEmpty()) {
+                        mItems.add(new BusStop(0, getString(R.string.search_no_results), null, 0, 0, 0));
                     }
 
-                    mResultsAdapter.notifyDataSetChanged();
+                    mAdapter.notifyDataSetChanged();
                 });
     }
 

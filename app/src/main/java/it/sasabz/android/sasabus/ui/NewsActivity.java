@@ -211,7 +211,7 @@ public class NewsActivity extends BaseActivity {
         }
 
         NewsApi newsApi = RestClient.ADAPTER.create(NewsApi.class);
-        newsApi.getNews(locale())
+        newsApi.getNews()
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
