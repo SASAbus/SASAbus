@@ -252,23 +252,15 @@ public final class UserRealmHelper {
         return result;
     }
 
-    public static boolean hasFavoriteBusStops() {
-        Realm realm = Realm.getDefaultInstance();
-        boolean result = realm.where(FavoriteBusStop.class).count() > 0;
-        realm.close();
-
-        return result;
-    }
-
 
     // ======================================= TRIPS ===============================================
 
-    public static boolean insertTrip(Context context, BusBeacon beacon) {
+    public static CloudTrip insertTrip(Context context, BusBeacon beacon) {
         int startIndex = beacon.busStops.indexOf(beacon.origin);
 
         if (startIndex == -1) {
             Utils.throwTripError(sContext, "Trip " + beacon.id + " startIndex == -1");
-            return false;
+            return null;
         }
 
         // Save the beacon trip list to a temporary list.
@@ -279,7 +271,7 @@ public final class UserRealmHelper {
         // it without crash.
         if (startIndex > stops.size()) {
             Utils.throwTripError(sContext, "Trip " + beacon.id + " startIndex > stops.size");
-            return false;
+            return null;
         }
 
         // Get the stops from the start index till the end of the list.
@@ -290,7 +282,7 @@ public final class UserRealmHelper {
         // Check if the end index is bigger than 0, thus it exists in the list.
         if (stopIndex < 0) {
             Utils.throwTripError(sContext, "Trip " + beacon.id + " stopIndex < 0");
-            return false;
+            return null;
         }
 
         // Get the stops from the start index till the end index.
@@ -303,7 +295,7 @@ public final class UserRealmHelper {
                     "start: " + beacon.origin + '\n' +
                     "stop: " + beacon.destination);
 
-            return false;
+            return null;
         }
 
         LogUtils.e(TAG, "Inserted trip " + beacon.getHash());
@@ -322,7 +314,7 @@ public final class UserRealmHelper {
 
         TripSyncHelper.upload(context, Collections.singletonList(cloudTrip), Schedulers.io());
 
-        return true;
+        return cloudTrip;
     }
 
 

@@ -31,7 +31,7 @@ import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.rx.NextObserver;
 import rx.schedulers.Schedulers;
 
-public abstract class Badge {
+public abstract class InAppBadge {
 
     private static final String TAG = "Badge";
 
@@ -41,7 +41,7 @@ public abstract class Badge {
     private final int icon;
     private final int points;
 
-    Badge(int id, int title, int summary, int icon, int points) {
+    InAppBadge(int id, int title, int summary, int icon, int points) {
         this.id = id;
         this.title = title;
         this.summary = summary;

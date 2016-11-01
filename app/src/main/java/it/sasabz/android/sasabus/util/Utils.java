@@ -39,6 +39,7 @@ import javax.net.ssl.SSLException;
 
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
+import it.sasabz.android.sasabus.data.network.rest.model.CloudTrip;
 import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
 
 /**
@@ -169,17 +170,17 @@ public final class Utils {
         }
     }
 
-    public static boolean insertTripIfValid(Context context, BusBeacon beacon) {
+    public static CloudTrip insertTripIfValid(Context context, BusBeacon beacon) {
         if (beacon.destination == 0) {
             throwTripError(context, "Trip " + beacon.id + " invalid -> getStopStation == 0");
-            return false;
+            return null;
         }
 
         if (beacon.origin == beacon.destination &&
                 beacon.lastSeen - beacon.getStartDate().getTime() < 600000) {
             throwTripError(context, "Trip " + beacon.id + " invalid -> getOrigin == getStopStation: " +
                     beacon.origin + ", " + beacon.destination);
-            return false;
+            return null;
         }
 
         return UserRealmHelper.insertTrip(context, beacon);

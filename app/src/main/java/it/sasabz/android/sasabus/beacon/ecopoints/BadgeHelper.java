@@ -24,8 +24,8 @@ import java.util.Collections;
 import java.util.List;
 
 import it.sasabz.android.sasabus.beacon.Beacon;
-import it.sasabz.android.sasabus.beacon.ecopoints.badge.Badge;
 import it.sasabz.android.sasabus.beacon.ecopoints.badge.FirstStepBadge;
+import it.sasabz.android.sasabus.beacon.ecopoints.badge.InAppBadge;
 import it.sasabz.android.sasabus.beacon.ecopoints.badge.VeryBeginningBadge;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Notifications;
@@ -34,10 +34,10 @@ public final class BadgeHelper {
 
     private static final String TAG = "BadgeHelper";
 
-    private static final List<Badge> BADGES;
+    private static final List<InAppBadge> BADGES;
 
     static {
-        List<Badge> badges = new ArrayList<>();
+        List<InAppBadge> badges = new ArrayList<>();
         badges.add(new FirstStepBadge());
         badges.add(new VeryBeginningBadge());
 
@@ -48,7 +48,7 @@ public final class BadgeHelper {
     }
 
     public static void evaluate(Context context, Beacon beacon) {
-        for (Badge badge : BADGES) {
+        for (InAppBadge badge : BADGES) {
             if (!badge.completed() && badge.evaluate(beacon)) {
                 LogUtils.e(TAG, "Completed badge " + badge.id());
 

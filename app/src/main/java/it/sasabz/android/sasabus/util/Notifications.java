@@ -33,6 +33,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
 import java.util.List;
 import java.util.Random;
@@ -41,9 +42,11 @@ import java.util.concurrent.ExecutionException;
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.beacon.ecopoints.badge.Badge;
+import it.sasabz.android.sasabus.beacon.ecopoints.badge.InAppBadge;
 import it.sasabz.android.sasabus.beacon.survey.SurveyActivity;
 import it.sasabz.android.sasabus.data.model.Departure;
+import it.sasabz.android.sasabus.data.network.rest.model.Badge;
+import it.sasabz.android.sasabus.data.network.rest.model.CloudTrip;
 import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.ui.NewsActivity;
 import it.sasabz.android.sasabus.ui.busstop.BusStopDetailActivity;
@@ -286,9 +289,9 @@ public final class Notifications {
         notificationManager.notify(NOTIFICATION_EVENT * point, mBuilder.build());
     }
 
-    public static void survey(Context context, String hash) {
+    public static void survey(Context context, CloudTrip trip) {
         Preconditions.checkNotNull(context, "survey() context == null");
-        Preconditions.checkNotNull(hash, "hash == null");
+        Preconditions.checkNotNull(trip, "trip == null");
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_assessment_white_48dp)
@@ -302,7 +305,7 @@ public final class Notifications {
                 .setCategory(NotificationCompat.CATEGORY_EVENT);
 
         Intent resultIntent = new Intent(context, SurveyActivity.class);
-        resultIntent.putExtra(Config.EXTRA_TRIP, hash);
+        resultIntent.putExtra(Config.EXTRA_TRIP, new Gson().toJson(trip));
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context,
                 NOTIFICATION_SURVEY,
@@ -316,7 +319,7 @@ public final class Notifications {
         notificationManager.notify(NOTIFICATION_SURVEY, mBuilder.build());
     }
 
-    public static void badge(Context context, Badge badge) {
+    public static void badge(Context context, InAppBadge badge) {
         Preconditions.checkNotNull(context, "context == null");
         Preconditions.checkNotNull(badge, "badge == null");
 
@@ -349,7 +352,7 @@ public final class Notifications {
     }
 
     @WorkerThread
-    public static void badge(Context context, it.sasabz.android.sasabus.data.network.rest.model.Badge badge) {
+    public static void badge(Context context, Badge badge) {
         Preconditions.checkNotNull(context, "context == null");
         Preconditions.checkNotNull(badge, "badge == null");
 

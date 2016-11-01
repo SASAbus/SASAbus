@@ -45,6 +45,7 @@ import it.sasabz.android.sasabus.data.model.line.Lines;
 import it.sasabz.android.sasabus.data.network.NetUtils;
 import it.sasabz.android.sasabus.data.network.rest.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.RealtimeApi;
+import it.sasabz.android.sasabus.data.network.rest.model.CloudTrip;
 import it.sasabz.android.sasabus.data.network.rest.model.RealtimeBus;
 import it.sasabz.android.sasabus.data.network.rest.response.RealtimeResponse;
 import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
@@ -421,9 +422,9 @@ public final class BusBeaconHandler implements IBeaconHandler {
             beacon.setDestination(beacon.busStops.get(index));
         }
 
-        if (Utils.insertTripIfValid(mContext, beacon) &&
-                Settings.isTripNotificationEnabled(mContext)) {
+        CloudTrip trip = Utils.insertTripIfValid(mContext, beacon);
 
+        if (trip != null && Settings.isTripNotificationEnabled(mContext)) {
             Notifications.trip(mContext, beacon.getHash());
 
             LogUtils.e(TAG, "Saved trip " + beacon.id);
@@ -469,7 +470,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
 
                 if (showSurvey) {
                     LogUtils.e(TAG, "Showing survey");
-                    Notifications.survey(mContext, beacon.getHash());
+                    Notifications.survey(mContext, trip);
 
                     Settings.setLastSurveyMillis(mContext, System.currentTimeMillis());
                 }
