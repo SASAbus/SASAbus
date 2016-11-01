@@ -101,8 +101,8 @@ class JSInterface {
 
 
     @JavascriptInterface
-    public String getLineString(int line) {
-        return context.getString(R.string.line_format, String.valueOf(line));
+    public String getLineString(String line) {
+        return context.getString(R.string.line_format, line);
     }
 
     @JavascriptInterface

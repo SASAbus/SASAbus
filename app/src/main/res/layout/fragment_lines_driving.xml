@@ -23,27 +23,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/include_error_wifi" android:visibility="gone"/>
-    <include layout="@layout/include_error_general" android:visibility="gone"/>
-    <include layout="@layout/include_error_lines" android:visibility="gone"/>
+    <include layout="@layout/include_error_wifi"/>
+    <include layout="@layout/include_error_general"/>
+    <include layout="@layout/include_error_lines"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/refresh"
         android:layout_marginBottom="?attr/actionBarSize"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <ListView
             android:id="@+id/lines_driving_listView"
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:listSelector="@android:color/transparent"
+            android:layout_height="match_parent"
             android:cacheColorHint="@android:color/transparent"
-            android:divider="@null"
-            android:paddingTop="@dimen/list_padding"
-            android:paddingBottom="@dimen/list_padding"
             android:clipToPadding="false"
+            android:divider="@null"
+            android:listSelector="@android:color/transparent"
+            android:paddingBottom="@dimen/list_padding"
+            android:paddingTop="@dimen/list_padding"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>

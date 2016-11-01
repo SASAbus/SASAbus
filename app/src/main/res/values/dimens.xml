@@ -57,7 +57,7 @@
     <dimen name="empty_state_title_top_margin">24dp</dimen>
     <dimen name="empty_state_subtitle_top_margin">4dp</dimen>
 
-    <dimen name="line_course_big_circle_padding">8dp</dimen>
+    <dimen name="line_course_big_circle_padding">4dp</dimen>
 
     <dimen name="keyline_1">16dp</dimen>
     <dimen name="keyline_2">72dp</dimen>

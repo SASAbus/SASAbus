@@ -23,22 +23,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/include_error_wifi" android:visibility="gone"/>
-    <include layout="@layout/include_error_general" android:visibility="gone"/>
+    <include layout="@layout/include_error_wifi"/>
+    <include layout="@layout/include_error_general"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/refresh"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler"
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
             android:paddingBottom="@dimen/recycler_padding"
             android:paddingTop="@dimen/recycler_padding"
-            android:clipToPadding="false"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
