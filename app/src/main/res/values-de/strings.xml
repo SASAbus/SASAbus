@@ -432,5 +432,13 @@
     <string name="notification_event_beacon_subtitle">Beacon #%d gescannt</string>
     <string name="qr_code_description">Lasse den QR-Code von einem Mitglied des Personals scannen um ein Geschenk zu bekommen!</string>
     <string name="snackbar_event_incomplete">Du musst zuerst alle Haltepunkte besuchen!</string>
+    <string name="departure_search_text">Haltestelle suchen</string>
+    <string name="departures_loading">Lade…</string>
+    <string name="departures_no_data">Keine Daten verfügbar</string>
+    <string name="empty_state_bus_stop_favorites_title">Keine Favoriten</string>
+    <string name="empty_state_departures_no_departures_title">Zurzeit gibt es keine Abfahrten.</string>
+    <string name="empty_state_departures_select_title">Wähle eine Haltestelle vom obigen Suchfeld</string>
+    <string name="search_no_results">Keine Ergebnisse</string>
+    <string name="title_departure">Abfahrten</string>
 
 </resources>
