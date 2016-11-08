@@ -251,7 +251,7 @@ public class DepartureActivity extends BaseActivity implements View.OnClickListe
                 DatePickerDialog datePicker = new DatePickerDialog(context, R.style.DatePicker, this, 0, 0, 0);
 
                 datePicker.getDatePicker().setMinDate(minDateMillis);
-                datePicker.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.button_next), datePicker);
+                datePicker.setButton(DialogInterface.BUTTON_POSITIVE, getString(android.R.string.ok), datePicker);
                 datePicker.setButton(DialogInterface.BUTTON_NEGATIVE, null,
                         (DialogInterface.OnClickListener) null);
 

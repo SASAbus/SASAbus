@@ -428,5 +428,13 @@
     <string name="notification_event_beacon_subtitle">Scannerizzato beacon #%d</string>
     <string name="qr_code_description">Chiedi a un membro dello staff di scannerizzare il codice QR per ottenere il regalo!</string>
     <string name="snackbar_event_incomplete">Non hai ancora visitato tutti i punti di fermata!</string>
+    <string name="departure_search_text">Cerca fermata</string>
+    <string name="departures_loading">Carico…</string>
+    <string name="departures_no_data">Ritardo non disponibile</string>
+    <string name="empty_state_bus_stop_favorites_title">Nessune fermate preferite</string>
+    <string name="empty_state_departures_no_departures_title">Attualmente non ci sono delle partenze.</string>
+    <string name="empty_state_departures_select_title">Scegli una fermata dal campo di sopra</string>
+    <string name="search_no_results">Nessun risultati</string>
+    <string name="title_departure">Partenze</string>
 
 </resources>

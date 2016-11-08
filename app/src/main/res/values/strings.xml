@@ -78,8 +78,6 @@
     <string name="bottom_sheet_early">%d\' ahead</string>
     <string name="bottom_sheet_punctual">Punctual</string>
 
-    <string name="button_next">Next</string>
-
     <string name="empty_state_title_font" translatable="false">sans-serif-medium</string>
     <string name="empty_state_departures_select_title">
         Pick a bus stop from the search field above.
@@ -88,7 +86,7 @@
         with another date or time, or search
         for another bus stop.
     </string>
-    <string name="empty_state_bus_stop_favorites_title">No favorite bus stops.</string>
+    <string name="empty_state_bus_stop_favorites_title">No favorite bus stops</string>
     <string name="search_no_results">No results</string>
 
 
@@ -132,7 +130,7 @@
     <!-- ==================================== DEPARTURES ======================================= -->
 
     <string name="departures_loading">Loading…</string>
-    <string name="departures_no_data">No data</string>
+    <string name="departures_no_data">No data available</string>
     <string name="departure_search_text">Search bus stop</string>
 
 
