@@ -17,6 +17,7 @@
 
 package it.sasabz.android.sasabus.data.vdv.data;
 
+import android.content.Context;
 import android.text.format.DateUtils;
 
 import org.json.JSONArray;
@@ -30,6 +31,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import it.sasabz.android.sasabus.data.vdv.model.VdvDate;
+import it.sasabz.android.sasabus.util.Settings;
 
 /**
  * Represents the calendar of day types of SASA SpA-AG. For example Saturdays, Sundays and holidays
@@ -63,7 +65,7 @@ public final class VdvCalendar {
         }
     }
 
-    public static VdvDate today() {
+    public static VdvDate today(Context context) {
         if (calendar.isEmpty()) {
             throw new VdvCalendarException("The calendar must be initialized first, " +
                     "before a date is requested.");
@@ -74,6 +76,8 @@ public final class VdvCalendar {
                 return date;
             }
         }
+
+        Settings.markDataUpdateAvailable(context, true);
 
         throw new VdvCalendarException(String.format("The requested day (%s) doesn't exist " +
                 "in the calendar.", dateFormat.format(new Date())));

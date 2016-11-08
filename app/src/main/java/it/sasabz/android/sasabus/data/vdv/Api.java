@@ -17,6 +17,8 @@
 
 package it.sasabz.android.sasabus.data.vdv;
 
+import android.content.Context;
+
 import org.joda.time.DateTimeZone;
 
 import java.util.ArrayList;
@@ -49,7 +51,11 @@ public final class Api {
     }
 
     public static VdvTrip getTrip(int tripId) {
-        VdvHandler.blockTillLoaded();
+        return getTrip(tripId, true);
+    }
+
+    public static VdvTrip getTrip(int tripId, boolean verifyUiThread) {
+        VdvHandler.blockTillLoaded(verifyUiThread);
 
         Collection<VdvTrip> trips = VdvTrips.ofSelectedDay();
 
@@ -64,7 +70,7 @@ public final class Api {
         return VdvTrip.empty;
     }
 
-    public static List<Integer> getPassingLines(int group) {
+    static List<Integer> getPassingLines(int group) {
         VdvHandler.blockTillLoaded();
 
         Collection<VdvBusStop> busStops = BusStopRealmHelper.getBusStopsFromFamily(group);
@@ -84,20 +90,20 @@ public final class Api {
         return lines;
     }
 
-    public static boolean todayExists() {
+    public static boolean todayExists(Context context) {
         VdvHandler.blockTillLoaded();
 
         try {
-            VdvCalendar.today();
+            VdvCalendar.today(context);
         } catch (VdvCalendar.VdvCalendarException e) {
             return false;
         }
 
-        return true;
+        return VdvHandler.isValid();
     }
 
-    public static Observable<Boolean> todayExistsRx() {
-        return Observable.fromCallable(Api::todayExists);
+    public static Observable<Boolean> todayExistsRx(Context context) {
+        return Observable.fromCallable(() -> Api.todayExists(context));
     }
 
     public static final class Time {

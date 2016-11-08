@@ -108,8 +108,8 @@ public final class PlannedData {
                 setDataValid();
 
                 // Load plan data
-                VdvHandler.load(context)
-                        .subscribe();
+                VdvHandler.reset();
+                VdvHandler.load(context).subscribe();
 
                 return null;
             }

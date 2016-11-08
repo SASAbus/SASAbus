@@ -22,14 +22,18 @@ import android.os.SystemClock;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.util.concurrent.Callable;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import it.sasabz.android.sasabus.data.vdv.PlannedData;
 import it.sasabz.android.sasabus.util.IOUtils;
 import it.sasabz.android.sasabus.util.Preconditions;
+import it.sasabz.android.sasabus.util.Settings;
+import it.sasabz.android.sasabus.util.Utils;
 import rx.Observable;
 import timber.log.Timber;
 
@@ -37,11 +41,13 @@ import timber.log.Timber;
  * Loads the JSON open data of SASA SpA-AG that is downloaded and stored on the device.
  *
  * @author David Dejori
+ * @author Alex Lardschneider
  */
 public final class VdvHandler {
 
-    private static boolean loaded;
-    private static boolean isLoading;
+    private static final AtomicBoolean isLoaded = new AtomicBoolean();
+    private static final AtomicBoolean isLoading = new AtomicBoolean();
+    private static final AtomicBoolean isValid = new AtomicBoolean();
 
     private VdvHandler() {
     }
@@ -59,45 +65,83 @@ public final class VdvHandler {
                     return null;
                 }
 
-                if (!loaded) {
-                    isLoading = true;
-
-                    try {
-                        long time = -System.currentTimeMillis();
-
-                        JSONObject data = new JSONObject(IOUtils.readFileAsString(new File(IOUtils
-                                .getDataDir(context).getAbsolutePath(), "/planned-data.json")));
-
-                        VdvCalendar.loadCalendar(data.getJSONArray("calendar"));
-                        VdvPaths.loadPaths(data.getJSONArray("paths"));
-                        VdvTrips.loadTrips(data.getJSONArray("trips"), VdvCalendar.today().getId());
-                        VdvIntervals.loadIntervals(data.getJSONArray("travel_times"));
-                        VdvBusStopBreaks.loadBreaks(data.getJSONArray("bus_stop_stop_times"));
-                        VdvTripBreaks.loadBreaks(data.getJSONArray("trip_stop_times"));
-
-                        Timber.w("Loaded planned data in %d ms", time + System.currentTimeMillis());
-                    } catch (Exception e) {
-                        throw new RuntimeException("Failed to load planned data", e);
-                    }
-
-                    loaded = true;
-                    isLoading = false;
+                if (isLoaded.get()) {
+                    Timber.i("Planned data already loaded");
+                    return null;
                 }
+
+                if (isLoading.get()) {
+                    Timber.i("Already loading data...");
+                    blockTillLoaded();
+                    return null;
+                }
+
+                isLoading.set(true);
+
+                try {
+                    long time = -System.currentTimeMillis();
+
+                    JSONObject data = new JSONObject(IOUtils.readFileAsString(new File(IOUtils
+                            .getDataDir(context).getAbsolutePath(), "/planned-data.json")));
+
+                    VdvCalendar.loadCalendar(data.getJSONArray("calendar"));
+                    VdvPaths.loadPaths(data.getJSONArray("paths"));
+                    VdvTrips.loadTrips(data.getJSONArray("trips"), VdvCalendar.today(context).getId());
+                    VdvIntervals.loadIntervals(data.getJSONArray("travel_times"));
+                    VdvBusStopBreaks.loadBreaks(data.getJSONArray("bus_stop_stop_times"));
+                    VdvTripBreaks.loadBreaks(data.getJSONArray("trip_stop_times"));
+
+                    isValid.set(true);
+
+                    Timber.i("Loaded planned data in %d ms", time + System.currentTimeMillis());
+                } catch (JSONException e) {
+                    // If this happens, the json plan data most likely is in an invalid format
+                    // because it got corrupted somehow, or someone modified it on purpose.
+                    // We should reschedule a new plan data download if this happens.
+                    Utils.logException(new RuntimeException("JSON format is invalid", e));
+                    isValid.set(false);
+
+                    Settings.markDataUpdateAvailable(context, true);
+                } catch (Exception e) {
+                    Utils.logException(new RuntimeException("Failed to load planned data", e));
+                    isValid.set(false);
+                }
+
+                isLoaded.set(true);
+                isLoading.set(false);
 
                 return null;
             }
         });
     }
 
+    public static boolean isValid() {
+        return isValid.get();
+    }
+
     public static void blockTillLoaded() {
-        Preconditions.checkNotUiThread();
+        blockTillLoaded(true);
+    }
 
-        if (isLoading) {
-            Timber.i("Data not loaded yet, waiting...");
+    public static void blockTillLoaded(boolean verifyUiThread) {
+        if (verifyUiThread) {
+            Preconditions.checkNotUiThread();
+        }
 
-            while (isLoading) {
+        if (isLoading.get()) {
+            Timber.i("Data not isLoaded yet, waiting...");
+
+            while (isLoading.get()) {
                 SystemClock.sleep(50);
             }
         }
+    }
+
+    public static void reset() {
+        Timber.e("Reset plan data");
+
+        isLoaded.set(false);
+        isLoading.set(false);
+        isValid.set(false);
     }
 }

@@ -21,8 +21,10 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import it.sasabz.android.sasabus.receiver.BluetoothReceiver;
-import it.sasabz.android.sasabus.util.LogUtils;
+import it.sasabz.android.sasabus.data.vdv.Api;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * Service which runs in the background and keeps the beacon handlers alive.
@@ -31,23 +33,32 @@ import it.sasabz.android.sasabus.util.LogUtils;
  */
 public class BeaconService extends Service {
 
-    private static final String TAG = "BeaconService";
-
     private BeaconHandler beaconHandler;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        LogUtils.e(TAG, "onCreate()");
-
-        beaconHandler = BeaconHandler.get(getApplication());
-        beaconHandler.startListening();
+        Timber.e("onCreate()");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        LogUtils.e(TAG, "onStartCommand()");
+        Timber.e("onStartCommand()");
+
+        beaconHandler = BeaconHandler.get(getApplication());
+
+        Api.todayExistsRx(this)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(exists -> {
+                    if (exists) {
+                        beaconHandler.startListening();
+                    } else {
+                        Timber.e("No plan data for this day");
+                        stopSelf();
+                    }
+                });
 
         return START_STICKY;
     }
@@ -56,10 +67,11 @@ public class BeaconService extends Service {
     public void onDestroy() {
         super.onDestroy();
 
-        LogUtils.e(TAG, "onDestroy()");
+        Timber.e("onDestroy()");
 
-        beaconHandler.stopListening();
-        sendBroadcast(new Intent(this, BluetoothReceiver.class));
+        if (beaconHandler != null) {
+            beaconHandler.stopListening();
+        }
     }
 
     @Override

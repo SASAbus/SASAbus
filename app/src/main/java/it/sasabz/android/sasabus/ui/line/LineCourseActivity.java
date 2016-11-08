@@ -246,11 +246,12 @@ public class LineCourseActivity extends RxAppCompatActivity {
      *                       the course details)
      * @param tripId         the ID of a trip
      */
-    private Observable<List<LineCourse>> parseFromPlanData(int vehicle, int busStopGroup, int currentBusStop, int tripId) {
+    private Observable<List<LineCourse>> parseFromPlanData(int vehicle, int busStopGroup,
+                                                           int currentBusStop, int tripId) {
         return Observable.fromCallable(() -> {
             int currentBusStopNew = currentBusStop;
 
-            if (!Api.todayExists()) {
+            if (!Api.todayExists(this)) {
                 Settings.markDataUpdateAvailable(LineCourseActivity.this, true);
 
                 throw new VdvCalendar.VdvCalendarException(ERROR_DATA);

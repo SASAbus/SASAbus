@@ -57,7 +57,7 @@ public class CurrentTrip implements JsonSerializable {
             times.clear();
         }
 
-        List<VdvBusStop> newTimes = Api.getTrip(beacon.trip).calcTimedPath();
+        List<VdvBusStop> newTimes = Api.getTrip(beacon.trip, false).calcTimedPath();
 
         if (newTimes != null) {
             times = new ArrayList<>(newTimes);
