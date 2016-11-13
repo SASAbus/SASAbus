@@ -230,6 +230,8 @@ public class RouteResultActivity extends RxAppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
+                        Utils.logException(e);
+
                         if (mAdapter != null) {
                             mAdapter.notifyDataSetChanged();
                         }
