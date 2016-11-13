@@ -144,7 +144,7 @@ public class ParkingConfigureActivity extends AppCompatActivity {
         mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
 
         ParkingApi parkingApi = RestClient.ADAPTER.create(ParkingApi.class);
-        parkingApi.getParking(Utils.locale(this))
+        parkingApi.getParking()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ParkingResponse>() {

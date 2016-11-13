@@ -139,7 +139,7 @@ public class ParkingActivity extends BaseActivity {
         mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
 
         ParkingApi parkingApi = RestClient.ADAPTER.create(ParkingApi.class);
-        parkingApi.getParking(locale())
+        parkingApi.getParking()
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

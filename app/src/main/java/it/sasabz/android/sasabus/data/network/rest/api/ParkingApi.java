@@ -26,8 +26,8 @@ import rx.Observable;
 public interface ParkingApi {
 
     @GET(Endpoint.PARKING)
-    Observable<ParkingResponse> getParking(@Path("language") String language);
+    Observable<ParkingResponse> getParking();
 
     @GET(Endpoint.PARKING_ID)
-    Observable<ParkingResponse> getParking(@Path("language") String language, @Path("id") int id);
+    Observable<ParkingResponse> getParking(@Path("id") int id);
 }
