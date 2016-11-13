@@ -271,6 +271,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
      * {@link it.sasabz.android.sasabus.beacon.BeaconHandler } reported that no more bus beacons
      * are in range.
      */
+    @Override
     public void stop() {
         LogUtils.e(TAG, "Stopping bus stop beacon handler");
 

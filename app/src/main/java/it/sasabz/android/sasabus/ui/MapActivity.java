@@ -83,7 +83,7 @@ import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.fcm.FcmService;
 import it.sasabz.android.sasabus.ui.about.AboutActivity;
-import it.sasabz.android.sasabus.ui.widget.OffsetNestedSwipeRefreshLayout;
+import it.sasabz.android.sasabus.ui.widget.NestedSwipeRefreshLayout;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.AnimUtils;
 import it.sasabz.android.sasabus.util.LogUtils;
@@ -137,7 +137,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
      * map will trigger the refresh.
      */
     @BindView(R.id.refresh)
-    OffsetNestedSwipeRefreshLayout mSwipeRefreshLayout;
+    NestedSwipeRefreshLayout mRefresh;
 
     /**
      * Various views for the filter.
@@ -152,7 +152,6 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
      * Snackbars to show updates like missing internet connection or general error
      */
     private Snackbar mInfoSnackbar;
-    private Snackbar mStationSnackbar;
     private Snackbar mErrorSnackbar;
     private Snackbar mInternetSnackbar;
 
@@ -237,7 +236,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
         mAutoRefresh = Settings.isMapAutoEnabled(this);
         mRefreshInterval = Settings.getMapAutoInterval(this);
 
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_amber, R.color.primary_red,
+        mRefresh.setColorSchemeResources(R.color.primary_amber, R.color.primary_red,
                 R.color.primary_green, R.color.primary_indigo);
 
         if (savedInstanceState != null) {
@@ -409,7 +408,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
         mapView.setMarkers(realtimeResponse, mFilter);
 
-        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+        mRefresh.setRefreshing(false);
     }
 
     @Override
@@ -423,7 +422,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
         mIsRefreshing = false;
         showErrorSnackbar(R.string.error_general);
 
-        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+        mRefresh.setRefreshing(false);
 
         if (mAutoRefresh) {
             HANDLER.postDelayed(REFRESH_RUNNABLE, mRefreshInterval);
@@ -446,7 +445,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
             }
         } else {
             mIsRefreshing = true;
-            mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
+            mRefresh.setRefreshing(true);
 
             RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
             realtimeApi.get()
@@ -646,10 +645,6 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
         if (mInternetSnackbar != null) {
             mInternetSnackbar.dismiss();
-        }
-
-        if (mStationSnackbar != null) {
-            mStationSnackbar.dismiss();
         }
     }
 

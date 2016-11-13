@@ -60,10 +60,10 @@ public class RouteResultActivity extends RxAppCompatActivity {
 
     private static final String TAG = "RouteResultActivity";
 
-    @BindView(R.id.refresh) SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.error_wifi) RelativeLayout errorWifi;
-    @BindView(R.id.error_general) RelativeLayout errorGeneral;
-    @BindView(R.id.error_route) RelativeLayout errorResults;
+    @BindView(R.id.refresh) SwipeRefreshLayout mRefresh;
+    @BindView(R.id.error_wifi) RelativeLayout mErrorWifi;
+    @BindView(R.id.error_general) RelativeLayout mErrorGeneral;
+    @BindView(R.id.error_route) RelativeLayout mErrorResults;
 
     private final ArrayList<RouteResult> mItems = new ArrayList<>();
     private RouteResultsAdapter mAdapter;
@@ -114,8 +114,8 @@ public class RouteResultActivity extends RxAppCompatActivity {
         String departure = departureId != 0 ? String.valueOf(departureId) : fromPlace;
         String arrival = arrivalId != 0 ? String.valueOf(arrivalId) : toPlace;
 
-        swipeRefreshLayout.setColorSchemeResources(R.color.primary_amber, R.color.primary_red, R.color.primary_green, R.color.primary_indigo);
-        swipeRefreshLayout.setOnRefreshListener(() -> parseData(departure, arrival, date1, time, walk, results));
+        mRefresh.setColorSchemeResources(R.color.primary_amber, R.color.primary_red, R.color.primary_green, R.color.primary_indigo);
+        mRefresh.setOnRefreshListener(() -> parseData(departure, arrival, date1, time, walk, results));
 
         if (savedInstanceState != null) {
             int errorWifiVisibility = savedInstanceState.getInt(Config.BUNDLE_ERROR_WIFI);
@@ -126,11 +126,11 @@ public class RouteResultActivity extends RxAppCompatActivity {
                     errorResultVisibility != 8) {
 
                 //noinspection ResourceType
-                errorGeneral.setVisibility(errorGeneralVisibility);
+                mErrorGeneral.setVisibility(errorGeneralVisibility);
                 //noinspection ResourceType
-                errorWifi.setVisibility(errorWifiVisibility);
+                mErrorWifi.setVisibility(errorWifiVisibility);
                 //noinspection ResourceType
-                errorResults.setVisibility(errorResultVisibility);
+                mErrorResults.setVisibility(errorResultVisibility);
 
                 return;
             } else {
@@ -157,9 +157,9 @@ public class RouteResultActivity extends RxAppCompatActivity {
 
         outState.putParcelableArrayList(Config.BUNDLE_LIST, mItems);
 
-        outState.putInt("ERROR_RESULT", errorResults.getVisibility());
-        outState.putInt(Config.BUNDLE_ERROR_WIFI, errorWifi.getVisibility());
-        outState.putInt(Config.BUNDLE_ERROR_GENERAL, errorGeneral.getVisibility());
+        outState.putInt("ERROR_RESULT", mErrorResults.getVisibility());
+        outState.putInt(Config.BUNDLE_ERROR_WIFI, mErrorWifi.getVisibility());
+        outState.putInt(Config.BUNDLE_ERROR_GENERAL, mErrorGeneral.getVisibility());
     }
 
     private void parseData(String from, String to, String date, String time, int walk, int results) {
@@ -168,17 +168,17 @@ public class RouteResultActivity extends RxAppCompatActivity {
                 mAdapter.notifyDataSetChanged();
             }
 
-            errorWifi.setVisibility(View.VISIBLE);
+            mErrorWifi.setVisibility(View.VISIBLE);
 
-            errorResults.setVisibility(View.GONE);
-            errorGeneral.setVisibility(View.GONE);
+            mErrorResults.setVisibility(View.GONE);
+            mErrorGeneral.setVisibility(View.GONE);
 
-            swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(false));
+            mRefresh.setRefreshing(false);
 
             return;
         }
 
-        swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(true));
+        mRefresh.setRefreshing(true);
 
         RouteApi routeApi = RestClient.ADAPTER.create(RouteApi.class);
         routeApi.route(from, to, date, time, walk, results)
@@ -236,12 +236,12 @@ public class RouteResultActivity extends RxAppCompatActivity {
                             mAdapter.notifyDataSetChanged();
                         }
 
-                        errorGeneral.setVisibility(View.VISIBLE);
+                        mErrorGeneral.setVisibility(View.VISIBLE);
 
-                        errorWifi.setVisibility(View.GONE);
-                        errorResults.setVisibility(View.GONE);
+                        mErrorWifi.setVisibility(View.GONE);
+                        mErrorResults.setVisibility(View.GONE);
 
-                        swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(false));
+                        mRefresh.setRefreshing(false);
                     }
 
                     @Override
@@ -249,20 +249,20 @@ public class RouteResultActivity extends RxAppCompatActivity {
                         if (routeResults.isEmpty()) {
                             mItems.clear();
 
-                            errorResults.setVisibility(View.VISIBLE);
+                            mErrorResults.setVisibility(View.VISIBLE);
                         } else {
                             mItems.clear();
                             mItems.addAll(routeResults);
 
-                            errorResults.setVisibility(View.GONE);
+                            mErrorResults.setVisibility(View.GONE);
                         }
 
                         mAdapter.notifyDataSetChanged();
 
-                        errorGeneral.setVisibility(View.GONE);
-                        errorWifi.setVisibility(View.GONE);
+                        mErrorGeneral.setVisibility(View.GONE);
+                        mErrorWifi.setVisibility(View.GONE);
 
-                        swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(false));
+                        mRefresh.setRefreshing(false);
                     }
                 });
     }

@@ -63,7 +63,7 @@ public class ParkingConfigureActivity extends AppCompatActivity {
 
     @BindView(R.id.error_general) RelativeLayout mErrorGeneral;
     @BindView(R.id.error_wifi) RelativeLayout mErrorWifi;
-    @BindView(R.id.refresh) SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.refresh) SwipeRefreshLayout mRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +88,8 @@ public class ParkingConfigureActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mAdapter);
 
-        mSwipeRefreshLayout.setOnRefreshListener(this::parseData);
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_amber, R.color.primary_red,
+        mRefresh.setOnRefreshListener(this::parseData);
+        mRefresh.setColorSchemeResources(R.color.primary_amber, R.color.primary_red,
                 R.color.primary_green, R.color.primary_indigo);
 
         if (savedInstanceState != null) {
@@ -137,11 +137,11 @@ public class ParkingConfigureActivity extends AppCompatActivity {
                 mAdapter.notifyDataSetChanged();
             }
 
-            mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+            mRefresh.setRefreshing(false);
             return;
         }
 
-        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
+        mRefresh.setRefreshing(true);
 
         ParkingApi parkingApi = RestClient.ADAPTER.create(ParkingApi.class);
         parkingApi.getParking()
@@ -162,7 +162,7 @@ public class ParkingConfigureActivity extends AppCompatActivity {
                             mAdapter.notifyDataSetChanged();
                         }
 
-                        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+                        mRefresh.setRefreshing(false);
                     }
 
                     @Override
@@ -177,7 +177,7 @@ public class ParkingConfigureActivity extends AppCompatActivity {
                         mErrorGeneral.setVisibility(View.GONE);
                         mErrorWifi.setVisibility(View.GONE);
 
-                        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+                        mRefresh.setRefreshing(false);
                     }
                 });
     }

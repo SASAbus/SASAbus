@@ -57,7 +57,7 @@ public class LinePathActivity extends RxAppCompatActivity {
     private static final String SCREEN_LABEL = "Line path";
 
     private LinePathMapView mapView;
-    private NestedSwipeRefreshLayout mSwipeRefreshLayout;
+    private NestedSwipeRefreshLayout mRefresh;
     private CoordinatorLayout mCoordinatorLayout;
 
     private int mLineId;
@@ -84,8 +84,8 @@ public class LinePathActivity extends RxAppCompatActivity {
 
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_content);
 
-        mSwipeRefreshLayout = (NestedSwipeRefreshLayout) findViewById(R.id.refresh);
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_amber, R.color.primary_red, R.color.primary_green, R.color.primary_indigo);
+        mRefresh = (NestedSwipeRefreshLayout) findViewById(R.id.refresh);
+        mRefresh.setColorSchemeResources(R.color.primary_amber, R.color.primary_red, R.color.primary_green, R.color.primary_indigo);
 
         mapView = new LinePathMapView(this, (WebView) findViewById(R.id.webview));
 
@@ -105,12 +105,12 @@ public class LinePathActivity extends RxAppCompatActivity {
     private void parseData() {
         if (!NetUtils.isOnline(this)) {
             showErrorSnackbar(R.string.error_wifi);
-            mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+            mRefresh.setRefreshing(false);
 
             return;
         }
 
-        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
+        mRefresh.setRefreshing(true);
 
         PathsApi pathsApi = RestClient.ADAPTER.create(PathsApi.class);
         pathsApi.getPath(mLineId)
@@ -130,14 +130,14 @@ public class LinePathActivity extends RxAppCompatActivity {
 
                         showErrorSnackbar(R.string.error_general);
 
-                        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+                        mRefresh.setRefreshing(false);
                     }
 
                     @Override
                     public void onNext(PathResponse pathResponse) {
                         mapView.setMarkers(pathResponse);
 
-                        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+                        mRefresh.setRefreshing(false);
                     }
                 });
     }

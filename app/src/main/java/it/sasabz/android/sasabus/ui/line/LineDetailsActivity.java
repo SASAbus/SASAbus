@@ -63,7 +63,6 @@ import it.sasabz.android.sasabus.util.recycler.LineDetailsAdapter;
 import retrofit2.Response;
 import rx.Observable;
 import rx.Observer;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
@@ -89,7 +88,7 @@ public class LineDetailsActivity extends RxAppCompatActivity implements OnClickL
     private LineDetailsAdapter mAdapter;
 
     @BindView(R.id.recycler) RecyclerView mRecyclerView;
-    @BindView(R.id.refresh) SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.refresh) SwipeRefreshLayout mRefresh;
     @BindView(R.id.lines_detail_favorites) FloatingActionButton mFavoritesFab;
     @BindView(R.id.main_content) CoordinatorLayout coordinatorLayout;
 
@@ -146,8 +145,8 @@ public class LineDetailsActivity extends RxAppCompatActivity implements OnClickL
 
         setFavoritesFabIcon(mIsInFavorites);
 
-        mSwipeRefreshLayout.setOnRefreshListener(() -> parseData(lineId, vehicle));
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_amber, R.color.primary_red,
+        mRefresh.setOnRefreshListener(() -> parseData(lineId, vehicle));
+        mRefresh.setColorSchemeResources(R.color.primary_amber, R.color.primary_red,
                 R.color.primary_green, R.color.primary_indigo);
 
         mItems.clear();
@@ -237,7 +236,7 @@ public class LineDetailsActivity extends RxAppCompatActivity implements OnClickL
             return;
         }
 
-        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
+        mRefresh.setRefreshing(true);
 
         Observable.zip(getLine(), getTraveling(lineId, busId), zipFunction())
                 .compose(bindToLifecycle())
@@ -252,7 +251,7 @@ public class LineDetailsActivity extends RxAppCompatActivity implements OnClickL
                     @Override
                     public void onError(Throwable e) {
                         Utils.logException(e);
-                        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+                        mRefresh.setRefreshing(false);
                     }
 
                     @Override
@@ -262,7 +261,7 @@ public class LineDetailsActivity extends RxAppCompatActivity implements OnClickL
 
                         mAdapter.notifyDataSetChanged();
 
-                        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+                        mRefresh.setRefreshing(false);
 
                         for (int i = 0; i < mItems.size(); i++) {
                             if (mItems.get(i).isColor()) {
@@ -277,18 +276,15 @@ public class LineDetailsActivity extends RxAppCompatActivity implements OnClickL
 
     private Observable<LineDetail> getLine() {
         if (line != null) {
-            return Observable.create(new Observable.OnSubscribe<LineDetail>() {
-                @Override
-                public void call(Subscriber<? super LineDetail> subscriber) {
-                    String data = line.getOrigin() + "#" +
-                            line.getDestination() + '#' +
-                            line.getCity() + '#' +
-                            getDateString(line.getDays()) + '#' +
-                            line.getInfo();
+            return Observable.create(subscriber -> {
+                String data = line.getOrigin() + "#" +
+                        line.getDestination() + '#' +
+                        line.getCity() + '#' +
+                        getDateString(line.getDays()) + '#' +
+                        line.getInfo();
 
-                    subscriber.onNext(new LineDetail(null, 0, null, null, data, 0, false));
-                    subscriber.onCompleted();
-                }
+                subscriber.onNext(new LineDetail(null, 0, null, null, data, 0, false));
+                subscriber.onCompleted();
             });
         } else {
             LinesApi linesApi = RestClient.ADAPTER.create(LinesApi.class);
@@ -315,67 +311,64 @@ public class LineDetailsActivity extends RxAppCompatActivity implements OnClickL
     }
 
     private Observable<List<LineDetail>> getTraveling(int line, int busId) {
-        return Observable.create(new Observable.OnSubscribe<List<LineDetail>>() {
-            @Override
-            public void call(Subscriber<? super List<LineDetail>> subscriber) {
-                List<LineDetail> items = new ArrayList<>();
+        return Observable.create(subscriber -> {
+            List<LineDetail> items = new ArrayList<>();
 
-                if (contains(lineId)) {
-                    items.add(new LineDetail(null, 0, null, null, "track", 0, false));
-
-                    subscriber.onNext(items);
-                    subscriber.onCompleted();
-                    return;
-                }
-
-                if (!NetUtils.isOnline(LineDetailsActivity.this) && LineDetailsActivity.this.line != null) {
-                    items.add(new LineDetail(null, 0, null, null, "nointernet", 0, false));
-
-                    subscriber.onNext(items);
-                    subscriber.onCompleted();
-                    return;
-                }
-
-                try {
-                    RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
-                    Response<RealtimeResponse> response = realtimeApi.line(line).execute();
-
-                    if (response.body() != null) {
-                        List<RealtimeBus> list = response.body().buses;
-
-                        for (RealtimeBus bus : list) {
-                            int lastStationID = bus.destination;
-
-                            String lastStationName = BusStopRealmHelper.getName(lastStationID);
-
-                            List<VdvBusStop> path = Api.getTrip(bus.trip).calcTimedPath();
-
-                            if (path != null && !path.isEmpty()) {
-                                String lastTime = path.get(path.size() - 1).getTime();
-
-                                String stationName = BusStopRealmHelper.getName(bus.busStop);
-
-                                items.add(new LineDetail(stationName, bus.delayMin, lastStationName,
-                                        lastTime, null, bus.vehicle, busId == bus.trip));
-                            } else {
-                                items.add(new LineDetail(null, 0, null, null, "error", 0, false));
-                                mErrorGeneral = true;
-                            }
-                        }
-                    } else if (!mErrorGeneral) {
-                        items.add(new LineDetail(null, 0, null, null, "error", 0, false));
-                        mErrorGeneral = true;
-                    }
-                } catch (IOException e) {
-                    if (!mErrorGeneral) {
-                        items.add(new LineDetail(null, 0, null, null, "error", 0, false));
-                        mErrorGeneral = true;
-                    }
-                }
+            if (contains(lineId)) {
+                items.add(new LineDetail(null, 0, null, null, "track", 0, false));
 
                 subscriber.onNext(items);
                 subscriber.onCompleted();
+                return;
             }
+
+            if (!NetUtils.isOnline(LineDetailsActivity.this) && LineDetailsActivity.this.line != null) {
+                items.add(new LineDetail(null, 0, null, null, "nointernet", 0, false));
+
+                subscriber.onNext(items);
+                subscriber.onCompleted();
+                return;
+            }
+
+            try {
+                RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
+                Response<RealtimeResponse> response = realtimeApi.line(line).execute();
+
+                if (response.body() != null) {
+                    List<RealtimeBus> list = response.body().buses;
+
+                    for (RealtimeBus bus : list) {
+                        int lastStationID = bus.destination;
+
+                        String lastStationName = BusStopRealmHelper.getName(lastStationID);
+
+                        List<VdvBusStop> path = Api.getTrip(bus.trip).calcTimedPath();
+
+                        if (path != null && !path.isEmpty()) {
+                            String lastTime = path.get(path.size() - 1).getTime();
+
+                            String stationName = BusStopRealmHelper.getName(bus.busStop);
+
+                            items.add(new LineDetail(stationName, bus.delayMin, lastStationName,
+                                    lastTime, null, bus.vehicle, busId == bus.trip));
+                        } else {
+                            items.add(new LineDetail(null, 0, null, null, "error", 0, false));
+                            mErrorGeneral = true;
+                        }
+                    }
+                } else if (!mErrorGeneral) {
+                    items.add(new LineDetail(null, 0, null, null, "error", 0, false));
+                    mErrorGeneral = true;
+                }
+            } catch (IOException e) {
+                if (!mErrorGeneral) {
+                    items.add(new LineDetail(null, 0, null, null, "error", 0, false));
+                    mErrorGeneral = true;
+                }
+            }
+
+            subscriber.onNext(items);
+            subscriber.onCompleted();
         });
     }
 

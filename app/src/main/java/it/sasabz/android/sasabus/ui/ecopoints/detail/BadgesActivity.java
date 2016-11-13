@@ -54,7 +54,7 @@ public class BadgesActivity extends AppCompatActivity {
     private static final String TAG = "BadgesActivity";
 
     @BindView(R.id.recycler) RecyclerView recyclerView;
-    @BindView(R.id.refresh) SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.refresh) SwipeRefreshLayout mRefresh;
 
     @BindView(R.id.error_general) RelativeLayout errorGeneral;
     @BindView(R.id.error_wifi) RelativeLayout errorWifi;
@@ -90,9 +90,9 @@ public class BadgesActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_amber, R.color.primary_red,
+        mRefresh.setColorSchemeResources(R.color.primary_amber, R.color.primary_red,
                 R.color.primary_green, R.color.primary_indigo);
-        mSwipeRefreshLayout.setOnRefreshListener(this::parseData);
+        mRefresh.setOnRefreshListener(this::parseData);
 
         mItems = new ArrayList<>();
         mAdapter = new BadgeAdapter(this, mItems);
@@ -123,12 +123,12 @@ public class BadgesActivity extends AppCompatActivity {
             mItems.clear();
             mAdapter.notifyDataSetChanged();
 
-            mSwipeRefreshLayout.setRefreshing(false);
+            mRefresh.setRefreshing(false);
 
             return;
         }
 
-        mSwipeRefreshLayout.setRefreshing(true);
+        mRefresh.setRefreshing(true);
 
         EcoPointsApi ecoPointsApi = RestClient.ADAPTER.create(EcoPointsApi.class);
         ecoPointsApi.getAllBadges()
@@ -152,7 +152,7 @@ public class BadgesActivity extends AppCompatActivity {
                         errorGeneral.setVisibility(View.VISIBLE);
                         errorWifi.setVisibility(View.GONE);
 
-                        mSwipeRefreshLayout.setRefreshing(false);
+                        mRefresh.setRefreshing(false);
                     }
 
                     @Override
@@ -165,7 +165,7 @@ public class BadgesActivity extends AppCompatActivity {
                         errorGeneral.setVisibility(View.GONE);
                         errorWifi.setVisibility(View.GONE);
 
-                        mSwipeRefreshLayout.setRefreshing(false);
+                        mRefresh.setRefreshing(false);
                     }
                 });
     }

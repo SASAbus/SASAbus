@@ -288,7 +288,7 @@ public class NewsActivity extends BaseActivity {
         private RelativeLayout mErrorGeneral;
         private RelativeLayout mErrorWifi;
 
-        private SwipeRefreshLayout mSwipeRefreshLayout;
+        private SwipeRefreshLayout mRefresh;
 
         private boolean mHighlightNews;
         private int mNewsId;
@@ -332,12 +332,12 @@ public class NewsActivity extends BaseActivity {
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             mRecyclerView.setAdapter(mAdapter);
 
-            mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
-            mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_amber, R.color.primary_red, R.color.primary_green, R.color.primary_indigo);
-            mSwipeRefreshLayout.setOnRefreshListener(() -> ((NewsActivity) getActivity()).parseContent());
+            mRefresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+            mRefresh.setColorSchemeResources(R.color.primary_amber, R.color.primary_red, R.color.primary_green, R.color.primary_indigo);
+            mRefresh.setOnRefreshListener(() -> ((NewsActivity) getActivity()).parseContent());
 
             if (savedInstanceState == null) {
-                mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
+                mRefresh.setRefreshing(true);
             }
 
             return view;
@@ -404,7 +404,7 @@ public class NewsActivity extends BaseActivity {
             mErrorGeneral.setVisibility(View.GONE);
             mErrorWifi.setVisibility(View.GONE);
 
-            mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+            mRefresh.setRefreshing(false);
         }
 
         void onFailure(String content) {
@@ -416,7 +416,7 @@ public class NewsActivity extends BaseActivity {
                 mErrorGeneral.setVisibility(View.VISIBLE);
             }
 
-            mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+            mRefresh.setRefreshing(false);
         }
     }
 }
