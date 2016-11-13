@@ -49,8 +49,8 @@ repositories {
 }
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '24.0.2'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.0'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -60,7 +60,7 @@ android {
     defaultConfig {
         applicationId "it.sasabz.android.sasabus"
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 55
         versionName "3.0.1"
     }

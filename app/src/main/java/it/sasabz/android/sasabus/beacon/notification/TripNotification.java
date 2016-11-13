@@ -34,6 +34,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import java.util.Arrays;
 import java.util.List;
 
 import it.sasabz.android.sasabus.Config;
@@ -46,6 +47,7 @@ import it.sasabz.android.sasabus.data.vdv.model.VdvBusStop;
 import it.sasabz.android.sasabus.ui.MapActivity;
 import it.sasabz.android.sasabus.util.Notifications;
 import it.sasabz.android.sasabus.util.UIUtils;
+import timber.log.Timber;
 
 public class TripNotification {
 
@@ -171,6 +173,17 @@ public class TripNotification {
             }
         }
 
+        if (index == -1) {
+            Timber.e("index == -1, current bus stop: %s, path: %s", currentBusStop.getId(),
+                    Arrays.toString(path.toArray()));
+
+            for (int i : BIG_VIEW_ROW_IDS) {
+                remoteViews.setViewVisibility(i, View.GONE);
+            }
+
+            return remoteViews;
+        }
+
         remoteViews.setTextViewText(R.id.notification_bus_stop_time,
                 times.get(index).getTime());
 
@@ -209,6 +222,17 @@ public class TripNotification {
                 index = i;
                 break;
             }
+        }
+
+        if (index == -1) {
+            Timber.e("index == -1, current bus stop: %s, path: %s", currentBusStop.getId(),
+                    Arrays.toString(path.toArray()));
+
+            for (int i : BIG_VIEW_ROW_IDS) {
+                remoteViews.setViewVisibility(i, View.GONE);
+            }
+
+            return remoteViews;
         }
 
         remoteViews.setViewVisibility(R.id.image_route_points, View.VISIBLE);

@@ -180,10 +180,8 @@ public class RouteResultActivity extends RxAppCompatActivity {
 
         swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(true));
 
-        String locale = Utils.locale(this);
-
         RouteApi routeApi = RestClient.ADAPTER.create(RouteApi.class);
-        routeApi.route(locale, from, to, date, time, walk, results)
+        routeApi.route(from, to, date, time, walk, results)
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())
                 .map(routeResponse -> {

@@ -26,11 +26,12 @@ import rx.Observable;
 public interface RouteApi {
 
     @GET(Endpoint.ROUTE)
-    Observable<RouteResponse> route(@Path("language") String language,
-                                    @Path("from") String from,
-                                    @Path("to") String to,
-                                    @Path("date") String date,
-                                    @Path("time") String time,
-                                    @Path("walk") int walk,
-                                    @Path("results") int results);
+    Observable<RouteResponse> route(
+            @Path("from") String from,
+            @Path("to") String to,
+            @Path("date") String date,
+            @Path("time") String time,
+            @Path("walk") int walk,
+            @Path("results") int results
+    );
 }

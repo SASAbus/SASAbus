@@ -74,11 +74,6 @@ public class NewsActivity extends BaseActivity {
     private NewsFragment mNewsMEFragment;
 
     /**
-     * Tab adapter to hold the fragments and fragment titles.
-     */
-    private TabsAdapter mAdapter;
-
-    /**
      * The view pager which allows us to scroll between the fragments.
      */
     @BindView(R.id.viewpager)
@@ -97,25 +92,24 @@ public class NewsActivity extends BaseActivity {
      */
     private static Bundle sArguments;
 
-    private static int mLoadedCounter;
+    private static int sLoadedCounter;
 
-    private List<News> mItems;
+    private List<News> mNews;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_news);
-
         ButterKnife.bind(this);
 
         AnalyticsHelper.sendScreenView(TAG);
 
-        mAdapter = new TabsAdapter(getSupportFragmentManager());
+        TabsAdapter mAdapter = new TabsAdapter(getSupportFragmentManager());
 
         Intent intent = getIntent();
 
-        mLoadedCounter = 0;
+        sLoadedCounter = 0;
         sArguments = new Bundle();
         sArguments.putBoolean(Config.EXTRA_SHOW_NEWS, intent.getBooleanExtra(Config.EXTRA_SHOW_NEWS, false));
         sArguments.putInt(Config.EXTRA_NEWS_ID, intent.getIntExtra(Config.EXTRA_NEWS_ID, 0));
@@ -123,11 +117,6 @@ public class NewsActivity extends BaseActivity {
 
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.white));
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
             mNewsAllFragment = (NewsFragment) getSupportFragmentManager()
@@ -192,7 +181,10 @@ public class NewsActivity extends BaseActivity {
         sArguments.putCharSequence(Config.EXTRA_NEWS_ZONE, intent.getCharSequenceExtra(Config.EXTRA_NEWS_ZONE));
 
         gotoZone(sArguments);
-        callFragments(mItems);
+
+        if (mNews != null) {
+            callFragments(mNews);
+        }
     }
 
 
@@ -231,8 +223,8 @@ public class NewsActivity extends BaseActivity {
 
                     @Override
                     public void onNext(NewsResponse newsResponse) {
-                        mItems = newsResponse.news;
-                        callFragments(mItems);
+                        mNews = newsResponse.news;
+                        callFragments(mNews);
                     }
                 });
     }
@@ -364,9 +356,9 @@ public class NewsActivity extends BaseActivity {
                 //noinspection ResourceType
                 mErrorWifi.setVisibility(errorWifiVisibility);
             } else {
-                mLoadedCounter++;
+                sLoadedCounter++;
 
-                if (mLoadedCounter == 3) {
+                if (sLoadedCounter == 3) {
                     ((NewsActivity) getActivity()).parseContent();
                 }
             }

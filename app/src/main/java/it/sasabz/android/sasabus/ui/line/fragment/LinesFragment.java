@@ -57,7 +57,7 @@ public class LinesFragment extends RxFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_lines_all, container, false);
+        View view = inflater.inflate(R.layout.fragment_lines, container, false);
 
         ButterKnife.bind(this, view);
 
