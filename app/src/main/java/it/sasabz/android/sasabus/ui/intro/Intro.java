@@ -69,10 +69,10 @@ public class Intro extends AppIntro {
         }
 
         ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(ContextCompat.getColor(this, R.color.primary_light_blue));
+        colors.add(ContextCompat.getColor(this, R.color.material_blue_500));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            colors.add(ContextCompat.getColor(this, R.color.primary_light_green));
+            colors.add(ContextCompat.getColor(this, R.color.material_light_green_500));
         }
 
         setAnimationColors(colors);

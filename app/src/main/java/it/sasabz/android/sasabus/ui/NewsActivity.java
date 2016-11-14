@@ -333,7 +333,7 @@ public class NewsActivity extends BaseActivity {
             mRecyclerView.setAdapter(mAdapter);
 
             mRefresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
-            mRefresh.setColorSchemeResources(R.color.primary_amber, R.color.primary_red, R.color.primary_green, R.color.primary_indigo);
+            mRefresh.setColorSchemeResources(Config.REFRESH_COLORS);
             mRefresh.setOnRefreshListener(() -> ((NewsActivity) getActivity()).parseContent());
 
             if (savedInstanceState == null) {

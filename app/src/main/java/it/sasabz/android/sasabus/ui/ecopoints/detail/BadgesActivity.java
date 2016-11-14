@@ -33,6 +33,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.network.NetUtils;
 import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
@@ -90,8 +91,7 @@ public class BadgesActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mRefresh.setColorSchemeResources(R.color.primary_amber, R.color.primary_red,
-                R.color.primary_green, R.color.primary_indigo);
+        mRefresh.setColorSchemeResources(Config.REFRESH_COLORS);
         mRefresh.setOnRefreshListener(this::parseData);
 
         mItems = new ArrayList<>();

@@ -21,34 +21,33 @@
     <color name="primary_dark">#F57C00</color>
     <color name="accent">#3F51B5</color>
 
-    <color name="primary_indigo">#3F51B5</color>
-    <color name="primary_indigo_dark">#303F9F</color>
+    <color name="material_indigo_500">#3F51B5</color>
+    <color name="material_indigo_700">#303F9F</color>
 
-    <color name="primary_blue">#448AFF</color>
-    <color name="primary_blue_dark">#2962FF</color>
+    <color name="material_blue_500">#448AFF</color>
+    <color name="material_blue_700">#2962FF</color>
 
-    <color name="primary_red">#F44336</color>
-    <color name="primary_red_dark">#D32F2F</color>
+    <color name="material_red_500">#F44336</color>
+    <color name="material_red_700">#D32F2F</color>
 
     <color name="material_pink_A200">#FF4081</color>
 
-    <color name="primary_green">#4CAF50</color>
-    <color name="primary_green_dark">#388E3C</color>
+    <color name="material_green_500">#4CAF50</color>
+    <color name="material_green_700">#388E3C</color>
 
-    <color name="primary_amber">#FFC107</color>
-    <color name="primary_amber_dark">#FFA000</color>
+    <color name="material_amber_500">#FFC107</color>
+    <color name="material_amber_700">#FFA000</color>
 
-    <color name="primary_teal">#009688</color>
-    <color name="primary_teal_dark">#00796B</color>
+    <color name="material_teal_500">#009688</color>
+    <color name="material_teal_700">#00796B</color>
 
-    <color name="primary_light_blue">#34495e</color>
+    <color name="material_purple_500">#9C27B0</color>
+    <color name="material_purple_700">#7B1FA2</color>
 
-    <color name="primary_purple">#9C27B0</color>
-    <color name="primary_purple_dark">#7B1FA2</color>
+    <color name="material_blue_grey_500">#607D8B</color>
+    <color name="material_blue_grey_700">#34495e</color>
 
-    <color name="primary_blue_grey">#607D8B</color>
-
-    <color name="primary_light_green">#8BC34A</color>
+    <color name="material_light_green_500">#8BC34A</color>
 
     <color name="red_500">#F44336</color>
     <color name="green_500">#4CAF50</color>

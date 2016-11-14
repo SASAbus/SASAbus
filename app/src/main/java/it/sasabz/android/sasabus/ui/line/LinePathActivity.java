@@ -85,7 +85,7 @@ public class LinePathActivity extends RxAppCompatActivity {
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_content);
 
         mRefresh = (NestedSwipeRefreshLayout) findViewById(R.id.refresh);
-        mRefresh.setColorSchemeResources(R.color.primary_amber, R.color.primary_red, R.color.primary_green, R.color.primary_indigo);
+        mRefresh.setColorSchemeResources(Config.REFRESH_COLORS);
 
         mapView = new LinePathMapView(this, (WebView) findViewById(R.id.webview));
 

@@ -41,7 +41,7 @@ public class IntroData extends AppIntro {
         addSlide(new IntroFragmentDataStandalone());
 
         ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(ContextCompat.getColor(this, R.color.primary_light_blue));
+        colors.add(ContextCompat.getColor(this, R.color.material_blue_500));
 
         setAnimationColors(colors);
     }

@@ -26,7 +26,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="116dp"
-        android:background="@color/primary_blue"
+        android:background="@color/material_blue_500"
         android:minHeight="?attr/actionBarSize"/>
 
     <android.support.v7.widget.CardView

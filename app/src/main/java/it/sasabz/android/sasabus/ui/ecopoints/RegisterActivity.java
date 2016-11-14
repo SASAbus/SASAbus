@@ -167,7 +167,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             updateDateFormPicker();
         };
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, R.style.DatePicker, date, mBirthdayCalendar.get(Calendar.YEAR),
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, R.style.DatePickerStyle,
+                date, mBirthdayCalendar.get(Calendar.YEAR),
                 mBirthdayCalendar.get(Calendar.MONTH), mBirthdayCalendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(365 * 13));
 

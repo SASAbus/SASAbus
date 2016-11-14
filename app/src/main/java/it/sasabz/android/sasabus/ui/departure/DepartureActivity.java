@@ -248,7 +248,7 @@ public class DepartureActivity extends BaseActivity implements View.OnClickListe
                     context = new ContextThemeWrapper(this, android.R.style.Theme_Holo_Light_Dialog);
                 }
 
-                DatePickerDialog datePicker = new DatePickerDialog(context, R.style.DatePicker, this, 0, 0, 0);
+                DatePickerDialog datePicker = new DatePickerDialog(context, R.style.DatePickerStyle, this, 0, 0, 0);
 
                 datePicker.getDatePicker().setMinDate(minDateMillis);
                 datePicker.setButton(DialogInterface.BUTTON_POSITIVE, getString(android.R.string.ok), datePicker);
@@ -311,7 +311,7 @@ public class DepartureActivity extends BaseActivity implements View.OnClickListe
 
         Timber.e("Set date from picker: %s.%s.%s", dayOfMonth, month, year);
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, R.style.DatePicker, this,
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, R.style.DatePickerStyle, this,
                 mCalendar.get(Calendar.HOUR_OF_DAY), mCalendar.get(Calendar.MINUTE), true);
 
         timePickerDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

@@ -89,8 +89,7 @@ public class ParkingConfigureActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
         mRefresh.setOnRefreshListener(this::parseData);
-        mRefresh.setColorSchemeResources(R.color.primary_amber, R.color.primary_red,
-                R.color.primary_green, R.color.primary_indigo);
+        mRefresh.setColorSchemeResources(Config.REFRESH_COLORS);
 
         if (savedInstanceState != null) {
             int errorWifiVisibility = savedInstanceState.getInt(Config.BUNDLE_ERROR_WIFI);

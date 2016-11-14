@@ -94,7 +94,7 @@
             android:paddingRight="10dp"
             android:paddingStart="10dp"
             android:text="@string/dialog_report_screenshot"
-            android:textColor="@color/primary_teal"/>
+            android:textColor="@color/material_teal_500"/>
 
         <ImageView
             android:id="@+id/dialog_report_screenshot"
@@ -105,7 +105,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="16dp"
-            android:background="@color/primary_teal"
+            android:background="@color/material_teal_500"
             android:src="@drawable/ic_collections_white_48dp"
             android:visibility="gone"/>
 

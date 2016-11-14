@@ -29,7 +29,7 @@
         android:layout_height="256dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:fitsSystemWindows="true"
-        android:background="@color/primary_red">
+        android:background="@color/material_red_500">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
@@ -86,7 +86,7 @@
         android:src="@drawable/ic_navigation_white_24dp"
         android:tint="@color/white"
         android:layout_margin="16dp"
-        app:backgroundTint="@color/primary_amber"
+        app:backgroundTint="@color/material_amber_500"
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|right|end"/>
 
@@ -97,7 +97,7 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:src="@drawable/ic_star_border_white_48dp"
-        app:backgroundTint="@color/primary_amber"/>
+        app:backgroundTint="@color/material_amber_500"/>
 
 </android.support.design.widget.CoordinatorLayout>
 

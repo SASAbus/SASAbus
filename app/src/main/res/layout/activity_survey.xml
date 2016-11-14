@@ -92,7 +92,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="6dp"
                 android:gravity="end"
-                android:textColor="@color/primary_teal"
+                android:textColor="@color/material_teal_500"
                 android:textSize="12sp"/>
 
             <View

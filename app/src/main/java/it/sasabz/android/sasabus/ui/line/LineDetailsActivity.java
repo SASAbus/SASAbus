@@ -146,8 +146,7 @@ public class LineDetailsActivity extends RxAppCompatActivity implements OnClickL
         setFavoritesFabIcon(mIsInFavorites);
 
         mRefresh.setOnRefreshListener(() -> parseData(lineId, vehicle));
-        mRefresh.setColorSchemeResources(R.color.primary_amber, R.color.primary_red,
-                R.color.primary_green, R.color.primary_indigo);
+        mRefresh.setColorSchemeResources(Config.REFRESH_COLORS);
 
         mItems.clear();
         mAdapter = new LineDetailsAdapter(this, mItems);

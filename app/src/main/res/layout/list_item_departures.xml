@@ -74,7 +74,7 @@
             android:id="@+id/list_item_departures_delay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/primary_red"/>
+            android:textColor="@color/material_red_500"/>
 
         <TextView
             android:id="@+id/list_item_departures_destination"

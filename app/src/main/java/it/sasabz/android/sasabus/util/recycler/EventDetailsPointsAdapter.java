@@ -56,7 +56,7 @@ public class EventDetailsPointsAdapter extends RecyclerView.Adapter<EventDetails
         EventPoint point = mItems.get(position);
 
         if (point.scanned) {
-            holder.check.setColorFilter(ContextCompat.getColor(mContext, R.color.primary_green));
+            holder.check.setColorFilter(ContextCompat.getColor(mContext, R.color.material_green_500));
         } else {
             holder.check.setColorFilter(ContextCompat.getColor(mContext, R.color.black_400));
         }

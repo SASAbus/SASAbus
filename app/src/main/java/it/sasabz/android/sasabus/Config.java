@@ -32,11 +32,9 @@ public final class Config {
     }
 
     public static final int[] REFRESH_COLORS = {
-            R.color.primary_amber, R.color.primary_red,
-            R.color.primary_green, R.color.primary_indigo
+            R.color.material_amber_500, R.color.material_red_500,
+            R.color.material_green_500, R.color.material_indigo_500
     };
-
-    public static final int BUS_STOP_FRAGMENTS_POST_DELAY = 500;
 
     /**
      * Static constant for intent extras which indicate a station id

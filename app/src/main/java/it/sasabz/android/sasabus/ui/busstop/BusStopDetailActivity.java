@@ -112,7 +112,7 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
         busStop = BusStopRealmHelper.getBusStop(busStopId);
 
         mCollapsingToolbar.setExpandedTitleTextAppearance(R.style.CollapsingToolbar);
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_amber, R.color.primary_red, R.color.primary_green, R.color.primary_indigo);
+        mSwipeRefreshLayout.setColorSchemeResources(Config.REFRESH_COLORS);
         mSwipeRefreshLayout.setOnRefreshListener(() -> parseData(busStop.getFamily(), busStop.getId()));
 
         AnalyticsHelper.sendScreenView(TAG);

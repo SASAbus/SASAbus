@@ -87,9 +87,9 @@ public class LinesDrivingAdapter extends ArrayAdapter<LineDriving> {
             delay.setTextSize(14);
 
             if (content.getDelay() > 0) {
-                delay.setTextColor(ContextCompat.getColor(context, R.color.primary_red));
+                delay.setTextColor(ContextCompat.getColor(context, R.color.material_red_500));
             } else {
-                delay.setTextColor(ContextCompat.getColor(context, R.color.primary_green));
+                delay.setTextColor(ContextCompat.getColor(context, R.color.material_green_500));
             }
 
             parentLayout.addView(delay);

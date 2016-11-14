@@ -24,6 +24,6 @@
         android:radius="2dp"/>
 
     <solid
-        android:color="@color/primary_green"/>
+        android:color="@color/material_green_500"/>
 
 </shape>

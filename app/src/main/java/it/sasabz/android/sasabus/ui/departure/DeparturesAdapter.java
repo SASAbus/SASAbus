@@ -63,11 +63,11 @@ class DeparturesAdapter extends RecyclerView.Adapter<DeparturesAdapter.ViewHolde
         Departure item = mItems.get(position);
 
         if (item.delay > 3) {
-            holder.delay.setTextColor(ContextCompat.getColor(mContext, R.color.primary_red));
+            holder.delay.setTextColor(ContextCompat.getColor(mContext, R.color.material_red_500));
         } else if (item.delay > 0) {
-            holder.delay.setTextColor(ContextCompat.getColor(mContext, R.color.primary_amber_dark));
+            holder.delay.setTextColor(ContextCompat.getColor(mContext, R.color.material_amber_700));
         } else {
-            holder.delay.setTextColor(ContextCompat.getColor(mContext, R.color.primary_green));
+            holder.delay.setTextColor(ContextCompat.getColor(mContext, R.color.material_green_500));
         }
 
         if (item.delay == Departure.OPERATION_RUNNING) {

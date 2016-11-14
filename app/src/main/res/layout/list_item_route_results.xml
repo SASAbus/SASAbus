@@ -43,7 +43,7 @@
                 android:id="@+id/route_list_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/primary_green"
+                android:textColor="@color/material_green_500"
                 android:textSize="18sp"
                 android:layout_marginTop="6dp"
                 android:layout_marginLeft="10dp"

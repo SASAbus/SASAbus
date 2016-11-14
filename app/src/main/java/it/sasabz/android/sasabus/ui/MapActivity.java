@@ -236,8 +236,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
         mAutoRefresh = Settings.isMapAutoEnabled(this);
         mRefreshInterval = Settings.getMapAutoInterval(this);
 
-        mRefresh.setColorSchemeResources(R.color.primary_amber, R.color.primary_red,
-                R.color.primary_green, R.color.primary_indigo);
+        mRefresh.setColorSchemeResources(Config.REFRESH_COLORS);
 
         if (savedInstanceState != null) {
 

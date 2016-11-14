@@ -36,9 +36,9 @@ public final class UIUtils {
 
     public static int getColorForDelay(Context context, int delay) {
         if (delay > 0) {
-            return ContextCompat.getColor(context, R.color.primary_red);
+            return ContextCompat.getColor(context, R.color.material_red_500);
         } else {
-            return ContextCompat.getColor(context, R.color.primary_green);
+            return ContextCompat.getColor(context, R.color.material_green_500);
         }
     }
 

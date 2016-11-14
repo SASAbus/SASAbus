@@ -111,7 +111,7 @@ public class SurveyActivity extends AppCompatActivity {
         DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(1)),
                 ContextCompat.getColor(this, R.color.material_grey_300));
         DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(2)),
-                ContextCompat.getColor(this, R.color.primary_teal));
+                ContextCompat.getColor(this, R.color.material_teal_500));
 
         RxRatingBar.ratingChanges(ratingBar)
                 .subscribe(rating -> {

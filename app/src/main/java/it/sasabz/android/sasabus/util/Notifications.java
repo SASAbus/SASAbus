@@ -135,9 +135,9 @@ public final class Notifications {
                 expandedView.setTextViewText(R.id.notification_departure_1_last, context.getString(R.string.notification_heading, stopDetail.destination));
 
                 if (stopDetail.delay > 3) {
-                    expandedView.setTextColor(R.id.notification_departure_1_delay, ContextCompat.getColor(context, R.color.primary_red));
+                    expandedView.setTextColor(R.id.notification_departure_1_delay, ContextCompat.getColor(context, R.color.material_red_500));
                 } else if (stopDetail.delay > 0) {
-                    expandedView.setTextColor(R.id.notification_departure_1_delay, ContextCompat.getColor(context, R.color.primary_amber_dark));
+                    expandedView.setTextColor(R.id.notification_departure_1_delay, ContextCompat.getColor(context, R.color.material_amber_700));
                 }
 
                 if (stopDetail.delay != Config.BUS_STOP_DETAILS_NO_DELAY) {
@@ -154,9 +154,9 @@ public final class Notifications {
                 expandedView.setTextViewText(R.id.notification_departure_2_last, context.getString(R.string.notification_heading, stopDetail.destination));
 
                 if (stopDetail.delay > 3) {
-                    expandedView.setTextColor(R.id.notification_departure_2_delay, ContextCompat.getColor(context, R.color.primary_red));
+                    expandedView.setTextColor(R.id.notification_departure_2_delay, ContextCompat.getColor(context, R.color.material_red_500));
                 } else if (stopDetail.delay > 0) {
-                    expandedView.setTextColor(R.id.notification_departure_2_delay, ContextCompat.getColor(context, R.color.primary_amber_dark));
+                    expandedView.setTextColor(R.id.notification_departure_2_delay, ContextCompat.getColor(context, R.color.material_amber_700));
                 }
 
                 if (stopDetail.delay != Config.BUS_STOP_DETAILS_NO_DELAY) {
@@ -240,7 +240,7 @@ public final class Notifications {
                 .setContentText(context.getString(R.string.notification_trip_sub))
                 .setAutoCancel(true)
                 .setLights(Color.BLUE, 500, 5000)
-                .setColor(ContextCompat.getColor(context, R.color.primary_blue_dark))
+                .setColor(ContextCompat.getColor(context, R.color.material_blue_700))
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setVibrate(new long[]{VIBRATION_TIME_MILLIS, VIBRATION_TIME_MILLIS})
                 .setCategory(NotificationCompat.CATEGORY_EVENT);
@@ -299,7 +299,7 @@ public final class Notifications {
                 .setContentText(context.getString(R.string.notification_survey_subtitle))
                 .setAutoCancel(true)
                 .setLights(Color.GREEN, 500, 5000)
-                .setColor(ContextCompat.getColor(context, R.color.primary_teal))
+                .setColor(ContextCompat.getColor(context, R.color.material_teal_500))
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setVibrate(new long[]{VIBRATION_TIME_MILLIS, VIBRATION_TIME_MILLIS})
                 .setCategory(NotificationCompat.CATEGORY_EVENT);

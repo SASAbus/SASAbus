@@ -135,11 +135,11 @@ public class BusStopDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
 
             if (item.getDelay() > 3) {
-                bus.delay.setTextColor(ContextCompat.getColor(mContext, R.color.primary_red));
+                bus.delay.setTextColor(ContextCompat.getColor(mContext, R.color.material_red_500));
             } else if (item.getDelay() > 0) {
-                bus.delay.setTextColor(ContextCompat.getColor(mContext, R.color.primary_amber_dark));
+                bus.delay.setTextColor(ContextCompat.getColor(mContext, R.color.material_amber_700));
             } else {
-                bus.delay.setTextColor(ContextCompat.getColor(mContext, R.color.primary_green));
+                bus.delay.setTextColor(ContextCompat.getColor(mContext, R.color.material_green_500));
             }
 
             if (item.getDelay() == Config.BUS_STOP_DETAILS_NO_DELAY) {

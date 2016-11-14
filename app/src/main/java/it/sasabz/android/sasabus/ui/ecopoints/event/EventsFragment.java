@@ -38,6 +38,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.network.NetUtils;
 import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
@@ -157,8 +158,7 @@ public class EventsFragment extends RxFragment {
         mAdapter = new EventsAdapter(getActivity(), mItems);
 
         mRefresh.setOnRefreshListener(this::parseData);
-        mRefresh.setColorSchemeResources(R.color.primary_amber,
-                R.color.primary_red, R.color.primary_green, R.color.primary_indigo);
+        mRefresh.setColorSchemeResources(Config.REFRESH_COLORS);
 
         recyclerView.setAdapter(mAdapter);
         recyclerView.setHasFixedSize(true);

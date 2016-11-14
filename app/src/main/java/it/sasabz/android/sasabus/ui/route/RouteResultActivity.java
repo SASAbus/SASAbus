@@ -114,7 +114,7 @@ public class RouteResultActivity extends RxAppCompatActivity {
         String departure = departureId != 0 ? String.valueOf(departureId) : fromPlace;
         String arrival = arrivalId != 0 ? String.valueOf(arrivalId) : toPlace;
 
-        mRefresh.setColorSchemeResources(R.color.primary_amber, R.color.primary_red, R.color.primary_green, R.color.primary_indigo);
+        mRefresh.setColorSchemeResources(Config.REFRESH_COLORS);
         mRefresh.setOnRefreshListener(() -> parseData(departure, arrival, date1, time, walk, results));
 
         if (savedInstanceState != null) {
