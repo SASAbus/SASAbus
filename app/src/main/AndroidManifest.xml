@@ -313,8 +313,6 @@
 
         <!-- Services -->
 
-        <service android:name="it.sasabz.android.sasabus.beacon.BeaconService"/>
-
         <service android:name="com.google.android.gms.analytics.CampaignTrackingService"/>
 
         <service

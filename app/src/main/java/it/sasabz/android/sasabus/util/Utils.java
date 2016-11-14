@@ -18,7 +18,6 @@
 package it.sasabz.android.sasabus.util;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
@@ -41,6 +40,7 @@ import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
 import it.sasabz.android.sasabus.data.network.rest.model.CloudTrip;
 import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
+import timber.log.Timber;
 
 /**
  * Utility class which holds various methods to help with things like logging exceptions.
@@ -96,11 +96,28 @@ public final class Utils {
      * @param context Context to access device info and preferences.
      * @return a boolean value indicating whether the beacon handler can be started.
      */
-    public static boolean isBeaconEnabled(Context context) {
-        return Settings.isBeaconEnabled(context) &&
-                DeviceUtils.isBluetoothEnabled() &&
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2 &&
-                context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);
+    public static boolean areBeaconsEnabled(Context context) {
+        if (!Settings.isBeaconEnabled(context)) {
+            Timber.e("Beacons are disabled via preferences");
+            return false;
+        }
+
+        if (!DeviceUtils.isBluetoothEnabled()) {
+            Timber.e("Bluetooth is disabled");
+            return false;
+        }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            Timber.e("Device does not support beacons, SDK_INT < JELLY_BEAN_MR2");
+            return false;
+        }
+
+        if (!DeviceUtils.hasBle(context)) {
+            Timber.e("Device does not support BLE");
+            return false;
+        }
+
+        return true;
     }
 
     /**

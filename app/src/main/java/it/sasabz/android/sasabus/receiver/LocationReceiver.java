@@ -50,7 +50,7 @@ public class LocationReceiver extends BroadcastReceiver {
                         !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
 
                     if (BeaconHandler.isListening) {
-                        BeaconHandler.get(context).stopListening();
+                        BeaconHandler.get(context).stop();
                     }
                 } else {
                     context.sendBroadcast(new Intent(context, BluetoothReceiver.class));

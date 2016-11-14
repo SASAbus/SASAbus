@@ -93,7 +93,7 @@ public class Intro extends AppIntro {
         if (requestCode == PERMISSIONS_ACCESS_LOCATION && grantResults.length > 0 &&
                 grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-            ((AppApplication) getApplication()).startBeacon();
+            ((AppApplication) getApplication()).initBeacons();
 
             finishIntro();
 

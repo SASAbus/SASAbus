@@ -42,7 +42,6 @@ import android.widget.Toast;
 
 import it.sasabz.android.sasabus.AppApplication;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.beacon.BeaconService;
 import it.sasabz.android.sasabus.receiver.BluetoothReceiver;
 import it.sasabz.android.sasabus.receiver.LocationReceiver;
 import it.sasabz.android.sasabus.ui.departure.DepartureActivity;
@@ -139,6 +138,7 @@ public class PreferenceActivity extends AppCompatActivity {
 
         outState.putInt("POSITION", position);
     }
+
 
     /**
      * Finishes this activity. If a configuration change happened, it will reload
@@ -289,6 +289,9 @@ public class PreferenceActivity extends AppCompatActivity {
                 case R.id.preferences_notifications:
                     ((PreferenceActivity) getActivity()).setNotificationsFragment();
                     break;
+                case R.id.preferences_advanced:
+                    ((PreferenceActivity) getActivity()).setAdvancedFragment();
+                    break;
             }
         }
     }
@@ -391,10 +394,6 @@ public class PreferenceActivity extends AppCompatActivity {
 
                 if (value) {
                     getActivity().getPackageManager().setComponentEnabledSetting(
-                            new ComponentName(getActivity(), BeaconService.class),
-                            PackageManager.COMPONENT_ENABLED_STATE_ENABLED, 0);
-
-                    getActivity().getPackageManager().setComponentEnabledSetting(
                             new ComponentName(getActivity(), LocationReceiver.class),
                             PackageManager.COMPONENT_ENABLED_STATE_ENABLED, 0);
 
@@ -404,10 +403,6 @@ public class PreferenceActivity extends AppCompatActivity {
 
                     LogUtils.e(TAG, "Enabled beacon components");
                 } else {
-                    getActivity().getPackageManager().setComponentEnabledSetting(
-                            new ComponentName(getActivity(), BeaconService.class),
-                            PackageManager.COMPONENT_ENABLED_STATE_DISABLED, 0);
-
                     getActivity().getPackageManager().setComponentEnabledSetting(
                             new ComponentName(getActivity(), LocationReceiver.class),
                             PackageManager.COMPONENT_ENABLED_STATE_DISABLED, 0);
@@ -445,7 +440,7 @@ public class PreferenceActivity extends AppCompatActivity {
 
             if (requestCode == REQUEST_ENABLE_BT) {
                 if (resultCode == Activity.RESULT_OK) {
-                    ((AppApplication) getActivity().getApplication()).startBeacon();
+                    ((AppApplication) getActivity().getApplication()).initBeacons();
                 } else {
                     beaconsEnable.setChecked(false);
                 }
@@ -486,7 +481,7 @@ public class PreferenceActivity extends AppCompatActivity {
                 Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(intent, REQUEST_ENABLE_BT);
             } else {
-                ((AppApplication) getActivity().getApplication()).startBeacon();
+                ((AppApplication) getActivity().getApplication()).initBeacons();
             }
 
             return true;

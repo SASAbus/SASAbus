@@ -17,18 +17,15 @@
 
 package it.sasabz.android.sasabus.receiver;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.WakefulBroadcastReceiver;
 
-import org.altbeacon.beacon.BeaconManager;
-
+import it.sasabz.android.sasabus.AppApplication;
 import it.sasabz.android.sasabus.beacon.BeaconHandler;
-import it.sasabz.android.sasabus.beacon.BeaconService;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.Notifications;
 import it.sasabz.android.sasabus.util.Utils;
+import timber.log.Timber;
 
 /**
  * Receiver to listen for changes in the bluetooth state.
@@ -45,34 +42,14 @@ public class BluetoothReceiver extends WakefulBroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         LogUtils.e(TAG, "onReceive()");
 
-        if (!Utils.isBeaconEnabled(context)) {
-            LogUtils.e(TAG, "Beacon scanning not available or enabled");
+        if (!Utils.areBeaconsEnabled(context)) {
+            Timber.w("Beacon scanning not available or enabled");
 
-            if (BeaconHandler.isListening) {
-                BeaconHandler.get(context).stopListening();
-            }
+            BeaconHandler.get(context).stop();
 
-            Notifications.cancelBus(context);
-            context.stopService(new Intent(context, BeaconService.class));
-
-            return;
-        }
-
-        try {
-            if (BeaconManager.getInstanceForApplication(context).checkAvailability()) {
-                ComponentName component = new ComponentName(context.getPackageName(),
-                        BeaconService.class.getName());
-
-                startWakefulService(context, intent.setComponent(component));
-
-                LogUtils.e(TAG, "Started beacon service");
-            } else {
-                context.stopService(new Intent(context, BeaconService.class));
-
-                Notifications.cancelBus(context);
-            }
-        } catch (Exception e) {
-            Utils.logException(e);
+            completeWakefulIntent(intent);
+        } else {
+            ((AppApplication) context.getApplicationContext()).initBeacons();
         }
     }
 }

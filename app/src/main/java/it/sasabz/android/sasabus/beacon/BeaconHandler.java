@@ -35,12 +35,15 @@ import org.altbeacon.beacon.Region;
 import org.altbeacon.beacon.startup.BootstrapNotifier;
 import org.altbeacon.beacon.startup.RegionBootstrap;
 
+import java.util.Arrays;
+
 import it.sasabz.android.sasabus.beacon.bus.BusBeaconHandler;
 import it.sasabz.android.sasabus.beacon.busstop.BusStopBeaconHandler;
 import it.sasabz.android.sasabus.beacon.event.EventBeaconHandler;
 import it.sasabz.android.sasabus.util.DeviceUtils;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
+import timber.log.Timber;
 
 /**
  * Beacon handler which scans for beacons in range. This scanner will be automatically stated
@@ -60,62 +63,43 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
     private Region mRegionBusStop;
     private Region mRegionEvent;
 
-    private final BusBeaconHandler mBusBeaconHandler;
-    private final BusStopBeaconHandler mBusStopBeaconHandler;
-    private final EventBeaconHandler mEventBeaconHandler;
+    private BusBeaconHandler mBusBeaconHandler;
+    private BusStopBeaconHandler mBusStopBeaconHandler;
+    private EventBeaconHandler mEventBeaconHandler;
 
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
-    private RegionBootstrap mRegionBusBootstrap;
-
-    @SuppressWarnings({"FieldCanBeLocal", "unused"})
-    private RegionBootstrap mRegionBusStopBootstrap;
-
-    @SuppressWarnings({"FieldCanBeLocal", "unused"})
-    private RegionBootstrap mRegionEventBootstrap;
+    private RegionBootstrap mBootstrap;
 
     @SuppressLint("StaticFieldLeak")
-    private static BeaconHandler sInstance;
-
-    private boolean isBeaconHandlerBound;
+    private static BeaconHandler INSTANCE;
 
     public static boolean isListening;
 
-    /**
-     * Creates a new instance of {@code BeaconHandler} used to listen for beacons and display
-     * bus and station information in the app
-     *
-     * @param context application context
-     */
-    private BeaconHandler(Context context) {
-        mContext = context.getApplicationContext();
 
-        mBusBeaconHandler = BusBeaconHandler.getInstance(context);
-        mBusStopBeaconHandler = BusStopBeaconHandler.getInstance(context);
-        mEventBeaconHandler = EventBeaconHandler.getInstance(context);
+    private BeaconHandler(Context context) {
+        LogUtils.e(TAG, "Creating beacon handlers");
+
+        mContext = context.getApplicationContext();
     }
 
-    /**
-     * Returns the current {@code BeaconHandler} instance. If there is no instance yet,
-     * create a new instance and start listening
-     *
-     * @param context AppApplication context
-     * @return current instance in use, or {@code null} if the scanner has no location permission.
-     */
     public static BeaconHandler get(Context context) {
-        if (sInstance == null) {
-            LogUtils.e(TAG, "Creating beacon handlers");
-
-            sInstance = new BeaconHandler(context);
+        if (INSTANCE == null) {
+            synchronized (BeaconHandler.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new BeaconHandler(context);
+                }
+            }
         }
 
-        return sInstance;
+        return INSTANCE;
     }
+
 
     @Override
     public void onBeaconServiceConnect() {
         LogUtils.e(TAG, "onBeaconServiceConnect()");
 
-        mBeaconManager.setRangeNotifier((beacons, region) -> {
+        mBeaconManager.addRangeNotifier((beacons, region) -> {
             if (!isListening) {
                 LogUtils.e(TAG, "didRangeBeaconsInRegion: not listening");
                 return;
@@ -146,29 +130,7 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
 
     @Override
     public void didEnterRegion(Region region) {
-        startRangingBeacon(region);
-    }
-
-    @Override
-    public void didExitRegion(Region region) {
-        stopRangingBeacon(region);
-    }
-
-    @Override
-    public boolean bindService(Intent service, ServiceConnection conn, int flags) {
-        return mContext.bindService(service, conn, flags);
-    }
-
-    @Override
-    public void unbindService(ServiceConnection conn) {
-        mContext.unbindService(conn);
-    }
-
-    /**
-     * Starts getting detailed beacon information
-     */
-    private void startRangingBeacon(Region region) {
-        LogUtils.e(TAG, "startRanging() " + region.getUniqueId());
+        Timber.e("didEnterRegion() %s", region.getUniqueId());
 
         try {
             if (region.getUniqueId().equals(BusBeaconHandler.IDENTIFIER)) {
@@ -189,11 +151,9 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
         }
     }
 
-    /**
-     * Stops getting detailed beacon information
-     */
-    private void stopRangingBeacon(Region region) {
-        LogUtils.e(TAG, "stopRanging() " + region.getUniqueId());
+    @Override
+    public void didExitRegion(Region region) {
+        Timber.e("didExitRegion() %s", region.getUniqueId());
 
         try {
             if (region.getUniqueId().equals(BusBeaconHandler.IDENTIFIER)) {
@@ -215,12 +175,27 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
         }
     }
 
-    /**
-     * Starts listening for available beacons
-     */
-    void startListening() {
+    @Override
+    public boolean bindService(Intent service, ServiceConnection conn, int flags) {
+        return mContext.bindService(service, conn, flags);
+    }
+
+    @Override
+    public void unbindService(ServiceConnection conn) {
+        mContext.unbindService(conn);
+    }
+
+
+    public void start() {
+        Timber.e("start()");
+
         if (isListening) {
             LogUtils.e(TAG, "Already listening for beacons");
+            return;
+        }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            Timber.e("Not above Android Jelly Bean");
             return;
         }
 
@@ -250,40 +225,41 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
             return;
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            LogUtils.e(TAG, "startListening()");
+        mBusBeaconHandler = BusBeaconHandler.getInstance(mContext);
+        mBusStopBeaconHandler = BusStopBeaconHandler.getInstance(mContext);
+        mEventBeaconHandler = EventBeaconHandler.getInstance(mContext);
 
-            mBeaconManager = BeaconManager.getInstanceForApplication(mContext);
-            mBeaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
+        mBeaconManager = BeaconManager.getInstanceForApplication(mContext);
+        mBeaconManager.setRegionStatePeristenceEnabled(false);
+        mBeaconManager.getBeaconParsers().add(new BeaconParser()
+                .setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
 
-            mBeaconManager.setForegroundScanPeriod(3000);
-            mBeaconManager.setForegroundBetweenScanPeriod(0);
+        mBeaconManager.setForegroundScanPeriod(3000);
+        mBeaconManager.setForegroundBetweenScanPeriod(0);
 
-            mBeaconManager.setBackgroundScanPeriod(3000);
-            mBeaconManager.setBackgroundBetweenScanPeriod(0);
+        mBeaconManager.setBackgroundScanPeriod(3000);
+        mBeaconManager.setBackgroundBetweenScanPeriod(0);
 
-            mRegionBus = new Region(BusBeaconHandler.IDENTIFIER, Identifier.parse(BusBeaconHandler.UUID), null, null);
-            mRegionBusBootstrap = new RegionBootstrap(this, mRegionBus);
+        mRegionBus = new Region(BusBeaconHandler.IDENTIFIER, Identifier.parse(BusBeaconHandler.UUID), null, null);
+        mRegionBusStop = new Region(BusStopBeaconHandler.IDENTIFIER, Identifier.parse(BusStopBeaconHandler.UUID), null, null);
+        mRegionEvent = new Region(EventBeaconHandler.IDENTIFIER, Identifier.parse(EventBeaconHandler.UUID), null, null);
 
-            mRegionBusStop = new Region(BusStopBeaconHandler.IDENTIFIER, Identifier.parse(BusStopBeaconHandler.UUID), null, null);
-            mRegionBusStopBootstrap = new RegionBootstrap(this, mRegionBusStop);
+        mBootstrap = new RegionBootstrap(this, Arrays.asList(
+                mRegionBus,
+                mRegionBusStop,
+                mRegionEvent
+        ));
 
-            mRegionEvent = new Region(EventBeaconHandler.IDENTIFIER, Identifier.parse(EventBeaconHandler.UUID), null, null);
-            mRegionEventBootstrap = new RegionBootstrap(this, mRegionEvent);
+        mBeaconManager.bind(this);
 
-            mBeaconManager.bind(this);
-
-            isBeaconHandlerBound = true;
-            isListening = true;
-        }
+        isListening = true;
     }
 
-    /**
-     * Stops listening for beacons and cancels all currently displayed notifications.
-     */
-    public void stopListening() {
+    public void stop() {
+        Timber.e("stop()");
+
         if (!isListening) {
-            LogUtils.e(TAG, "Not listening, call to stopListening() will be ignored");
+            LogUtils.e(TAG, "Not listening, call to stop() will be ignored");
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
@@ -295,8 +271,7 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
                 mEventBeaconHandler.stop();
             }
 
-            if (mBeaconManager != null && isBeaconHandlerBound) {
-                isBeaconHandlerBound = false;
+            if (mBeaconManager != null) {
                 mBeaconManager.unbind(this);
             }
 

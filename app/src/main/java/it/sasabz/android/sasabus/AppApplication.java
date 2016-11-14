@@ -18,7 +18,6 @@
 package it.sasabz.android.sasabus;
 
 import android.app.Application;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -28,12 +27,12 @@ import com.google.android.gms.location.LocationServices;
 
 import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
+import it.sasabz.android.sasabus.beacon.BeaconHandler;
 import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
 import it.sasabz.android.sasabus.data.network.rest.RestClient;
 import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.data.vdv.data.VdvHandler;
-import it.sasabz.android.sasabus.receiver.BluetoothReceiver;
 import it.sasabz.android.sasabus.sync.SyncHelper;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.Settings;
@@ -83,10 +82,6 @@ public class AppApplication extends Application {
         // Initialize authentication helper
         AuthHelper.init(this);
 
-        // Start the beacon handler if it hasn't been started already and start listening
-        // for nearby beacons. Also start the beacon service.
-        startBeacon();
-
         // Schedules the daily trip/plan data sync.
         SyncHelper.scheduleSync(this);
 
@@ -119,19 +114,23 @@ public class AppApplication extends Application {
                 .build();
 
         mApiClient.connect();
+
+        // Start the beacon handler if it hasn't been started already and start listening
+        // for nearby beacons. Also start the beacon service.
+        initBeacons();
     }
+
 
     public GoogleApiClient getGoogleApiClient() {
         return mApiClient;
     }
 
-    /**
-     * Start the beacon handler if it hasn't been started already and start listening
-     * for nearby beacons. Also start the beacon service.
-     */
-    public void startBeacon() {
-        if (Utils.isBeaconEnabled(this)) {
-            sendBroadcast(new Intent(this, BluetoothReceiver.class));
+    public void initBeacons() {
+        if (Utils.areBeaconsEnabled(this)) {
+            BeaconHandler beaconHandler = BeaconHandler.get(this);
+            beaconHandler.start();
+        } else {
+            Timber.e("Beacons are disabled");
         }
     }
 }

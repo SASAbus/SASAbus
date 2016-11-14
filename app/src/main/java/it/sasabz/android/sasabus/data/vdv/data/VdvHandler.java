@@ -29,6 +29,7 @@ import java.io.File;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import it.sasabz.android.sasabus.beacon.BeaconHandler;
 import it.sasabz.android.sasabus.data.vdv.PlannedData;
 import it.sasabz.android.sasabus.util.IOUtils;
 import it.sasabz.android.sasabus.util.Preconditions;
@@ -105,6 +106,10 @@ public final class VdvHandler {
                 } catch (Exception e) {
                     Utils.logException(new RuntimeException("Failed to load planned data", e));
                     isValid.set(false);
+                }
+
+                if (!isValid()) {
+                    BeaconHandler.get(context).stop();
                 }
 
                 isLoaded.set(true);
