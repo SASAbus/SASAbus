@@ -21,7 +21,7 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.beacon.Beacon;
 import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
 
-public class FirstStepBadge extends Badge {
+public class FirstStepBadge extends InAppBadge {
 
     public FirstStepBadge() {
         super(120, R.string.badge_the_first_step_title, R.string.badge_the_first_step_subtitle,

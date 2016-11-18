@@ -42,13 +42,13 @@ import android.widget.Toast;
 
 import it.sasabz.android.sasabus.AppApplication;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.beacon.BeaconService;
 import it.sasabz.android.sasabus.receiver.BluetoothReceiver;
 import it.sasabz.android.sasabus.receiver.LocationReceiver;
+import it.sasabz.android.sasabus.ui.departure.DepartureActivity;
 import it.sasabz.android.sasabus.ui.widget.PreferenceFragment;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 
 /**
@@ -87,7 +87,7 @@ public class PreferenceActivity extends AppCompatActivity {
         AnalyticsHelper.sendScreenView(TAG);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.settings);
+        toolbar.setTitle(R.string.title_settings);
         setSupportActionBar(toolbar);
 
         assert getSupportActionBar() != null;
@@ -139,6 +139,7 @@ public class PreferenceActivity extends AppCompatActivity {
         outState.putInt("POSITION", position);
     }
 
+
     /**
      * Finishes this activity. If a configuration change happened, it will reload
      * the {@link MapActivity}. If a {@link PreferenceFragment} is in the backstack, it will first
@@ -151,7 +152,7 @@ public class PreferenceActivity extends AppCompatActivity {
             position = 0;
         } else {
             if (update) {
-                Intent intent = new Intent(this, MapActivity.class);
+                Intent intent = new Intent(this, DepartureActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -288,6 +289,9 @@ public class PreferenceActivity extends AppCompatActivity {
                 case R.id.preferences_notifications:
                     ((PreferenceActivity) getActivity()).setNotificationsFragment();
                     break;
+                case R.id.preferences_advanced:
+                    ((PreferenceActivity) getActivity()).setAdvancedFragment();
+                    break;
             }
         }
     }
@@ -344,13 +348,13 @@ public class PreferenceActivity extends AppCompatActivity {
 
             addPreferencesFromResource(R.xml.preferences_map);
 
-            SwitchPreference mapUpdate = (SwitchPreference) findPreference(SettingsUtils.PREF_AUTO_UPDATE);
+            SwitchPreference mapUpdate = (SwitchPreference) findPreference(Settings.PREF_AUTO_UPDATE);
             mapUpdate.setOnPreferenceChangeListener((preference, newValue) -> {
                 update = true;
                 return true;
             });
 
-            ListPreference mapInterval = (ListPreference) findPreference(SettingsUtils.PREF_AUTO_UPDATE_INTERVAL);
+            ListPreference mapInterval = (ListPreference) findPreference(Settings.PREF_AUTO_UPDATE_INTERVAL);
             mapInterval.setOnPreferenceChangeListener((preference, newValue) -> {
                 update = true;
                 return true;
@@ -384,15 +388,11 @@ public class PreferenceActivity extends AppCompatActivity {
 
             addPreferencesFromResource(R.xml.preferences_beacons);
 
-            beaconsEnable = (SwitchPreference) findPreference(SettingsUtils.PREF_BEACONS_ENABLED);
+            beaconsEnable = (SwitchPreference) findPreference(Settings.PREF_BEACONS_ENABLED);
             beaconsEnable.setOnPreferenceChangeListener((preference, newValue) -> {
                 boolean value = (boolean) newValue;
 
                 if (value) {
-                    getActivity().getPackageManager().setComponentEnabledSetting(
-                            new ComponentName(getActivity(), BeaconService.class),
-                            PackageManager.COMPONENT_ENABLED_STATE_ENABLED, 0);
-
                     getActivity().getPackageManager().setComponentEnabledSetting(
                             new ComponentName(getActivity(), LocationReceiver.class),
                             PackageManager.COMPONENT_ENABLED_STATE_ENABLED, 0);
@@ -403,10 +403,6 @@ public class PreferenceActivity extends AppCompatActivity {
 
                     LogUtils.e(TAG, "Enabled beacon components");
                 } else {
-                    getActivity().getPackageManager().setComponentEnabledSetting(
-                            new ComponentName(getActivity(), BeaconService.class),
-                            PackageManager.COMPONENT_ENABLED_STATE_DISABLED, 0);
-
                     getActivity().getPackageManager().setComponentEnabledSetting(
                             new ComponentName(getActivity(), LocationReceiver.class),
                             PackageManager.COMPONENT_ENABLED_STATE_DISABLED, 0);
@@ -444,7 +440,7 @@ public class PreferenceActivity extends AppCompatActivity {
 
             if (requestCode == REQUEST_ENABLE_BT) {
                 if (resultCode == Activity.RESULT_OK) {
-                    ((AppApplication) getActivity().getApplication()).startBeacon();
+                    ((AppApplication) getActivity().getApplication()).initBeacons();
                 } else {
                     beaconsEnable.setChecked(false);
                 }
@@ -485,7 +481,7 @@ public class PreferenceActivity extends AppCompatActivity {
                 Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(intent, REQUEST_ENABLE_BT);
             } else {
-                ((AppApplication) getActivity().getApplication()).startBeacon();
+                ((AppApplication) getActivity().getApplication()).initBeacons();
             }
 
             return true;

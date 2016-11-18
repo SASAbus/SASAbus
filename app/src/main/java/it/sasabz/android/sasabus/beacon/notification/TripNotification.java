@@ -34,17 +34,20 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import java.util.Arrays;
 import java.util.List;
 
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.beacon.bus.CurrentTrip;
-import it.sasabz.android.sasabus.model.BusStop;
-import it.sasabz.android.sasabus.model.line.Lines;
-import it.sasabz.android.sasabus.provider.ApiUtils;
-import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.data.model.BusStop;
+import it.sasabz.android.sasabus.data.model.line.Lines;
+import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.data.vdv.model.VdvBusStop;
 import it.sasabz.android.sasabus.ui.MapActivity;
+import it.sasabz.android.sasabus.util.Notifications;
 import it.sasabz.android.sasabus.util.UIUtils;
+import timber.log.Timber;
 
 public class TripNotification {
 
@@ -124,7 +127,7 @@ public class TripNotification {
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(Config.NOTIFICATION_BUS, notification);
+        notificationManager.notify(Notifications.NOTIFICATION_BUS, notification);
     }
 
     private static void setCommonNotification(Context context, RemoteViews remoteViews, CurrentTrip trip) {
@@ -157,7 +160,7 @@ public class TripNotification {
         setCommonNotification(context, remoteViews, trip);
 
         List<BusStop> path = trip.getPath();
-        List<it.sasabz.android.sasabus.provider.model.BusStop> times = trip.getTimes();
+        List<VdvBusStop> times = trip.getTimes();
 
         BusStop currentBusStop = trip.beacon.busStop;
 
@@ -170,8 +173,19 @@ public class TripNotification {
             }
         }
 
+        if (index == -1) {
+            Timber.e("index == -1, current bus stop: %s, path: %s", currentBusStop.getId(),
+                    Arrays.toString(path.toArray()));
+
+            for (int i : BIG_VIEW_ROW_IDS) {
+                remoteViews.setViewVisibility(i, View.GONE);
+            }
+
+            return remoteViews;
+        }
+
         remoteViews.setTextViewText(R.id.notification_bus_stop_time,
-                ApiUtils.getTime(times.get(index).getSeconds()));
+                times.get(index).getTime());
 
         String busStationName = BusStopRealmHelper.getName(
                 trip.beacon.busStop.getId());
@@ -197,7 +211,7 @@ public class TripNotification {
         setCommonNotification(context, remoteViews, trip);
 
         List<BusStop> path = trip.getPath();
-        List<it.sasabz.android.sasabus.provider.model.BusStop> times = trip.getTimes();
+        List<VdvBusStop> times = trip.getTimes();
 
         BusStop currentBusStop = trip.beacon.busStop;
 
@@ -208,6 +222,17 @@ public class TripNotification {
                 index = i;
                 break;
             }
+        }
+
+        if (index == -1) {
+            Timber.e("index == -1, current bus stop: %s, path: %s", currentBusStop.getId(),
+                    Arrays.toString(path.toArray()));
+
+            for (int i : BIG_VIEW_ROW_IDS) {
+                remoteViews.setViewVisibility(i, View.GONE);
+            }
+
+            return remoteViews;
         }
 
         remoteViews.setViewVisibility(R.id.image_route_points, View.VISIBLE);

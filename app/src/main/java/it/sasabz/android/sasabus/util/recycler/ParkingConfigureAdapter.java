@@ -34,8 +34,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.appwidget.ParkingWidgetProvider;
-import it.sasabz.android.sasabus.model.Parking;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.data.model.Parking;
+import it.sasabz.android.sasabus.util.Settings;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -95,7 +95,7 @@ public class ParkingConfigureAdapter extends RecyclerView.Adapter<ParkingConfigu
         public void onClick(View v) {
             Parking item = mItems.get(getAdapterPosition());
 
-            SettingsUtils.setWidgetParking(mContext, item.getId());
+            Settings.setWidgetParking(mContext, item.getId());
 
             Intent intent = new Intent(mContext, ParkingWidgetProvider.class);
             intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);

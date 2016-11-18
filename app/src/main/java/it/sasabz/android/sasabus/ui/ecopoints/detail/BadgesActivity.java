@@ -33,13 +33,14 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.network.NetUtils;
-import it.sasabz.android.sasabus.network.auth.AuthHelper;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.EcoPointsApi;
-import it.sasabz.android.sasabus.network.rest.model.Badge;
-import it.sasabz.android.sasabus.network.rest.response.BadgesResponse;
+import it.sasabz.android.sasabus.data.network.NetUtils;
+import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.EcoPointsApi;
+import it.sasabz.android.sasabus.data.network.rest.model.Badge;
+import it.sasabz.android.sasabus.data.network.rest.response.BadgesResponse;
 import it.sasabz.android.sasabus.ui.ecopoints.LoginActivity;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
@@ -54,7 +55,7 @@ public class BadgesActivity extends AppCompatActivity {
     private static final String TAG = "BadgesActivity";
 
     @BindView(R.id.recycler) RecyclerView recyclerView;
-    @BindView(R.id.refresh) SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.refresh) SwipeRefreshLayout mRefresh;
 
     @BindView(R.id.error_general) RelativeLayout errorGeneral;
     @BindView(R.id.error_wifi) RelativeLayout errorWifi;
@@ -90,9 +91,8 @@ public class BadgesActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_amber, R.color.primary_red,
-                R.color.primary_green, R.color.primary_indigo);
-        mSwipeRefreshLayout.setOnRefreshListener(this::parseData);
+        mRefresh.setColorSchemeResources(Config.REFRESH_COLORS);
+        mRefresh.setOnRefreshListener(this::parseData);
 
         mItems = new ArrayList<>();
         mAdapter = new BadgeAdapter(this, mItems);
@@ -123,12 +123,12 @@ public class BadgesActivity extends AppCompatActivity {
             mItems.clear();
             mAdapter.notifyDataSetChanged();
 
-            mSwipeRefreshLayout.setRefreshing(false);
+            mRefresh.setRefreshing(false);
 
             return;
         }
 
-        mSwipeRefreshLayout.setRefreshing(true);
+        mRefresh.setRefreshing(true);
 
         EcoPointsApi ecoPointsApi = RestClient.ADAPTER.create(EcoPointsApi.class);
         ecoPointsApi.getAllBadges()
@@ -152,7 +152,7 @@ public class BadgesActivity extends AppCompatActivity {
                         errorGeneral.setVisibility(View.VISIBLE);
                         errorWifi.setVisibility(View.GONE);
 
-                        mSwipeRefreshLayout.setRefreshing(false);
+                        mRefresh.setRefreshing(false);
                     }
 
                     @Override
@@ -165,7 +165,7 @@ public class BadgesActivity extends AppCompatActivity {
                         errorGeneral.setVisibility(View.GONE);
                         errorWifi.setVisibility(View.GONE);
 
-                        mSwipeRefreshLayout.setRefreshing(false);
+                        mRefresh.setRefreshing(false);
                     }
                 });
     }

@@ -35,8 +35,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.route.RouteLeg;
-import it.sasabz.android.sasabus.model.route.RouteResult;
+import it.sasabz.android.sasabus.data.model.route.RouteLeg;
+import it.sasabz.android.sasabus.data.model.route.RouteResult;
 
 /**
  * @author Alex Lardschneider

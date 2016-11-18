@@ -25,7 +25,7 @@ import android.text.TextUtils;
 
 import java.util.Map;
 
-import it.sasabz.android.sasabus.network.auth.AuthHelper;
+import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
 
 /**

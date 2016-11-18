@@ -30,7 +30,7 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.receiver.DownloadReceiver;
 import it.sasabz.android.sasabus.util.IOUtils;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Settings;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 
@@ -73,7 +73,7 @@ public class MapDownloadHelper {
     void checkForMap() {
         IOUtils.deleteOldMapZipFiles(rootFolder);
 
-        if (!SettingsUtils.shouldShowMapDialog(context)) {
+        if (!Settings.shouldShowMapDialog(context)) {
             return;
         }
 
@@ -89,7 +89,7 @@ public class MapDownloadHelper {
                         dialog.dismiss();
                     })
                     .setNegativeButton(R.string.dialog_button_dont_show_again, (dialog, which) -> {
-                        SettingsUtils.disableMapDialog(context);
+                        Settings.disableMapDialog(context);
                         dialog.dismiss();
                     })
                     .create()

@@ -17,6 +17,7 @@
 
 package it.sasabz.android.sasabus.ui.line;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -28,100 +29,109 @@ import android.widget.RelativeLayout;
 
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
-import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.line.LineCourse;
-import it.sasabz.android.sasabus.network.NetUtils;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.RealtimeApi;
-import it.sasabz.android.sasabus.network.rest.model.RealtimeBus;
-import it.sasabz.android.sasabus.network.rest.response.RealtimeResponse;
-import it.sasabz.android.sasabus.provider.API;
-import it.sasabz.android.sasabus.provider.ApiUtils;
-import it.sasabz.android.sasabus.provider.apis.Trips;
-import it.sasabz.android.sasabus.provider.model.BusStop;
-import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.data.model.line.LineCourse;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.RealtimeApi;
+import it.sasabz.android.sasabus.data.network.rest.model.RealtimeBus;
+import it.sasabz.android.sasabus.data.network.rest.response.RealtimeResponse;
+import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
+import it.sasabz.android.sasabus.data.vdv.Api;
+import it.sasabz.android.sasabus.data.vdv.data.VdvCalendar;
+import it.sasabz.android.sasabus.data.vdv.model.VdvBusStop;
+import it.sasabz.android.sasabus.util.AnalyticsHelper;
+import it.sasabz.android.sasabus.util.DeviceUtils;
+import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
-import it.sasabz.android.sasabus.util.recycler.LineCourseAdapter;
+import retrofit2.Call;
 import retrofit2.Response;
 import rx.Observable;
 import rx.Observer;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
- * Displays a list with all the bus stops where a vehicle will stop / has stopped.
- * If the vehicle is already in service the bus stops where the bus passed will be marked in a
+ * Displays a list with all the bus stops where a mVehicle will stop/has stopped.
+ * If the mVehicle is already in service the bus stops where the bus passed will be marked in a
  * lighter color compared to the bus stops where the bus has yet to stop.
- * <p>
- * The path will always be calculated offline by using the integrated {@link API}, but depending
- * if the bus is in service the current bus stop will be loaded from the realtime api.
  *
  * @author Alex Lardschneider
  * @author David Dejori
  */
 public class LineCourseActivity extends RxAppCompatActivity {
 
-    @BindView(R.id.refresh) SwipeRefreshLayout mSwipeRefreshLayout;
-    @BindView(R.id.lines_course_recycler) RecyclerView mRecyclerView;
+    private static final String EXTRA_CURRENT_BUS_STOP = "com.davale.sasabus.EXTRA_CURRENT_BUS_STOP";
+
+    private static final String TAG = "LineCourseActivity";
+    private static final String ERROR_DATA = "data";
+
+    private static int mTripId;
+    private static int mBusStopGroup;
+    private static int mCurrentBusStop;
+    private static int vehicle;
+
     @BindView(R.id.error_general) RelativeLayout mErrorGeneral;
     @BindView(R.id.error_wifi) RelativeLayout mErrorWifi;
     @BindView(R.id.error_data) RelativeLayout mErrorData;
 
-    private int vehicle;
-    private int[] stationIds;
-    private int tempBusStop;
-    private int lineId;
-    private String time;
+    @BindView(R.id.refresh) SwipeRefreshLayout mRefresh;
+    @BindView(R.id.lines_course_recycler) RecyclerView mRecyclerView;
 
-    private final ArrayList<LineCourse> mItems = new ArrayList<>();
+    private ArrayList<LineCourse> mItems;
     private LineCourseAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Utils.changeLanguage(this);
-
         setContentView(R.layout.activity_line_course);
 
         ButterKnife.bind(this);
+        AnalyticsHelper.sendScreenView(TAG);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.course_details);
+        toolbar.setTitle(R.string.title_course_details);
 
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(v -> finish());
 
-        assert getSupportActionBar() != null;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         Intent intent = getIntent();
+        mTripId = intent.getIntExtra(Config.EXTRA_TRIP_ID, -1);
+        mBusStopGroup = intent.getIntExtra(Config.EXTRA_BUS_STOP_GROUP, -1);
+        vehicle = intent.getIntExtra(Config.EXTRA_VEHICLE, -1);
+        mCurrentBusStop = intent.getIntExtra(EXTRA_CURRENT_BUS_STOP, -1);
 
-        vehicle = intent.getExtras().getInt(Config.EXTRA_VEHICLE);
-        stationIds = intent.getExtras().getIntArray(Config.EXTRA_STATION_ID);
+        mRefresh.setColorSchemeResources(Config.REFRESH_COLORS);
+        mRefresh.setOnRefreshListener(() -> parsePlanData(false));
 
-        time = intent.getExtras().getString("time");
-        lineId = intent.getExtras().getInt(Config.EXTRA_LINE_ID);
+        if (savedInstanceState != null) {
+            int errorDataVisibility = savedInstanceState.getInt("ERROR_DATA");
+            int errorWifiVisibility = savedInstanceState.getInt(Config.BUNDLE_ERROR_WIFI);
+            int errorGeneralVisibility = savedInstanceState.getInt(Config.BUNDLE_ERROR_GENERAL);
 
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_amber, R.color.primary_red, R.color.primary_green, R.color.primary_indigo);
-        mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            if (time != null) {
-                parsePlanData(stationIds, time, true);
-            } else {
-                parseDataFromVehicle(vehicle, true);
-            }
-        });
+            //noinspection ResourceType
+            mErrorData.setVisibility(errorDataVisibility);
+            //noinspection ResourceType
+            mErrorWifi.setVisibility(errorWifiVisibility);
+            //noinspection ResourceType
+            mErrorGeneral.setVisibility(errorGeneralVisibility);
+
+            mItems = savedInstanceState
+                    .getParcelableArrayList(Config.BUNDLE_LIST);
+        } else {
+            mItems = new ArrayList<>();
+            mRefresh.setRefreshing(true);
+        }
 
         mAdapter = new LineCourseAdapter(this, mItems);
 
@@ -129,39 +139,7 @@ public class LineCourseActivity extends RxAppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);
 
-        if (savedInstanceState != null) {
-            int errorDataVisibility = savedInstanceState.getInt("ERROR_DATA");
-            int errorWifiVisibility = savedInstanceState.getInt(Config.BUNDLE_ERROR_WIFI);
-            int errorGeneralVisibility = savedInstanceState.getInt(Config.BUNDLE_ERROR_GENERAL);
-
-            if (errorWifiVisibility != View.GONE || errorGeneralVisibility != View.GONE ||
-                    errorDataVisibility != View.GONE) {
-                //noinspection ResourceType
-                mErrorData.setVisibility(errorDataVisibility);
-                //noinspection ResourceType
-                mErrorWifi.setVisibility(errorWifiVisibility);
-                //noinspection ResourceType
-                mErrorGeneral.setVisibility(errorGeneralVisibility);
-
-                return;
-            } else {
-                ArrayList<LineCourse> temp = savedInstanceState
-                        .getParcelableArrayList(Config.BUNDLE_LIST);
-
-                if (temp != null && !temp.isEmpty()) {
-                    mItems.addAll(temp);
-                    mAdapter.notifyDataSetChanged();
-
-                    return;
-                }
-            }
-        }
-
-        if (time != null) {
-            parsePlanData(stationIds, time, false);
-        } else {
-            parseDataFromVehicle(vehicle, false);
-        }
+        parsePlanData(true);
     }
 
     @Override
@@ -169,45 +147,26 @@ public class LineCourseActivity extends RxAppCompatActivity {
         super.onSaveInstanceState(outState);
 
         outState.putParcelableArrayList(Config.BUNDLE_LIST, mItems);
+
         outState.putInt("ERROR_DATA", mErrorData.getVisibility());
         outState.putInt(Config.BUNDLE_ERROR_WIFI, mErrorWifi.getVisibility());
         outState.putInt(Config.BUNDLE_ERROR_GENERAL, mErrorGeneral.getVisibility());
     }
 
-
-    private void parseDataFromVehicle(int vehicle, boolean manualRefresh) {
-        tempBusStop = 0;
-
-        if (!NetUtils.isOnline(this)) {
-            mErrorWifi.setVisibility(View.VISIBLE);
-            mErrorGeneral.setVisibility(View.GONE);
-
-            mItems.clear();
-            mAdapter.notifyDataSetChanged();
-
-            mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
-
-            return;
-        }
-
-        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
-
-        getPath(vehicle)
+    /**
+     * Parses the line course from the plan data. This is used to get the course of a non
+     * tracked mVehicle or a mVehicle which will drive in the future.
+     *
+     * @param animate If this data was requested automatically when you start the activity,
+     *                pass {@code false}, else if the user refreshed it pass {@code true}.
+     *                This is done to show {@link RecyclerView} animations the first time the
+     *                data is inserted.
+     */
+    private void parsePlanData(boolean animate) {
+        parseFromPlanData(vehicle, mBusStopGroup, mCurrentBusStop, mTripId)
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())
-                .flatMap(busStops -> {
-                    if (!busStops.isEmpty()) {
-                        for (int i = 0; i < busStops.size(); i++) {
-                            if (busStops.get(i).getId() == tempBusStop) {
-                                BusStop stop = busStops.get(i);
-
-                                return parseFromPlanData(new int[]{stop.getId()}, stop.getTime(), lineId, busStops, false);
-                            }
-                        }
-                    }
-
-                    return Observable.empty();
-                })
+                .compose(bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<LineCourse>>() {
                     @Override
@@ -217,204 +176,152 @@ public class LineCourseActivity extends RxAppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Utils.logException(e);
-
-                        mItems.clear();
-                        mAdapter.notifyDataSetChanged();
-
-                        if ("data".equals(e.getMessage())) {
-                            mErrorData.setVisibility(View.VISIBLE);
-                        } else {
-                            mErrorGeneral.setVisibility(View.VISIBLE);
-                        }
-
-                        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
-                    }
-
-                    @Override
-                    public void onNext(List<LineCourse> items) {
-                        mItems.clear();
-                        mItems.addAll(items);
-
-                        if (manualRefresh) {
-                            mAdapter.notifyDataSetChanged();
-                        } else {
-                            mAdapter.notifyItemRangeInserted(0, mItems.size());
-                        }
-
-                        mErrorGeneral.setVisibility(View.GONE);
-                        mErrorWifi.setVisibility(View.GONE);
-                        mErrorData.setVisibility(View.GONE);
-
-                        for (int i = 0; i < mItems.size(); i++) {
-                            LineCourse item = mItems.get(i);
-                            if (item.isActive()) {
-                                mRecyclerView.smoothScrollToPosition(i);
-                                break;
-                            }
-                        }
-
-                        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
-                    }
-                });
-    }
-
-    private void parsePlanData(int[] stationIds, String time, boolean manualRefresh) {
-        parseFromPlanData(stationIds, time, lineId, null, true)
-                .compose(bindToLifecycle())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<LineCourse>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        if (e != null) {
+                        if (!ERROR_DATA.equals(e.getMessage())) {
                             Utils.logException(e);
                         }
 
-                        mErrorGeneral.setVisibility(View.VISIBLE);
-                        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+                        LineCourseActivity.this.onError(e);
                     }
 
                     @Override
                     public void onNext(List<LineCourse> items) {
-                        mItems.clear();
-                        mItems.addAll(items);
-
-                        if (manualRefresh) {
-                            mAdapter.notifyDataSetChanged();
-                        } else {
-                            mAdapter.notifyItemRangeInserted(0, mItems.size());
-                        }
-
-                        mErrorGeneral.setVisibility(View.GONE);
-                        mErrorWifi.setVisibility(View.GONE);
-                        mErrorData.setVisibility(View.GONE);
-
-                        for (int i = 0; i < mItems.size(); i++) {
-                            LineCourse item = mItems.get(i);
-                            if (item.isActive()) {
-                                mRecyclerView.smoothScrollToPosition(i);
-                                break;
-                            }
-                        }
-
-                        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+                        onResult(items, animate);
                     }
                 });
     }
 
-    private Observable<List<BusStop>> getPath(int vehicle) {
-        return Observable.create(new Observable.OnSubscribe<List<BusStop>>() {
-            @Override
-            public void call(Subscriber<? super List<BusStop>> subscriber) {
-                if (!API.todayExists(LineCourseActivity.this)) {
-                    SettingsUtils.markDataUpdateAvailable(LineCourseActivity.this, true);
+    private void onResult(Collection<LineCourse> lines, boolean animate) {
+        mItems.clear();
+        mItems.addAll(lines);
 
-                    subscriber.onError(new Throwable("data"));
-                    return;
-                }
+        if (animate) {
+            mAdapter.notifyItemRangeInserted(0, mItems.size());
+        } else {
+            mAdapter.notifyDataSetChanged();
+        }
 
-                try {
-                    RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
-                    Response<RealtimeResponse> response = realtimeApi.vehicle(vehicle).execute();
+        mErrorGeneral.setVisibility(View.GONE);
+        mErrorWifi.setVisibility(View.GONE);
+        mErrorData.setVisibility(View.GONE);
 
-                    RealtimeResponse realtimeResponse = response.body();
+        for (int i = 0; i < mItems.size(); i++) {
+            LineCourse item = mItems.get(i);
 
-                    // Ignore empty response.
-                    if (realtimeResponse.buses.isEmpty()) {
-                        subscriber.onError(null);
-                    }
+            if (item.active && (item.dot || item.bus)) {
+                int offset = DeviceUtils.getScreenHeight(this) / 3;
 
-                    RealtimeBus bus = response.body().buses.get(0);
+                ((LinearLayoutManager) mRecyclerView.getLayoutManager())
+                        .scrollToPositionWithOffset(i, offset);
 
-                    List<BusStop> path = Trips.getPath(getApplicationContext(), bus.trip);
-
-                    tempBusStop = bus.busStop;
-
-                    subscriber.onNext(path);
-                    subscriber.onCompleted();
-                } catch (IOException e) {
-                    subscriber.onError(e);
-                }
+                break;
             }
-        });
+        }
+
+        mRefresh.setRefreshing(false);
+    }
+
+    private void onError(Throwable throwable) {
+        mItems.clear();
+        mAdapter.notifyDataSetChanged();
+
+        if ("data".equals(throwable.getMessage())) {
+            mErrorData.setVisibility(View.VISIBLE);
+        } else if ("internet".equals(throwable.getMessage())) {
+            mErrorWifi.setVisibility(View.VISIBLE);
+        } else {
+            mErrorGeneral.setVisibility(View.VISIBLE);
+        }
+
+        mRefresh.setRefreshing(false);
     }
 
     /**
      * Extracts a course from the offline API
      *
-     * @param stationIds the ids of the stop where the bus is currently located or where the user
-     *                   wants to get step onto the bus (basically from which bus stop he requested
-     *                   the course details)
-     * @param time       the time when the bus departs at the bus stop in the parameter above
-     * @param line       the line which will pass at the defined bus stop and time
-     * @param busStops   optionally the path of the bus can be passed, if it is already known in
-     *                   advance, in order to avoid calculating it again
+     * @param busStopGroup   the ids of the stop where the bus is currently located or where the user
+     *                       wants to get step onto the bus (basically from which bus stop he requested
+     *                       the course details)
+     * @param currentBusStop the ids of the stop where the bus is currently located or where the user
+     *                       wants to get step onto the bus (basically from which bus stop he requested
+     *                       the course details)
+     * @param tripId         the ID of a trip
      */
-    private Observable<List<LineCourse>> parseFromPlanData(int[] stationIds, String time, int line,
-                                                           List<BusStop> busStops, boolean allBlack) {
-        return Observable.create(new Observable.OnSubscribe<List<LineCourse>>() {
-            @Override
-            public void call(Subscriber<? super List<LineCourse>> subscriber) {
-                if (!API.todayExists(LineCourseActivity.this)) {
-                    SettingsUtils.markDataUpdateAvailable(LineCourseActivity.this, true);
+    private Observable<List<LineCourse>> parseFromPlanData(int vehicle, int busStopGroup,
+                                                           int currentBusStop, int tripId) {
+        return Observable.fromCallable(() -> {
+            int currentBusStopNew = currentBusStop;
 
-                    subscriber.onError(new Throwable("data"));
-                    return;
-                }
+            if (!Api.todayExists(this)) {
+                Settings.markDataUpdateAvailable(LineCourseActivity.this, true);
 
-                List<LineCourse> items = new ArrayList<>();
-
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(Calendar.HOUR_OF_DAY, 1);
-                calendar.set(Calendar.MINUTE, 0);
-                calendar.set(Calendar.SECOND, 0);
-
-                TimeZone timeZone = TimeZone.getTimeZone("Europe/Rome");
-
-                if (timeZone.inDaylightTime(calendar.getTime())) {
-                    calendar.add(Calendar.MILLISECOND, timeZone.getDSTSavings());
-                }
-
-                long unixTime = calendar.getTimeInMillis() / 1000;
-
-                List<BusStop> path;
-
-                if (busStops == null) {
-                    path = API.getPath(LineCourseActivity.this,
-                            unixTime + ApiUtils.getSeconds(time), line);
-                } else {
-                    path = busStops;
-                }
-
-                boolean isActive = allBlack;
-
-                for (BusStop stop : path) {
-                    String stationString = BusStopRealmHelper.getName(stop.getId());
-                    String municString = BusStopRealmHelper.getMunic(stop.getId());
-
-                    boolean dot = false;
-
-                    for (int id : stationIds) {
-                        if (stop.getId() == id) {
-                            dot = true;
-                            isActive = true;
-                            break;
-                        }
-                    }
-
-                    items.add(new LineCourse(stop.getId(), stationString,
-                            municString, stop.getTime(), isActive, dot));
-                }
-
-                subscriber.onNext(items);
-                subscriber.onCompleted();
+                throw new VdvCalendar.VdvCalendarException(ERROR_DATA);
             }
+
+            if (vehicle != 0) {
+                Timber.w("Getting bus position for %s", vehicle);
+
+                RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
+                Call<RealtimeResponse> call = realtimeApi.vehicle(vehicle);
+                Response<RealtimeResponse> response = call.execute();
+
+                if (response.isSuccessful() && response.body() != null) {
+                    RealtimeResponse body = response.body();
+
+                    if (!body.buses.isEmpty()) {
+                        RealtimeBus bus = body.buses.get(0);
+                        currentBusStopNew = bus.busStop;
+
+                        Timber.w("Got bus position for %s: %s", vehicle, currentBusStopNew);
+                    } else {
+                        Timber.w("Bus %s is not in service", vehicle);
+                    }
+                } else {
+                    Timber.w("Could not get bus position: %s, %s", response.code(),
+                            response.errorBody());
+                }
+            }
+
+            List<LineCourse> items = new ArrayList<>();
+            List<VdvBusStop> path;
+
+            path = Api.getTrip(tripId).calcTimedPath();
+
+            boolean active = currentBusStopNew == 0;
+
+            for (VdvBusStop stop : path) {
+                BusStop busStop = BusStopRealmHelper.getBusStop(stop.getId());
+
+                boolean dot = false;
+                boolean bus = false;
+
+                // Iterate all times to see at which bus stop the bus currently is, and mark it
+                // to make it stand out in the list (by either a dot or a bus depending if it
+                // currently is in service).
+
+                if (busStop.getId() == currentBusStopNew) {
+                    active = true;
+                    bus = true;
+                }
+
+                if (busStop.getFamily() == busStopGroup) {
+                    dot = true;
+                }
+
+                items.add(new LineCourse(stop.getId(), busStop, stop.getTime(), active, dot, bus));
+            }
+
+            return items;
         });
+    }
+
+    public static Intent intent(Context context, int tripId, int busStopGroup,
+                                int currentBusStop, int vehicle) {
+
+        Intent intent = new Intent(context, LineCourseActivity.class);
+        intent.putExtra(Config.EXTRA_TRIP_ID, tripId);
+        intent.putExtra(Config.EXTRA_BUS_STOP_GROUP, busStopGroup);
+        intent.putExtra(Config.EXTRA_VEHICLE, vehicle);
+        intent.putExtra(EXTRA_CURRENT_BUS_STOP, currentBusStop);
+        return intent;
     }
 }

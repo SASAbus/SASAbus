@@ -34,11 +34,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.Parking;
-import it.sasabz.android.sasabus.network.NetUtils;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.ParkingApi;
-import it.sasabz.android.sasabus.network.rest.response.ParkingResponse;
+import it.sasabz.android.sasabus.data.model.Parking;
+import it.sasabz.android.sasabus.data.network.NetUtils;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.ParkingApi;
+import it.sasabz.android.sasabus.data.network.rest.response.ParkingResponse;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.recycler.ParkingConfigureAdapter;
@@ -63,7 +63,7 @@ public class ParkingConfigureActivity extends AppCompatActivity {
 
     @BindView(R.id.error_general) RelativeLayout mErrorGeneral;
     @BindView(R.id.error_wifi) RelativeLayout mErrorWifi;
-    @BindView(R.id.refresh) SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.refresh) SwipeRefreshLayout mRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +88,8 @@ public class ParkingConfigureActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mAdapter);
 
-        mSwipeRefreshLayout.setOnRefreshListener(this::parseData);
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_amber, R.color.primary_red,
-                R.color.primary_green, R.color.primary_indigo);
+        mRefresh.setOnRefreshListener(this::parseData);
+        mRefresh.setColorSchemeResources(Config.REFRESH_COLORS);
 
         if (savedInstanceState != null) {
             int errorWifiVisibility = savedInstanceState.getInt(Config.BUNDLE_ERROR_WIFI);
@@ -137,14 +136,14 @@ public class ParkingConfigureActivity extends AppCompatActivity {
                 mAdapter.notifyDataSetChanged();
             }
 
-            mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+            mRefresh.setRefreshing(false);
             return;
         }
 
-        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
+        mRefresh.setRefreshing(true);
 
         ParkingApi parkingApi = RestClient.ADAPTER.create(ParkingApi.class);
-        parkingApi.getParking(Utils.locale(this))
+        parkingApi.getParking()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ParkingResponse>() {
@@ -162,7 +161,7 @@ public class ParkingConfigureActivity extends AppCompatActivity {
                             mAdapter.notifyDataSetChanged();
                         }
 
-                        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+                        mRefresh.setRefreshing(false);
                     }
 
                     @Override
@@ -177,7 +176,7 @@ public class ParkingConfigureActivity extends AppCompatActivity {
                         mErrorGeneral.setVisibility(View.GONE);
                         mErrorWifi.setVisibility(View.GONE);
 
-                        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+                        mRefresh.setRefreshing(false);
                     }
                 });
     }

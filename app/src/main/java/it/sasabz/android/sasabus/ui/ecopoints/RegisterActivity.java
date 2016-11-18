@@ -46,11 +46,11 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.data.network.NetUtils;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.UserApi;
+import it.sasabz.android.sasabus.data.network.rest.response.RegisterResponse;
 import it.sasabz.android.sasabus.fcm.FcmSettings;
-import it.sasabz.android.sasabus.network.NetUtils;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.UserApi;
-import it.sasabz.android.sasabus.network.rest.response.RegisterResponse;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.AnswersHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
@@ -167,7 +167,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             updateDateFormPicker();
         };
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, R.style.DatePicker, date, mBirthdayCalendar.get(Calendar.YEAR),
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, R.style.DatePickerStyle,
+                date, mBirthdayCalendar.get(Calendar.YEAR),
                 mBirthdayCalendar.get(Calendar.MONTH), mBirthdayCalendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(365 * 13));
 

@@ -36,7 +36,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.line.LineDetail;
+import it.sasabz.android.sasabus.data.model.line.LineDetail;
 import it.sasabz.android.sasabus.ui.bus.BusDetailActivity;
 
 /**
@@ -146,11 +146,11 @@ public class LineDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             bus.delay.setText(String.format(Locale.ITALY, "%s'", item.getDelay()));
 
             if (item.getDelay() > 3) {
-                bus.delay.setTextColor(ContextCompat.getColor(mContext, R.color.primary_red));
+                bus.delay.setTextColor(ContextCompat.getColor(mContext, R.color.material_red_500));
             } else if (item.getDelay() > 0) {
-                bus.delay.setTextColor(ContextCompat.getColor(mContext, R.color.primary_amber_dark));
+                bus.delay.setTextColor(ContextCompat.getColor(mContext, R.color.material_amber_700));
             } else {
-                bus.delay.setTextColor(ContextCompat.getColor(mContext, R.color.primary_green));
+                bus.delay.setTextColor(ContextCompat.getColor(mContext, R.color.material_green_500));
             }
 
             if (item.isColor()) {

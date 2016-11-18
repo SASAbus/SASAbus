@@ -80,11 +80,16 @@ public final class AnimUtils {
      * @param view     the {@link View} to fade out.
      * @param duration the duration of the animation.
      */
-    public static void fadeIn(View view, @Duration int duration) {
+    public static void fadeIn(View view, @Duration int duration, boolean useAlpha) {
         Preconditions.checkNotNull(view, "view == null");
 
+        view.animate().cancel();
+
         view.setVisibility(View.VISIBLE);
-        ViewCompat.setAlpha(view, 0);
+
+        if (useAlpha) {
+            ViewCompat.setAlpha(view, 0);
+        }
 
         view.animate()
                 .alpha(1)
@@ -97,5 +102,9 @@ public final class AnimUtils {
                     }
                 })
                 .start();
+    }
+
+    public static void fadeIn(View view, @Duration int duration) {
+        fadeIn(view, duration, true);
     }
 }

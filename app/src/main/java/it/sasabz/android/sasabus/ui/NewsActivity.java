@@ -38,11 +38,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.News;
-import it.sasabz.android.sasabus.network.NetUtils;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.NewsApi;
-import it.sasabz.android.sasabus.network.rest.response.NewsResponse;
+import it.sasabz.android.sasabus.data.model.News;
+import it.sasabz.android.sasabus.data.network.NetUtils;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.NewsApi;
+import it.sasabz.android.sasabus.data.network.rest.response.NewsResponse;
 import it.sasabz.android.sasabus.ui.widget.adapter.TabsAdapter;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.Utils;
@@ -74,11 +74,6 @@ public class NewsActivity extends BaseActivity {
     private NewsFragment mNewsMEFragment;
 
     /**
-     * Tab adapter to hold the fragments and fragment titles.
-     */
-    private TabsAdapter mAdapter;
-
-    /**
      * The view pager which allows us to scroll between the fragments.
      */
     @BindView(R.id.viewpager)
@@ -97,25 +92,24 @@ public class NewsActivity extends BaseActivity {
      */
     private static Bundle sArguments;
 
-    private static int mLoadedCounter;
+    private static int sLoadedCounter;
 
-    private List<News> mItems;
+    private List<News> mNews;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_news);
-
         ButterKnife.bind(this);
 
         AnalyticsHelper.sendScreenView(TAG);
 
-        mAdapter = new TabsAdapter(getSupportFragmentManager(), false);
+        TabsAdapter mAdapter = new TabsAdapter(getSupportFragmentManager());
 
         Intent intent = getIntent();
 
-        mLoadedCounter = 0;
+        sLoadedCounter = 0;
         sArguments = new Bundle();
         sArguments.putBoolean(Config.EXTRA_SHOW_NEWS, intent.getBooleanExtra(Config.EXTRA_SHOW_NEWS, false));
         sArguments.putInt(Config.EXTRA_NEWS_ID, intent.getIntExtra(Config.EXTRA_NEWS_ID, 0));
@@ -123,11 +117,6 @@ public class NewsActivity extends BaseActivity {
 
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.white));
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
             mNewsAllFragment = (NewsFragment) getSupportFragmentManager()
@@ -192,7 +181,10 @@ public class NewsActivity extends BaseActivity {
         sArguments.putCharSequence(Config.EXTRA_NEWS_ZONE, intent.getCharSequenceExtra(Config.EXTRA_NEWS_ZONE));
 
         gotoZone(sArguments);
-        callFragments(mItems);
+
+        if (mNews != null) {
+            callFragments(mNews);
+        }
     }
 
 
@@ -211,7 +203,7 @@ public class NewsActivity extends BaseActivity {
         }
 
         NewsApi newsApi = RestClient.ADAPTER.create(NewsApi.class);
-        newsApi.getNews(locale())
+        newsApi.getNews()
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -231,8 +223,8 @@ public class NewsActivity extends BaseActivity {
 
                     @Override
                     public void onNext(NewsResponse newsResponse) {
-                        mItems = newsResponse.news;
-                        callFragments(mItems);
+                        mNews = newsResponse.news;
+                        callFragments(mNews);
                     }
                 });
     }
@@ -296,7 +288,7 @@ public class NewsActivity extends BaseActivity {
         private RelativeLayout mErrorGeneral;
         private RelativeLayout mErrorWifi;
 
-        private SwipeRefreshLayout mSwipeRefreshLayout;
+        private SwipeRefreshLayout mRefresh;
 
         private boolean mHighlightNews;
         private int mNewsId;
@@ -340,12 +332,12 @@ public class NewsActivity extends BaseActivity {
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             mRecyclerView.setAdapter(mAdapter);
 
-            mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
-            mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_amber, R.color.primary_red, R.color.primary_green, R.color.primary_indigo);
-            mSwipeRefreshLayout.setOnRefreshListener(() -> ((NewsActivity) getActivity()).parseContent());
+            mRefresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+            mRefresh.setColorSchemeResources(Config.REFRESH_COLORS);
+            mRefresh.setOnRefreshListener(() -> ((NewsActivity) getActivity()).parseContent());
 
             if (savedInstanceState == null) {
-                mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
+                mRefresh.setRefreshing(true);
             }
 
             return view;
@@ -364,9 +356,9 @@ public class NewsActivity extends BaseActivity {
                 //noinspection ResourceType
                 mErrorWifi.setVisibility(errorWifiVisibility);
             } else {
-                mLoadedCounter++;
+                sLoadedCounter++;
 
-                if (mLoadedCounter == 3) {
+                if (sLoadedCounter == 3) {
                     ((NewsActivity) getActivity()).parseContent();
                 }
             }
@@ -412,7 +404,7 @@ public class NewsActivity extends BaseActivity {
             mErrorGeneral.setVisibility(View.GONE);
             mErrorWifi.setVisibility(View.GONE);
 
-            mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+            mRefresh.setRefreshing(false);
         }
 
         void onFailure(String content) {
@@ -424,7 +416,7 @@ public class NewsActivity extends BaseActivity {
                 mErrorGeneral.setVisibility(View.VISIBLE);
             }
 
-            mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+            mRefresh.setRefreshing(false);
         }
     }
 }

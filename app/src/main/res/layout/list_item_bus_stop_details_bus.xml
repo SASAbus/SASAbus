@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif-condensed"
-            android:textColor="@color/primary_red"
+            android:textColor="@color/material_red_500"
             android:textSize="30sp"
             android:visibility="gone"/>
 

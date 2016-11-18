@@ -46,11 +46,10 @@ import butterknife.ButterKnife;
 import io.realm.Realm;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.network.NetUtils;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.SurveyApi;
-import it.sasabz.android.sasabus.realm.user.Survey;
-import it.sasabz.android.sasabus.realm.user.Trip;
+import it.sasabz.android.sasabus.data.network.NetUtils;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.SurveyApi;
+import it.sasabz.android.sasabus.data.network.rest.model.CloudTrip;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.ReportHelper;
 import it.sasabz.android.sasabus.util.Utils;
@@ -91,21 +90,13 @@ public class SurveyActivity extends AppCompatActivity {
         };
 
         Intent intent = getIntent();
-        if (!intent.hasExtra(Config.EXTRA_TRIP_HASH)) {
+        if (!intent.hasExtra(Config.EXTRA_TRIP)) {
             finish();
             return;
         }
 
-        String tripHash = intent.getStringExtra(Config.EXTRA_TRIP_HASH);
-
-        Realm realm = Realm.getDefaultInstance();
-
-        Trip trip = realm.where(Trip.class).equalTo("hash", tripHash).findFirst();
-
-        if (trip == null) {
-            finish();
-            return;
-        }
+        CloudTrip trip = new Gson().fromJson(intent.getStringExtra(Config.EXTRA_TRIP),
+                CloudTrip.class);
 
         TextView ratingSubtitle = (TextView) findViewById(R.id.survey_rating_bar_subtitle);
 
@@ -120,7 +111,7 @@ public class SurveyActivity extends AppCompatActivity {
         DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(1)),
                 ContextCompat.getColor(this, R.color.material_grey_300));
         DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(2)),
-                ContextCompat.getColor(this, R.color.primary_teal));
+                ContextCompat.getColor(this, R.color.material_teal_500));
 
         RxRatingBar.ratingChanges(ratingBar)
                 .subscribe(rating -> {
@@ -167,7 +158,7 @@ public class SurveyActivity extends AppCompatActivity {
         return true;
     }
 
-    private void sendSurvey(Trip trip) {
+    private void sendSurvey(CloudTrip trip) {
         if (!validateEmail(formEmail.getText().toString())) {
             return;
         }
@@ -184,13 +175,6 @@ public class SurveyActivity extends AppCompatActivity {
             LogUtils.e(TAG, "Not sending survey because device is OFFLINE");
 
             surveyError();
-
-            realm.beginTransaction();
-
-            Survey survey = realm.createObject(Survey.class);
-            survey.setData(new Gson().toJson(reportBody));
-
-            realm.commitTransaction();
 
             return;
         }
@@ -215,13 +199,6 @@ public class SurveyActivity extends AppCompatActivity {
                     @Override
                     public void onError(Throwable e) {
                         Utils.logException(e);
-
-                        realm.beginTransaction();
-
-                        Survey survey = realm.createObject(Survey.class);
-                        survey.setData(new Gson().toJson(reportBody));
-
-                        realm.commitTransaction();
 
                         progress.dismiss();
                         surveyError();

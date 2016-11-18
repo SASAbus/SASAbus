@@ -33,7 +33,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.network.rest.model.Badge;
+import it.sasabz.android.sasabus.data.network.rest.model.Badge;
 import it.sasabz.android.sasabus.ui.ecopoints.EcoPointsActivity;
 
 /**

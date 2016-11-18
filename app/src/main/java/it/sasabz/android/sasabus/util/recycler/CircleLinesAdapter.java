@@ -34,8 +34,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.CircleLine;
-import it.sasabz.android.sasabus.model.line.Lines;
+import it.sasabz.android.sasabus.data.model.CircleLine;
+import it.sasabz.android.sasabus.data.model.line.Lines;
 
 /**
  * @author Alex Lardschneider

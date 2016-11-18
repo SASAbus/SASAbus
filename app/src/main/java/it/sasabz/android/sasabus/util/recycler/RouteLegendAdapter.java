@@ -32,7 +32,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.route.RouteLegend;
+import it.sasabz.android.sasabus.data.model.route.RouteLegend;
 
 /**
  * @author Alex Lardschneider

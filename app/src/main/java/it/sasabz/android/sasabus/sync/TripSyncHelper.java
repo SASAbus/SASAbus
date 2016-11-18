@@ -19,25 +19,16 @@ package it.sasabz.android.sasabus.sync;
 
 import android.content.Context;
 
-import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 
-import io.realm.Realm;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.CloudApi;
-import it.sasabz.android.sasabus.network.rest.model.Badge;
-import it.sasabz.android.sasabus.network.rest.model.CloudTrip;
-import it.sasabz.android.sasabus.network.rest.response.CloudResponsePost;
-import it.sasabz.android.sasabus.network.rest.response.TripUploadResponse;
-import it.sasabz.android.sasabus.realm.UserRealmHelper;
-import it.sasabz.android.sasabus.realm.user.Trip;
-import it.sasabz.android.sasabus.realm.user.TripToDelete;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.CloudApi;
+import it.sasabz.android.sasabus.data.network.rest.model.Badge;
+import it.sasabz.android.sasabus.data.network.rest.model.CloudTrip;
+import it.sasabz.android.sasabus.data.network.rest.response.TripUploadResponse;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.NotificationUtils;
+import it.sasabz.android.sasabus.util.Notifications;
 import it.sasabz.android.sasabus.util.Utils;
-import okhttp3.ResponseBody;
-import retrofit2.Response;
 import rx.Observer;
 import rx.Scheduler;
 
@@ -51,45 +42,6 @@ public final class TripSyncHelper {
     private static final String TAG = "TripSyncHelper";
 
     private TripSyncHelper() {
-    }
-
-    /**
-     * Attempts to download the trips defined by {@code trips}.
-     *
-     * @param trips the trips to download. Each trip will be requested from the server by its id.
-     * @return {@code true} if one or more trips have been downloaded, {@code false} otherwise.
-     * @throws IOException if downloading the trips failed.
-     */
-    public static boolean download(List<String> trips) throws IOException {
-        LogUtils.w(TAG, "Downloading " + trips.size() + " trips");
-
-        CloudApi cloudApi = RestClient.ADAPTER.create(CloudApi.class);
-        Response<CloudResponsePost> response = cloudApi.downloadTrips(trips).execute();
-
-        if (response.isSuccessful()) {
-            LogUtils.w(TAG, "Download: " + response.body());
-
-            Collection<CloudTrip> cloudTrips = response.body().trips;
-
-            for (CloudTrip cloudTrip : cloudTrips) {
-                UserRealmHelper.insertTrip(cloudTrip);
-            }
-
-            if (cloudTrips.size() != trips.size()) {
-                LogUtils.e(TAG, "Downloaded " + cloudTrips.size() + " trips, " +
-                        "should have been " + trips.size());
-            } else {
-                LogUtils.w(TAG, "Downloaded " + cloudTrips.size() + " trips");
-            }
-        } else {
-            ResponseBody body = response.errorBody();
-            LogUtils.e(TAG, response.code() + " error while downloading trips: " +
-                    (body != null ? body.string() : null));
-
-            return false;
-        }
-
-        return true;
     }
 
     /**
@@ -122,64 +74,12 @@ public final class TripSyncHelper {
 
                         new Thread(() -> {
                             for (Badge badge : response.badges) {
-                                NotificationUtils.badge(context, badge);
+                                Notifications.badge(context, badge);
                             }
                         }).start();
-
-                        Realm realm = Realm.getDefaultInstance();
-
-                        for (String rejected : response.rejected) {
-                            Trip trip = realm.where(Trip.class).equalTo("hash", rejected)
-                                    .findFirst();
-
-                            if (trip != null) {
-                                realm.beginTransaction();
-                                trip.deleteFromRealm();
-                                realm.commitTransaction();
-                            } else {
-                                LogUtils.e(TAG, "Rejected trip with hash " + rejected +
-                                        " not found in database");
-                            }
-                        }
-
-                        realm.close();
                     }
                 });
 
         return true;
-    }
-
-    /**
-     * Deletes a trip from the cloud. This method it used to remove a trip from the cloud
-     * which could not have been deleted on the cloud when the user deleted if from the app,
-     * usually because of a connection error.
-     *
-     * @param hash the hash of the trip to delete
-     * @return {@code true} if the trip has been deleted, {@code false} otherwise.
-     * @throws IOException if removing the trip failed.
-     */
-    static boolean delete(String hash) throws IOException {
-        CloudApi cloudApi = RestClient.ADAPTER.create(CloudApi.class);
-        Response<Void> response = cloudApi.deleteTrip(hash).execute();
-
-        // Sending the request to delete the trip succeeded so we can remove the entry
-        // from the database.
-        if (response.isSuccessful()) {
-            LogUtils.w(TAG, "Removed trip " + hash);
-
-            Realm realm = Realm.getDefaultInstance();
-
-            realm.beginTransaction();
-            realm.where(TripToDelete.class)
-                    .equalTo("type", TripToDelete.TYPE_TRIP)
-                    .equalTo("hash", hash)
-                    .findFirst().deleteFromRealm();
-            realm.commitTransaction();
-
-            return true;
-        } else {
-            LogUtils.e(TAG, "Error removing trip " + hash);
-            return false;
-        }
     }
 }

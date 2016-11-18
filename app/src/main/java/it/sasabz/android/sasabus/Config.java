@@ -31,30 +31,10 @@ public final class Config {
     private Config() {
     }
 
-    public static final int NOTIFICATION_SURVEY = 1 << 20;
-
-    public static final int NOTIFICATION_TRIP_SUCCESS = 1 << 19;
-
-    public static final int NOTIFICATION_BUS = 1 << 18;
-
-    public static final int NOTIFICATION_TRIP_DEPARTURE = 1 << 17;
-
-    public static final int NOTIFICATION_PLANNED_TRIP_DEPARTURE_AT = 1 << 16;
-
-    public static final int NOTIFICATION_PLANNED_TRIP_DEPARTURE_IN = 1 << 15;
-
-    public static final int SYNC_ALARM_ID = 1 << 14;
-
-    public static final int NOTIFICATION_BADGE = 1 << 13;
-
-    public static final int NOTIFICATION_EVENT = 1 << 10;
-
-    /**
-     * The delay between the line fragments finishing loading and starting the internet data fetch.
-     */
-    public static final int LINE_FRAGMENTS_POST_DELAY = 500;
-
-    public static final int BUS_STOP_FRAGMENTS_POST_DELAY = 500;
+    public static final int[] REFRESH_COLORS = {
+            R.color.material_amber_500, R.color.material_red_500,
+            R.color.material_green_500, R.color.material_indigo_500
+    };
 
     /**
      * Static constant for intent extras which indicate a station id
@@ -77,11 +57,6 @@ public final class Config {
     public static final String EXTRA_VEHICLE = "EXTRA_VEHICLE";
 
     /**
-     * Static constant for intent extras
-     */
-    public static final String EXTRA_DISPLAY_BUS = "EXTRA_DISPLAY_BUS";
-
-    /**
      * Static constant for route departure id used to pass
      * the station id to route results
      */
@@ -101,12 +76,7 @@ public final class Config {
     /**
      * Static constant for a trip hash intent extra
      */
-    public static final String EXTRA_TRIP_HASH = "EXTRA_TRIP_HASH";
-
-    /**
-     * Static constant for a planned trip hash intent extra
-     */
-    public static final String EXTRA_PLANNED_TRIP_HASH = "EXTRA_PLANNED_TRIP_HASH";
+    public static final String EXTRA_TRIP = "EXTRA_TRIP";
 
     /**
      * Static constant for a news notification intent extra
@@ -141,6 +111,8 @@ public final class Config {
      */
     public static final String BUNDLE_ERROR_GENERAL = "BUNDLE_ERROR_GENERAL";
 
+    public static final String EXTRA_TRIP_ID = "com.davale.sasabus.EXTRA_TRIP_ID";
+
     /**
      * Integer constant to define a bus stop detail item which has no delay, so the adapter
      * can hide the delay {@link android.widget.TextView}.
@@ -152,4 +124,9 @@ public final class Config {
      * from the internet.
      */
     public static final int BUS_STOP_DETAILS_OPERATION_RUNNING = 1 << 9;
+
+    public static final String BUNDLE_EMPTY_STATE_VISIBILITY =
+            "com.davale.sasabus.BUNDLE_EMPTY_STATE_VISIBILITY";
+
+    public static final String EXTRA_BUS_STOP_GROUP = "com.davale.sasabus.EXTRA_BUS_STOP_GROUP";
 }

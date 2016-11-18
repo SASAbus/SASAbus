@@ -35,12 +35,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import it.sasabz.android.sasabus.beacon.IBeaconHandler;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.EventsApi;
-import it.sasabz.android.sasabus.network.rest.response.EventBeaconResponse;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.EventsApi;
+import it.sasabz.android.sasabus.data.network.rest.response.EventBeaconResponse;
 import it.sasabz.android.sasabus.ui.ecopoints.event.EventDetailsActivity;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.NotificationUtils;
+import it.sasabz.android.sasabus.util.Notifications;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 import rx.schedulers.Schedulers;
@@ -190,7 +190,7 @@ public final class EventBeaconHandler implements IBeaconHandler {
 
                         int color = Color.parseColor('#' + response.color);
 
-                        NotificationUtils.eventBeacon(mContext, response.event, response.point, color);
+                        Notifications.eventBeacon(mContext, response.event, response.point, color);
 
                         LogUtils.e(TAG, "Sending point broadcast");
 

@@ -82,6 +82,10 @@ public final class DeviceUtils {
         return context.getResources().getDisplayMetrics().heightPixels;
     }
 
+    static boolean hasBle(Context context) {
+        return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);
+    }
+
     public static boolean hasPermission(Context context, String permission) {
         return ActivityCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
     }

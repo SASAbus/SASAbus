@@ -27,7 +27,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,47 +38,30 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.BusStopDetail;
-import it.sasabz.android.sasabus.model.line.Lines;
-import it.sasabz.android.sasabus.network.NetUtils;
-import it.sasabz.android.sasabus.network.rest.Endpoint;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.RealtimeApi;
-import it.sasabz.android.sasabus.network.rest.model.RealtimeBus;
-import it.sasabz.android.sasabus.network.rest.response.RealtimeResponse;
-import it.sasabz.android.sasabus.provider.API;
-import it.sasabz.android.sasabus.provider.ApiUtils;
-import it.sasabz.android.sasabus.provider.PlanData;
-import it.sasabz.android.sasabus.provider.model.Trip;
-import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
-import it.sasabz.android.sasabus.realm.UserRealmHelper;
-import it.sasabz.android.sasabus.realm.busstop.BusStop;
+import it.sasabz.android.sasabus.data.model.BusStopDetail;
+import it.sasabz.android.sasabus.data.network.NetUtils;
+import it.sasabz.android.sasabus.data.network.rest.Endpoint;
+import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
+import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
+import it.sasabz.android.sasabus.data.vdv.PlannedData;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.recycler.BusStopDetailsAdapter;
-import retrofit2.Response;
-import rx.Observable;
-import rx.Observer;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.observers.Observers;
-import rx.schedulers.Schedulers;
 
 /**
  * Displays detailed information about a bus stop in form of a list. This list consists of a top
  * card displaying info about this bus stop like passing lines and municipality.
  * <p>
  * The other cards contain the next departures at this bus stop which are calculated offline
- * by using the integrated {@link API}. If a bus which departs at this bus stop is already in service,
+ * by using the integrated. If a bus which departs at this bus stop is already in service,
  * the delay will be displayed next to the line.
  *
  * @author Alex Lardschneider
@@ -130,7 +112,7 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
         busStop = BusStopRealmHelper.getBusStop(busStopId);
 
         mCollapsingToolbar.setExpandedTitleTextAppearance(R.style.CollapsingToolbar);
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_amber, R.color.primary_red, R.color.primary_green, R.color.primary_indigo);
+        mSwipeRefreshLayout.setColorSchemeResources(Config.REFRESH_COLORS);
         mSwipeRefreshLayout.setOnRefreshListener(() -> parseData(busStop.getFamily(), busStop.getId()));
 
         AnalyticsHelper.sendScreenView(TAG);
@@ -155,7 +137,7 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
             mIsInFavorites = true;
         }
 
-        setFavoritesFabIcon(mIsInFavorites);
+        //setFavoritesFabIcon(mIsInFavorites);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setHasFixedSize(true);
@@ -170,17 +152,17 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
         mAdapter = new BusStopDetailsAdapter(this, busStop.getFamily(), mItems);
         mRecyclerView.setAdapter(mAdapter);
 
-        if (PlanData.planDataExists(this)) {
+        if (PlannedData.planDataExists(this)) {
             parseData(busStop.getFamily(), busStop.getId());
         } else {
-            SettingsUtils.markDataUpdateAvailable(this, true);
+            Settings.markDataUpdateAvailable(this, true);
             mItems.add(new BusStopDetail(0, 0, null, null, null, 0, "data"));
             mAdapter.notifyDataSetChanged();
         }
 
         ImageView background = (ImageView) findViewById(R.id.backdrop);
 
-        int fetchImages = SettingsUtils.getFetchImages(this);
+        int fetchImages = Settings.getFetchImages(this);
         if (fetchImages == 1 || fetchImages == 2 && NetUtils.isWifiConnected(this)) {
             Glide.with(this).load(Endpoint.API + "assets/images/bus_stops/" + busStop.getId())
                     .centerCrop()
@@ -208,14 +190,14 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
                     Snackbar.make(coordinatorLayout, getString(R.string.bus_stop_favorites_remove,
                             busStop.getName(this)), Snackbar.LENGTH_SHORT).show();
 
-                    setFavoritesFabIcon(false);
+                    //setFavoritesFabIcon(false);
                     mIsInFavorites = false;
                 } else {
                     UserRealmHelper.addFavoriteBusStop(busStop.getFamily());
                     Snackbar.make(coordinatorLayout, getString(R.string.bus_stop_favorites_add,
                             busStop.getName(this)), Snackbar.LENGTH_SHORT).show();
 
-                    setFavoritesFabIcon(true);
+                    //setFavoritesFabIcon(true);
                     mIsInFavorites = true;
                 }
                 break;
@@ -229,7 +211,7 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
                 Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
                 vibrator.vibrate(100);
 
-                setResult(BusStopActivity.RESULT_DISPLAY_FAVORITES);
+                //setResult(BusStopActivity.RESULT_DISPLAY_FAVORITES);
                 finish();
 
                 return true;
@@ -256,7 +238,7 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
 
 
     private void parseData(int family, int stationId) {
-        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
+        /*mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
 
         getDepartures(family, stationId)
                 .compose(bindToLifecycle())
@@ -298,10 +280,10 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
                                     }, Utils::logException));
                         }
                     }
-                });
+                });*/
     }
 
-    private void setFavoritesFabIcon(boolean favorite) {
+    /*private void setFavoritesFabIcon(boolean favorite) {
         if (favorite) {
             mFavoritesFab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_star_white_48dp));
         } else {
@@ -322,7 +304,7 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
                 items.add(new BusStopDetail(0, 0, null, null, null, 0, stop + '#' + lines));
 
                 if (!API.todayExists(BusStopDetailActivity.this)) {
-                    SettingsUtils.markDataUpdateAvailable(BusStopDetailActivity.this, true);
+                    Settings.markDataUpdateAvailable(BusStopDetailActivity.this, true);
 
                     items.add(new BusStopDetail(0, 0, null, null, null, 0, "data"));
                     subscriber.onNext(items);
@@ -394,5 +376,5 @@ public class BusStopDetailActivity extends RxAppCompatActivity implements View.O
                 subscriber.onCompleted();
             }
         });
-    }
+    }*/
 }

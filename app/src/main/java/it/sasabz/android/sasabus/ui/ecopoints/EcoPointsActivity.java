@@ -43,9 +43,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.network.auth.AuthHelper;
-import it.sasabz.android.sasabus.network.rest.model.Badge;
-import it.sasabz.android.sasabus.network.rest.model.LeaderboardPlayer;
+import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
+import it.sasabz.android.sasabus.data.network.rest.model.Badge;
+import it.sasabz.android.sasabus.data.network.rest.model.LeaderboardPlayer;
 import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.ui.ecopoints.detail.ProfileActivity;
 import it.sasabz.android.sasabus.ui.ecopoints.event.EventsFragment;
@@ -99,7 +99,7 @@ public class EcoPointsActivity extends BaseActivity {
 
         AnalyticsHelper.sendScreenView(TAG);
 
-        TabsAdapter mAdapter = new TabsAdapter(getSupportFragmentManager(), false);
+        TabsAdapter mAdapter = new TabsAdapter(getSupportFragmentManager());
 
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.white));

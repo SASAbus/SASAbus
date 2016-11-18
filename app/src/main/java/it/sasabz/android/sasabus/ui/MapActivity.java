@@ -70,25 +70,25 @@ import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.data.model.Buses;
+import it.sasabz.android.sasabus.data.model.line.Lines;
+import it.sasabz.android.sasabus.data.network.NetUtils;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.RealtimeApi;
+import it.sasabz.android.sasabus.data.network.rest.api.TrafficLightApi;
+import it.sasabz.android.sasabus.data.network.rest.model.RealtimeBus;
+import it.sasabz.android.sasabus.data.network.rest.response.RealtimeResponse;
+import it.sasabz.android.sasabus.data.network.rest.response.TrafficLightResponse;
+import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.fcm.FcmService;
-import it.sasabz.android.sasabus.model.Buses;
-import it.sasabz.android.sasabus.model.line.Lines;
-import it.sasabz.android.sasabus.network.NetUtils;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.RealtimeApi;
-import it.sasabz.android.sasabus.network.rest.api.TrafficLightApi;
-import it.sasabz.android.sasabus.network.rest.model.RealtimeBus;
-import it.sasabz.android.sasabus.network.rest.response.RealtimeResponse;
-import it.sasabz.android.sasabus.network.rest.response.TrafficLightResponse;
-import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
-import it.sasabz.android.sasabus.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.ui.about.AboutActivity;
-import it.sasabz.android.sasabus.ui.widget.OffsetNestedSwipeRefreshLayout;
+import it.sasabz.android.sasabus.ui.widget.NestedSwipeRefreshLayout;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.AnimUtils;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Preconditions;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.map.RealtimeMapView;
 import rx.Observer;
@@ -137,7 +137,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
      * map will trigger the refresh.
      */
     @BindView(R.id.refresh)
-    OffsetNestedSwipeRefreshLayout mSwipeRefreshLayout;
+    NestedSwipeRefreshLayout mRefresh;
 
     /**
      * Various views for the filter.
@@ -152,7 +152,6 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
      * Snackbars to show updates like missing internet connection or general error
      */
     private Snackbar mInfoSnackbar;
-    private Snackbar mStationSnackbar;
     private Snackbar mErrorSnackbar;
     private Snackbar mInternetSnackbar;
 
@@ -217,7 +216,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
         setContentView(R.layout.activity_map);
 
-        getSupportActionBar().setTitle(R.string.map);
+        getSupportActionBar().setTitle(R.string.title_map);
 
         ButterKnife.bind(this);
 
@@ -234,11 +233,10 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
         setupFilter();
 
-        mAutoRefresh = SettingsUtils.isMapAutoEnabled(this);
-        mRefreshInterval = SettingsUtils.getMapAutoInterval(this);
+        mAutoRefresh = Settings.isMapAutoEnabled(this);
+        mRefreshInterval = Settings.getMapAutoInterval(this);
 
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_amber, R.color.primary_red,
-                R.color.primary_green, R.color.primary_indigo);
+        mRefresh.setColorSchemeResources(Config.REFRESH_COLORS);
 
         if (savedInstanceState != null) {
 
@@ -285,7 +283,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
         showAnnouncementDialogIfNeeded(getIntent());
 
-        if (SettingsUtils.isMapAutoEnabled(this)) {
+        if (Settings.isMapAutoEnabled(this)) {
             parseData();
         }
     }
@@ -294,7 +292,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_refresh:
-                if (!SettingsUtils.isMapAutoEnabled(this)) {
+                if (!Settings.isMapAutoEnabled(this)) {
                     parseData();
                 }
                 return true;
@@ -409,7 +407,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
         mapView.setMarkers(realtimeResponse, mFilter);
 
-        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+        mRefresh.setRefreshing(false);
     }
 
     @Override
@@ -423,7 +421,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
         mIsRefreshing = false;
         showErrorSnackbar(R.string.error_general);
 
-        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+        mRefresh.setRefreshing(false);
 
         if (mAutoRefresh) {
             HANDLER.postDelayed(REFRESH_RUNNABLE, mRefreshInterval);
@@ -446,10 +444,10 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
             }
         } else {
             mIsRefreshing = true;
-            mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
+            mRefresh.setRefreshing(true);
 
             RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
-            realtimeApi.get(locale())
+            realtimeApi.get()
                     .compose(bindToLifecycle())
                     .subscribeOn(Schedulers.newThread())
                     .map(realtimeResponse -> {
@@ -475,7 +473,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
                     .subscribe(this);
 
             TrafficLightApi trafficLightApi = RestClient.ADAPTER.create(TrafficLightApi.class);
-            trafficLightApi.trafficLight(locale(), SettingsUtils.getTrafficLightCity(MapActivity.this))
+            trafficLightApi.trafficLight(Settings.getTrafficLightCity(MapActivity.this))
                     .compose(bindToLifecycle())
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -497,13 +495,6 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
                         }
                     });
         }
-    }
-
-    /**
-     * Updates the marker visibility according to the filter settings
-     */
-    private void updateFilterMarkers() {
-        mapView.filter(mFilter);
     }
 
     /**
@@ -653,10 +644,6 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
         if (mInternetSnackbar != null) {
             mInternetSnackbar.dismiss();
-        }
-
-        if (mStationSnackbar != null) {
-            mStationSnackbar.dismiss();
         }
     }
 
@@ -949,7 +936,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
                 }
             }
 
-            updateFilterMarkers();
+            mapView.filter(mFilter);
         }
     }
 
@@ -958,9 +945,9 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
      * the app for more than 20 times it displays the rating card.
      */
     private void setupRating() {
-        SettingsUtils.incrementStartupCount(this);
+        Settings.incrementStartupCount(this);
 
-        if (SettingsUtils.canAskForRating(this) && SettingsUtils.getStartupCount(this) >= 20) {
+        if (Settings.canAskForRating(this) && Settings.getStartupCount(this) >= 20) {
             FrameLayout rating = (FrameLayout) findViewById(R.id.rating_popup);
             TextView title = (TextView) findViewById(R.id.rating_title);
             Button positive = (Button) findViewById(R.id.rating_positive);
@@ -977,7 +964,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
                 if (mNegativeClick) {
                     AnimUtils.fadeOut(rating, AnimUtils.DURATION_MEDIUM);
 
-                    SettingsUtils.setRatingDisabled(this);
+                    Settings.setRatingDisabled(this);
 
                     startActivity(new Intent(this, AboutActivity.class).putExtra("dialog_report", true));
 
@@ -992,8 +979,8 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
                     AnimUtils.fadeOut(rating, AnimUtils.DURATION_MEDIUM);
 
-                    SettingsUtils.setRatingDisabled(this);
-                    SettingsUtils.markAsRated(this);
+                    Settings.setRatingDisabled(this);
+                    Settings.markAsRated(this);
 
                     AnalyticsHelper.sendEvent("Rating", "Rate click");
                 } else {
@@ -1007,7 +994,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
             negative.setOnClickListener(v -> {
                 if (mPositiveClick || mNegativeClick) {
-                    SettingsUtils.setRatingDisabled(this);
+                    Settings.setRatingDisabled(this);
 
                     AnimUtils.fadeOut(rating, AnimUtils.DURATION_MEDIUM);
 

@@ -60,11 +60,11 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.BusStop;
-import it.sasabz.android.sasabus.model.route.RouteRecent;
-import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
-import it.sasabz.android.sasabus.realm.UserRealmHelper;
-import it.sasabz.android.sasabus.realm.user.RecentRoute;
+import it.sasabz.android.sasabus.data.model.BusStop;
+import it.sasabz.android.sasabus.data.model.route.RouteRecent;
+import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
+import it.sasabz.android.sasabus.data.realm.user.RecentRoute;
 import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.ui.widget.RecyclerItemClickListener;
 import it.sasabz.android.sasabus.ui.widget.RecyclerItemDivider;
@@ -231,7 +231,7 @@ public class RouteActivity extends BaseActivity implements View.OnClickListener,
             context = new ContextThemeWrapper(this, android.R.style.Theme_Holo_Light_Dialog);
         }
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(context, R.style.DatePicker, date, mDateCalendar.get(Calendar.YEAR),
+        DatePickerDialog datePickerDialog = new DatePickerDialog(context, R.style.DatePickerStyle, date, mDateCalendar.get(Calendar.YEAR),
                 mDateCalendar.get(Calendar.MONTH), mDateCalendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.getDatePicker().setMinDate(minDateMillis);
 
@@ -250,7 +250,7 @@ public class RouteActivity extends BaseActivity implements View.OnClickListener,
         };
 
         timePicker.setOnClickListener(v -> {
-            TimePickerDialog timePickerDialog = new TimePickerDialog(this, R.style.DatePicker, time,
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, R.style.DatePickerStyle, time,
                     mTimeCalendar.get(Calendar.HOUR_OF_DAY), mTimeCalendar.get(Calendar.MINUTE), true);
 
             timePickerDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

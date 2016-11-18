@@ -93,8 +93,8 @@
             Android.onLineClick(lineId);
         }
 
-        function onLineCourseClick(vehicle, lineId, busStop) {
-            Android.onLineCourseClick(vehicle, lineId, busStop);
+        function onLineCourseClick(vehicle, busStop, tripId) {
+            Android.onLineCourseClick(vehicle, busStop, tripId);
         }
 
         function reloadMap() {
@@ -164,13 +164,13 @@
                 }
 
                 var html = "<center>" +
-                            "<b>Line " + busData[0] + "</b><br>" +
-                            "Now at " + busData[6] + "<br>" +
-                            "Heading to " + busData[7] + "<br>" +
+                            "<b>" + Android.getLineString(busData[0]) + "</b><br>" +
+                            Android.getNowAtString(busData[6]) + "<br>" +
+                            Android.getHeadingToString(busData[7]) + "<br>" +
                             "<font color=\"" + color + "\">" + Android.getDelayString(parseInt(busData[8], 10)) + "</font><br><br>" +
                             "<b><span class=\"button\" onclick=\"onVehicleClick(" + busData[3] + ");\">" + busDetails + "</span><br><br></b>" +
                             "<b><span class=\"button\" onclick=\"onLineClick(" + busData[2] + ");\">" + lineDetails + "</span><br><br></b>" +
-                            "<b><span class=\"button\" onclick=\"onLineCourseClick(" + busData[3] + ", " + busData[2] + ", " + busData[9] + ");\">" + courseDetails + "</span><br></b>" +
+                            "<b><span class=\"button\" onclick=\"onLineCourseClick(" + busData[3] + ", " + busData[9] + ", " + busData[1] + ");\">" + courseDetails + "</span><br></b>" +
                             "</center>"
 
                 var marker = new DataMarker([busData[4], busData[5]], {

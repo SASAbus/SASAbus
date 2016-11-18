@@ -31,8 +31,8 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.ExecutedTrip;
-import it.sasabz.android.sasabus.provider.ApiUtils;
+import it.sasabz.android.sasabus.data.model.ExecutedTrip;
+import it.sasabz.android.sasabus.data.vdv.Api;
 
 /**
  * @author Alex Lardschneider
@@ -56,7 +56,7 @@ public class BusTripHistoryAdapter extends RecyclerView.Adapter<BusTripHistoryAd
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.mId.setText("#" + mItems.get(position).getTripId());
         holder.mLine.setText(mItems.get(position).getLine());
-        holder.mDateTime.setText(mDate.format(new Date(mItems.get(position).getDate() * 1000)) + ' ' + ApiUtils.getTime(mItems.get(position).getDeparture()));
+        holder.mDateTime.setText(mDate.format(new Date(mItems.get(position).getDate() * 1000)) + ' ' + Api.Time.toTime(mItems.get(position).getDeparture()));
         holder.mFirstStop.setText(mItems.get(position).getFirstStop());
         holder.mLastStop.setText(mItems.get(position).getLastStop());
     }

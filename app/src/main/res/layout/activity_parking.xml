@@ -36,8 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="?attr/actionBarSize">
 
-            <include layout="@layout/include_error_wifi" android:visibility="gone"/>
-            <include layout="@layout/include_error_general" android:visibility="gone"/>
+            <include layout="@layout/include_error_wifi"/>
+            <include layout="@layout/include_error_general"/>
 
         </FrameLayout>
 

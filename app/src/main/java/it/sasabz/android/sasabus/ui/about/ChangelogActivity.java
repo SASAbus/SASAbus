@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.Changelog;
+import it.sasabz.android.sasabus.data.model.Changelog;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.DeviceUtils;
 import it.sasabz.android.sasabus.util.Utils;
@@ -39,7 +39,7 @@ import it.sasabz.android.sasabus.util.recycler.ChangelogAdapter;
 
 /**
  * Shows the changelogs of all the app versions which have been released either as production
- * or beta. The changelogs are saved in {@link it.sasabz.android.sasabus.R.string#changelog} in {@code english},
+ * or beta. The changelogs are saved in {@link it.sasabz.android.sasabus.R.string#title_changelog} in {@code english},
  * {@code german} and {@code italian}.
  *
  * @see it.sasabz.android.sasabus.util.Changelog

@@ -149,6 +149,7 @@ public final class IOUtils {
 
                     FileOutputStream out = new FileOutputStream(unzipFile, false);
                     BufferedOutputStream outputStream = new BufferedOutputStream(out, 8192);
+
                     try {
                         while ((size = zin.read(buffer, 0, 8192)) != -1) {
                             outputStream.write(buffer, 0, size);

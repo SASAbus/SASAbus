@@ -32,15 +32,15 @@ import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.line.Lines;
-import it.sasabz.android.sasabus.network.rest.Endpoint;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.ValidityApi;
-import it.sasabz.android.sasabus.network.rest.response.ValidityResponse;
+import it.sasabz.android.sasabus.data.model.line.Lines;
+import it.sasabz.android.sasabus.data.network.rest.Endpoint;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.ValidityApi;
+import it.sasabz.android.sasabus.data.network.rest.response.ValidityResponse;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.IOUtils;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.recycler.TimetableAdapter;
 import okhttp3.OkHttpClient;
@@ -140,7 +140,7 @@ public class TimetableActivity extends BaseActivity implements Observer<Integer>
     public void onCompleted() {
         LogUtils.e(TAG, "onCompleted()");
 
-        SettingsUtils.setTimetableDate(this);
+        Settings.setTimetableDate(this);
 
         progressBar.dismiss();
         parseData();
@@ -171,7 +171,7 @@ public class TimetableActivity extends BaseActivity implements Observer<Integer>
         Collections.addAll(mItems, lines);
         mAdapter.notifyDataSetChanged();
 
-        String date = SettingsUtils.getTimetableDate(this);
+        String date = Settings.getTimetableDate(this);
 
         ValidityApi validityApi = RestClient.ADAPTER.create(ValidityApi.class);
         validityApi.timetables(date)
@@ -193,7 +193,7 @@ public class TimetableActivity extends BaseActivity implements Observer<Integer>
                     public void onNext(ValidityResponse validityResponse) {
                         if (!validityResponse.isValid) {
                             LogUtils.e(TAG, "Timetable update available");
-                            SettingsUtils.markDataUpdateAvailable(TimetableActivity.this, true);
+                            Settings.markDataUpdateAvailable(TimetableActivity.this, true);
 
                             mSnackbar = Snackbar.make(getMainContent(), R.string.timetable_update_text, Snackbar.LENGTH_INDEFINITE);
                             mSnackbar.setActionTextColor(ContextCompat.getColor(TimetableActivity.this, R.color.snackbar_action_text));
@@ -244,6 +244,7 @@ public class TimetableActivity extends BaseActivity implements Observer<Integer>
         downloadFileObservable()
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.io())
+                .onBackpressureLatest()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this);
     }
@@ -256,30 +257,27 @@ public class TimetableActivity extends BaseActivity implements Observer<Integer>
      * @return a {@link Observable} which handles timetable download.
      */
     private Observable<Integer> downloadFileObservable() {
-        return Observable.create(new Observable.OnSubscribe<Integer>() {
-            @Override
-            public void call(Subscriber<? super Integer> subscriber) {
-                try {
-                    LogUtils.e(TAG, "Starting plan data download");
+        return Observable.create(subscriber -> {
+            try {
+                LogUtils.e(TAG, "Starting plan data download");
 
-                    File file = new File(IOUtils.getTimetablesDir(TimetableActivity.this), FILENAME_OFFLINE);
+                File file = new File(IOUtils.getTimetablesDir(TimetableActivity.this), FILENAME_OFFLINE);
 
-                    if (!file.getParentFile().exists() && !file.getParentFile().mkdirs()) {
-                        subscriber.onError(new Throwable("Cannot create directory file"));
-                        return;
-                    }
-
-                    downloadFile(subscriber, file);
-
-                    IOUtils.unzipFile(FILENAME_OFFLINE, file.getParent());
-
-                    //noinspection ResultOfMethodCallIgnored
-                    file.delete();
-
-                    subscriber.onCompleted();
-                } catch (IOException e) {
-                    subscriber.onError(e);
+                if (!file.getParentFile().exists() && !file.getParentFile().mkdirs()) {
+                    subscriber.onError(new Throwable("Cannot create directory file"));
+                    return;
                 }
+
+                downloadFile(subscriber, file);
+
+                IOUtils.unzipFile(FILENAME_OFFLINE, file.getParent());
+
+                //noinspection ResultOfMethodCallIgnored
+                file.delete();
+
+                subscriber.onCompleted();
+            } catch (IOException e) {
+                subscriber.onError(e);
             }
         });
     }
@@ -291,7 +289,7 @@ public class TimetableActivity extends BaseActivity implements Observer<Integer>
      * cycle about the current progress.
      *
      * @param subscriber the {@link Subscriber} which subscribes to {@link #downloadFileObservable()}
-     * @param file the File where the timetables should be saved in form of a zip.
+     * @param file       the File where the timetables should be saved in form of a zip.
      * @throws IOException if downloading or writing the file fails.
      */
     private void downloadFile(Observer<? super Integer> subscriber, File file) throws IOException {
@@ -310,19 +308,14 @@ public class TimetableActivity extends BaseActivity implements Observer<Integer>
 
         BufferedSink sink = Okio.buffer(Okio.sink(file));
 
-        int BYTE_SIZE = 8192;
-        int progressCounter = 0;
+        long totalBytesRead = 0;
+        long bytesRead;
 
-        long bytesRead = 0;
-        while (source.read(sink.buffer(), BYTE_SIZE) != -1) {
-            bytesRead += BYTE_SIZE;
+        while ((bytesRead = source.read(sink.buffer(), 4096)) != -1) {
+            totalBytesRead += bytesRead;
 
-            if (progressCounter % 8 == 0) {
-                int progress = (int) (bytesRead * 100 / contentLength);
-                subscriber.onNext(progress);
-            }
-
-            progressCounter++;
+            int progress = (int) (totalBytesRead * 100 / contentLength);
+            subscriber.onNext(progress);
         }
 
         subscriber.onNext(Integer.MAX_VALUE);

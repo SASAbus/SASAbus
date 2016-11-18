@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.ui.MapActivity;
+import it.sasabz.android.sasabus.ui.departure.DepartureActivity;
 import it.sasabz.android.sasabus.ui.intro.AppIntro;
 
 /**
@@ -40,7 +41,7 @@ public class IntroData extends AppIntro {
         addSlide(new IntroFragmentDataStandalone());
 
         ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(ContextCompat.getColor(this, R.color.primary_light_blue));
+        colors.add(ContextCompat.getColor(this, R.color.material_blue_500));
 
         setAnimationColors(colors);
     }
@@ -54,7 +55,7 @@ public class IntroData extends AppIntro {
      * Finishes the intro screen and navigates to {@link MapActivity}.
      */
     private void finishIntro() {
-        Intent intent = new Intent(this, MapActivity.class);
+        Intent intent = new Intent(this, DepartureActivity.class);
         startActivity(intent);
 
         finish();

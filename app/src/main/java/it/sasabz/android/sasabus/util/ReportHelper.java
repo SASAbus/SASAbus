@@ -38,8 +38,8 @@ import android.widget.TextView;
 import java.io.File;
 
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.ReportApi;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.ReportApi;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import rx.Observable;

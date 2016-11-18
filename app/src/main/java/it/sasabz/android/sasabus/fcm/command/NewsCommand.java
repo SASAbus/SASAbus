@@ -23,8 +23,8 @@ import android.support.annotation.NonNull;
 import java.util.Map;
 
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.NotificationUtils;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Notifications;
+import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 
 /**
@@ -43,7 +43,7 @@ public class NewsCommand implements FcmCommand {
         LogUtils.w(TAG, "Received GCM news message");
         LogUtils.w(TAG, "Parsing GCM notification command: " + data);
 
-        if (!SettingsUtils.isNewsPushEnabled(context)) {
+        if (!Settings.isNewsPushEnabled(context)) {
             LogUtils.e(TAG, "Ignoring news command as news are disabled in preferences");
             return;
         }
@@ -61,6 +61,6 @@ public class NewsCommand implements FcmCommand {
         LogUtils.e(TAG, "Notification: id: " + id + ", title: " +
                 title + ", message: " + message + ", zone: " + zone);
 
-        NotificationUtils.news(context, id, zone, title, message);
+        Notifications.news(context, id, zone, title, message);
     }
 }

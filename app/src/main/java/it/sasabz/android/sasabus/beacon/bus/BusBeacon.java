@@ -26,10 +26,10 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import it.sasabz.android.sasabus.beacon.Beacon;
-import it.sasabz.android.sasabus.model.BusStop;
-import it.sasabz.android.sasabus.model.JsonSerializable;
+import it.sasabz.android.sasabus.data.model.BusStop;
+import it.sasabz.android.sasabus.data.model.JsonSerializable;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.NotificationUtils;
+import it.sasabz.android.sasabus.util.Notifications;
 
 public class BusBeacon implements Beacon, JsonSerializable {
 
@@ -165,7 +165,7 @@ public class BusBeacon implements Beacon, JsonSerializable {
     void setSuitableForTrip(Context context, boolean suitableForTrip) {
         if (!suitableForTrip) {
             LogUtils.e(TAG, "Beacon is not suitable for a trip, dismissing notification");
-            NotificationUtils.cancelBus(context);
+            Notifications.cancelBus(context);
         }
 
         isSuitableForTrip = suitableForTrip;

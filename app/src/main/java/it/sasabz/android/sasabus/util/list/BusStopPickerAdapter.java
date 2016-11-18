@@ -32,7 +32,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.BusStop;
+import it.sasabz.android.sasabus.data.model.BusStop;
 
 /**
  * @author Alex Lardschneider

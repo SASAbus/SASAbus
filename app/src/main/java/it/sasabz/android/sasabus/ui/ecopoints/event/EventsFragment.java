@@ -38,14 +38,15 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.network.NetUtils;
-import it.sasabz.android.sasabus.network.auth.AuthHelper;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.EventsApi;
-import it.sasabz.android.sasabus.network.rest.model.Event;
-import it.sasabz.android.sasabus.network.rest.model.EventPoint;
-import it.sasabz.android.sasabus.network.rest.response.EventResponse;
+import it.sasabz.android.sasabus.data.network.NetUtils;
+import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.EventsApi;
+import it.sasabz.android.sasabus.data.network.rest.model.Event;
+import it.sasabz.android.sasabus.data.network.rest.model.EventPoint;
+import it.sasabz.android.sasabus.data.network.rest.response.EventResponse;
 import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.recycler.EventsAdapter;
@@ -157,8 +158,7 @@ public class EventsFragment extends RxFragment {
         mAdapter = new EventsAdapter(getActivity(), mItems);
 
         mRefresh.setOnRefreshListener(this::parseData);
-        mRefresh.setColorSchemeResources(R.color.primary_amber,
-                R.color.primary_red, R.color.primary_green, R.color.primary_indigo);
+        mRefresh.setColorSchemeResources(Config.REFRESH_COLORS);
 
         recyclerView.setAdapter(mAdapter);
         recyclerView.setHasFixedSize(true);

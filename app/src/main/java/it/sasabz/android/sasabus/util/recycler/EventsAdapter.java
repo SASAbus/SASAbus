@@ -35,7 +35,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.network.rest.model.Event;
+import it.sasabz.android.sasabus.data.network.rest.model.Event;
 import it.sasabz.android.sasabus.ui.ecopoints.event.EventDetailsActivity;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {

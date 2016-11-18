@@ -59,6 +59,6 @@
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:src="@drawable/ic_search_white_48dp"
-        android:tint="@color/default_icon_color2"/>
+        android:tint="@color/default_icon_color_inverted"/>
 
 </RelativeLayout>

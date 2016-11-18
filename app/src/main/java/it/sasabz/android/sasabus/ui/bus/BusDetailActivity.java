@@ -47,10 +47,10 @@ import com.bumptech.glide.Glide;
 
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.Bus;
-import it.sasabz.android.sasabus.model.Buses;
-import it.sasabz.android.sasabus.model.Vehicle;
-import it.sasabz.android.sasabus.network.rest.api.ReportApi;
+import it.sasabz.android.sasabus.data.model.Bus;
+import it.sasabz.android.sasabus.data.model.Buses;
+import it.sasabz.android.sasabus.data.model.Vehicle;
+import it.sasabz.android.sasabus.data.network.rest.api.ReportApi;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.ReportHelper;
 import it.sasabz.android.sasabus.util.Utils;
@@ -145,7 +145,7 @@ public class BusDetailActivity extends AppCompatActivity {
         scrim.
         */
         CollapsingToolbarLayout mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        mCollapsingToolbar.setTitle(getString(R.string.bus_details));
+        mCollapsingToolbar.setTitle(getString(R.string.title_bus_details));
 
         CoordinatorLayout mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_content);
 

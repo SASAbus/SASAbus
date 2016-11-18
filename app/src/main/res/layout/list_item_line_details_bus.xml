@@ -80,7 +80,7 @@
             android:layout_gravity="center"
             android:layout_weight="3"
             android:fontFamily="sans-serif-condensed"
-            android:textColor="@color/primary_red"
+            android:textColor="@color/material_red_500"
             android:textSize="30sp"/>
 
         <RelativeLayout

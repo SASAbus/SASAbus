@@ -45,14 +45,14 @@ import com.bumptech.glide.Glide;
 
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.ReportApi;
-import it.sasabz.android.sasabus.network.rest.api.TrafficLightApi;
-import it.sasabz.android.sasabus.network.rest.response.TrafficLightResponse;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.ReportApi;
+import it.sasabz.android.sasabus.data.network.rest.api.TrafficLightApi;
+import it.sasabz.android.sasabus.data.network.rest.response.TrafficLightResponse;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.CustomTabsHelper;
 import it.sasabz.android.sasabus.util.ReportHelper;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -148,7 +148,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
         statusCity = (TextView) findViewById(R.id.about_traffic_light_city);
 
         statusCity.setText(String.format(getResources().getString(R.string.about_traffic_light_city),
-                SettingsUtils.getTrafficLightCity(AboutActivity.this).equals("bz")
+                Settings.getTrafficLightCity(AboutActivity.this).equals("bz")
                         ? getResources().getString(R.string.bolzano)
                         : getResources().getString(R.string.merano)));
 
@@ -190,8 +190,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
         status.setText(getResources().getString(R.string.about_traffic_light_loading));
 
         TrafficLightApi api = RestClient.ADAPTER.create(TrafficLightApi.class);
-        api.trafficLight(Utils.locale(this),
-                SettingsUtils.getTrafficLightCity(AboutActivity.this).toLowerCase())
+        api.trafficLight(Settings.getTrafficLightCity(AboutActivity.this).toLowerCase())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<TrafficLightResponse>() {
@@ -228,8 +227,8 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 mCustomTabsHelper.launchUrl(Uri.parse(URL_PRIVACY));
                 break;
             case R.id.about_fifth:
-                String city = SettingsUtils.getTrafficLightCity(AboutActivity.this);
-                SettingsUtils.setTrafficLightCity(AboutActivity.this, city.equals("bz") ? "me" : "bz");
+                String city = Settings.getTrafficLightCity(AboutActivity.this);
+                Settings.setTrafficLightCity(AboutActivity.this, city.equals("bz") ? "me" : "bz");
 
                 statusCity.setText(String.format(getResources().getString(R.string.about_traffic_light_city), city.equals("bz")
                                 ? getResources().getString(R.string.merano)

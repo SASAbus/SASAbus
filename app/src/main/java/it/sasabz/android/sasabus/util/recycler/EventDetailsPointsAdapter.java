@@ -31,7 +31,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.network.rest.model.EventPoint;
+import it.sasabz.android.sasabus.data.network.rest.model.EventPoint;
 
 public class EventDetailsPointsAdapter extends RecyclerView.Adapter<EventDetailsPointsAdapter.ViewHolder> {
 
@@ -56,7 +56,7 @@ public class EventDetailsPointsAdapter extends RecyclerView.Adapter<EventDetails
         EventPoint point = mItems.get(position);
 
         if (point.scanned) {
-            holder.check.setColorFilter(ContextCompat.getColor(mContext, R.color.primary_green));
+            holder.check.setColorFilter(ContextCompat.getColor(mContext, R.color.material_green_500));
         } else {
             holder.check.setColorFilter(ContextCompat.getColor(mContext, R.color.black_400));
         }

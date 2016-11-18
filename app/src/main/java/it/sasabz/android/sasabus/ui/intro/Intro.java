@@ -31,15 +31,16 @@ import java.util.ArrayList;
 
 import it.sasabz.android.sasabus.AppApplication;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.network.NetUtils;
+import it.sasabz.android.sasabus.data.network.NetUtils;
 import it.sasabz.android.sasabus.sync.SyncHelper;
 import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.ui.MapActivity;
+import it.sasabz.android.sasabus.ui.departure.DepartureActivity;
 import it.sasabz.android.sasabus.ui.intro.data.IntroFragmentData;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.CustomTabsHelper;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Settings;
 
 /**
  * The actual intro activity where all the intro fragments are attached. Handles permission
@@ -68,10 +69,10 @@ public class Intro extends AppIntro {
         }
 
         ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(ContextCompat.getColor(this, R.color.primary_light_blue));
+        colors.add(ContextCompat.getColor(this, R.color.material_blue_500));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            colors.add(ContextCompat.getColor(this, R.color.primary_light_green));
+            colors.add(ContextCompat.getColor(this, R.color.material_light_green_500));
         }
 
         setAnimationColors(colors);
@@ -92,7 +93,7 @@ public class Intro extends AppIntro {
         if (requestCode == PERMISSIONS_ACCESS_LOCATION && grantResults.length > 0 &&
                 grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-            ((AppApplication) getApplication()).startBeacon();
+            ((AppApplication) getApplication()).initBeacons();
 
             finishIntro();
 
@@ -142,9 +143,9 @@ public class Intro extends AppIntro {
     private void finishIntro() {
         new SyncHelper(this).performSyncAsync();
 
-        SettingsUtils.markIntroAsShown(this);
+        Settings.markIntroAsShown(this);
 
-        Intent intent = new Intent(this, MapActivity.class);
+        Intent intent = new Intent(this, DepartureActivity.class);
         intent.setAction(BaseActivity.ACTION_NO_CHANGELOG);
         startActivity(intent);
 

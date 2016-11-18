@@ -17,7 +17,6 @@
 
 package it.sasabz.android.sasabus.util.recycler;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
@@ -35,10 +34,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.realm.UserRealmHelper;
-import it.sasabz.android.sasabus.realm.busstop.BusStop;
+import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
+import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.ui.BaseActivity;
-import it.sasabz.android.sasabus.ui.busstop.BusStopActivity;
 import it.sasabz.android.sasabus.ui.busstop.BusStopDetailActivity;
 
 /**
@@ -135,7 +133,7 @@ public class BusStopListAdapter extends RecyclerView.Adapter<BusStopListAdapter.
 
             Intent intent = new Intent(v.getContext(), BusStopDetailActivity.class);
             intent.putExtra(Config.EXTRA_STATION_ID, mItems.get(position).getId());
-            ((Activity) mContext).startActivityForResult(intent, BusStopActivity.INTENT_DISPLAY_FAVORITES);
+            //((Activity) mContext).startActivityForResult(intent, BusStopActivity.INTENT_DISPLAY_FAVORITES);
         }
 
         @Override
@@ -152,7 +150,7 @@ public class BusStopListAdapter extends RecyclerView.Adapter<BusStopListAdapter.
                         station.getName(mContext)), Snackbar.LENGTH_SHORT).show();
             }
 
-            ((BusStopActivity) mContext).invalidateFavorites();
+            //((BusStopActivity) mContext).invalidateFavorites();
 
             Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(100);

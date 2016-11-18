@@ -29,11 +29,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.WorkerThread;
 
-import com.google.gson.Gson;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -41,33 +38,24 @@ import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
-import it.sasabz.android.sasabus.Config;
-import it.sasabz.android.sasabus.network.NetUtils;
-import it.sasabz.android.sasabus.network.auth.AuthHelper;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.BeaconsApi;
-import it.sasabz.android.sasabus.network.rest.api.CloudApi;
-import it.sasabz.android.sasabus.network.rest.api.EcoPointsApi;
-import it.sasabz.android.sasabus.network.rest.api.SurveyApi;
-import it.sasabz.android.sasabus.network.rest.api.ValidityApi;
-import it.sasabz.android.sasabus.network.rest.model.CloudTrip;
-import it.sasabz.android.sasabus.network.rest.model.ScannedBeacon;
-import it.sasabz.android.sasabus.network.rest.response.CloudResponseGet;
-import it.sasabz.android.sasabus.network.rest.response.ValidityResponse;
-import it.sasabz.android.sasabus.provider.PlanData;
-import it.sasabz.android.sasabus.realm.user.Beacon;
-import it.sasabz.android.sasabus.realm.user.EarnedBadge;
-import it.sasabz.android.sasabus.realm.user.Survey;
-import it.sasabz.android.sasabus.realm.user.Trip;
-import it.sasabz.android.sasabus.realm.user.TripToDelete;
-import it.sasabz.android.sasabus.util.LogUtils;
+import it.sasabz.android.sasabus.data.network.NetUtils;
+import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.BeaconsApi;
+import it.sasabz.android.sasabus.data.network.rest.api.EcoPointsApi;
+import it.sasabz.android.sasabus.data.network.rest.api.ValidityApi;
+import it.sasabz.android.sasabus.data.network.rest.model.ScannedBeacon;
+import it.sasabz.android.sasabus.data.network.rest.response.ValidityResponse;
+import it.sasabz.android.sasabus.data.realm.user.Beacon;
+import it.sasabz.android.sasabus.data.realm.user.EarnedBadge;
+import it.sasabz.android.sasabus.data.vdv.PlannedData;
 import it.sasabz.android.sasabus.util.Preconditions;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import rx.Observer;
-import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * A helper class for dealing with data synchronization. All operations occur on the
@@ -81,7 +69,7 @@ public class SyncHelper {
 
     private static final int SYNC_INTERVAL_DAYS = 1;
 
-    private static final String TAG = "SyncHelper";
+    private static final int SYNC_ALARM_ID = 1 << 17;
 
     private final Context mContext;
     private final JobService mService;
@@ -123,17 +111,17 @@ public class SyncHelper {
      */
     @WorkerThread
     boolean performSync() {
-        LogUtils.e(TAG, "Starting sync");
+        Timber.e("Starting sync");
 
         realm = Realm.getDefaultInstance();
 
         if (!NetUtils.isOnline(mContext)) {
-            LogUtils.e(TAG, "Not attempting remote sync because device is OFFLINE");
+            Timber.e("Not attempting remote sync because device is OFFLINE");
             return false;
         }
 
         if (!NetUtils.isOnline(mContext)) {
-            LogUtils.e(TAG, "Not attempting remote sync because device is OFFLINE");
+            Timber.e("Not attempting remote sync because device is OFFLINE");
             return false;
         }
 
@@ -141,8 +129,6 @@ public class SyncHelper {
 
         // Sync consists of 1 or more of these operations. We try them one by one and tolerate
         // individual failures on each.
-        final int OP_TRIP_DATA_SYNC = 0;
-        final int OP_SURVEY_SYNC = 3;
         final int OP_BEACON_SYNC = 4;
         final int OP_BADGE_SYNC = 5;
         final int OP_PLAN_DATA_SYNC = 2;
@@ -150,14 +136,10 @@ public class SyncHelper {
         // Only sync trips and badges if the user is logged in, as that requires the
         // authentication header with the JWT.
         int[] opsToPerform = AuthHelper.isLoggedIn() ? new int[]{
-                OP_TRIP_DATA_SYNC,
-                OP_SURVEY_SYNC,
-
                 OP_BADGE_SYNC,
                 OP_PLAN_DATA_SYNC,
                 OP_BEACON_SYNC
         } : new int[]{
-                OP_SURVEY_SYNC,
                 OP_PLAN_DATA_SYNC,
                 OP_BEACON_SYNC
         };
@@ -166,12 +148,6 @@ public class SyncHelper {
         for (int op : opsToPerform) {
             try {
                 switch (op) {
-                    case OP_TRIP_DATA_SYNC:
-                        dataChanged |= doTripSync();
-                        break;
-                    case OP_SURVEY_SYNC:
-                        dataChanged |= doSurveySync();
-                        break;
                     case OP_PLAN_DATA_SYNC:
                         dataChanged |= doPlanDataSync();
                         break;
@@ -187,11 +163,11 @@ public class SyncHelper {
             } catch (Throwable throwable) {
                 Utils.logException(throwable);
 
-                LogUtils.e(TAG, "Error performing remote sync");
+                Timber.e("Error performing remote sync");
             }
         }
 
-        LogUtils.e(TAG, "End of sync (" + (dataChanged ? "data changed" : "no data changed") + ')');
+        Timber.e("End of sync (%s)", (dataChanged ? "data changed" : "no data changed"));
 
         realm.close();
 
@@ -203,112 +179,6 @@ public class SyncHelper {
     }
 
     /**
-     * Syncs trips to the server. The sync process is split into two parts: upload and
-     * download. All the trips which are not on the server will be uploaded.
-     * All the trips which are on the server but not saved locally will be downloaded.
-     *
-     * @return {@code true} if at least one trip was downloaded or uploaded, {@code false}
-     * otherwise.
-     * @throws IOException if contacting the server failed.
-     */
-    private boolean doTripSync() throws Exception {
-        LogUtils.e(TAG, "Starting trip sync");
-
-        RealmResults<Trip> trips = realm.where(Trip.class).findAll();
-
-        CloudApi cloudApi = RestClient.ADAPTER.create(CloudApi.class);
-        Response<CloudResponseGet> response = cloudApi.compareTrips().execute();
-
-        boolean dataChanged = false;
-
-        if (response.body() != null) {
-            List<Trip> serverMissing = new ArrayList<>(trips);
-            List<String> clientMissing = new ArrayList<>();
-            List<String> onServer = response.body().hashes;
-
-            for (String uuid : onServer) {
-                if (!containsTrip(trips, uuid)) {
-                    clientMissing.add(uuid);
-                }
-            }
-
-            for (int i = serverMissing.size() - 1; i >= 0; i--) {
-                Trip trip = serverMissing.get(i);
-                if (onServer.contains(trip.getHash())) {
-                    serverMissing.remove(trip);
-                }
-            }
-
-            LogUtils.d(TAG, "clientMissing: " + Arrays.toString(clientMissing.toArray()));
-            LogUtils.d(TAG, "serverMissing: " + Arrays.toString(serverMissing.toArray()));
-
-            if (!clientMissing.isEmpty()) {
-                dataChanged = TripSyncHelper.download(clientMissing);
-            }
-
-            if (!serverMissing.isEmpty()) {
-                dataChanged |= TripSyncHelper.upload(mContext, tripToCloudTrip(serverMissing),
-                        Schedulers.immediate());
-            }
-
-            LogUtils.e(TAG, "Finished trip sync");
-        } else {
-            LogUtils.e(TAG, "Error downloading trips: " + response.errorBody().string());
-        }
-
-        // Delete trips which might not have been deleted on the server
-        RealmResults<TripToDelete> tripsToDelete = realm.where(TripToDelete.class)
-                .equalTo("type", TripToDelete.TYPE_TRIP).findAll();
-
-        for (TripToDelete tripToDelete : tripsToDelete) {
-            dataChanged |= TripSyncHelper.delete(tripToDelete.getHash());
-        }
-
-        return dataChanged;
-    }
-
-    /**
-     * Uploads all batched surveys, those being surveys which could not be sent at the time
-     * the user took the surveys.
-     *
-     * @return {@code true} if there were one or more surveys to upload, {@code false} otherwise.
-     */
-    private boolean doSurveySync() {
-        LogUtils.e(TAG, "Starting survey sync");
-
-        RealmResults<Survey> surveys = realm.where(Survey.class).findAll();
-
-        if (surveys.isEmpty()) {
-            LogUtils.e(TAG, "No surveys to upload");
-            return false;
-        }
-
-        Gson gson = new Gson();
-
-        LogUtils.e(TAG, "Uploading " + surveys.size() + " surveys");
-
-        boolean[] dataChanged = {false};
-        int[] surveyCount = {0};
-
-        for (Survey survey : surveys) {
-            SurveyApi surveyApi = RestClient.ADAPTER.create(SurveyApi.class);
-            surveyApi.send(gson.fromJson(survey.getData(), SurveyApi.ReportBody.class))
-                    .subscribe(aVoid -> {
-                        realm.beginTransaction();
-                        survey.deleteFromRealm();
-                        realm.commitTransaction();
-
-                        dataChanged[0] |= true;
-                        surveyCount[0]++;
-                    });
-        }
-
-        LogUtils.e(TAG, "Uploaded " + surveyCount[0] + " surveys");
-
-        return dataChanged[0];
-    }
-
-    /**
      * Syncs all the tracked beacons. If a user is near a bus or bus stop beacon, it automatically
      * gets inserted into the database. On app sync, the beacon data like UUID, major and minor
      * get sent to the server which then can be used to perform statistics.
@@ -316,18 +186,18 @@ public class SyncHelper {
      * @return {@code true} if one or more beacons have been uploaded, {@code false} otherwise.
      */
     private boolean doBeaconSync() {
-        LogUtils.e(TAG, "Starting beacon sync");
+        Timber.e("Starting beacon sync");
 
         RealmResults<Beacon> result = realm.where(Beacon.class).findAll();
 
         if (result.isEmpty()) {
-            LogUtils.e(TAG, "No beacons to upload");
+            Timber.e("No beacons to upload");
             return false;
         }
 
         int size = result.size();
 
-        LogUtils.e(TAG, "Uploading " + size + " beacons");
+        Timber.e("Uploading %s beacons", size);
 
         boolean[] dataChanged = {false};
 
@@ -353,7 +223,7 @@ public class SyncHelper {
                     dataChanged[0] |= true;
                 });
 
-        LogUtils.e(TAG, "Uploaded " + size + " beacons");
+        Timber.e("Uploaded %s beacons", size);
 
         return dataChanged[0];
     }
@@ -364,19 +234,19 @@ public class SyncHelper {
      * @return {@code true} if one or more badges have been sent, {@code false} otherwise.
      */
     private boolean doBadgeSync() {
-        LogUtils.e(TAG, "Starting badge sync");
+        Timber.e("Starting badge sync");
 
         RealmResults<EarnedBadge> result = realm.where(EarnedBadge.class)
                 .equalTo("sent", false).findAll();
 
         if (result.isEmpty()) {
-            LogUtils.e(TAG, "No badges to upload");
+            Timber.e("No badges to upload");
             return false;
         }
 
         int size = result.size();
 
-        LogUtils.e(TAG, "Uploading " + size + " badges");
+        Timber.e("Uploading %s badges", size);
 
         boolean[] dataChanged = {false};
 
@@ -392,7 +262,7 @@ public class SyncHelper {
                     });
         }
 
-        LogUtils.e(TAG, "Uploaded " + size + " badges");
+        Timber.e("Uploaded %s badges", size);
 
         return dataChanged[0];
     }
@@ -406,43 +276,43 @@ public class SyncHelper {
      * @throws IOException if there is an error checking for a plan data update.
      */
     private boolean doPlanDataSync() throws IOException {
-        LogUtils.e(TAG, "Starting plan data sync");
+        Timber.e("Starting plan data sync");
 
         boolean shouldDownloadData = false;
 
         // Check if plan data exists. If not, we should immediately download it, else check if an
         // update is available and download it.
-        if (!PlanData.planDataExists(mContext)) {
-            LogUtils.e(TAG, "Plan data does not exist");
+        if (!PlannedData.planDataExists(mContext)) {
+            Timber.e("Plan data does not exist");
 
             shouldDownloadData = true;
         } else {
-            String date = SettingsUtils.getDataDate(mContext);
+            String date = Settings.getDataDate(mContext);
 
             ValidityApi validityApi = RestClient.ADAPTER.create(ValidityApi.class);
             Response<ValidityResponse> response = validityApi.data(date).execute();
 
             if (response.body() != null) {
                 if (!response.body().isValid) {
-                    LogUtils.e(TAG, "Plan data update available");
+                    Timber.e("Plan data update available");
 
-                    SettingsUtils.markDataUpdateAvailable(mContext, true);
+                    Settings.markDataUpdateAvailable(mContext, true);
 
                     shouldDownloadData = true;
                 } else {
-                    LogUtils.e(TAG, "No plan data update available");
+                    Timber.e("No plan data update available");
                 }
             } else {
                 ResponseBody body = response.errorBody();
-                LogUtils.e(TAG, "Error while checking for plan data update: " + body.string());
+                Timber.e("Error while checking for plan data update: %s", body.string());
             }
         }
 
         // Plan data does not exist or an update is available, download it now.
         if (shouldDownloadData) {
-            LogUtils.e(TAG, "Downloading plan data");
+            Timber.e("Downloading plan data");
 
-            PlanData.download(mContext)
+            PlannedData.download(mContext)
                     .subscribe(new Observer<Void>() {
                         @Override
                         public void onCompleted() {
@@ -456,7 +326,7 @@ public class SyncHelper {
 
                         @Override
                         public void onNext(Void aVoid) {
-                            LogUtils.e(TAG, "Downloaded plan data");
+                            Timber.e("Downloaded plan data");
                         }
                     });
         }
@@ -491,14 +361,14 @@ public class SyncHelper {
 
             int code = jobScheduler.schedule(builder.build());
             if (code <= 0) {
-                LogUtils.e(TAG, "Could not scheduled job: " + code);
+                Timber.e("Could not scheduled job: %s", code);
             }
         } else {
             AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
             Intent intent = new Intent(context, SyncHelper.class);
 
-            PendingIntent pendingIntent = PendingIntent.getService(context, Config.SYNC_ALARM_ID,
+            PendingIntent pendingIntent = PendingIntent.getService(context, SYNC_ALARM_ID,
                     intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
             Calendar calendar = Calendar.getInstance();
@@ -509,39 +379,7 @@ public class SyncHelper {
             manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                     TimeUnit.DAYS.toMillis(SYNC_INTERVAL_DAYS), pendingIntent);
 
-            LogUtils.w(TAG, "Sync will run at " + calendar.getTime());
+            Timber.w("Sync will run at %s", calendar.getTime());
         }
-    }
-
-    /**
-     * Check if a given {@link List} contains a {@link Trip} with a given {@link Trip#hash}.
-     *
-     * @param trips all the trips
-     * @param hash  the hash to search for
-     * @return a boolean value indicating whether the list containsTrip the uuid.
-     */
-    private static boolean containsTrip(Iterable<Trip> trips, String hash) {
-        for (Trip trip : trips) {
-            if (trip.getHash().equals(hash)) return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Converts a {@link Iterable} containing {@link Trip trips} to a {@link Iterable} containing
-     * {@link CloudTrip cloud trips}.
-     *
-     * @param trips the trips to convert.
-     * @return a {@link Iterable} containing the converted trips.
-     */
-    private List<CloudTrip> tripToCloudTrip(Iterable<Trip> trips) {
-        List<CloudTrip> list = new ArrayList<>();
-
-        for (Trip trip : trips) {
-            list.add(new CloudTrip(trip));
-        }
-
-        return list;
     }
 }

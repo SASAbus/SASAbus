@@ -21,7 +21,7 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.beacon.Beacon;
 import it.sasabz.android.sasabus.beacon.busstop.BusStopBeacon;
 
-public class VeryBeginningBadge extends Badge {
+public class VeryBeginningBadge extends InAppBadge {
 
     public VeryBeginningBadge() {
         super(110, R.string.badge_the_very_beginning_title, R.string.badge_the_very_beginning_subtitle,

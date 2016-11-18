@@ -18,7 +18,6 @@
 package it.sasabz.android.sasabus.util;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
@@ -37,11 +36,11 @@ import java.util.Locale;
 
 import javax.net.ssl.SSLException;
 
-import io.realm.Realm;
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
-import it.sasabz.android.sasabus.realm.UserRealmHelper;
-import it.sasabz.android.sasabus.realm.user.Trip;
+import it.sasabz.android.sasabus.data.network.rest.model.CloudTrip;
+import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
+import timber.log.Timber;
 
 /**
  * Utility class which holds various methods to help with things like logging exceptions.
@@ -68,7 +67,7 @@ public final class Utils {
 
         Locale locale = Locale.getDefault();
 
-        String language = SettingsUtils.getLanguage(context).toLowerCase();
+        String language = Settings.getLanguage(context).toLowerCase();
         if (!language.equals("system")) {
             locale = new Locale(language);
         }
@@ -97,11 +96,28 @@ public final class Utils {
      * @param context Context to access device info and preferences.
      * @return a boolean value indicating whether the beacon handler can be started.
      */
-    public static boolean isBeaconEnabled(Context context) {
-        return SettingsUtils.isBeaconEnabled(context) &&
-                DeviceUtils.isBluetoothEnabled() &&
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2 &&
-                context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);
+    public static boolean areBeaconsEnabled(Context context) {
+        if (!Settings.isBeaconEnabled(context)) {
+            Timber.e("Beacons are disabled via preferences");
+            return false;
+        }
+
+        if (!DeviceUtils.isBluetoothEnabled()) {
+            Timber.e("Bluetooth is disabled");
+            return false;
+        }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            Timber.e("Device does not support beacons, SDK_INT < JELLY_BEAN_MR2");
+            return false;
+        }
+
+        if (!DeviceUtils.hasBle(context)) {
+            Timber.e("Device does not support BLE");
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -166,35 +182,35 @@ public final class Utils {
      */
     public static void throwTripError(Context context, String text) {
         if (BuildConfig.DEBUG) {
-            NotificationUtils.error(context, new IllegalTripException(text));
+            Notifications.error(context, new IllegalTripException(text));
             LogUtils.e("Utils", "Trip error: " + text);
         }
     }
 
-    public static boolean insertTripIfValid(Context context, BusBeacon beacon) {
+    public static CloudTrip insertTripIfValid(Context context, BusBeacon beacon) {
         if (beacon.destination == 0) {
             throwTripError(context, "Trip " + beacon.id + " invalid -> getStopStation == 0");
-            return false;
+            return null;
         }
 
         if (beacon.origin == beacon.destination &&
                 beacon.lastSeen - beacon.getStartDate().getTime() < 600000) {
             throwTripError(context, "Trip " + beacon.id + " invalid -> getOrigin == getStopStation: " +
                     beacon.origin + ", " + beacon.destination);
-            return false;
-        }
-
-        Realm realm = Realm.getDefaultInstance();
-
-        Trip trip = realm.where(Trip.class).equalTo("hash", beacon.getHash()).findFirst();
-
-        //noinspection SimplifiableIfStatement
-        if (trip != null) {
-            // Trip is already in db.
-            // We do not care about this error so do not show an error notification
-            return false;
+            return null;
         }
 
         return UserRealmHelper.insertTrip(context, beacon);
+    }
+
+    public static boolean isBrokenSamsungDevice() {
+        return Build.MANUFACTURER.equalsIgnoreCase("samsung")
+                && isBetweenAndroidVersions(
+                Build.VERSION_CODES.LOLLIPOP,
+                Build.VERSION_CODES.LOLLIPOP_MR1);
+    }
+
+    private static boolean isBetweenAndroidVersions(int min, int max) {
+        return Build.VERSION.SDK_INT >= min && Build.VERSION.SDK_INT <= max;
     }
 }

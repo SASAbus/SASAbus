@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="2dp"
-                    android:textColor="@color/primary_green"
+                    android:textColor="@color/material_green_500"
                     android:textSize="14sp"/>
 
                 <LinearLayout

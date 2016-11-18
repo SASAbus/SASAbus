@@ -17,6 +17,7 @@
 
 package it.sasabz.android.sasabus.util;
 
+import android.os.Looper;
 import android.support.annotation.Nullable;
 
 /**
@@ -44,5 +45,12 @@ public final class Preconditions {
             throw new NullPointerException(String.valueOf(errorMessage));
         }
         return reference;
+    }
+
+    public static void checkNotUiThread() {
+        //noinspection ObjectEquality
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            throw new IllegalStateException("Cannot be executed on UI thread");
+        }
     }
 }

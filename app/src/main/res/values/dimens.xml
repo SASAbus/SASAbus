@@ -49,6 +49,16 @@
 
     <dimen name="intro_data_download_indicator_margin_bottom">72dp</dimen>
 
+    <dimen name="empty_state_margin">16dp</dimen>
+    <dimen name="empty_state_negative_margin_top">-56dp</dimen>
+
+    <dimen name="empty_state_circle_outer">164dp</dimen>
+    <dimen name="empty_state_circle_inner">72dp</dimen>
+    <dimen name="empty_state_title_top_margin">24dp</dimen>
+    <dimen name="empty_state_subtitle_top_margin">4dp</dimen>
+
+    <dimen name="line_course_big_circle_padding">4dp</dimen>
+
     <dimen name="keyline_1">16dp</dimen>
     <dimen name="keyline_2">72dp</dimen>
     <dimen name="keyline_2_session_detail">@dimen/keyline_2</dimen>

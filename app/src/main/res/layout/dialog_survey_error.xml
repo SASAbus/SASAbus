@@ -49,13 +49,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="48dp"
         android:layout_marginLeft="48dp"
         android:layout_marginRight="48dp"
+        android:layout_marginStart="48dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="@string/survey_dialog_error_sub"
         android:textColor="@color/text_secondary"
-        android:textSize="14sp" android:layout_marginStart="48dp" android:layout_marginEnd="48dp"/>
+        android:textSize="14sp"/>
 
     <FrameLayout
         style="?attr/buttonBarStyle"
@@ -69,9 +71,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="12dp"
             android:layout_marginRight="12dp"
             android:text="@android:string/ok"
-            android:textColor="#EF5350" android:layout_marginEnd="12dp"/>
+            android:textColor="#EF5350"/>
 
     </FrameLayout>
 

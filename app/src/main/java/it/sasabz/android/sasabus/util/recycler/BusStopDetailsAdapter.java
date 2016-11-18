@@ -37,10 +37,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.model.BusStopDetail;
-import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.data.model.BusStopDetail;
+import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.ui.line.LineCourseActivity;
-import it.sasabz.android.sasabus.ui.line.LineDetailActivity;
 import it.sasabz.android.sasabus.util.Utils;
 
 /**
@@ -136,11 +135,11 @@ public class BusStopDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
 
             if (item.getDelay() > 3) {
-                bus.delay.setTextColor(ContextCompat.getColor(mContext, R.color.primary_red));
+                bus.delay.setTextColor(ContextCompat.getColor(mContext, R.color.material_red_500));
             } else if (item.getDelay() > 0) {
-                bus.delay.setTextColor(ContextCompat.getColor(mContext, R.color.primary_amber_dark));
+                bus.delay.setTextColor(ContextCompat.getColor(mContext, R.color.material_amber_700));
             } else {
-                bus.delay.setTextColor(ContextCompat.getColor(mContext, R.color.primary_green));
+                bus.delay.setTextColor(ContextCompat.getColor(mContext, R.color.material_green_500));
             }
 
             if (item.getDelay() == Config.BUS_STOP_DETAILS_NO_DELAY) {

@@ -40,20 +40,21 @@ import it.sasabz.android.sasabus.beacon.BeaconStorage;
 import it.sasabz.android.sasabus.beacon.IBeaconHandler;
 import it.sasabz.android.sasabus.beacon.busstop.BusStopBeaconHandler;
 import it.sasabz.android.sasabus.beacon.notification.TripNotification;
-import it.sasabz.android.sasabus.model.BusStop;
-import it.sasabz.android.sasabus.model.line.Lines;
-import it.sasabz.android.sasabus.network.NetUtils;
-import it.sasabz.android.sasabus.network.rest.RestClient;
-import it.sasabz.android.sasabus.network.rest.api.RealtimeApi;
-import it.sasabz.android.sasabus.network.rest.model.RealtimeBus;
-import it.sasabz.android.sasabus.network.rest.response.RealtimeResponse;
-import it.sasabz.android.sasabus.realm.BusStopRealmHelper;
-import it.sasabz.android.sasabus.realm.UserRealmHelper;
+import it.sasabz.android.sasabus.data.model.BusStop;
+import it.sasabz.android.sasabus.data.model.line.Lines;
+import it.sasabz.android.sasabus.data.network.NetUtils;
+import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.rest.api.RealtimeApi;
+import it.sasabz.android.sasabus.data.network.rest.model.CloudTrip;
+import it.sasabz.android.sasabus.data.network.rest.model.RealtimeBus;
+import it.sasabz.android.sasabus.data.network.rest.response.RealtimeResponse;
+import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.util.HashUtils;
 import it.sasabz.android.sasabus.util.IllegalTripException;
 import it.sasabz.android.sasabus.util.LogUtils;
-import it.sasabz.android.sasabus.util.NotificationUtils;
-import it.sasabz.android.sasabus.util.SettingsUtils;
+import it.sasabz.android.sasabus.util.Notifications;
+import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 import rx.schedulers.Schedulers;
@@ -163,7 +164,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
                     }
 
                     if (!currentTrip.notificationVisible && currentTrip.beacon.isSuitableForTrip &&
-                            SettingsUtils.isBusNotificationEnabled(mContext)) {
+                            Settings.isBusNotificationEnabled(mContext)) {
 
                         currentTrip.setNotificationVisible(true);
 
@@ -215,7 +216,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
 
             mBeaconMap.put(major, busBeacon);
 
-            UserRealmHelper.addBeacon(beacon, it.sasabz.android.sasabus.realm.user.Beacon.TYPE_BUS);
+            UserRealmHelper.addBeacon(beacon, it.sasabz.android.sasabus.data.realm.user.Beacon.TYPE_BUS);
 
             LogUtils.e(TAG, "Added beacon " + major);
 
@@ -378,7 +379,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
 
                         LogUtils.e(TAG, "Dismissing notification for " + currentTrip.getId());
 
-                        NotificationUtils.cancelBus(mContext);
+                        Notifications.cancelBus(mContext);
 
                         getStopStation(beacon);
 
@@ -421,20 +422,20 @@ public final class BusBeaconHandler implements IBeaconHandler {
             beacon.setDestination(beacon.busStops.get(index));
         }
 
-        if (Utils.insertTripIfValid(mContext, beacon) &&
-                SettingsUtils.isTripNotificationEnabled(mContext)) {
+        CloudTrip trip = Utils.insertTripIfValid(mContext, beacon);
 
-            NotificationUtils.trip(mContext, beacon.getHash());
+        if (trip != null && Settings.isTripNotificationEnabled(mContext)) {
+            Notifications.trip(mContext, beacon.getHash());
 
             LogUtils.e(TAG, "Saved trip " + beacon.id);
 
-            if (SettingsUtils.isSurveyEnabled(mContext)) {
+            if (Settings.isSurveyEnabled(mContext)) {
                 LogUtils.e(TAG, "Survey is enabled");
 
-                long lastSurvey = SettingsUtils.getLastSurveyMillis(mContext);
+                long lastSurvey = Settings.getLastSurveyMillis(mContext);
                 boolean showSurvey = false;
 
-                switch (SettingsUtils.getSurveyInterval(mContext)) {
+                switch (Settings.getSurveyInterval(mContext)) {
                     // Show every time
                     case 0:
                         LogUtils.e(TAG, "Survey interval: every time");
@@ -469,9 +470,9 @@ public final class BusBeaconHandler implements IBeaconHandler {
 
                 if (showSurvey) {
                     LogUtils.e(TAG, "Showing survey");
-                    NotificationUtils.survey(mContext, beacon.getHash());
+                    Notifications.survey(mContext, trip);
 
-                    SettingsUtils.setLastSurveyMillis(mContext, System.currentTimeMillis());
+                    Settings.setLastSurveyMillis(mContext, System.currentTimeMillis());
                 }
             }
         } else {
@@ -546,7 +547,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
 
                             // Cancel all bus stop notifications
                             for (int i = 0; i < 6000; i++) {
-                                NotificationUtils.cancel(mContext, i);
+                                Notifications.cancel(mContext, i);
                             }
                         }
                     }
