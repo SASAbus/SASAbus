@@ -61,7 +61,6 @@ import it.sasabz.android.sasabus.util.Utils;
 public class PreferenceActivity extends AppCompatActivity {
 
     private static final String TAG = "PreferenceActivity";
-    private static final String SCREEN_LABEL = "Preferences";
 
     private final String[] FRAGMENTS = {
             "PreferenceMenuFragment",
@@ -253,7 +252,8 @@ public class PreferenceActivity extends AppCompatActivity {
      * The fragment the user sees first as it enters the settings. It holds all the categories
      * like appearance, map, beacons ecc.
      */
-    public static class PreferenceMenuFragment extends PreferenceFragment implements View.OnClickListener {
+    public static class PreferenceMenuFragment extends PreferenceFragment
+            implements View.OnClickListener {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

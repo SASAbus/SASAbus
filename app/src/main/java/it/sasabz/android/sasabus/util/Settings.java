@@ -84,11 +84,6 @@ public final class Settings {
     private static final String PREF_BUS_STOP_BEACONS_ENABLED = "pref_bus_stop_beacons_enabled";
 
     /**
-     * Trip notifications enabled or disabled.
-     */
-    private static final String PREF_TRIP_NOTIFICATION_ENABLED = "pref_trips_enabled";
-
-    /**
      * BusMarker stop beacon notification vibrations enabled or disabled.
      */
     private static final String PREF_BUS_STOP_BEACON_VIBRATION = "pref_bus_stop_beacon_vibration";
@@ -99,16 +94,6 @@ public final class Settings {
     private static final String PREF_RATING_ENABLED = "pref_rating_enabled";
 
     /**
-     * Preferences holding all the favorite line ids separated by a comma.
-     */
-    private static final String PREF_FAVORITE_LINES = "pref_favorite_lines";
-
-    /**
-     * Preferences holding all the favorite bus stop ids separated by a comma.
-     */
-    private static final String PREF_FAVORITE_BUS_STOPS = "pref_favorite_busstops";
-
-    /**
      * User already rated or not.
      */
     private static final String PREF_HAS_RATED = "pref_has_rated";
@@ -117,11 +102,6 @@ public final class Settings {
      * Determines when to load bus stop images.
      */
     private static final String PREF_FETCH_IMAGES = "pref_fetch_images";
-
-    /**
-     * Show station ids next to the name.
-     */
-    private static final String PREF_SHOW_BUS_STOP_IDS = "pref_show_station_ids";
 
     private static final String PREF_SHOULD_SHOW_CHANGELOG = "pref_should_show_changelog";
 
@@ -187,7 +167,7 @@ public final class Settings {
     /**
      * Determines if the beacon scanner is enabled ans should scan for beacons. This value
      * does not force the beacon scanner to be enabled, it also depends on values found in
-     * {@link Utils#isBeaconEnabled(Context)}.
+     * {@link Utils#areBeaconsEnabled(Context)}.
      *
      * @param context Context to be used to lookup the {@link SharedPreferences}.
      * @return a boolean value.
@@ -214,17 +194,6 @@ public final class Settings {
      */
     public static boolean isBusStopNotificationEnabled(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PREF_BUS_STOP_BEACONS_ENABLED, true);
-    }
-
-    /**
-     * Determines if the app should show a notification if a trip has been completed.
-     *
-     * @param context Context to be used to lookup the {@link SharedPreferences}.
-     * @return a boolean value.
-     */
-    public static boolean isTripNotificationEnabled(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREF_TRIP_NOTIFICATION_ENABLED, true);
     }
 
     /**
@@ -280,16 +249,6 @@ public final class Settings {
      */
     static String getLanguage(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_LANGUAGE, "system");
-    }
-
-    /**
-     * Determines if the app should show the station ids next to the names.
-     *
-     * @param context Context to be used to lookup the {@link SharedPreferences}.
-     * @return {@code true} if it should display the ids, {@code false} otherwise.
-     */
-    public static boolean showBusStopIds(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PREF_SHOW_BUS_STOP_IDS, BuildConfig.DEBUG);
     }
 
     public static boolean isNewsPushEnabled(Context context) {
@@ -542,7 +501,7 @@ public final class Settings {
                 .getBoolean(PREF_SHOW_MAP_DOWNLOAD_DIALOG, true);
     }
 
-    @SuppressLint("CommitPrefEdits")
+    @SuppressLint("ApplySharedPref")
     public static void disableMapDialog(Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         sp.edit().putBoolean(PREF_SHOW_MAP_DOWNLOAD_DIALOG, false).commit();

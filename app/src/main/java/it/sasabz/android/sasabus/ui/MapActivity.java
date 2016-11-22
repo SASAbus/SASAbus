@@ -94,6 +94,7 @@ import it.sasabz.android.sasabus.util.map.RealtimeMapView;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * Activity which will displayed first when the user launches the app. It shows a map with all
@@ -504,14 +505,11 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
      */
     private void showBusInfo(int vehicle) {
         if (vehicle == 0) {
-            LogUtils.e(TAG, "vehicle == null");
+            Timber.e("vehicle == null");
             return;
         }
 
-        LogUtils.e(TAG, "Vehicle " + vehicle + " not on map");
-
-        mBusBeaconId = 0;
-        showErrorSnackbar(R.string.snackbar_bus_not_driving);
+        mapView.goToBus(vehicle);
     }
 
     /**

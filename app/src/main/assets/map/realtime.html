@@ -55,7 +55,8 @@
         DataMarker = L.Marker.extend({
            options: {
               trip: 0,
-              lineId: 0
+              lineId: 0,
+              vehicle: 0
            }
         });
 
@@ -139,6 +140,21 @@
             }
         }
 
+        function goToBus(vehicle) {
+            for (i = 0; i < markers.length; i++) {
+                var marker = markers[i];
+
+                for (j = 0; j < params.length && !found; j++) {
+                    if (params[j] == marker.options.vehicle) {
+                        var group = L.featureGroup(marker).addTo(map);
+                        map.fitBounds(group.getBounds());
+
+                        break;
+                    }
+                }
+            }
+        }
+
         function setMarkers(data, params) {
             var buses = data.split("=");
 
@@ -176,7 +192,8 @@
                 var marker = new DataMarker([busData[4], busData[5]], {
                     icon: marker,
                     trip: busData[1],
-                    lineId: busData[2]
+                    lineId: busData[2],
+                    vehicle: busDate[3]
                 })
                 .addTo(map)
                 .bindPopup(html);

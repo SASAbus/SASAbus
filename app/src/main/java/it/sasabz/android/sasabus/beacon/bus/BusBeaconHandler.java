@@ -423,60 +423,58 @@ public final class BusBeaconHandler implements IBeaconHandler {
         }
 
         CloudTrip trip = Utils.insertTripIfValid(mContext, beacon);
-
-        if (trip != null && Settings.isTripNotificationEnabled(mContext)) {
-            Notifications.trip(mContext, beacon.getHash());
-
-            LogUtils.e(TAG, "Saved trip " + beacon.id);
-
-            if (Settings.isSurveyEnabled(mContext)) {
-                LogUtils.e(TAG, "Survey is enabled");
-
-                long lastSurvey = Settings.getLastSurveyMillis(mContext);
-                boolean showSurvey = false;
-
-                switch (Settings.getSurveyInterval(mContext)) {
-                    // Show every time
-                    case 0:
-                        LogUtils.e(TAG, "Survey interval: every time");
-
-                        showSurvey = true;
-                        break;
-                    // Once a day
-                    case 1:
-                        LogUtils.e(TAG, "Survey interval: once a day");
-
-                        if (System.currentTimeMillis() - lastSurvey > TimeUnit.DAYS.toMillis(1)) {
-                            showSurvey = true;
-                        }
-                        break;
-                    // Once a week
-                    case 2:
-                        LogUtils.e(TAG, "Survey interval: once a week");
-
-                        if (System.currentTimeMillis() - lastSurvey > TimeUnit.DAYS.toMillis(7)) {
-                            showSurvey = true;
-                        }
-                        break;
-                    // Once a month
-                    case 3:
-                        LogUtils.e(TAG, "Survey interval: once a month");
-
-                        if (System.currentTimeMillis() - lastSurvey > TimeUnit.DAYS.toMillis(30)) {
-                            showSurvey = true;
-                        }
-                        break;
-                }
-
-                if (showSurvey) {
-                    LogUtils.e(TAG, "Showing survey");
-                    Notifications.survey(mContext, trip);
-
-                    Settings.setLastSurveyMillis(mContext, System.currentTimeMillis());
-                }
-            }
-        } else {
+        if (trip == null) {
             LogUtils.e(TAG, "Could not save trip " + beacon.id);
+            return;
+        }
+
+        LogUtils.e(TAG, "Saved trip " + beacon.id);
+
+        if (Settings.isSurveyEnabled(mContext)) {
+            LogUtils.e(TAG, "Survey is enabled");
+
+            long lastSurvey = Settings.getLastSurveyMillis(mContext);
+            boolean showSurvey = false;
+
+            switch (Settings.getSurveyInterval(mContext)) {
+                // Show every time
+                case 0:
+                    LogUtils.e(TAG, "Survey interval: every time");
+
+                    showSurvey = true;
+                    break;
+                // Once a day
+                case 1:
+                    LogUtils.e(TAG, "Survey interval: once a day");
+
+                    if (System.currentTimeMillis() - lastSurvey > TimeUnit.DAYS.toMillis(1)) {
+                        showSurvey = true;
+                    }
+                    break;
+                // Once a week
+                case 2:
+                    LogUtils.e(TAG, "Survey interval: once a week");
+
+                    if (System.currentTimeMillis() - lastSurvey > TimeUnit.DAYS.toMillis(7)) {
+                        showSurvey = true;
+                    }
+                    break;
+                // Once a month
+                case 3:
+                    LogUtils.e(TAG, "Survey interval: once a month");
+
+                    if (System.currentTimeMillis() - lastSurvey > TimeUnit.DAYS.toMillis(30)) {
+                        showSurvey = true;
+                    }
+                    break;
+            }
+
+            if (showSurvey) {
+                LogUtils.e(TAG, "Showing survey");
+                Notifications.survey(mContext, trip);
+
+                Settings.setLastSurveyMillis(mContext, System.currentTimeMillis());
+            }
         }
     }
 
