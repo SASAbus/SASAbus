@@ -41,7 +41,6 @@ import it.sasabz.android.sasabus.beacon.bus.BusBeaconHandler;
 import it.sasabz.android.sasabus.beacon.busstop.BusStopBeaconHandler;
 import it.sasabz.android.sasabus.beacon.event.EventBeaconHandler;
 import it.sasabz.android.sasabus.util.DeviceUtils;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
 import timber.log.Timber;
 
@@ -77,7 +76,7 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
 
 
     private BeaconHandler(Context context) {
-        LogUtils.e(TAG, "Creating beacon handlers");
+        Timber.e("Creating beacon handlers");
 
         mContext = context.getApplicationContext();
     }
@@ -97,11 +96,11 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
 
     @Override
     public void onBeaconServiceConnect() {
-        LogUtils.e(TAG, "onBeaconServiceConnect()");
+        Timber.e("onBeaconServiceConnect()");
 
         mBeaconManager.addRangeNotifier((beacons, region) -> {
             if (!isListening) {
-                LogUtils.e(TAG, "didRangeBeaconsInRegion: not listening");
+                Timber.e("didRangeBeaconsInRegion: not listening");
                 return;
             }
 
@@ -190,7 +189,7 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
         Timber.e("start()");
 
         if (isListening) {
-            LogUtils.e(TAG, "Already listening for beacons");
+            Timber.e("Already listening for beacons");
             return;
         }
 
@@ -200,28 +199,28 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
         }
 
         if (!DeviceUtils.hasPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)) {
-            LogUtils.e(TAG, "Missing location permission");
+            Timber.e("Missing location permission");
             return;
         }
 
         BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
         if (adapter == null) {
-            LogUtils.e(TAG, "Unable to find a valid bluetooth adapter");
+            Timber.e("Unable to find a valid bluetooth adapter");
             return;
         }
 
         if (!adapter.isEnabled()) {
-            LogUtils.e(TAG, "Bluetooth adapter is disabled");
+            Timber.e("Bluetooth adapter is disabled");
             return;
         }
 
         if (adapter.getState() == BluetoothAdapter.STATE_TURNING_OFF) {
-            LogUtils.e(TAG, "Bluetooth adapter is turning off");
+            Timber.e("Bluetooth adapter is turning off");
             return;
         }
 
         if (adapter.getState() != BluetoothAdapter.STATE_ON) {
-            LogUtils.e(TAG, "Bluetooth adapter is not in state STATE_ON");
+            Timber.e("Bluetooth adapter is not in state STATE_ON");
             return;
         }
 
@@ -259,7 +258,7 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
         Timber.e("stop()");
 
         if (!isListening) {
-            LogUtils.e(TAG, "Not listening, call to stop() will be ignored");
+            Timber.e("Not listening, call to stop() will be ignored");
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {

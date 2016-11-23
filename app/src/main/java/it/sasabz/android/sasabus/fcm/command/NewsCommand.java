@@ -22,10 +22,10 @@ import android.support.annotation.NonNull;
 
 import java.util.Map;
 
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Notifications;
 import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
+import timber.log.Timber;
 
 /**
  * Handles incoming news. Because the user is always registered to the GCM topic which will receive
@@ -40,11 +40,11 @@ public class NewsCommand implements FcmCommand {
 
     @Override
     public void execute(Context context, @NonNull Map<String, String> data) {
-        LogUtils.w(TAG, "Received GCM news message");
-        LogUtils.w(TAG, "Parsing GCM notification command: " + data);
+        Timber.w("Received GCM news message");
+        Timber.w("Parsing GCM notification command: " + data);
 
         if (!Settings.isNewsPushEnabled(context)) {
-            LogUtils.e(TAG, "Ignoring news command as news are disabled in preferences");
+            Timber.e("Ignoring news command as news are disabled in preferences");
             return;
         }
 
@@ -58,7 +58,7 @@ public class NewsCommand implements FcmCommand {
         String message = data.get(language.contains("de") ? "message_de" : "message_it");
         String zone = data.get("zone");
 
-        LogUtils.e(TAG, "Notification: id: " + id + ", title: " +
+        Timber.e("Notification: id: " + id + ", title: " +
                 title + ", message: " + message + ", zone: " + zone);
 
         Notifications.news(context, id, zone, title, message);

@@ -23,7 +23,6 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 
 import it.sasabz.android.sasabus.AppApplication;
 import it.sasabz.android.sasabus.beacon.BeaconHandler;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
 import timber.log.Timber;
 
@@ -36,11 +35,9 @@ import timber.log.Timber;
  */
 public class BluetoothReceiver extends WakefulBroadcastReceiver {
 
-    private static final String TAG = "BluetoothReceiver";
-
     @Override
     public void onReceive(Context context, Intent intent) {
-        LogUtils.e(TAG, "onReceive()");
+        Timber.e("onReceive()");
 
         if (!Utils.areBeaconsEnabled(context)) {
             Timber.w("Beacon scanning not available or enabled");

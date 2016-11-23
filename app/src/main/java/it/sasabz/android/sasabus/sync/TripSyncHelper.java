@@ -26,11 +26,11 @@ import it.sasabz.android.sasabus.data.network.rest.api.CloudApi;
 import it.sasabz.android.sasabus.data.network.rest.model.Badge;
 import it.sasabz.android.sasabus.data.network.rest.model.CloudTrip;
 import it.sasabz.android.sasabus.data.network.rest.response.TripUploadResponse;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Notifications;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 import rx.Scheduler;
+import timber.log.Timber;
 
 /**
  * Utility class to help with syncing trips to the server.
@@ -52,7 +52,7 @@ public final class TripSyncHelper {
      * @return {@code true} if one or more trips have been uploaded, {@code false} otherwise.
      */
     public static boolean upload(Context context, List<CloudTrip> trips, Scheduler scheduler) {
-        LogUtils.w(TAG, "Uploading " + trips.size() + " trips");
+        Timber.w("Uploading " + trips.size() + " trips");
 
         CloudApi cloudApi = RestClient.ADAPTER.create(CloudApi.class);
         cloudApi.uploadTrips(trips)
@@ -70,7 +70,7 @@ public final class TripSyncHelper {
 
                     @Override
                     public void onNext(TripUploadResponse response) {
-                        LogUtils.e(TAG, "Got " + response.badges.size() + " new badges to display");
+                        Timber.e("Got " + response.badges.size() + " new badges to display");
 
                         new Thread(() -> {
                             for (Badge badge : response.badges) {

@@ -86,7 +86,6 @@ import it.sasabz.android.sasabus.ui.about.AboutActivity;
 import it.sasabz.android.sasabus.ui.widget.NestedSwipeRefreshLayout;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.AnimUtils;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Preconditions;
 import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
@@ -351,7 +350,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
             showBusInfo(mBusBeaconId);
         }
 
-        LogUtils.i(TAG, "onNewIntent, extras " + intent.getExtras());
+        Timber.i("onNewIntent, extras " + intent.getExtras());
 
         if (intent.hasExtra(EXTRA_DIALOG_MESSAGE)) {
             mShowedAnnouncementDialog = false;
@@ -569,7 +568,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
         Preconditions.checkNotNull(response, "response == null");
 
         if (TextUtils.isEmpty(response.status)) return;
-        LogUtils.e(TAG, "Got status message: " + response.message);
+        Timber.e("Got status message: " + response.message);
 
         if (!mShowInfoSnackBar) return;
 
@@ -599,7 +598,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
                 break;
             case "link":
                 if (TextUtils.isEmpty(response.link)) {
-                    LogUtils.e(TAG, "Got link status but link is null or empty");
+                    Timber.e("Got link status but link is null or empty");
                     return;
                 }
 
@@ -1021,15 +1020,15 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
         String message = intent.getStringExtra(EXTRA_DIALOG_MESSAGE);
 
         if (!mShowedAnnouncementDialog && !TextUtils.isEmpty(title) && !TextUtils.isEmpty(message)) {
-            LogUtils.i(TAG, "showAnnouncementDialogIfNeeded, title: " + title);
-            LogUtils.i(TAG, "showAnnouncementDialogIfNeeded, message: " + message);
+            Timber.i("showAnnouncementDialogIfNeeded, title: " + title);
+            Timber.i("showAnnouncementDialogIfNeeded, message: " + message);
 
             String yes = intent.getStringExtra(EXTRA_DIALOG_YES);
-            LogUtils.i(TAG, "showAnnouncementDialogIfNeeded, yes: " + yes);
+            Timber.i("showAnnouncementDialogIfNeeded, yes: " + yes);
             String no = intent.getStringExtra(EXTRA_DIALOG_NO);
-            LogUtils.i(TAG, "showAnnouncementDialogIfNeeded, no: " + no);
+            Timber.i("showAnnouncementDialogIfNeeded, no: " + no);
             String url = intent.getStringExtra(EXTRA_DIALOG_URL);
-            LogUtils.i(TAG, "showAnnouncementDialogIfNeeded, url: " + url);
+            Timber.i("showAnnouncementDialogIfNeeded, url: " + url);
 
             Spannable spannable = new SpannableString(message);
             Linkify.addLinks(spannable, Linkify.WEB_URLS);

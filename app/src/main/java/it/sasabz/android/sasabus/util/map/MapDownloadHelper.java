@@ -29,14 +29,12 @@ import java.io.File;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.receiver.DownloadReceiver;
 import it.sasabz.android.sasabus.util.IOUtils;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Settings;
+import timber.log.Timber;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 
 public class MapDownloadHelper {
-
-    private final String TAG = "MapDownloadHelper";
 
     private static final String MAP_URL = "http://opensasa.info/files/maptiles";
     private static final String OSM_ZIP_NAME = "osm-tiles.zip";
@@ -78,7 +76,7 @@ public class MapDownloadHelper {
         }
 
         if (rootFolder.listFiles() == null || rootFolder.listFiles().length < 2) {
-            LogUtils.e(TAG, "Missing map");
+            Timber.e("Missing map");
 
             new AlertDialog.Builder(context, R.style.DialogStyle)
                     .setTitle(R.string.dialog_map_download_title)
@@ -95,13 +93,13 @@ public class MapDownloadHelper {
                     .create()
                     .show();
         } else {
-            LogUtils.e(TAG, "Map exists");
+            Timber.e("Map exists");
             mapExists = true;
         }
     }
 
     private void downloadMap() {
-        LogUtils.e(TAG, "Downloading map tiles");
+        Timber.e("Downloading map tiles");
 
         String downloadZip = MAP_URL + "/" + OSM_ZIP_NAME;
         File destination = new File(rootFolder, OSM_ZIP_NAME);
@@ -120,7 +118,7 @@ public class MapDownloadHelper {
 
         long downloadId = downloadManager.enqueue(request);
 
-        LogUtils.e(TAG, "Download id is: " + downloadId);
+        Timber.e("Download id is: " + downloadId);
 
         context.registerReceiver(new DownloadReceiver(downloadId, destination, webView),
                 new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));

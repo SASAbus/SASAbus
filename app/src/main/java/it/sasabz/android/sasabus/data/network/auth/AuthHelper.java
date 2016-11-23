@@ -28,7 +28,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.io.DataInputStream;
 import java.io.InputStream;
@@ -42,14 +41,12 @@ import it.sasabz.android.sasabus.data.network.auth.jjwt.Jws;
 import it.sasabz.android.sasabus.data.network.auth.jjwt.Jwts;
 import it.sasabz.android.sasabus.data.network.auth.jjwt.SignatureException;
 import it.sasabz.android.sasabus.ui.ecopoints.LoginActivity;
-import it.sasabz.android.sasabus.util.LogUtils;
 import retrofit2.adapter.rxjava.HttpException;
+import timber.log.Timber;
 
 public final class AuthHelper {
 
     private static PublicKey publicKey;
-
-    private static final String TAG = "AuthHelper";
 
     @SuppressLint("StaticFieldLeak")
     private static Context sContext;
@@ -92,7 +89,7 @@ public final class AuthHelper {
             HttpException httpException = (HttpException) throwable;
 
             if (httpException.code() == 401) {
-                LogUtils.e(TAG, "Unauthorized response, clearing credentials");
+                Timber.e("Unauthorized response, clearing credentials");
 
                 clearCredentials();
 
@@ -107,12 +104,12 @@ public final class AuthHelper {
 
     public static void logout(Activity activity) {
         if (!isLoggedIn()) {
-            LogUtils.e(TAG, "Attempt to log out a player who is not logged in");
+            Timber.e("Attempt to log out a player who is not logged in");
         }
 
         clearCredentials();
 
-        LogUtils.e(TAG, "Logged out user");
+        Timber.e("Logged out user");
 
         activity.finish();
 
@@ -128,7 +125,7 @@ public final class AuthHelper {
         return new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                LogUtils.e(TAG, "Got logout broadcast");
+                Timber.e("Got logout broadcast");
                 logout(activity);
             }
         };
@@ -145,7 +142,7 @@ public final class AuthHelper {
 
     public static void unregisterLogoutReceiver(Activity activity, BroadcastReceiver receiver) {
         if (receiver == null) {
-            LogUtils.e(TAG, "Attempt to unregister a null receiver in class " +
+            Timber.e("Attempt to unregister a null receiver in class " +
                     activity.getClass().getSimpleName());
             return;
         }
@@ -201,14 +198,14 @@ public final class AuthHelper {
             String userId = claims.getBody().getSubject();
 
             if (TextUtils.isEmpty(userId)) {
-                LogUtils.e(TAG, "User id is empty");
+                Timber.e("User id is empty");
 
                 clearCredentials();
 
                 return false;
             }
 
-            LogUtils.d(TAG, "Token is valid, got user id: " + userId);
+            Timber.d("Token is valid, got user id: " + userId);
 
             setUserId(sContext, userId);
             setAuthToken(sContext, token);
@@ -219,7 +216,7 @@ public final class AuthHelper {
 
             clearCredentials();
 
-            Log.e(TAG, "Key is invalid, clearing credentials");
+            Timber.e("Key is invalid, clearing credentials");
 
             return false;
         }
@@ -241,19 +238,19 @@ public final class AuthHelper {
             String savedUserId = getUserId(sContext);
 
             if (TextUtils.isEmpty(savedUserId)) {
-                LogUtils.e(TAG, "Saved user id is empty");
+                Timber.e("Saved user id is empty");
                 clearCredentials();
                 return false;
             }
 
             if (TextUtils.isEmpty(userId)) {
-                LogUtils.e(TAG, "Token user id is empty");
+                Timber.e("Token user id is empty");
                 clearCredentials();
                 return false;
             }
 
             if (!userId.equals(savedUserId)) {
-                LogUtils.e(TAG, "Saved user id and token user id don't match, should be " +
+                Timber.e("Saved user id and token user id don't match, should be " +
                         savedUserId + ", got " + userId + " instead");
 
                 clearCredentials();
@@ -261,7 +258,7 @@ public final class AuthHelper {
                 return false;
             }
 
-            LogUtils.d(TAG, "Token is valid, got user id: " + userId);
+            Timber.d("Token is valid, got user id: " + userId);
 
             return true;
         } catch (SignatureException e) {
@@ -269,7 +266,7 @@ public final class AuthHelper {
 
             clearCredentials();
 
-            Log.e(TAG, "Key is invalid, clearing credentials");
+            Timber.e("Key is invalid, clearing credentials");
 
             return false;
         }
@@ -279,6 +276,6 @@ public final class AuthHelper {
         setUserId(sContext, null);
         setAuthToken(sContext, null);
 
-        LogUtils.e(TAG, "Cleared credentials");
+        Timber.e("Cleared credentials");
     }
 }

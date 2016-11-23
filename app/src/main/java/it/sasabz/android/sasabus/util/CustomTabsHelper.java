@@ -27,6 +27,7 @@ import android.support.customtabs.CustomTabsSession;
 import android.support.v4.content.ContextCompat;
 
 import it.sasabz.android.sasabus.R;
+import timber.log.Timber;
 
 /**
  * Helper class to use custom tabs. Handles common functionality like warming the service up,
@@ -69,7 +70,7 @@ public class CustomTabsHelper {
                 //Initialize a session as soon as possible.
                 mCustomTabsSession = mClient.newSession(null);
 
-                LogUtils.e(TAG, "Custom tabs warmup done");
+                Timber.e("Custom tabs warmup done");
             }
 
             @Override

@@ -47,16 +47,14 @@ import it.sasabz.android.sasabus.data.network.rest.api.EventsApi;
 import it.sasabz.android.sasabus.data.network.rest.model.Event;
 import it.sasabz.android.sasabus.data.network.rest.model.EventPoint;
 import it.sasabz.android.sasabus.data.network.rest.response.EventResponse;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.recycler.EventsAdapter;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class EventsFragment extends RxFragment {
-
-    private static final String TAG = "EventsFragment";
 
     @BindView(R.id.recycler) RecyclerView recyclerView;
     @BindView(R.id.refresh) SwipeRefreshLayout mRefresh;
@@ -67,12 +65,12 @@ public class EventsFragment extends RxFragment {
     private final BroadcastReceiver pointReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            LogUtils.e(TAG, "Got event point broadcast");
+            Timber.e("Got event point broadcast");
 
             int id = intent.getIntExtra(EventDetailsActivity.EXTRA_BEACON_POINT, -1);
 
             if (id == -1) {
-                LogUtils.e(TAG, "Missing intent extra " + EventDetailsActivity.EXTRA_BEACON_POINT);
+                Timber.e("Missing intent extra " + EventDetailsActivity.EXTRA_BEACON_POINT);
                 return;
             }
 
@@ -102,18 +100,18 @@ public class EventsFragment extends RxFragment {
     private final BroadcastReceiver eventCompletedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            LogUtils.e(TAG, "Got QR code broadcast");
+            Timber.e("Got QR code broadcast");
 
             String eventId = intent.getStringExtra(EventDetailsActivity.EXTRA_EVENT_ID);
             String code = intent.getStringExtra(EventDetailsActivity.EXTRA_QR_CODE);
 
             if (TextUtils.isEmpty(eventId)) {
-                LogUtils.e(TAG, "Missing intent extra " + EventDetailsActivity.EXTRA_EVENT_ID);
+                Timber.e("Missing intent extra " + EventDetailsActivity.EXTRA_EVENT_ID);
                 return;
             }
 
             if (TextUtils.isEmpty(code)) {
-                LogUtils.e(TAG, "Missing intent extra " + EventDetailsActivity.EXTRA_QR_CODE);
+                Timber.e("Missing intent extra " + EventDetailsActivity.EXTRA_QR_CODE);
                 return;
             }
 
@@ -128,12 +126,12 @@ public class EventsFragment extends RxFragment {
     private final BroadcastReceiver qrCodeRedeemedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            LogUtils.e(TAG, "Got QR code redeemed broadcast");
+            Timber.e("Got QR code redeemed broadcast");
 
             String eventId = intent.getStringExtra(EventDetailsActivity.EXTRA_EVENT_ID);
 
             if (TextUtils.isEmpty(eventId)) {
-                LogUtils.e(TAG, "Missing intent extra " + EventDetailsActivity.EXTRA_EVENT_ID);
+                Timber.e("Missing intent extra " + EventDetailsActivity.EXTRA_EVENT_ID);
                 return;
             }
 

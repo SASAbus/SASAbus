@@ -28,6 +28,7 @@ import java.util.Locale;
 
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.ui.intro.Intro;
+import timber.log.Timber;
 
 /**
  * Utility class to help with saving and getting shared preferences.
@@ -229,7 +230,7 @@ public final class Settings {
                 .getDefaultSharedPreferences(context).getString(PREF_AUTO_UPDATE_INTERVAL, "5000"));
 
         if (interval == 3000) {
-            LogUtils.e(TAG, "Auto refresh interval 3000 was changed to 5000");
+            Timber.e("Auto refresh interval 3000 was changed to 5000");
 
             PreferenceManager.getDefaultSharedPreferences(context).edit()
                     .putString(PREF_AUTO_UPDATE_INTERVAL, "5000").apply();

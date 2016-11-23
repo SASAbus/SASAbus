@@ -24,7 +24,7 @@ import android.support.annotation.NonNull;
 
 import java.util.Map;
 
-import it.sasabz.android.sasabus.util.LogUtils;
+import timber.log.Timber;
 
 /**
  * Command which allows GCM to change app settings. To change app settings, a push notification
@@ -36,17 +36,15 @@ import it.sasabz.android.sasabus.util.LogUtils;
  */
 public class ConfigCommand implements FcmCommand {
 
-    private static final String TAG = "ConfigCommand";
-
     @Override
     public void execute(Context context, @NonNull Map<String, String> data) {
-        LogUtils.e(TAG, "Received GCM test message: extraData=" + data);
+        Timber.e("Received GCM test message: extraData=" + data);
 
         String type = data.get("type");
         String key = data.get("key");
         String value = data.get("value");
 
-        LogUtils.e(TAG, "Setting key " + key + " of type " + type + " to value " + value);
+        Timber.e("Setting key " + key + " of type " + type + " to value " + value);
 
         SharedPreferences.Editor editor = PreferenceManager
                 .getDefaultSharedPreferences(context).edit();

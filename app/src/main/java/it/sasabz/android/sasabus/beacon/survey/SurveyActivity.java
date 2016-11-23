@@ -50,16 +50,14 @@ import it.sasabz.android.sasabus.data.network.NetUtils;
 import it.sasabz.android.sasabus.data.network.rest.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.SurveyApi;
 import it.sasabz.android.sasabus.data.network.rest.model.CloudTrip;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.ReportHelper;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class SurveyActivity extends AppCompatActivity {
-
-    private static final String TAG = "SurveyActivity";
 
     @BindView(R.id.survey_form_email) EditText formEmail;
     @BindView(R.id.survey_form_message) EditText formMessage;
@@ -169,10 +167,10 @@ public class SurveyActivity extends AppCompatActivity {
         SurveyApi.ReportBody reportBody = new SurveyApi.ReportBody(this, email, message,
                 trip.getVehicle(), (int) ratingBar.getRating(), trip);
 
-        LogUtils.e(TAG, new Gson().toJson(reportBody));
+        Timber.e(new Gson().toJson(reportBody));
 
         if (!NetUtils.isOnline(this)) {
-            LogUtils.e(TAG, "Not sending survey because device is OFFLINE");
+            Timber.e("Not sending survey because device is OFFLINE");
 
             surveyError();
 

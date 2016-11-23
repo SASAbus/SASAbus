@@ -28,13 +28,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.text.SimpleDateFormat;
@@ -53,12 +51,12 @@ import it.sasabz.android.sasabus.data.network.rest.response.RegisterResponse;
 import it.sasabz.android.sasabus.fcm.FcmSettings;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.AnswersHelper;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.ReportHelper;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -239,7 +237,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void tryRegister() {
         if (!NetUtils.isOnline(this)) {
-            LogUtils.e(TAG, "No internet connection available");
+            Timber.e("No internet connection available");
 
             new AlertDialog.Builder(this, R.style.DialogStyle)
                     .setTitle(R.string.login_no_internet_title)
@@ -258,8 +256,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         UserApi.RegisterBody body = new UserApi.RegisterBody(email, name,
                 password, FcmSettings.getGcmToken(this), birthdateSeconds, male.isChecked());
-
-        Log.e(TAG, new Gson().toJson(body));
 
         UserApi api = RestClient.ADAPTER.create(UserApi.class);
         api.register(body)
@@ -280,7 +276,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                     @Override
                     public void onNext(RegisterResponse registerResponse) {
-                        LogUtils.e(TAG, registerResponse.toString());
+                        Timber.e(registerResponse.toString());
 
                         validateResponse(registerResponse);
                     }
@@ -289,13 +285,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void validateResponse(RegisterResponse response) {
         if (response.success) {
-            LogUtils.e(TAG, "Registration successful");
+            Timber.e("Registration successful");
 
             registrationCompleted();
 
             AnswersHelper.logSignUpSuccess();
         } else {
-            LogUtils.e(TAG, "Registration failure, got error: " + response.error);
+            Timber.e("Registration failure, got error: " + response.error);
 
             TextInputLayout field = null;
             switch (response.param) {
@@ -312,7 +308,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     field = birthdayLayout;
                     break;
                 default:
-                    LogUtils.e(TAG, "Invalid field " + response.param);
+                    Timber.e("Invalid field " + response.param);
                     break;
             }
 

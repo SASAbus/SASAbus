@@ -39,7 +39,6 @@ import it.sasabz.android.sasabus.data.network.rest.api.ValidityApi;
 import it.sasabz.android.sasabus.data.network.rest.response.ValidityResponse;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.IOUtils;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.recycler.TimetableAdapter;
@@ -55,6 +54,7 @@ import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * Displays all the available timetables, inclusive a map of bz/me, in a list so the user
@@ -138,7 +138,7 @@ public class TimetableActivity extends BaseActivity implements Observer<Integer>
 
     @Override
     public void onCompleted() {
-        LogUtils.e(TAG, "onCompleted()");
+        Timber.e("onCompleted()");
 
         Settings.setTimetableDate(this);
 
@@ -192,7 +192,7 @@ public class TimetableActivity extends BaseActivity implements Observer<Integer>
                     @Override
                     public void onNext(ValidityResponse validityResponse) {
                         if (!validityResponse.isValid) {
-                            LogUtils.e(TAG, "Timetable update available");
+                            Timber.e("Timetable update available");
                             Settings.markDataUpdateAvailable(TimetableActivity.this, true);
 
                             mSnackbar = Snackbar.make(getMainContent(), R.string.timetable_update_text, Snackbar.LENGTH_INDEFINITE);
@@ -201,7 +201,7 @@ public class TimetableActivity extends BaseActivity implements Observer<Integer>
 
                             mSnackbar.show();
                         } else {
-                            LogUtils.e(TAG, "No timetable update available");
+                            Timber.e("No timetable update available");
                         }
                     }
                 });
@@ -223,7 +223,7 @@ public class TimetableActivity extends BaseActivity implements Observer<Integer>
             File file = new File(filesDir.getAbsolutePath(), line + ".pdf");
 
             if (!file.exists()) {
-                LogUtils.e(TAG, "Missing file: " + file.getAbsolutePath());
+                Timber.e("Missing file: " + file.getAbsolutePath());
                 return false;
             }
         }
@@ -259,7 +259,7 @@ public class TimetableActivity extends BaseActivity implements Observer<Integer>
     private Observable<Integer> downloadFileObservable() {
         return Observable.create(subscriber -> {
             try {
-                LogUtils.e(TAG, "Starting plan data download");
+                Timber.e("Starting plan data download");
 
                 File file = new File(IOUtils.getTimetablesDir(TimetableActivity.this), FILENAME_OFFLINE);
 

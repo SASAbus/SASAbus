@@ -27,11 +27,11 @@ import java.util.List;
 
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
+import timber.log.Timber;
 
 /**
  * Intercepts each call to the rest api and adds the user agent header to the request.
@@ -43,8 +43,6 @@ import okhttp3.Response;
  * @author Alex Lardschneider
  */
 public class NetworkInterceptor implements Interceptor {
-
-    private static final String TAG = "NetworkInterceptor";
 
     private final Context mContext;
 
@@ -72,7 +70,7 @@ public class NetworkInterceptor implements Interceptor {
             String token = AuthHelper.getTokenIfValid();
 
             if (token == null) {
-                LogUtils.e(TAG, "Token is invalid");
+                Timber.e("Token is invalid");
             } else {
                 newRequest.addHeader("Authorization", "Bearer " + token);
             }
@@ -80,7 +78,7 @@ public class NetworkInterceptor implements Interceptor {
 
         Request request = newRequest.build();
 
-        LogUtils.w("OkHttp", request.method() + " url " + originalRequest.url());
+        Timber.w(request.method() + " url " + originalRequest.url());
 
         return chain.proceed(request);
     }

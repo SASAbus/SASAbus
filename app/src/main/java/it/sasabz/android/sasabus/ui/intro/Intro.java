@@ -39,8 +39,8 @@ import it.sasabz.android.sasabus.ui.departure.DepartureActivity;
 import it.sasabz.android.sasabus.ui.intro.data.IntroFragmentData;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.CustomTabsHelper;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Settings;
+import timber.log.Timber;
 
 /**
  * The actual intro activity where all the intro fragments are attached. Handles permission
@@ -155,7 +155,7 @@ public class Intro extends AppIntro {
 
     @Override
     protected void onNewIntent(Intent intent) {
-        LogUtils.e(SCREEN_LABEL, intent.getScheme());
+        Timber.e(intent.getScheme());
 
         if ("terms".equals(intent.getScheme())) {
             tabsHelper.launchUrl(Uri.parse(TERMS_URL));

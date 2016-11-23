@@ -52,16 +52,14 @@ import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.util.HashUtils;
 import it.sasabz.android.sasabus.util.IllegalTripException;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Notifications;
 import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 public final class BusBeaconHandler implements IBeaconHandler {
-
-    private static final String TAG = "BusBeaconHandler";
 
     /**
      * The uuid which identifies a bus beacon.
@@ -100,7 +98,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
             @Override
             public void run() {
                 handler.post(() -> {
-                    LogUtils.w(TAG, "Running timer");
+                    Timber.w("Running timer");
 
                     inspectBeacons();
                 });
@@ -140,7 +138,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
                     mPrefsManager.getCurrentTrip().beacon.id == firstBeacon.id) {
 
                 if (firstBeacon.lastSeen + TIMEOUT >= System.currentTimeMillis()) {
-                    LogUtils.i(TAG, "Seen: " + (firstBeacon.lastSeen + TIMEOUT - System.currentTimeMillis()));
+                    Timber.i("Seen: " + (firstBeacon.lastSeen + TIMEOUT - System.currentTimeMillis()));
 
                     CurrentTrip currentTrip = mPrefsManager.getCurrentTrip();
                     currentTrip.setBeacon(firstBeacon);
@@ -155,7 +153,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
                                 firstBeacon.setBusStop(currentBusStop.second, currentBusStop.first);
                                 currentTrip.update();
 
-                                LogUtils.e(TAG, "Set current bus stop " + busStop.getId() +
+                                Timber.e("Set current bus stop " + busStop.getId() +
                                         " for vehicle " + firstBeacon.id);
 
                                 break;
@@ -198,7 +196,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
             busBeacon.seen();
             busBeacon.setDistance(beacon.getDistance());
 
-            LogUtils.w(TAG, "Beacon " + major + ", seen: " + busBeacon.seenSeconds +
+            Timber.w("Beacon " + major + ", seen: " + busBeacon.seenSeconds +
                     ", distance: " + busBeacon.distance);
 
 
@@ -218,7 +216,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
 
             UserRealmHelper.addBeacon(beacon, it.sasabz.android.sasabus.data.realm.user.Beacon.TYPE_BUS);
 
-            LogUtils.e(TAG, "Added beacon " + major);
+            Timber.e("Added beacon " + major);
 
             if (NetUtils.isOnline(mContext) && beacon.getDistance() <= MAX_BEACON_DISTANCE) {
                 getBusInformation(busBeacon);
@@ -265,7 +263,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
             return;
         }
 
-        LogUtils.e(TAG, "getBusInformation " + beacon.id);
+        Timber.e("getBusInformation " + beacon.id);
 
         beacon.setOriginPending(true);
         beacon.retry();
@@ -293,7 +291,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
                         if (response.buses.isEmpty()) {
                             // Assume this bus is not driving at the moment and return.
                             // If this bus is still not driving after 3 retries ignore it.
-                            LogUtils.e(TAG, "Vehicle " + beacon.id + " not driving");
+                            Timber.e("Vehicle " + beacon.id + " not driving");
 
                             beacon.setSuitableForTrip(mContext, false);
                             beacon.setOriginPending(false);
@@ -303,7 +301,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
 
                         RealtimeBus bus = response.buses.get(0);
 
-                        LogUtils.e(TAG, "getBusInformation: " + bus.busStop);
+                        Timber.e("getBusInformation: " + bus.busStop);
 
                         if (bus.path.isEmpty()) {
                             beacon.setOriginPending(false);
@@ -340,7 +338,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
                         String hash = HashUtils.getHashForTrip(mContext, beacon);
                         beacon.setHash(hash);
 
-                        LogUtils.e(TAG, "Got bus info for " + beacon.id +
+                        Timber.e("Got bus info for " + beacon.id +
                                 ", bus stop " + bus.busStop);
 
                         beacon.setSuitableForTrip(mContext, true);
@@ -350,7 +348,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
     }
 
     private void deleteInvisibleBeacons() {
-        LogUtils.i(TAG, "deleteInvisibleBeacons");
+        Timber.i("deleteInvisibleBeacons");
 
         CurrentTrip currentTrip = mPrefsManager.getCurrentTrip();
 
@@ -360,7 +358,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
             if (beacon.lastSeen + BUS_LAST_SEEN_THRESHOLD < System.currentTimeMillis()) {
                 mBeaconMap.remove(entry.getKey());
 
-                LogUtils.e(TAG, "Removed beacon " + entry.getKey());
+                Timber.e("Removed beacon " + entry.getKey());
 
                 if (mPrefsManager.hasCurrentTrip() &&
                         currentTrip.getId() == entry.getValue().id) {
@@ -377,7 +375,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
                         currentTrip.setNotificationVisible(false);
                         currentTrip.setBeacon(beacon);
 
-                        LogUtils.e(TAG, "Dismissing notification for " + currentTrip.getId());
+                        Timber.e("Dismissing notification for " + currentTrip.getId());
 
                         Notifications.cancelBus(mContext);
 
@@ -424,14 +422,14 @@ public final class BusBeaconHandler implements IBeaconHandler {
 
         CloudTrip trip = Utils.insertTripIfValid(mContext, beacon);
         if (trip == null) {
-            LogUtils.e(TAG, "Could not save trip " + beacon.id);
+            Timber.e("Could not save trip " + beacon.id);
             return;
         }
 
-        LogUtils.e(TAG, "Saved trip " + beacon.id);
+        Timber.e("Saved trip " + beacon.id);
 
         if (Settings.isSurveyEnabled(mContext)) {
-            LogUtils.e(TAG, "Survey is enabled");
+            Timber.e("Survey is enabled");
 
             long lastSurvey = Settings.getLastSurveyMillis(mContext);
             boolean showSurvey = false;
@@ -439,13 +437,13 @@ public final class BusBeaconHandler implements IBeaconHandler {
             switch (Settings.getSurveyInterval(mContext)) {
                 // Show every time
                 case 0:
-                    LogUtils.e(TAG, "Survey interval: every time");
+                    Timber.e("Survey interval: every time");
 
                     showSurvey = true;
                     break;
                 // Once a day
                 case 1:
-                    LogUtils.e(TAG, "Survey interval: once a day");
+                    Timber.e("Survey interval: once a day");
 
                     if (System.currentTimeMillis() - lastSurvey > TimeUnit.DAYS.toMillis(1)) {
                         showSurvey = true;
@@ -453,7 +451,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
                     break;
                 // Once a week
                 case 2:
-                    LogUtils.e(TAG, "Survey interval: once a week");
+                    Timber.e("Survey interval: once a week");
 
                     if (System.currentTimeMillis() - lastSurvey > TimeUnit.DAYS.toMillis(7)) {
                         showSurvey = true;
@@ -461,7 +459,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
                     break;
                 // Once a month
                 case 3:
-                    LogUtils.e(TAG, "Survey interval: once a month");
+                    Timber.e("Survey interval: once a month");
 
                     if (System.currentTimeMillis() - lastSurvey > TimeUnit.DAYS.toMillis(30)) {
                         showSurvey = true;
@@ -470,7 +468,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
             }
 
             if (showSurvey) {
-                LogUtils.e(TAG, "Showing survey");
+                Timber.e("Showing survey");
                 Notifications.survey(mContext, trip);
 
                 Settings.setLastSurveyMillis(mContext, System.currentTimeMillis());
@@ -479,10 +477,10 @@ public final class BusBeaconHandler implements IBeaconHandler {
     }
 
     private void isBeaconCurrentTrip(BusBeacon beacon) {
-        LogUtils.e(TAG, "isBeaconCurrentTrip");
+        Timber.e("isBeaconCurrentTrip");
 
         if (beacon.seenSeconds > MIN_NOTIFICATION_SECONDS) {
-            LogUtils.e(TAG, "Added trip because it was in range for more than " +
+            Timber.e("Added trip because it was in range for more than " +
                     MIN_NOTIFICATION_SECONDS + 's');
 
             mPrefsManager.setCurrentTrip(new CurrentTrip(mContext, beacon));
@@ -524,10 +522,10 @@ public final class BusBeaconHandler implements IBeaconHandler {
 
                         RealtimeBus bus = response.buses.get(0);
 
-                        LogUtils.e(TAG, "isBeaconCurrentTrip response: " + bus.busStop);
+                        Timber.e("isBeaconCurrentTrip response: " + bus.busStop);
 
                         if (beacon.origin != bus.busStop) {
-                            LogUtils.e(TAG, "Setting new bus stop for " + beacon.id);
+                            Timber.e("Setting new bus stop for " + beacon.id);
 
                             if (mPrefsManager.hasCurrentTrip() &&
                                     mPrefsManager.getCurrentTrip().beacon.id != beacon.id) {
@@ -553,10 +551,10 @@ public final class BusBeaconHandler implements IBeaconHandler {
     }
 
     private void fetchBusDelayAndInfo(CurrentTrip currentTrip) {
-        LogUtils.e(TAG, "fetchBusDelayAndInfo()");
+        Timber.e("fetchBusDelayAndInfo()");
 
         if (!NetUtils.isOnline(mContext)) {
-            LogUtils.e(TAG, "No internet connection");
+            Timber.e("No internet connection");
             return;
         }
 
@@ -580,14 +578,14 @@ public final class BusBeaconHandler implements IBeaconHandler {
                     @Override
                     public void onNext(RealtimeResponse response) {
                         if (response.buses.isEmpty()) {
-                            LogUtils.e(TAG, "Vehicle " + beacon.id + " not driving");
+                            Timber.e("Vehicle " + beacon.id + " not driving");
 
                             return;
                         }
 
                         RealtimeBus bus = response.buses.get(0);
 
-                        LogUtils.e(TAG, "Got bus delay for vehicle " + beacon.id + ": " +
+                        Timber.e("Got bus delay for vehicle " + beacon.id + ": " +
                                 bus.delayMin);
 
                         beacon.setDelay(bus.delayMin);
@@ -598,7 +596,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
     }
 
     private void getStopStation(BusBeacon beacon) {
-        LogUtils.e(TAG, "getStopStation " + beacon.id);
+        Timber.e("getStopStation " + beacon.id);
 
         RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
         realtimeApi.vehicleRx(beacon.id)
@@ -621,7 +619,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
 
                             beacon.setDestination(bus.busStop);
 
-                            LogUtils.e(TAG, "Stop station for " + beacon.id + ": " +
+                            Timber.e("Stop station for " + beacon.id + ": " +
                                     bus.busStop);
                         }
                     }
@@ -654,7 +652,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
                 currentTrip.beacon.setBusStop(newBusStop, BusBeacon.TYPE_BEACON);
                 currentTrip.update();
 
-                LogUtils.e(TAG, "Set " + newBusStop.getId() + ' ' +
+                Timber.e("Set " + newBusStop.getId() + ' ' +
                         newBusStop.getNameDe() + " as new bus stop for " + currentTrip.getId());
             }
         }

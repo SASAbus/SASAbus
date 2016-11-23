@@ -47,9 +47,9 @@ import it.sasabz.android.sasabus.receiver.LocationReceiver;
 import it.sasabz.android.sasabus.ui.departure.DepartureActivity;
 import it.sasabz.android.sasabus.ui.widget.PreferenceFragment;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
+import timber.log.Timber;
 
 /**
  * Activity which handles app preferences. For the sake of this application the preferences are
@@ -401,7 +401,7 @@ public class PreferenceActivity extends AppCompatActivity {
                             new ComponentName(getActivity(), BluetoothReceiver.class),
                             PackageManager.COMPONENT_ENABLED_STATE_ENABLED, 0);
 
-                    LogUtils.e(TAG, "Enabled beacon components");
+                    Timber.e("Enabled beacon components");
                 } else {
                     getActivity().getPackageManager().setComponentEnabledSetting(
                             new ComponentName(getActivity(), LocationReceiver.class),
@@ -411,7 +411,7 @@ public class PreferenceActivity extends AppCompatActivity {
                             new ComponentName(getActivity(), BluetoothReceiver.class),
                             PackageManager.COMPONENT_ENABLED_STATE_DISABLED, 0);
 
-                    LogUtils.e(TAG, "Disabled beacon components");
+                    Timber.e("Disabled beacon components");
                 }
 
                 return !value || setBeaconScanner();

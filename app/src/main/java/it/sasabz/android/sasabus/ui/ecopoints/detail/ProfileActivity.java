@@ -70,7 +70,6 @@ import it.sasabz.android.sasabus.fcm.FcmSettings;
 import it.sasabz.android.sasabus.ui.ecopoints.LoginActivity;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.AnswersHelper;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.ReportHelper;
 import it.sasabz.android.sasabus.util.UIUtils;
 import it.sasabz.android.sasabus.util.Utils;
@@ -80,6 +79,7 @@ import okhttp3.RequestBody;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * @author David Dejori
@@ -118,7 +118,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
 
         if (!AuthHelper.isLoggedIn()) {
-            LogUtils.e(TAG, "Token is null, showing login activity");
+            Timber.e("Token is null, showing login activity");
             finish();
             startActivity(new Intent(this, LoginActivity.class));
 
@@ -142,7 +142,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         Intent intent = getIntent();
         Profile profile = intent.getParcelableExtra(EXTRA_PROFILE);
         if (profile == null) {
-            LogUtils.e(TAG, "Missing intent extra " + EXTRA_PROFILE);
+            Timber.e("Missing intent extra " + EXTRA_PROFILE);
             finish();
             return;
         }
@@ -508,7 +508,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                                     return;
                                 }
 
-                                LogUtils.e(TAG, "Password change successful");
+                                Timber.e("Password change successful");
 
                                 progressDialog.dismiss();
 
@@ -522,7 +522,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                                         });
 
                             } else {
-                                LogUtils.e(TAG, "Password change failure, got error: " + response.error);
+                                Timber.e("Password change failure, got error: " + response.error);
 
                                 progressDialog.dismiss();
 
@@ -535,7 +535,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                                         newLayout2.setError(response.errorMessage);
                                         break;
                                     default:
-                                        LogUtils.e(TAG, "Invalid field " + response.param);
+                                        Timber.e("Invalid field " + response.param);
                                         break;
                                 }
                             }

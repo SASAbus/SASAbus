@@ -29,11 +29,9 @@ import it.sasabz.android.sasabus.data.model.JsonSerializable;
 import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.vdv.Api;
 import it.sasabz.android.sasabus.data.vdv.model.VdvBusStop;
-import it.sasabz.android.sasabus.util.LogUtils;
+import timber.log.Timber;
 
 public class CurrentTrip implements JsonSerializable {
-
-    private static final String TAG = "CurrentTrip";
 
     public BusBeacon beacon;
 
@@ -66,7 +64,7 @@ public class CurrentTrip implements JsonSerializable {
                 path.add(new BusStop(BusStopRealmHelper.getBusStop(busStop.getId())));
             }
         } else {
-            LogUtils.e(TAG, "Times for trip " + beacon.trip + " are null");
+            Timber.e("Times for trip " + beacon.trip + " are null");
             beacon.setSuitableForTrip(context, false);
             notificationVisible = false;
         }

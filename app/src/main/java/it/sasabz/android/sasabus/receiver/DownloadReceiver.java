@@ -27,18 +27,15 @@ import java.io.File;
 import java.io.IOException;
 
 import it.sasabz.android.sasabus.util.IOUtils;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.map.MapDownloadHelper;
 import rx.Observable;
 import rx.Observer;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class DownloadReceiver extends BroadcastReceiver {
-
-    private static final String TAG = "DownloadReceiver";
 
     private final long downloadId;
     private final File zipFile;
@@ -54,7 +51,7 @@ public class DownloadReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
 
-        LogUtils.e(TAG, "onReceive() action: " + action);
+        Timber.e("onReceive() action: " + action);
 
         if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
             long downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0);
@@ -89,19 +86,16 @@ public class DownloadReceiver extends BroadcastReceiver {
     }
 
     private Observable<Void> extractZipObservable() {
-        return Observable.create(new Observable.OnSubscribe<Void>() {
-            @Override
-            public void call(Subscriber<? super Void> subscriber) {
-                try {
-                    LogUtils.e(TAG, "Extracting zip file");
-                    IOUtils.unzipFile(zipFile.getName(), zipFile.getParent());
-                    LogUtils.e(TAG, "Extracted zip file");
+        return Observable.create(subscriber -> {
+            try {
+                Timber.e("Extracting zip file");
+                IOUtils.unzipFile(zipFile.getName(), zipFile.getParent());
+                Timber.e("Extracted zip file");
 
-                    subscriber.onNext(null);
-                    subscriber.onCompleted();
-                } catch (IOException e) {
-                    subscriber.onError(e);
-                }
+                subscriber.onNext(null);
+                subscriber.onCompleted();
+            } catch (IOException e) {
+                subscriber.onError(e);
             }
         });
     }
