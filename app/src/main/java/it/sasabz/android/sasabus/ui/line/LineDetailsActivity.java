@@ -57,7 +57,6 @@ import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.data.vdv.Api;
 import it.sasabz.android.sasabus.data.vdv.model.VdvBusStop;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.recycler.LineDetailsAdapter;
 import retrofit2.Response;
@@ -66,6 +65,7 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * Displays information about this line and all the vehicles currently driving this line.
@@ -407,7 +407,7 @@ public class LineDetailsActivity extends RxAppCompatActivity implements OnClickL
             case 7:
                 return getString(R.string.monday_long) + " - " + getString(R.string.sunday_long);
             default:
-                LogUtils.e(TAG, "Unknown day: " + date);
+                Timber.e("Unknown day: " + date);
                 return "Unknown";
         }
     }

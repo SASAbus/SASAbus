@@ -42,12 +42,6 @@
             android:summary="@string/settings_beacons_station_enabled_sub"
             android:defaultValue="true"/>
 
-        <SwitchPreference
-            android:key="pref_trips_enabled"
-            android:title="@string/settings_trips_enabled_title"
-            android:summary="@string/settings_trips_enabled_sub"
-            android:defaultValue="true"/>
-
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_notifications_vibrations">

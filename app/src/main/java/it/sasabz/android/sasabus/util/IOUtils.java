@@ -38,14 +38,14 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import timber.log.Timber;
+
 /**
  * Utility methods and constants used for writing and reading to from streams and files.
  *
  * @author Alex Lardschneider
  */
 public final class IOUtils {
-
-    private static final String TAG = "IOUtils";
 
     private static File storageDir;
 
@@ -194,7 +194,7 @@ public final class IOUtils {
 
         for (File file : files) {
             if (file != null && file.canRead() && file.canWrite()) {
-                LogUtils.w(TAG, "Using " + file.getAbsolutePath() + " as storage");
+                Timber.w("Using " + file.getAbsolutePath() + " as storage");
 
                 storageDir = file;
                 return file;
@@ -257,16 +257,16 @@ public final class IOUtils {
 
     public static void deleteOldMapZipFiles(File location) {
         if (!location.exists() || location.listFiles() == null) {
-            LogUtils.e(TAG, "Location does not exist");
+            Timber.e("Location does not exist");
             return;
         }
 
         for (File file : location.listFiles()) {
             if (file.getName().endsWith(".zip")) {
-                LogUtils.e(TAG, "Deleting file " + file.getName());
+                Timber.e("Deleting file " + file.getName());
 
                 if (!file.delete()) {
-                    LogUtils.e(TAG, "Couldn't delete file " + file.getName());
+                    Timber.e("Couldn't delete file " + file.getName());
                 }
             }
         }

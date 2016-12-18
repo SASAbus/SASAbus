@@ -39,15 +39,13 @@ import it.sasabz.android.sasabus.data.network.rest.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.EventsApi;
 import it.sasabz.android.sasabus.data.network.rest.response.EventBeaconResponse;
 import it.sasabz.android.sasabus.ui.ecopoints.event.EventDetailsActivity;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Notifications;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 public final class EventBeaconHandler implements IBeaconHandler {
-
-    private static final String TAG = "EventBeaconHandler";
 
     public static final String UUID = "abaf1d52-cafd-42b1-b02c-9060b3027e51";
 
@@ -112,13 +110,13 @@ public final class EventBeaconHandler implements IBeaconHandler {
             beaconInfo.seen();
             beaconInfo.setDistance(beacon.getDistance());
 
-            LogUtils.e(TAG, "Beacon " + major + ":" + minor + ", seen: " +
-                    beaconInfo.seenSeconds + ", distance: " + beaconInfo.distance);
+            Timber.e("Beacon %s, seen: %s, distance: %s", major, beaconInfo.seenSeconds,
+                    beaconInfo.distance);
         } else {
             EventBeacon eventBeacon = new EventBeacon(major, minor);
             mBeaconMap.put(key, eventBeacon);
 
-            LogUtils.e(TAG, "Added beacon " + major);
+            Timber.e("Added beacon %s", major);
 
             sendBeacon(eventBeacon);
         }
@@ -126,13 +124,13 @@ public final class EventBeaconHandler implements IBeaconHandler {
 
     @Override
     public void stop() {
-        LogUtils.e(TAG, "Stopping bus stop beacon handler");
+        Timber.e("Stopping bus stop beacon handler");
 
         HANDLER.postDelayed(STOP_TIMER, BEACON_REMOVAL_TIME + TIMER_INTERVAL);
     }
 
     public void start() {
-        LogUtils.e(TAG, "Starting timer");
+        Timber.e("Starting timer");
 
         mBeaconMap.clear();
 
@@ -147,13 +145,13 @@ public final class EventBeaconHandler implements IBeaconHandler {
         TIMER.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                LogUtils.e(TAG, "Running timer");
+                Timber.e("Running timer");
 
                 for (Map.Entry<String, EventBeacon> entry : mBeaconMap.entrySet()) {
                     EventBeacon beacon = entry.getValue();
 
                     if (beacon.lastSeen < System.currentTimeMillis() - BEACON_REMOVAL_TIME) {
-                        LogUtils.e(TAG, "Removed beacon " + beacon.major + ":" + beacon.minor);
+                        Timber.e("Removed beacon " + beacon.major + ":" + beacon.minor);
 
                         mBeaconMap.remove(beacon.major + ":" + beacon.minor);
                     }
@@ -180,10 +178,10 @@ public final class EventBeaconHandler implements IBeaconHandler {
 
                     @Override
                     public void onNext(EventBeaconResponse response) {
-                        LogUtils.e(TAG, "Uploaded beacon: " + beacon.major + ":" + beacon.minor);
+                        Timber.e("Uploaded beacon: %s:%s", beacon.major, beacon.minor);
 
                         if (response.event == null) {
-                            LogUtils.e(TAG, "event == null, most probably beacon " +
+                            Timber.e("event == null, most probably beacon " +
                                     beacon.major + ":" + beacon.minor + " was already sent");
                             return;
                         }
@@ -192,7 +190,7 @@ public final class EventBeaconHandler implements IBeaconHandler {
 
                         Notifications.eventBeacon(mContext, response.event, response.point, color);
 
-                        LogUtils.e(TAG, "Sending point broadcast");
+                        Timber.e("Sending point broadcast");
 
                         Intent pointIntent = new Intent(EventDetailsActivity.BROADCAST_BEACON_SEEN);
                         pointIntent.putExtra(EventDetailsActivity.EXTRA_BEACON_POINT, response.point);
@@ -201,7 +199,7 @@ public final class EventBeaconHandler implements IBeaconHandler {
                         LocalBroadcastManager.getInstance(mContext).sendBroadcast(pointIntent);
 
                         if (!TextUtils.isEmpty(response.qrCode)) {
-                            LogUtils.e(TAG, "Got QR code, sending broadcast");
+                            Timber.e("Got QR code, sending broadcast");
 
                             Intent qrIntent = new Intent(EventDetailsActivity.BROADCAST_EVENT_COMPLETED);
                             qrIntent.putExtra(EventDetailsActivity.EXTRA_QR_CODE, response.qrCode);
@@ -216,7 +214,7 @@ public final class EventBeaconHandler implements IBeaconHandler {
     private class StopRunnable implements Runnable {
         @Override
         public void run() {
-            LogUtils.e(TAG, "Stopped timer");
+            Timber.e("Stopped timer");
 
             if (TIMER != null) {
                 TIMER.cancel();

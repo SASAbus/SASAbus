@@ -28,12 +28,10 @@ import java.util.concurrent.TimeUnit;
 import it.sasabz.android.sasabus.beacon.Beacon;
 import it.sasabz.android.sasabus.data.model.BusStop;
 import it.sasabz.android.sasabus.data.model.JsonSerializable;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Notifications;
+import timber.log.Timber;
 
 public class BusBeacon implements Beacon, JsonSerializable {
-
-    private final String TAG = "BusBeacon";
 
     public static final int TYPE_BEACON = 0;
     static final int TYPE_REALTIME = 1;
@@ -141,19 +139,6 @@ public class BusBeacon implements Beacon, JsonSerializable {
         this.busStops.addAll(busStops);
     }
 
-    void appendBusStops(List<Integer> busStops) {
-        if (busStops == null || busStops.isEmpty()) {
-            LogUtils.e(TAG, "BusStops null or empty");
-            return;
-        }
-
-        if (this.busStops.get(this.busStops.size() - 1).equals(busStops.get(0))) {
-            busStops = busStops.subList(1, busStops.size());
-        }
-
-        this.busStops.addAll(busStops);
-    }
-
     void setDestination(int destination) {
         this.destination = destination;
     }
@@ -164,7 +149,7 @@ public class BusBeacon implements Beacon, JsonSerializable {
 
     void setSuitableForTrip(Context context, boolean suitableForTrip) {
         if (!suitableForTrip) {
-            LogUtils.e(TAG, "Beacon is not suitable for a trip, dismissing notification");
+            Timber.e("Beacon is not suitable for a trip, dismissing notification");
             Notifications.cancelBus(context);
         }
 
@@ -183,7 +168,7 @@ public class BusBeacon implements Beacon, JsonSerializable {
     public void setHash(String hash) {
         this.hash = hash;
 
-        LogUtils.e(TAG, "Set hash " + hash + " for trip " + id);
+        Timber.e("Set hash %s for trip %s", hash, id);
     }
 
     boolean shouldFetchDelay() {

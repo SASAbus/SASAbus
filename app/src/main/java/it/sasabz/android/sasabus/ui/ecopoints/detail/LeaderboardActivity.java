@@ -40,12 +40,12 @@ import it.sasabz.android.sasabus.data.network.rest.model.LeaderboardPlayer;
 import it.sasabz.android.sasabus.data.network.rest.response.LeaderboardResponse;
 import it.sasabz.android.sasabus.ui.ecopoints.LoginActivity;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.recycler.LeaderboardDetailsAdapter;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class LeaderboardActivity extends AppCompatActivity {
 
@@ -65,7 +65,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         if (!AuthHelper.isLoggedIn()) {
-            LogUtils.e(TAG, "Token is null, showing login activity");
+            Timber.e("Token is null, showing login activity");
             finish();
             startActivity(new Intent(this, LoginActivity.class));
 

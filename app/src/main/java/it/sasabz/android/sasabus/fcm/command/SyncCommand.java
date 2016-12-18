@@ -28,7 +28,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import it.sasabz.android.sasabus.sync.SyncService;
-import it.sasabz.android.sasabus.util.LogUtils;
+import timber.log.Timber;
 
 /**
  * Starts a remote sync. The sync will be spread across a time period of 15 minutes to reduce
@@ -38,14 +38,12 @@ import it.sasabz.android.sasabus.util.LogUtils;
  */
 public class SyncCommand implements FcmCommand {
 
-    private static final String TAG = "SyncCommand";
-
     private static final int DEFAULT_TRIGGER_SYNC_MAX_JITTER_MILLIS = (int) TimeUnit.MINUTES.toMillis(15);
     private static final Random RANDOM = new Random();
 
     @Override
     public void execute(Context context, @NonNull Map<String, String> data) {
-        LogUtils.e(TAG, "Received GCM sync message");
+        Timber.e("Received GCM sync message");
 
         int jitter = DEFAULT_TRIGGER_SYNC_MAX_JITTER_MILLIS;
         if (data.containsKey("jitter")) {
@@ -58,7 +56,7 @@ public class SyncCommand implements FcmCommand {
     private void scheduleSync(Context context, int jitter) {
         int jitterMillis = (int) (RANDOM.nextFloat() * jitter);
 
-        LogUtils.e(TAG, "Scheduling next sync for " + jitterMillis + "ms");
+        Timber.e("Scheduling next sync for " + jitterMillis + "ms");
 
         PendingIntent intent = PendingIntent.getService(context, 0,
                 new Intent(context, SyncService.class),

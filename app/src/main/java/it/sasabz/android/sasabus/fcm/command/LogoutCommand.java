@@ -26,7 +26,7 @@ import android.text.TextUtils;
 import java.util.Map;
 
 import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
-import it.sasabz.android.sasabus.util.LogUtils;
+import timber.log.Timber;
 
 /**
  * This command handles logout from eco points. If a user chooses to log out from all devices,
@@ -38,26 +38,24 @@ import it.sasabz.android.sasabus.util.LogUtils;
  */
 public class LogoutCommand implements FcmCommand {
 
-    private static final String TAG = "LogoutCommand";
-
     @Override
     public void execute(Context context, @NonNull Map<String, String> data) {
-        LogUtils.w(TAG, "Received GCM logout command");
+        Timber.w("Received GCM logout command");
 
         String user = data.get("user");
 
         if (!AuthHelper.isLoggedIn()) {
-            LogUtils.e(TAG, "Cannot log out if no user is logged in on this device");
+            Timber.e("Cannot log out if no user is logged in on this device");
             return;
         }
 
         if (TextUtils.isEmpty(user)) {
-            LogUtils.e(TAG, "Got an empty or null user id");
+            Timber.e("Got an empty or null user id");
             return;
         }
 
         if (!user.equals(AuthHelper.getUserId(context))) {
-            LogUtils.e(TAG, "User id does not match user id of logged in account");
+            Timber.e("User id does not match user id of logged in account");
             return;
         }
 

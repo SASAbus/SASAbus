@@ -49,11 +49,9 @@ import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.network.rest.model.Event;
 import it.sasabz.android.sasabus.util.HashUtils;
-import it.sasabz.android.sasabus.util.LogUtils;
+import timber.log.Timber;
 
 public class QrCodeActivity extends RxAppCompatActivity {
-
-    private static final String TAG = "QrCodeActivity";
 
     public static final String BROADCAST_QR_CODE_REDEEMED =
             "it.sasabz.android.sasabus.BROADCAST_QR_CODE_REDEEMED";
@@ -65,8 +63,7 @@ public class QrCodeActivity extends RxAppCompatActivity {
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            LogUtils.e(TAG, "Got QR code broadcast");
-
+            Timber.e("Got QR code broadcast");
             showDoneAnimation();
         }
     };
@@ -82,7 +79,7 @@ public class QrCodeActivity extends RxAppCompatActivity {
         Event event = intent.getParcelableExtra(EventDetailsActivity.EXTRA_EVENT);
 
         if (event == null) {
-            LogUtils.e(TAG, "Missing intent extra " + EventDetailsActivity.EXTRA_EVENT);
+            Timber.e("Missing intent extra " + EventDetailsActivity.EXTRA_EVENT);
             finish();
             return;
         }

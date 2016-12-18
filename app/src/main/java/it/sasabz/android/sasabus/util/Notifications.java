@@ -224,42 +224,6 @@ public final class Notifications {
         notificationManager.notify(id, mBuilder.build());
     }
 
-    /**
-     * Shows a notification if a trip has been successfully saved.
-     *
-     * @param context  application context
-     * @param hash the trip uuid to display
-     */
-    public static void trip(Context context, String hash) {
-        Preconditions.checkNotNull(context, "trip() context == null");
-        Preconditions.checkNotNull(hash, "hash == null");
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.ic_timeline)
-                .setContentTitle(context.getString(R.string.notification_trip_title))
-                .setContentText(context.getString(R.string.notification_trip_sub))
-                .setAutoCancel(true)
-                .setLights(Color.BLUE, 500, 5000)
-                .setColor(ContextCompat.getColor(context, R.color.material_blue_700))
-                .setPriority(NotificationCompat.PRIORITY_LOW)
-                .setVibrate(new long[]{VIBRATION_TIME_MILLIS, VIBRATION_TIME_MILLIS})
-                .setCategory(NotificationCompat.CATEGORY_EVENT);
-
-        Intent resultIntent = new Intent(context, EcoPointsActivity.class);
-        resultIntent.putExtra(Config.EXTRA_TRIP, hash);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,
-                NOTIFICATION_TRIP_SUCCESS,
-                resultIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-
-        mBuilder.setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager =
-                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(NOTIFICATION_TRIP_SUCCESS, mBuilder.build());
-    }
-
     public static void eventBeacon(Context context, CharSequence event, int point, int color) {
         String subtitle = context.getString(R.string.notification_event_beacon_subtitle, point);
 

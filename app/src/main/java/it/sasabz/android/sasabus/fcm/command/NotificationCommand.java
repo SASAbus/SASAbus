@@ -43,8 +43,8 @@ import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.receiver.NotificationReceiver;
 import it.sasabz.android.sasabus.ui.MapActivity;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
+import timber.log.Timber;
 
 /**
  * General purpose command which can display a highly customizable notification. The notification
@@ -100,8 +100,8 @@ public class NotificationCommand implements FcmCommand {
 
     @Override
     public void execute(Context context, @NonNull Map<String, String> data) {
-        LogUtils.w(TAG, "Received GCM notification message");
-        LogUtils.w(TAG, "Parsing GCM notification command: " + data);
+        Timber.w("Received GCM notification message");
+        Timber.w("Parsing GCM notification command: " + data);
 
         JSONObject json = new JSONObject();
 
@@ -120,43 +120,43 @@ public class NotificationCommand implements FcmCommand {
             command = gson.fromJson(json.toString(), NotificationCommandModel.class);
 
             if (command == null) {
-                LogUtils.e(TAG, "Failed to parse command (gson returned null).");
+                Timber.e("Failed to parse command (gson returned null).");
                 return;
             }
 
-            LogUtils.w(TAG, "Id: " + command.id);
-            LogUtils.w(TAG, "Audience: " + command.audience);
-            LogUtils.w(TAG, "TitleIt: " + command.titleIt);
-            LogUtils.w(TAG, "TitleDe: " + command.titleDe);
-            LogUtils.w(TAG, "MessageIt: " + command.messageIt);
-            LogUtils.w(TAG, "MessageDe: " + command.messageDe);
-            LogUtils.w(TAG, "Expiry: " + command.expiry);
-            LogUtils.w(TAG, "URL: " + command.url);
-            LogUtils.w(TAG, "Dialog titleIt: " + command.dialogTitleIt);
-            LogUtils.w(TAG, "Dialog titleDe: " + command.dialogTitleDe);
-            LogUtils.w(TAG, "Dialog textIt: " + command.dialogTextIt);
-            LogUtils.w(TAG, "Dialog textDe: " + command.dialogTextDe);
-            LogUtils.w(TAG, "Dialog yesIt: " + command.dialogYesIt);
-            LogUtils.w(TAG, "Dialog yesDe: " + command.dialogYesDe);
-            LogUtils.w(TAG, "Dialog noIt: " + command.dialogNoIt);
-            LogUtils.w(TAG, "Dialog noDe: " + command.dialogNoDe);
-            LogUtils.w(TAG, "Min version code: " + command.minVersion);
-            LogUtils.w(TAG, "Max version code: " + command.maxVersion);
-            LogUtils.w(TAG, "Color: " + command.color);
+            Timber.w("Id: " + command.id);
+            Timber.w("Audience: " + command.audience);
+            Timber.w("TitleIt: " + command.titleIt);
+            Timber.w("TitleDe: " + command.titleDe);
+            Timber.w("MessageIt: " + command.messageIt);
+            Timber.w("MessageDe: " + command.messageDe);
+            Timber.w("Expiry: " + command.expiry);
+            Timber.w("URL: " + command.url);
+            Timber.w("Dialog titleIt: " + command.dialogTitleIt);
+            Timber.w("Dialog titleDe: " + command.dialogTitleDe);
+            Timber.w("Dialog textIt: " + command.dialogTextIt);
+            Timber.w("Dialog textDe: " + command.dialogTextDe);
+            Timber.w("Dialog yesIt: " + command.dialogYesIt);
+            Timber.w("Dialog yesDe: " + command.dialogYesDe);
+            Timber.w("Dialog noIt: " + command.dialogNoIt);
+            Timber.w("Dialog noDe: " + command.dialogNoDe);
+            Timber.w("Min version code: " + command.minVersion);
+            Timber.w("Max version code: " + command.maxVersion);
+            Timber.w("Color: " + command.color);
         } catch (Exception e) {
             Utils.logException(e);
 
-            LogUtils.e(TAG, "Failed to parse GCM notification command.");
+            Timber.e("Failed to parse GCM notification command.");
             return;
         }
 
         // Do not show this notification on fdroid build as it doesn't support FCM.
         if (data.get("flavor").equals(BuildConfig.FLAVOR) && Utils.isFDroid()) {
-            LogUtils.e(TAG, "Fdroid is not supported.");
+            Timber.e("Fdroid is not supported.");
             return;
         }
 
-        LogUtils.i(TAG, "Processing notification command.");
+        Timber.i("Processing notification command.");
         processCommand(context, command);
     }
 
@@ -190,54 +190,54 @@ public class NotificationCommand implements FcmCommand {
 
         // Check package
         if (!TextUtils.isEmpty(command.packageName) && !command.packageName.equals(BuildConfig.APPLICATION_ID)) {
-            LogUtils.w(TAG, "Skipping command because of wrong package name, is "
+            Timber.w("Skipping command because of wrong package name, is "
                     + command.packageName + ", should be " + BuildConfig.APPLICATION_ID);
             return;
         }
 
         // Check app version
         if (command.minVersion != 0 || command.maxVersion != 0) {
-            LogUtils.i(TAG, "Command has version range.");
+            Timber.i("Command has version range.");
 
             int minVersion = command.minVersion;
             int maxVersion = command.maxVersion != 0 ? command.maxVersion : Integer.MAX_VALUE;
 
             try {
-                LogUtils.i(TAG, "Version range: " + minVersion + " - " + maxVersion);
-                LogUtils.i(TAG, "My version code: " + BuildConfig.VERSION_CODE);
+                Timber.i("Version range: " + minVersion + " - " + maxVersion);
+                Timber.i("My version code: " + BuildConfig.VERSION_CODE);
 
                 if (BuildConfig.VERSION_CODE < minVersion) {
-                    LogUtils.w(TAG, "Skipping command because our version is too old, "
+                    Timber.w("Skipping command because our version is too old, "
                             + BuildConfig.VERSION_CODE + " < " + minVersion);
                     return;
                 }
                 if (BuildConfig.VERSION_CODE > maxVersion) {
-                    LogUtils.i(TAG, "Skipping command because our version is too new, "
+                    Timber.i("Skipping command because our version is too new, "
                             + BuildConfig.VERSION_CODE + " > " + maxVersion);
                     return;
                 }
             } catch (NumberFormatException ex) {
-                LogUtils.e(TAG, "Version spec badly formatted: min=" + command.minVersion
+                Timber.e("Version spec badly formatted: min=" + command.minVersion
                         + ", max=" + command.maxVersion);
                 return;
             } catch (Exception ex) {
-                LogUtils.e(TAG, "Unexpected problem doing version check.", ex);
+                Timber.e("Unexpected problem doing version check.", ex);
                 return;
             }
         }
 
         // Check if we are the right audience
         if ("all".equals(command.audience)) {
-            LogUtils.i(TAG, "Relevant (audience is 'all').");
+            Timber.i("Relevant (audience is 'all').");
         } else if ("debug".equals(command.audience)) {
             if (!BuildConfig.DEBUG) {
-                LogUtils.w(TAG, "App is not in debug mode");
+                Timber.w("App is not in debug mode");
                 return;
             }
 
-            LogUtils.i(TAG, "Relevant (audience is 'debug').");
+            Timber.i("Relevant (audience is 'debug').");
         } else {
-            LogUtils.e(TAG, "Invalid audience on GCM notification command: " + command.audience);
+            Timber.e("Invalid audience on GCM notification command: " + command.audience);
             return;
         }
 
@@ -245,10 +245,10 @@ public class NotificationCommand implements FcmCommand {
         Date expiry = new Date(command.expiry * 1000L);
 
         if (expiry.getTime() < System.currentTimeMillis()) {
-            LogUtils.w(TAG, "Got expired GCM notification command. Expiry: " + expiry);
+            Timber.w("Got expired GCM notification command. Expiry: " + expiry);
             return;
         } else {
-            LogUtils.i(TAG, "Message is still valid (expiry is in the future: " + expiry + ')');
+            Timber.i("Message is still valid (expiry is in the future: " + expiry + ')');
         }
 
         // decide the intent that will be fired when the user clicks the notification
@@ -290,7 +290,7 @@ public class NotificationCommand implements FcmCommand {
                 color = Color.parseColor('#' + command.color);
             }
         } catch (Exception e) {
-            LogUtils.e(TAG, "Color spec badly formatted: color=" + command.color + ", using default");
+            Timber.e("Color spec badly formatted: color=" + command.color + ", using default");
         }
 
         NotificationManager notificationManager = (NotificationManager)

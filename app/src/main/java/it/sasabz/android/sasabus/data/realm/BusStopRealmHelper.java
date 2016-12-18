@@ -36,8 +36,8 @@ import it.sasabz.android.sasabus.data.realm.busstop.BusStopModule;
 import it.sasabz.android.sasabus.data.realm.busstop.SadBusStop;
 import it.sasabz.android.sasabus.data.vdv.model.VdvBusStop;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
+import timber.log.Timber;
 
 public final class BusStopRealmHelper {
 
@@ -82,10 +82,10 @@ public final class BusStopRealmHelper {
         long version = dynamicRealm.getVersion();
         dynamicRealm.close();
 
-        LogUtils.w(TAG, "Realm db version: " + version + ", should be " + DB_VERSION);
+        Timber.w("Realm db version: %s, should be %s", version, DB_VERSION);
 
         if (version < DB_VERSION || version > DB_VERSION) {
-            LogUtils.e(TAG, "Deleting old realm");
+            Timber.e("Deleting old realm");
 
             Realm.deleteRealm(CONFIG);
         }
@@ -100,7 +100,7 @@ public final class BusStopRealmHelper {
         BusStop busStop = realm.where(BusStop.class).equalTo("id", id).findFirst();
 
         if (busStop == null) {
-            LogUtils.e(TAG, "Missing SASA station: " + id);
+            Timber.e("Missing SASA station: %s", id);
             Utils.logException(new Throwable("getName SASA station = 0"));
 
             return sContext.getString(R.string.unknown);
@@ -119,7 +119,7 @@ public final class BusStopRealmHelper {
         SadBusStop busStop = realm.where(SadBusStop.class).equalTo("id", id).findFirst();
 
         if (busStop == null) {
-            LogUtils.e(TAG, "Missing SASA station: " + id);
+            Timber.e("Missing SASA station: %s", id);
             Utils.logException(new Throwable("getSadName SAD station = 0"));
 
             return sContext.getString(R.string.unknown);
@@ -138,7 +138,7 @@ public final class BusStopRealmHelper {
         BusStop busStop = realm.where(BusStop.class).equalTo("id", id).findFirst();
 
         if (busStop == null) {
-            LogUtils.e(TAG, "Missing SASA station: " + id);
+            Timber.e("Missing SASA station: %s", id);
             Utils.logException(new Throwable("getMunic SASA station = 0"));
 
             return sContext.getString(R.string.unknown);
@@ -157,7 +157,7 @@ public final class BusStopRealmHelper {
         SadBusStop busStop = realm.where(SadBusStop.class).equalTo("id", id).findFirst();
 
         if (busStop == null) {
-            LogUtils.e(TAG, "Missing SASA station: " + id);
+            Timber.e("Missing SASA station: %s", id);
             Utils.logException(new Throwable("getSadMunic SAD station = 0"));
 
             return sContext.getString(R.string.unknown);

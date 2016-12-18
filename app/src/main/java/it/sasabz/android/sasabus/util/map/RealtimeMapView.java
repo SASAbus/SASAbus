@@ -101,4 +101,8 @@ public class RealtimeMapView {
 
         webView.loadUrl("javascript:filterMarkers([" + sb.toString() + "]);");
     }
+
+    public void goToBus(int bus) {
+        webView.loadUrl("javascript:filterMarkers(" + bus + ");");
+    }
 }

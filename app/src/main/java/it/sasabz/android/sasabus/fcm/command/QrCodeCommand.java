@@ -26,15 +26,13 @@ import java.util.Map;
 
 import it.sasabz.android.sasabus.ui.ecopoints.event.EventDetailsActivity;
 import it.sasabz.android.sasabus.ui.ecopoints.event.QrCodeActivity;
-import it.sasabz.android.sasabus.util.LogUtils;
+import timber.log.Timber;
 
 public class QrCodeCommand implements FcmCommand {
 
-    private static final String TAG = "QrCodeCommand";
-
     @Override
     public void execute(Context context, @NonNull Map<String, String> data) {
-        LogUtils.e(TAG, "Received QR code command");
+        Timber.e("Received QR code command");
 
         String action = data.get("action");
         String event = data.get("event");
@@ -46,7 +44,7 @@ public class QrCodeCommand implements FcmCommand {
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                 break;
             default:
-                LogUtils.e(TAG, "Unknown action: " + action);
+                Timber.e("Unknown action: " + action);
         }
     }
 }

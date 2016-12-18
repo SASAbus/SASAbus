@@ -51,9 +51,9 @@ import it.sasabz.android.sasabus.ui.ecopoints.detail.ProfileActivity;
 import it.sasabz.android.sasabus.ui.ecopoints.event.EventsFragment;
 import it.sasabz.android.sasabus.ui.widget.adapter.TabsAdapter;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.recycler.LeaderboardAdapter;
+import timber.log.Timber;
 
 /**
  * @author Alex Lardschneider
@@ -288,7 +288,7 @@ public class EcoPointsActivity extends BaseActivity {
             LeaderboardPlayer player = list.get(i);
 
             if (player.id.equals(mProfileFragment.profile.id)) {
-                LogUtils.e(TAG, "Found view holder for profile");
+                Timber.e("Found view holder for profile");
 
                 return (LeaderboardAdapter.ViewHolder) mProfileFragment.recyclerView
                         .findViewHolderForLayoutPosition(i);

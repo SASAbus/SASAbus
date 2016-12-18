@@ -30,12 +30,10 @@ import it.sasabz.android.sasabus.ui.busstop.BusStopDetailActivity;
 import it.sasabz.android.sasabus.ui.line.LineCourseActivity;
 import it.sasabz.android.sasabus.ui.line.LineDetailsActivity;
 import it.sasabz.android.sasabus.ui.route.RouteMapPickerActivity;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Settings;
+import timber.log.Timber;
 
 class JSInterface {
-
-    private static final String TAG = "JSInterface";
 
     private final Context context;
 
@@ -46,7 +44,7 @@ class JSInterface {
 
         rootFolder = MapDownloadHelper.getRootFolder(context);
 
-        LogUtils.e(TAG, rootFolder.getAbsolutePath());
+        Timber.e(rootFolder.getAbsolutePath());
     }
 
     @JavascriptInterface

@@ -27,13 +27,11 @@ import it.sasabz.android.sasabus.data.network.rest.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.EcoPointsApi;
 import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.data.realm.user.EarnedBadge;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.rx.NextObserver;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 public abstract class InAppBadge {
-
-    private static final String TAG = "Badge";
 
     private final int id;
     private final int title;
@@ -68,7 +66,7 @@ public abstract class InAppBadge {
                                 .equalTo("id", id).findFirst();
 
                         if (badge == null) {
-                            LogUtils.e(TAG, "Badge with id " + id + " has been inserted into database, " +
+                            Timber.e("Badge with id " + id + " has been inserted into database, " +
                                     "but cannot be queried.");
                             return;
                         }
@@ -79,7 +77,7 @@ public abstract class InAppBadge {
 
                         realm.close();
 
-                        LogUtils.e(TAG, "Uploaded badge " + id);
+                        Timber.e("Uploaded badge " + id);
                     }
                 });
     }

@@ -25,6 +25,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import it.sasabz.android.sasabus.BuildConfig;
+import timber.log.Timber;
 
 /**
  * Centralized Analytics interface to ensure proper initialization and
@@ -63,7 +64,7 @@ public final class AnalyticsHelper {
             mTracker.setScreenName(screenName);
             mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
-            LogUtils.e(TAG, "Screen View recorded: " + screenName);
+            Timber.e("Screen View recorded: %s", screenName);
         }
     }
 
@@ -80,8 +81,7 @@ public final class AnalyticsHelper {
                         .setAction(action)
                         .build());
 
-                LogUtils.e(TAG, "Event recorded: category: " + category +
-                        ", action: " + action);
+                Timber.e("Event recorded: category: %s, action: %s", category, action);
             }
         }
     }
@@ -160,7 +160,7 @@ public final class AnalyticsHelper {
 
         if (instance != null) {
             instance.setAppOptOut(true);
-            LogUtils.e(TAG, "Analytics disabled");
+            Timber.e("Analytics disabled");
         }
 
     }

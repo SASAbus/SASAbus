@@ -32,13 +32,11 @@ import java.util.Map;
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
 import it.sasabz.android.sasabus.beacon.bus.CurrentTrip;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Notifications;
 import it.sasabz.android.sasabus.util.Utils;
+import timber.log.Timber;
 
 public final class BeaconStorage {
-
-    private static final String TAG = "BeaconStorage";
 
     /**
      * Preferences which contain the saved bus beacons to keep the trip progress
@@ -79,7 +77,7 @@ public final class BeaconStorage {
         mCurrentTrip = trip;
 
         if (trip == null) {
-            LogUtils.e(TAG, "trip == null, cancelling notification");
+            Timber.e("trip == null, cancelling notification");
             Notifications.cancelBus(mContext);
         }
 

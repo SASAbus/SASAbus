@@ -48,12 +48,12 @@ import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.data.vdv.DepartureMonitor;
 import it.sasabz.android.sasabus.data.vdv.model.VdvDeparture;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Notifications;
 import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * Class which handles bus stop beacons.
@@ -65,8 +65,6 @@ import rx.schedulers.Schedulers;
  * @author Alex Lardschneider
  */
 public final class BusStopBeaconHandler implements IBeaconHandler {
-
-    private static final String TAG = "BusStopBeaconHandler";
 
     /**
      * The uuid which identifies a bus stop beacon.
@@ -125,7 +123,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
      * after the user went out of beacon scanning region.
      */
     private final Runnable STOP_TIMER = () -> {
-        LogUtils.e(TAG, "Stopped timer");
+        Timber.e("Stopped timer");
 
         if (TIMER != null) {
             TIMER.cancel();
@@ -188,8 +186,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
         }
 
         if (currentBusStop != null && !found) {
-            LogUtils.i(TAG, "Removed current bus stop " +
-                    currentBusStop.second.getId());
+            Timber.i("Removed current bus stop %s", currentBusStop.second.getId());
 
             BusBeaconHandler.getInstance(mContext)
                     .currentBusStopOutOfRange(currentBusStop);
@@ -233,12 +230,11 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
                 Notifications.cancel(mContext, major);
             }
 
-            LogUtils.i(TAG, "Beacon " + major + ", seen: " + beaconInfo.seenSeconds +
-                    ", distance: " + beaconInfo.distance);
+            Timber.i("Beacon %s, seen: %s, distance: %s", major, beaconInfo.seenSeconds, beaconInfo.distance);
         } else {
             mBeaconMap.put(major, new BusStopBeacon(major));
 
-            LogUtils.e(TAG, "Added beacon " + major);
+            Timber.e("Added beacon %s", major);
 
             UserRealmHelper.addBeacon(beacon,
                     it.sasabz.android.sasabus.data.realm.user.Beacon.TYPE_BUS_STOP);
@@ -260,7 +256,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
                 BusStopRealmHelper.getBusStopOrNull(major);
 
         if (busStop != null) {
-            LogUtils.i(TAG, "Set " + major + " as current bus stop");
+            Timber.i("Set %s as current bus stop", major);
             currentBusStop = new Pair<>(BusBeacon.TYPE_BEACON, new BusStop(busStop));
         }
     }
@@ -273,7 +269,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
      */
     @Override
     public void stop() {
-        LogUtils.e(TAG, "Stopping bus stop beacon handler");
+        Timber.e("Stopping bus stop beacon handler");
 
         HANDLER.postDelayed(STOP_TIMER, BEACON_REMOVAL_TIME + TIMER_INTERVAL);
     }
@@ -283,7 +279,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
      * they are suitable for a trip and removed them from the {@link #mBeaconMap}.
      */
     public void start() {
-        LogUtils.e(TAG, "Starting timer");
+        Timber.e("Starting timer");
 
         mBeaconMap.clear();
 
@@ -298,7 +294,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
         TIMER.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                LogUtils.i(TAG, "Running timer");
+                Timber.i("Running timer");
 
                 for (Map.Entry<Integer, BusStopBeacon> entry : mBeaconMap.entrySet()) {
                     BusStopBeacon beacon = entry.getValue();
@@ -312,7 +308,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
                             currentBusStop = null;
                         }
 
-                        LogUtils.e(TAG, "Removed beacon " + beacon.id);
+                        Timber.e("Removed beacon %s", beacon.id);
 
                         mBeaconMap.remove(beacon.id);
                     }
@@ -343,7 +339,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
 
                 BadgeHelper.evaluate(mContext, beacon);
 
-                LogUtils.e(TAG, "Notification station beacon " + beacon.id);
+                Timber.e("Notification station beacon %s", beacon.id);
 
                 Collection<VdvDeparture> vdvDepartures = new DepartureMonitor()
                         .atBusStop(beacon.id)

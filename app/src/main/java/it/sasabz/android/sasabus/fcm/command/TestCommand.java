@@ -22,7 +22,7 @@ import android.support.annotation.NonNull;
 
 import java.util.Map;
 
-import it.sasabz.android.sasabus.util.LogUtils;
+import timber.log.Timber;
 
 /**
  * Test command because debugging is fun ;-)
@@ -35,6 +35,6 @@ public class TestCommand implements FcmCommand {
 
     @Override
     public void execute(Context context, @NonNull Map<String, String> data) {
-        LogUtils.e(TAG, "Received GCM test message: extraData=" + data);
+        Timber.e("Received GCM test message: extraData=%s", data);
     }
 }

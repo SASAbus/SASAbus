@@ -50,13 +50,13 @@ import it.sasabz.android.sasabus.fcm.FcmSettings;
 import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.AnswersHelper;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.ReportHelper;
 import it.sasabz.android.sasabus.util.UIUtils;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
@@ -93,7 +93,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         verifyData = intent.getData();
 
         if (action != null && verifyData != null) {
-            LogUtils.e(TAG, "Got intent: " + action + " " + verifyData);
+            Timber.e("Got intent: " + action + " " + verifyData);
 
             verify = true;
             loginOrVerify();
@@ -147,7 +147,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         verifyData = intent.getData();
 
         if (action != null && verifyData != null) {
-            LogUtils.e(TAG, "Got intent: " + action + " " + verifyData);
+            Timber.e("Got intent: " + action + " " + verifyData);
 
             verify = true;
             loginOrVerify();
@@ -169,7 +169,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void loginOrVerify() {
         if (!NetUtils.isOnline(this)) {
-            LogUtils.e(TAG, "No internet connection available");
+            Timber.e("No internet connection available");
 
             UIUtils.okDialog(this, R.string.login_no_internet_title,
                     R.string.login_no_internet_subtitle);
@@ -211,7 +211,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                         @Override
                         public void onNext(LoginResponse response) {
-                            LogUtils.e(TAG, response.toString());
+                            Timber.e(response.toString());
 
                             progressDialog.dismiss();
 
@@ -232,7 +232,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                             R.string.login_verify_link_invalid_subtitle);
                                     break;
                                 default:
-                                    LogUtils.e(TAG, "Unknown error: " + response.error);
+                                    Timber.e("Unknown error: " + response.error);
                             }
                         }
                     });
@@ -263,13 +263,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                         @Override
                         public void onNext(LoginResponse response) {
-                            LogUtils.e(TAG, response.toString());
+                            Timber.e(response.toString());
 
                             if (response.success) {
-                                LogUtils.e(TAG, "Login success, got token: " + response.token);
+                                Timber.e("Login success, got token: " + response.token);
 
                                 if (response.token == null) {
-                                    LogUtils.e(TAG, "Token is null");
+                                    Timber.e("Token is null");
                                     loginFailed();
                                     return;
                                 }
@@ -278,7 +278,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                 return;
                             }
 
-                            LogUtils.e(TAG, "Login failure, got error: " + response.error);
+                            Timber.e("Login failure, got error: " + response.error);
 
                             TextInputLayout field = null;
                             switch (response.param) {
@@ -289,7 +289,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     field = passwordLayout;
                                     break;
                                 default:
-                                    LogUtils.e(TAG, "Unknown field " + response.param);
+                                    Timber.e("Unknown field " + response.param);
                                     break;
                             }
 
@@ -362,7 +362,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
             AnswersHelper.logLoginSuccess();
         } else {
-            LogUtils.e(TAG, "Could not set token");
+            Timber.e("Could not set token");
             loginFailed();
         }
     }

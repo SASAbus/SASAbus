@@ -36,12 +36,12 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.network.NetUtils;
 import it.sasabz.android.sasabus.data.vdv.PlannedData;
 import it.sasabz.android.sasabus.ui.intro.AppIntro;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * Special intro fragment which handles downloading of the plan data. If the plan data download
@@ -51,8 +51,6 @@ import rx.schedulers.Schedulers;
  * @author Alex Lardschneider
  */
 public class IntroFragmentData extends Fragment implements Observer<Void>, View.OnClickListener {
-
-    private static final String TAG = "IntroFragmentData";
 
     private Subscription subscription;
 
@@ -166,7 +164,7 @@ public class IntroFragmentData extends Fragment implements Observer<Void>, View.
 
     @Override
     public void onCompleted() {
-        LogUtils.e(TAG, "onCompleted()");
+        Timber.e("onCompleted()");
 
         downloadRunning = false;
         success = true;

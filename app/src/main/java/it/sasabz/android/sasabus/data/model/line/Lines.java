@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.util.LogUtils;
+import timber.log.Timber;
 
 /**
  * @author David Dejori
@@ -92,44 +92,6 @@ public final class Lines {
 
         return String.valueOf(id);
     }
-
-    public static final int[] lineIds = {
-            1001,
-            1003,
-            1005,
-            1006,
-            1071,
-            1072,
-            1008,
-            1009,
-            1101,
-            1102,
-            1011,
-            1012,
-            1014,
-            110,
-            111,
-            112,
-            116,
-            117,
-            1153,
-            183,
-            201,
-            202,
-            1,
-            2,
-            3,
-            4,
-            6,
-            146,
-            211,
-            212,
-            213,
-            214,
-            215,
-            221,
-            222
-    };
 
     public static final int[] checkBoxesId = {
             100001,
@@ -333,7 +295,7 @@ public final class Lines {
             case 146:
                 return lineColors[36];
             default:
-                LogUtils.e("Lines", "Unknown line id " + id);
+                Timber.e("Unknown line id " + id);
                 return "FF9800";
         }
     }

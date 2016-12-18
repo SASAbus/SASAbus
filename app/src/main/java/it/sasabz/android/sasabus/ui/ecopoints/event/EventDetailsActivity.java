@@ -58,13 +58,11 @@ import it.sasabz.android.sasabus.data.network.rest.model.Event;
 import it.sasabz.android.sasabus.data.network.rest.model.EventPoint;
 import it.sasabz.android.sasabus.ui.widget.ObservableButton;
 import it.sasabz.android.sasabus.util.CustomTabsHelper;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.map.EventMapView;
 import it.sasabz.android.sasabus.util.recycler.EventDetailsPointsAdapter;
+import timber.log.Timber;
 
 public class EventDetailsActivity extends RxAppCompatActivity implements View.OnClickListener {
-
-    private static final String TAG = "EventDetailsActivity";
 
     public static final String EXTRA_EVENT = "it.sasabz.android.sasabus.EXTRA_EVENT";
     public static final String EXTRA_EVENT_ID = "it.sasabz.android.sasabus.EXTRA_EVENT_ID";
@@ -99,12 +97,12 @@ public class EventDetailsActivity extends RxAppCompatActivity implements View.On
     private final BroadcastReceiver pointReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            LogUtils.e(TAG, "Got event point broadcast");
+            Timber.e("Got event point broadcast");
 
             int id = intent.getIntExtra(EXTRA_BEACON_POINT, -1);
 
             if (id == -1) {
-                LogUtils.e(TAG, "Missing intent extra " + EXTRA_BEACON_POINT);
+                Timber.e("Missing intent extra " + EXTRA_BEACON_POINT);
                 return;
             }
 
@@ -122,12 +120,12 @@ public class EventDetailsActivity extends RxAppCompatActivity implements View.On
     private final BroadcastReceiver eventCompletedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            LogUtils.e(TAG, "Got event completed broadcast");
+            Timber.e("Got event completed broadcast");
 
             String code = intent.getStringExtra(EXTRA_QR_CODE);
 
             if (TextUtils.isEmpty(code)) {
-                LogUtils.e(TAG, "Missing intent extra " + EXTRA_QR_CODE);
+                Timber.e("Missing intent extra " + EXTRA_QR_CODE);
                 return;
             }
 
@@ -145,7 +143,7 @@ public class EventDetailsActivity extends RxAppCompatActivity implements View.On
     private final BroadcastReceiver qrCodeRedeemedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            LogUtils.e(TAG, "Got QR code redeemed broadcast");
+            Timber.e("Got QR code redeemed broadcast");
 
             event.completed = true;
             event.redeemed = true;
@@ -158,7 +156,7 @@ public class EventDetailsActivity extends RxAppCompatActivity implements View.On
 
         Intent intent = getIntent();
         if (!intent.hasExtra(EXTRA_EVENT)) {
-            LogUtils.e(TAG, "Missing intent extra " + EXTRA_EVENT);
+            Timber.e("Missing intent extra " + EXTRA_EVENT);
             finish();
             return;
         }

@@ -21,8 +21,8 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
+import timber.log.Timber;
 
 /**
  * Called if InstanceID token is updated. This may occur if the security of
@@ -34,8 +34,6 @@ import it.sasabz.android.sasabus.util.Utils;
  */
 public class InstanceIdService extends FirebaseInstanceIdService {
 
-    private static final String TAG = "InstanceIdService";
-
     @Override
     public void onTokenRefresh() {
         if (Utils.isFDroid()) {
@@ -44,12 +42,12 @@ public class InstanceIdService extends FirebaseInstanceIdService {
 
         String token = FirebaseInstanceId.getInstance().getToken();
 
-        LogUtils.e(TAG, "Got token: " + token);
+        Timber.e("Got token: " + token);
 
         FcmSettings.setGcmToken(this, token);
 
         FirebaseMessaging.getInstance().subscribeToTopic("general");
 
-        LogUtils.e(TAG, "Registration complete");
+        Timber.e("Registration complete");
     }
 }

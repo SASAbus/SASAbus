@@ -49,9 +49,9 @@ import it.sasabz.android.sasabus.ui.line.LinesActivity;
 import it.sasabz.android.sasabus.ui.parking.ParkingActivity;
 import it.sasabz.android.sasabus.ui.route.RouteActivity;
 import it.sasabz.android.sasabus.util.Changelog;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
+import timber.log.Timber;
 
 /**
  * A base activity that handles common functionality in the app. This includes the
@@ -63,8 +63,6 @@ import it.sasabz.android.sasabus.util.Utils;
  * @author Alex Lardschneider
  */
 public abstract class BaseActivity extends RxAppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    private static final String TAG = "BaseActivity";
 
     /**
      * Navigation drawer
@@ -182,7 +180,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Naviga
                 mMainContent.setAlpha(0);
                 mMainContent.animate().alpha(1).setDuration(MAIN_CONTENT_FADEIN_DURATION);
             } else {
-                LogUtils.e(TAG, "No view with ID main_content to fade in.");
+                Timber.e("No view with ID main_content to fade in.");
             }
         }
     }

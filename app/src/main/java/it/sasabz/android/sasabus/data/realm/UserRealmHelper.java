@@ -43,9 +43,9 @@ import it.sasabz.android.sasabus.data.realm.user.FilterLine;
 import it.sasabz.android.sasabus.data.realm.user.RecentRoute;
 import it.sasabz.android.sasabus.data.realm.user.UserDataModule;
 import it.sasabz.android.sasabus.sync.TripSyncHelper;
-import it.sasabz.android.sasabus.util.LogUtils;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 public final class UserRealmHelper {
 
@@ -173,7 +173,7 @@ public final class UserRealmHelper {
         realm.commitTransaction();
         realm.close();
 
-        LogUtils.e(TAG, "Added favorite line " + lineId);
+        Timber.e("Added favorite line " + lineId);
     }
 
     public static void addFavoriteBusStop(int busStopGroup) {
@@ -194,7 +194,7 @@ public final class UserRealmHelper {
         realm.commitTransaction();
         realm.close();
 
-        LogUtils.e(TAG, "Added favorite bus stop group " + busStopGroup);
+        Timber.e("Added favorite bus stop group " + busStopGroup);
     }
 
     public static void removeFavoriteLine(int lineId) {
@@ -209,7 +209,7 @@ public final class UserRealmHelper {
 
         realm.close();
 
-        LogUtils.e(TAG, "Removed favorite line " + lineId);
+        Timber.e("Removed favorite line " + lineId);
     }
 
     public static void removeFavoriteBusStop(int busStopGroup) {
@@ -225,7 +225,7 @@ public final class UserRealmHelper {
 
         realm.close();
 
-        LogUtils.e(TAG, "Removed favorite bus stop group " + busStopGroup);
+        Timber.e("Removed favorite bus stop group " + busStopGroup);
     }
 
     public static boolean hasFavoriteLine(int lineId) {
@@ -298,7 +298,7 @@ public final class UserRealmHelper {
             return null;
         }
 
-        LogUtils.e(TAG, "Inserted trip " + beacon.getHash());
+        Timber.e("Inserted trip " + beacon.getHash());
 
         CloudTrip cloudTrip = new CloudTrip(
                 beacon.getHash(),
@@ -387,7 +387,7 @@ public final class UserRealmHelper {
         realm.commitTransaction();
         realm.close();
 
-        LogUtils.w(TAG, "Added beacon " + major + " to realm");
+        Timber.w("Added beacon " + major + " to realm");
     }
 
 

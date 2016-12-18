@@ -28,6 +28,7 @@ import java.util.Locale;
 
 import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
 import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
+import timber.log.Timber;
 
 /**
  * Utility class to form weak hashes like md5 identifier for trips or app signatures.
@@ -36,8 +37,6 @@ import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
  * @author David Dejori
  */
 public final class HashUtils {
-
-    private static final String TAG = "HashUtils";
 
     private HashUtils() {
     }
@@ -84,8 +83,7 @@ public final class HashUtils {
         String identifier = String.format(Locale.ROOT, "%s:%s:%s:%s:%s",
                 trip, dayOfYear, year, accountId, origin);
 
-        LogUtils.i(TAG, "Generating hash for bus " + beacon.id + ": " + identifier);
-
+        Timber.i("Generating hash for bus " + beacon.id + ": " + identifier);
 
         return md5(identifier).substring(0, 16);
     }

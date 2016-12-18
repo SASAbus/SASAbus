@@ -183,7 +183,7 @@ public final class Utils {
     public static void throwTripError(Context context, String text) {
         if (BuildConfig.DEBUG) {
             Notifications.error(context, new IllegalTripException(text));
-            LogUtils.e("Utils", "Trip error: " + text);
+            Timber.e("Trip error: " + text);
         }
     }
 

@@ -22,7 +22,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import it.sasabz.android.sasabus.util.LogUtils;
+import timber.log.Timber;
 
 /**
  * Called when a planned trip calculation was scheduled. This receiver will calculate the next
@@ -37,8 +37,6 @@ import it.sasabz.android.sasabus.util.LogUtils;
  */
 public class NotificationReceiver extends BroadcastReceiver {
 
-    private static final String TAG = "NotificationReceiver";
-
     public static final String ACTION_HIDE_NOTIFICATION =
             "it.sasabz.android.sasabus.HIDE_NOTIFICATION";
 
@@ -47,7 +45,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        LogUtils.e(TAG, "onReceive() " + intent.getAction());
+        Timber.e("onReceive() " + intent.getAction());
 
         if (ACTION_HIDE_NOTIFICATION.equals(intent.getAction())) {
             hideNotification(context, intent);
@@ -58,7 +56,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         int notificationId = intent.getIntExtra(EXTRA_NOTIFICATION_ID, 0);
 
         if (notificationId == 0) {
-            LogUtils.e(TAG, "Notification id == 0");
+            Timber.e("Notification id == 0");
             return;
         }
 
@@ -67,6 +65,6 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         notificationManager.cancel(notificationId);
 
-        LogUtils.e(TAG, "Cancelled notification with id " + notificationId);
+        Timber.e("Cancelled notification with id " + notificationId);
     }
 }

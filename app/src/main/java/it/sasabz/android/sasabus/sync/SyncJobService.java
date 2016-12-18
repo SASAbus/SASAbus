@@ -22,7 +22,7 @@ import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.os.Build;
 
-import it.sasabz.android.sasabus.util.LogUtils;
+import timber.log.Timber;
 
 /**
  * Job which will be scheduled by {@link android.app.job.JobScheduler}. This job will substitute
@@ -40,11 +40,9 @@ import it.sasabz.android.sasabus.util.LogUtils;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class SyncJobService extends JobService {
 
-    private static final String TAG = "SyncJobService";
-
     @Override
     public boolean onStartJob(JobParameters params) {
-        LogUtils.i(TAG, "onStartJob()");
+        Timber.i("onStartJob()");
 
         new SyncHelper(this, this, params).performSyncAsync();
 
@@ -53,7 +51,7 @@ public class SyncJobService extends JobService {
 
     @Override
     public boolean onStopJob(JobParameters params) {
-        LogUtils.i(TAG, "onStopJob()");
+        Timber.i("onStopJob()");
 
         return true;
     }
