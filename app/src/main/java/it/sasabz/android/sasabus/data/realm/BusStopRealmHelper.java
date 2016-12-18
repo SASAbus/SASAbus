@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import io.realm.DynamicRealm;
 import io.realm.Realm;
@@ -35,7 +36,6 @@ import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.data.realm.busstop.BusStopModule;
 import it.sasabz.android.sasabus.data.realm.busstop.SadBusStop;
 import it.sasabz.android.sasabus.data.vdv.model.VdvBusStop;
-import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.Utils;
 import timber.log.Timber;
 
@@ -138,9 +138,7 @@ public final class BusStopRealmHelper {
         BusStop busStop = realm.where(BusStop.class).equalTo("id", id).findFirst();
 
         if (busStop == null) {
-            Timber.e("Missing SASA station: %s", id);
-            Utils.logException(new Throwable("getMunic SASA station = 0"));
-
+            missingBusStop(id);
             return sContext.getString(R.string.unknown);
         }
 
@@ -157,9 +155,7 @@ public final class BusStopRealmHelper {
         SadBusStop busStop = realm.where(SadBusStop.class).equalTo("id", id).findFirst();
 
         if (busStop == null) {
-            Timber.e("Missing SASA station: %s", id);
-            Utils.logException(new Throwable("getSadMunic SAD station = 0"));
-
+            missingBusStop(id);
             return sContext.getString(R.string.unknown);
         }
 
@@ -174,9 +170,7 @@ public final class BusStopRealmHelper {
         BusStop busStop = realm.where(BusStop.class).equalTo("id", id).findFirst();
 
         if (busStop == null) {
-            AnalyticsHelper.sendEvent(TAG, "Missing SASA station: " + id);
-            Utils.logException(new Throwable("getBusStop SASA station = 0"));
-
+            missingBusStop(id);
             busStop = new BusStop(id, String.valueOf(id), String.valueOf(id), 0, 0, 0);
         } else {
             busStop = realm.copyFromRealm(busStop);
@@ -208,9 +202,7 @@ public final class BusStopRealmHelper {
         SadBusStop busStop = realm.where(SadBusStop.class).equalTo("id", id).findFirst();
 
         if (busStop == null) {
-            AnalyticsHelper.sendEvent(TAG, "Missing SASA station: " + id);
-            Utils.logException(new Throwable("getSadBusStop SASA station = 0"));
-
+            missingBusStop(id);
             busStop = new SadBusStop(id, String.valueOf(id), String.valueOf(id), 0, 0);
         } else {
             busStop = realm.copyFromRealm(busStop);
@@ -277,6 +269,7 @@ public final class BusStopRealmHelper {
         List<BusStop> busStops = realm.where(BusStop.class).equalTo("family", family).findAll();
 
         if (busStops.isEmpty()) {
+            missingBusStopFamily(family);
             return Collections.emptyList();
         }
 
@@ -289,5 +282,22 @@ public final class BusStopRealmHelper {
         realm.close();
 
         return stops;
+    }
+
+
+    // ==================================== MISSING BUS STOPS ======================================
+
+    private static void missingBusStop(int id) {
+        String message = "Missing bus stop: " + id;
+
+        Timber.e(message);
+        Utils.logException(new NoSuchElementException(message));
+    }
+
+    private static void missingBusStopFamily(int id) {
+        String message = "Missing bus stop family: " + id;
+
+        Timber.e(message);
+        Utils.logException(new NoSuchElementException(message));
     }
 }

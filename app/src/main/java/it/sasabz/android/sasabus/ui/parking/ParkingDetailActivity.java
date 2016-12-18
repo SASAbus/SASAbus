@@ -34,9 +34,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.ui.busstop.BusStopDetailActivity;
+import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
+import it.sasabz.android.sasabus.ui.departure.DepartureActivity;
 import it.sasabz.android.sasabus.util.Utils;
 
 /**
@@ -164,8 +165,8 @@ public class ParkingDetailActivity extends AppCompatActivity {
     }
 
     private void onClickStation(String value) {
-        Intent intent = new Intent(getApplication(), BusStopDetailActivity.class);
-        intent.putExtra(Config.EXTRA_STATION_ID, Integer.parseInt(value.split(":")[0]));
+        BusStop busStop = BusStopRealmHelper.getBusStop(Integer.parseInt(value.split(":")[0]));
+        Intent intent = DepartureActivity.intent(this, busStop.getFamily());
         startActivity(intent);
     }
 
