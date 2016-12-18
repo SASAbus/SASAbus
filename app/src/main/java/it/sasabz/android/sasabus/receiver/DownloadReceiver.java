@@ -51,7 +51,7 @@ public class DownloadReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
 
-        Timber.e("onReceive() action: " + action);
+        Timber.e("onReceive() action: %s", action);
 
         if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
             long downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0);

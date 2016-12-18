@@ -186,8 +186,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
         }
 
         if (currentBusStop != null && !found) {
-            Timber.i("Removed current bus stop " +
-                    currentBusStop.second.getId());
+            Timber.i("Removed current bus stop %s", currentBusStop.second.getId());
 
             BusBeaconHandler.getInstance(mContext)
                     .currentBusStopOutOfRange(currentBusStop);
@@ -231,12 +230,11 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
                 Notifications.cancel(mContext, major);
             }
 
-            Timber.i("Beacon " + major + ", seen: " + beaconInfo.seenSeconds +
-                    ", distance: " + beaconInfo.distance);
+            Timber.i("Beacon %s, seen: %s, distance: %s", major, beaconInfo.seenSeconds, beaconInfo.distance);
         } else {
             mBeaconMap.put(major, new BusStopBeacon(major));
 
-            Timber.e("Added beacon " + major);
+            Timber.e("Added beacon %s", major);
 
             UserRealmHelper.addBeacon(beacon,
                     it.sasabz.android.sasabus.data.realm.user.Beacon.TYPE_BUS_STOP);
@@ -258,7 +256,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
                 BusStopRealmHelper.getBusStopOrNull(major);
 
         if (busStop != null) {
-            Timber.i("Set " + major + " as current bus stop");
+            Timber.i("Set %s as current bus stop", major);
             currentBusStop = new Pair<>(BusBeacon.TYPE_BEACON, new BusStop(busStop));
         }
     }
@@ -310,7 +308,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
                             currentBusStop = null;
                         }
 
-                        Timber.e("Removed beacon " + beacon.id);
+                        Timber.e("Removed beacon %s", beacon.id);
 
                         mBeaconMap.remove(beacon.id);
                     }
@@ -341,7 +339,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
 
                 BadgeHelper.evaluate(mContext, beacon);
 
-                Timber.e("Notification station beacon " + beacon.id);
+                Timber.e("Notification station beacon %s", beacon.id);
 
                 Collection<VdvDeparture> vdvDepartures = new DepartureMonitor()
                         .atBusStop(beacon.id)

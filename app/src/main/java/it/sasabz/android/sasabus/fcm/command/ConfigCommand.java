@@ -38,13 +38,13 @@ public class ConfigCommand implements FcmCommand {
 
     @Override
     public void execute(Context context, @NonNull Map<String, String> data) {
-        Timber.e("Received GCM test message: extraData=" + data);
+        Timber.e("Received GCM test message: extraData=%s", data);
 
         String type = data.get("type");
         String key = data.get("key");
         String value = data.get("value");
 
-        Timber.e("Setting key " + key + " of type " + type + " to value " + value);
+        Timber.e("Setting key %s of type %s to value %s", key, type, value);
 
         SharedPreferences.Editor editor = PreferenceManager
                 .getDefaultSharedPreferences(context).edit();

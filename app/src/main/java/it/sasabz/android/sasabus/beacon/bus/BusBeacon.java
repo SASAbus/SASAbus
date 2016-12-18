@@ -168,7 +168,7 @@ public class BusBeacon implements Beacon, JsonSerializable {
     public void setHash(String hash) {
         this.hash = hash;
 
-        Timber.e("Set hash " + hash + " for trip " + id);
+        Timber.e("Set hash %s for trip %s", hash, id);
     }
 
     boolean shouldFetchDelay() {

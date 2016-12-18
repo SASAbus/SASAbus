@@ -64,7 +64,7 @@ public final class AnalyticsHelper {
             mTracker.setScreenName(screenName);
             mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
-            Timber.e("Screen View recorded: " + screenName);
+            Timber.e("Screen View recorded: %s", screenName);
         }
     }
 
@@ -81,8 +81,7 @@ public final class AnalyticsHelper {
                         .setAction(action)
                         .build());
 
-                Timber.e("Event recorded: category: " + category +
-                        ", action: " + action);
+                Timber.e("Event recorded: category: %s, action: %s", category, action);
             }
         }
     }

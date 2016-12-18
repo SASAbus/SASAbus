@@ -110,13 +110,13 @@ public final class EventBeaconHandler implements IBeaconHandler {
             beaconInfo.seen();
             beaconInfo.setDistance(beacon.getDistance());
 
-            Timber.e("Beacon " + major + ":" + minor + ", seen: " +
-                    beaconInfo.seenSeconds + ", distance: " + beaconInfo.distance);
+            Timber.e("Beacon %s, seen: %s, distance: %s", major, beaconInfo.seenSeconds,
+                    beaconInfo.distance);
         } else {
             EventBeacon eventBeacon = new EventBeacon(major, minor);
             mBeaconMap.put(key, eventBeacon);
 
-            Timber.e("Added beacon " + major);
+            Timber.e("Added beacon %s", major);
 
             sendBeacon(eventBeacon);
         }
@@ -178,7 +178,7 @@ public final class EventBeaconHandler implements IBeaconHandler {
 
                     @Override
                     public void onNext(EventBeaconResponse response) {
-                        Timber.e("Uploaded beacon: " + beacon.major + ":" + beacon.minor);
+                        Timber.e("Uploaded beacon: %s:%s", beacon.major, beacon.minor);
 
                         if (response.event == null) {
                             Timber.e("event == null, most probably beacon " +

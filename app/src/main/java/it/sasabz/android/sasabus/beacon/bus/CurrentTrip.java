@@ -64,7 +64,7 @@ public class CurrentTrip implements JsonSerializable {
                 path.add(new BusStop(BusStopRealmHelper.getBusStop(busStop.getId())));
             }
         } else {
-            Timber.e("Times for trip " + beacon.trip + " are null");
+            Timber.e("Times for trip %s are null", beacon.trip);
             beacon.setSuitableForTrip(context, false);
             notificationVisible = false;
         }

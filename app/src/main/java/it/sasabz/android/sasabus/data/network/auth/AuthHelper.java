@@ -142,7 +142,7 @@ public final class AuthHelper {
 
     public static void unregisterLogoutReceiver(Activity activity, BroadcastReceiver receiver) {
         if (receiver == null) {
-            Timber.e("Attempt to unregister a null receiver in class " +
+            Timber.e("Attempt to unregister a null receiver in class %s",
                     activity.getClass().getSimpleName());
             return;
         }
@@ -205,7 +205,7 @@ public final class AuthHelper {
                 return false;
             }
 
-            Timber.d("Token is valid, got user id: " + userId);
+            Timber.d("Token is valid, got user id: %s", userId);
 
             setUserId(sContext, userId);
             setAuthToken(sContext, token);
@@ -250,15 +250,15 @@ public final class AuthHelper {
             }
 
             if (!userId.equals(savedUserId)) {
-                Timber.e("Saved user id and token user id don't match, should be " +
-                        savedUserId + ", got " + userId + " instead");
+                Timber.e("Saved user id and token user id don't match, should be %s," +
+                        " got %s instead", savedUserId, userId);
 
                 clearCredentials();
 
                 return false;
             }
 
-            Timber.d("Token is valid, got user id: " + userId);
+            Timber.d("Token is valid, got user id: %s", userId);
 
             return true;
         } catch (SignatureException e) {

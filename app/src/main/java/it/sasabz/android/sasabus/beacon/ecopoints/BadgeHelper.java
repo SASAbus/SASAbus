@@ -48,7 +48,7 @@ public final class BadgeHelper {
     public static void evaluate(Context context, Beacon beacon) {
         for (InAppBadge badge : BADGES) {
             if (!badge.completed() && badge.evaluate(beacon)) {
-                Timber.e("Completed badge " + badge.id());
+                Timber.e("Completed badge %s", badge.id());
 
                 badge.complete();
 

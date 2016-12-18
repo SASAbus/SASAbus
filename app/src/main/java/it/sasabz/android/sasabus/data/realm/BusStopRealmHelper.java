@@ -82,7 +82,7 @@ public final class BusStopRealmHelper {
         long version = dynamicRealm.getVersion();
         dynamicRealm.close();
 
-        Timber.w("Realm db version: " + version + ", should be " + DB_VERSION);
+        Timber.w("Realm db version: %s, should be %s", version, DB_VERSION);
 
         if (version < DB_VERSION || version > DB_VERSION) {
             Timber.e("Deleting old realm");
@@ -100,7 +100,7 @@ public final class BusStopRealmHelper {
         BusStop busStop = realm.where(BusStop.class).equalTo("id", id).findFirst();
 
         if (busStop == null) {
-            Timber.e("Missing SASA station: " + id);
+            Timber.e("Missing SASA station: %s", id);
             Utils.logException(new Throwable("getName SASA station = 0"));
 
             return sContext.getString(R.string.unknown);
@@ -119,7 +119,7 @@ public final class BusStopRealmHelper {
         SadBusStop busStop = realm.where(SadBusStop.class).equalTo("id", id).findFirst();
 
         if (busStop == null) {
-            Timber.e("Missing SASA station: " + id);
+            Timber.e("Missing SASA station: %s", id);
             Utils.logException(new Throwable("getSadName SAD station = 0"));
 
             return sContext.getString(R.string.unknown);
@@ -138,7 +138,7 @@ public final class BusStopRealmHelper {
         BusStop busStop = realm.where(BusStop.class).equalTo("id", id).findFirst();
 
         if (busStop == null) {
-            Timber.e("Missing SASA station: " + id);
+            Timber.e("Missing SASA station: %s", id);
             Utils.logException(new Throwable("getMunic SASA station = 0"));
 
             return sContext.getString(R.string.unknown);
@@ -157,7 +157,7 @@ public final class BusStopRealmHelper {
         SadBusStop busStop = realm.where(SadBusStop.class).equalTo("id", id).findFirst();
 
         if (busStop == null) {
-            Timber.e("Missing SASA station: " + id);
+            Timber.e("Missing SASA station: %s", id);
             Utils.logException(new Throwable("getSadMunic SAD station = 0"));
 
             return sContext.getString(R.string.unknown);
