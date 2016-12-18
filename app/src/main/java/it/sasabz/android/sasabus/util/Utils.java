@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
+import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
@@ -131,6 +132,10 @@ public final class Utils {
         if (BuildConfig.DEBUG) {
             t.printStackTrace();
         } else {
+            if (Log.isLoggable("LOG", Log.ERROR)) {
+                t.printStackTrace();
+            }
+
             if (t instanceof SocketTimeoutException) return;
             if (t instanceof SocketException) return;
             if (t instanceof UnknownHostException) return;

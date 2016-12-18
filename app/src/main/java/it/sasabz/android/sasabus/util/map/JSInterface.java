@@ -25,8 +25,10 @@ import java.io.File;
 
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.ui.bus.BusDetailActivity;
-import it.sasabz.android.sasabus.ui.busstop.BusStopDetailActivity;
+import it.sasabz.android.sasabus.ui.departure.DepartureActivity;
 import it.sasabz.android.sasabus.ui.line.LineCourseActivity;
 import it.sasabz.android.sasabus.ui.line.LineDetailsActivity;
 import it.sasabz.android.sasabus.ui.route.RouteMapPickerActivity;
@@ -35,103 +37,102 @@ import timber.log.Timber;
 
 class JSInterface {
 
-    private final Context context;
+    private final Context mContext;
 
-    private final File rootFolder;
+    private final File mRootFolder;
 
     JSInterface(Context context) {
-        this.context = context;
+        this.mContext = context;
 
-        rootFolder = MapDownloadHelper.getRootFolder(context);
+        mRootFolder = MapDownloadHelper.getRootFolder(context);
 
-        Timber.e(rootFolder.getAbsolutePath());
+        Timber.e(mRootFolder.getAbsolutePath());
     }
 
     @JavascriptInterface
     public String getMapTilesRootUrl() {
-        return "file://" + rootFolder.getAbsolutePath();
+        return "file://" + mRootFolder.getAbsolutePath();
     }
 
     @JavascriptInterface
     public void onVehicleClick(int vehicle) {
-        Intent intent = new Intent(context, BusDetailActivity.class);
+        Intent intent = new Intent(mContext, BusDetailActivity.class);
         intent.putExtra(Config.EXTRA_VEHICLE, vehicle);
-        context.startActivity(intent);
+        mContext.startActivity(intent);
     }
 
     @JavascriptInterface
     public void onLineClick(int lineId) {
-        Intent intent = new Intent(context, LineDetailsActivity.class);
+        Intent intent = new Intent(mContext, LineDetailsActivity.class);
         intent.putExtra(Config.EXTRA_LINE_ID, lineId);
-        context.startActivity(intent);
+        mContext.startActivity(intent);
     }
 
     @JavascriptInterface
     public void onLineCourseClick(int vehicle, int busStop, int tripId) {
-        context.startActivity(LineCourseActivity.intent(context, tripId,
+        mContext.startActivity(LineCourseActivity.intent(mContext, tripId,
                 0, busStop, vehicle));
     }
 
     @JavascriptInterface
     public String getDelayString(int delay) {
-        return context.getString(R.string.bottom_sheet_delayed, delay);
+        return mContext.getString(R.string.bottom_sheet_delayed, delay);
     }
 
     @JavascriptInterface
     public String getBusDetailsString() {
-        return context.getString(R.string.title_bus_details).toUpperCase();
+        return mContext.getString(R.string.title_bus_details).toUpperCase();
     }
 
     @JavascriptInterface
     public String getLineDetailsString() {
-        return context.getString(R.string.title_line_details).toUpperCase();
+        return mContext.getString(R.string.title_line_details).toUpperCase();
     }
 
     @JavascriptInterface
     public String getCourseDetailsString() {
-        return context.getString(R.string.title_course_details).toUpperCase();
+        return mContext.getString(R.string.title_course_details).toUpperCase();
     }
 
     @JavascriptInterface
     public String getNowAtString(String stop) {
-        return context.getString(R.string.line_current_stop, stop);
+        return mContext.getString(R.string.line_current_stop, stop);
     }
 
 
     @JavascriptInterface
     public String getLineString(String line) {
-        return context.getString(R.string.line_format, line);
+        return mContext.getString(R.string.line_format, line);
     }
 
     @JavascriptInterface
     public String getHeadingToString(String stop) {
-        return context.getString(R.string.line_heading, stop);
+        return mContext.getString(R.string.line_heading, stop);
     }
 
     @JavascriptInterface
     public void onBusStopDetailsClick(int id) {
-        Intent intent = new Intent(context, BusStopDetailActivity.class);
-        intent.putExtra(Config.EXTRA_STATION_ID, id);
-        //((Activity) context).startActivityForResult(intent, INTENT_DISPLAY_FAVORITES);
+        BusStop busStop = BusStopRealmHelper.getBusStop(id);
+        Intent intent = DepartureActivity.intent(mContext, busStop.getFamily());
     }
 
     @JavascriptInterface
     public String getBusStopDetailsString() {
-        return context.getString(R.string.station_details).toUpperCase();
+        return mContext.getString(R.string.station_details).toUpperCase();
     }
 
     @JavascriptInterface
     public void onBusStopSelectClick(int id) {
-        ((RouteMapPickerActivity) context).selectBusStop(id);
+        ((RouteMapPickerActivity) mContext).selectBusStop(id);
     }
 
     @JavascriptInterface
     public String getSelectString() {
-        return context.getString(R.string.station_select).toUpperCase();
+        return mContext.getString(R.string.station_select).toUpperCase();
     }
 
     @JavascriptInterface
     public boolean shouldUseOnlineMap() {
-        return !MapDownloadHelper.mapExists || !Settings.shouldShowMapDialog(context);
+        return !MapDownloadHelper.mapExists || !Settings.shouldShowMapDialog(mContext);
     }
 }

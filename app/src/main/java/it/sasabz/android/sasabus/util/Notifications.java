@@ -48,8 +48,9 @@ import it.sasabz.android.sasabus.data.model.Departure;
 import it.sasabz.android.sasabus.data.network.rest.model.Badge;
 import it.sasabz.android.sasabus.data.network.rest.model.CloudTrip;
 import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.ui.NewsActivity;
-import it.sasabz.android.sasabus.ui.busstop.BusStopDetailActivity;
+import it.sasabz.android.sasabus.ui.departure.DepartureActivity;
 import it.sasabz.android.sasabus.ui.ecopoints.EcoPointsActivity;
 import timber.log.Timber;
 
@@ -61,8 +62,6 @@ import timber.log.Timber;
 public final class Notifications {
 
     private static final int NOTIFICATION_SURVEY = 1 << 20;
-
-    private static final int NOTIFICATION_TRIP_SUCCESS = 1 << 19;
 
     public static final int NOTIFICATION_BUS = 1 << 18;
 
@@ -109,8 +108,8 @@ public final class Notifications {
             mBuilder.setVibrate(null);
         }
 
-        Intent resultIntent = new Intent(context, BusStopDetailActivity.class);
-        resultIntent.putExtra(Config.EXTRA_STATION_ID, busStopId);
+        BusStop busStop = BusStopRealmHelper.getBusStop(busStopId);
+        Intent resultIntent = DepartureActivity.intent(context, busStop.getFamily());
 
         PendingIntent resultPendingIntent = PendingIntent.getActivity(context,
                 busStopId,

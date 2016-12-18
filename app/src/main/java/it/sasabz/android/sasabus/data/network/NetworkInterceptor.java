@@ -78,7 +78,7 @@ public class NetworkInterceptor implements Interceptor {
 
         Request request = newRequest.build();
 
-        Timber.w(request.method() + " url " + originalRequest.url());
+        Timber.w("%s url %s", request.method(), originalRequest.url());
 
         return chain.proceed(request);
     }

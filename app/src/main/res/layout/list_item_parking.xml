@@ -39,25 +39,18 @@
         android:padding="16dp"
         android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/parking_list_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="2">
-
-            <TextView
-                android:id="@+id/parking_list_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/card_title_default_color"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                android:gravity="start"
-                android:ellipsize="end"
-                android:maxLines="1"/>
-
-        </LinearLayout>
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/card_title_default_color"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:gravity="start"
+            android:ellipsize="end"
+            android:maxLines="1"/>
 
         <ProgressBar
             android:id="@+id/parking_list_slots"

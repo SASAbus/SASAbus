@@ -31,10 +31,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.model.route.RouteRecent;
-import it.sasabz.android.sasabus.ui.busstop.BusStopDetailActivity;
+import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
+import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
+import it.sasabz.android.sasabus.ui.departure.DepartureActivity;
 
 /**
  * @author Alex Lardschneider
@@ -128,8 +129,9 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
 
             RouteRecent item = mItems.get(position);
 
-            Intent intent = new Intent(v.getContext(), BusStopDetailActivity.class);
-            intent.putExtra(Config.EXTRA_STATION_ID, item.getId());
+            BusStop busStop = BusStopRealmHelper.getBusStop(item.getId());
+            Intent intent = DepartureActivity.intent(v.getContext(), busStop.getFamily());
+
             v.getContext().startActivity(intent);
         }
     }
