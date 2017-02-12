@@ -80,7 +80,7 @@ android {
     }
 
     retrolambda {
-        jdk '/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home'
+        jdk '/Library/Java/JavaVirtualMachines/jdk1.8.0_112.jdk/Contents/Home'
     }
 
     /*productFlavors {
