@@ -54,69 +54,66 @@ public final class VdvHandler {
     }
 
     public static Observable<Void> load(Context context) {
-        return Observable.fromCallable(new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                Preconditions.checkNotUiThread();
+        return Observable.fromCallable(() -> {
+            Preconditions.checkNotUiThread();
 
-                JodaTimeAndroid.init(context);
+            JodaTimeAndroid.init(context);
 
-                if (!PlannedData.planDataExists(context)) {
-                    Timber.e("Planned data does not exist, skipping loading");
-                    return null;
-                }
-
-                if (isLoaded.get()) {
-                    Timber.i("Planned data already loaded");
-                    return null;
-                }
-
-                if (isLoading.get()) {
-                    Timber.i("Already loading data...");
-                    blockTillLoaded();
-                    return null;
-                }
-
-                isLoading.set(true);
-
-                try {
-                    long time = -System.currentTimeMillis();
-
-                    JSONObject data = new JSONObject(IOUtils.readFileAsString(new File(IOUtils
-                            .getDataDir(context).getAbsolutePath(), "/planned-data.json")));
-
-                    VdvCalendar.loadCalendar(data.getJSONArray("calendar"));
-                    VdvPaths.loadPaths(data.getJSONArray("paths"));
-                    VdvTrips.loadTrips(data.getJSONArray("trips"), VdvCalendar.today(context).getId());
-                    VdvIntervals.loadIntervals(data.getJSONArray("travel_times"));
-                    VdvBusStopBreaks.loadBreaks(data.getJSONArray("bus_stop_stop_times"));
-                    VdvTripBreaks.loadBreaks(data.getJSONArray("trip_stop_times"));
-
-                    isValid.set(true);
-
-                    Timber.i("Loaded planned data in %d ms", time + System.currentTimeMillis());
-                } catch (JSONException e) {
-                    // If this happens, the json plan data most likely is in an invalid format
-                    // because it got corrupted somehow, or someone modified it on purpose.
-                    // We should reschedule a new plan data download if this happens.
-                    Utils.logException(new RuntimeException("JSON format is invalid", e));
-                    isValid.set(false);
-
-                    Settings.markDataUpdateAvailable(context, true);
-                } catch (Exception e) {
-                    Utils.logException(new RuntimeException("Failed to load planned data", e));
-                    isValid.set(false);
-                }
-
-                if (!isValid()) {
-                    BeaconHandler.get(context).stop();
-                }
-
-                isLoaded.set(true);
-                isLoading.set(false);
-
+            if (!PlannedData.planDataExists(context)) {
+                Timber.e("Planned data does not exist, skipping loading");
                 return null;
             }
+
+            if (isLoaded.get()) {
+                Timber.i("Planned data already loaded");
+                return null;
+            }
+
+            if (isLoading.get()) {
+                Timber.i("Already loading data...");
+                blockTillLoaded();
+                return null;
+            }
+
+            isLoading.set(true);
+
+            try {
+                long time = -System.currentTimeMillis();
+
+                JSONObject data = new JSONObject(IOUtils.readFileAsString(new File(IOUtils
+                        .getDataDir(context).getAbsolutePath(), "/planned-data.json")));
+
+                VdvCalendar.loadCalendar(data.getJSONArray("calendar"));
+                VdvPaths.loadPaths(data.getJSONArray("paths"));
+                VdvTrips.loadTrips(data.getJSONArray("trips"), VdvCalendar.today(context).getId());
+                VdvIntervals.loadIntervals(data.getJSONArray("travel_times"));
+                VdvBusStopBreaks.loadBreaks(data.getJSONArray("bus_stop_stop_times"));
+                VdvTripBreaks.loadBreaks(data.getJSONArray("trip_stop_times"));
+
+                isValid.set(true);
+
+                Timber.i("Loaded planned data in %d ms", time + System.currentTimeMillis());
+            } catch (JSONException e) {
+                // If this happens, the json plan data most likely is in an invalid format
+                // because it got corrupted somehow, or someone modified it on purpose.
+                // We should reschedule a new plan data download if this happens.
+                Utils.logException(new RuntimeException("JSON format is invalid", e));
+                isValid.set(false);
+
+                Settings.markDataUpdateAvailable(context, true);
+            } catch (Exception e) {
+                Utils.logException(new RuntimeException("Failed to load planned data", e));
+                isValid.set(false);
+            }
+
+            if (!isValid()) {
+                BeaconHandler.get(context).stop();
+            }
+
+            isLoaded.set(true);
+            isLoading.set(false);
+
+            return null;
         });
     }
 
