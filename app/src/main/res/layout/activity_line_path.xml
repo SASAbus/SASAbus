@@ -17,14 +17,15 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/include_toolbar" />
+    <include layout="@layout/include_toolbar"/>
 
-    <it.sasabz.android.sasabus.ui.widget.OffsetNestedSwipeRefreshLayout
+    <it.sasabz.android.sasabus.ui.widget.NestedSwipeRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -34,8 +35,8 @@
         <WebView
             android:id="@+id/webview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
 
-    </it.sasabz.android.sasabus.ui.widget.OffsetNestedSwipeRefreshLayout>
+    </it.sasabz.android.sasabus.ui.widget.NestedSwipeRefreshLayout>
 
 </android.support.design.widget.CoordinatorLayout>
