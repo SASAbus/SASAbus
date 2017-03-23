@@ -27,22 +27,15 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <link type="text/css" rel="stylesheet" href="style.css">
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+
     <link rel="stylesheet" href="leaflet/leaflet.css"/>
-    <link rel="stylesheet" href="markers/markers.css">
+    <link rel="stylesheet" href="css/markers.css">
 
     <script src="leaflet/leaflet.js"></script>
-    <script src="markers/markers.min.js"></script>
+    <script src="js/markers.min.js"></script>
 
-    <style type="text/css">
-        center {
-            font-size: 14px;
-        }
-        .button {
-            color: #FF9800;
-            font-size: 16px;
-        }
-    </style>
+    <script src="js/utils.js"></script>
 
 </head>
 
@@ -68,23 +61,7 @@
 
         var markers = [];
 
-        var tileLayer;
-
-        if (Android.shouldUseOnlineMap()) {
-            tileLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-                maxZoom: 17,
-                minZoom: 8
-            }).addTo(map);
-        } else {
-            var mapPath = Android.getMapTilesRootUrl() + "/{z}/{x}/{y}.png";
-            tileLayer = L.tileLayer(mapPath, {
-                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
-                maxZoom: 17,
-                minZoom: 8
-            }).addTo(map);
-        }
-
+        setTileLayerForMap(map);
 
         function onVehicleClick(vehicle) {
             Android.onVehicleClick(vehicle);
