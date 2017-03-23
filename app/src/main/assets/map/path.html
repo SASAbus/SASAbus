@@ -27,21 +27,12 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <link type="text/css" rel="stylesheet" href="style.css">
+    <link type="text/css" rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="leaflet/leaflet.css"/>
 
     <script src="leaflet/leaflet.js"></script>
 
-    <style type="text/css">
-        center {
-            font-size: 14px;
-        }
-        .button {
-            color: #FF9800;
-            font-size: 16px;
-        }
-
-    </style>
+    <script src="js/utils.js"></script>
 
 </head>
 
@@ -53,13 +44,8 @@
 
         var busDetails = Android.getBusDetailsString();
         var map = L.map('map').setView([46.58, 11.25], 10);
-        var mapPath = Android.getMapTilesRootUrl() + "/{z}/{x}/{y}.png";
 
-        L.tileLayer(mapPath, {
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
-            maxZoom: 17,
-            minZoom: 8
-        }).addTo(map);
+        setTileLayerForMap(map);
 
         function onBusStopDetailsClick(stop) {
             Android.onBusStopDetailsClick(stop);

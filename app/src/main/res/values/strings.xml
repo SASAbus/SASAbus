@@ -100,6 +100,10 @@
     <string name="about_credits_subtitle">Developers and libraries</string>
     <string name="about_policy_title">Privacy Policy</string>
     <string name="about_policy_subtitle">Open in browser</string>
+    <string name="about_traffic_light_city">Status for %s</string>
+    <string name="about_traffic_light_loading">Loading…</string>
+    <string name="about_github_title">View on GitHub</string>
+    <string name="about_github_subtitle">Contribute to SASAbus on GitHub</string>
 
 
     <!-- ==================== CREDITS ==================== -->
@@ -511,9 +515,6 @@
     <string name="intro_offline_data_update_sub">The offline data (about 150 KB) needs to be
         updated.
     </string>
-
-    <string name="about_traffic_light_city">Status for %s</string>
-    <string name="about_traffic_light_loading">Loading…</string>
 
     <!-- ===================================== ECO POINTS ====================================== -->
 

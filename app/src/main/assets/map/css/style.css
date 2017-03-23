@@ -17,3 +17,12 @@ img.leaflet-tile {
 	top:0px;
 	width:10em;
 }
+
+center {
+    font-size: 14px;
+}
+
+.button {
+    color: #FF9800;
+    font-size: 16px;
+}

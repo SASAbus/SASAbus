@@ -25,9 +25,9 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.21.6'
+        classpath 'io.fabric.tools:gradle:1.22.1'
         classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.1'
-        classpath 'me.tatarka:gradle-retrolambda:3.4.0'
+        classpath 'me.tatarka:gradle-retrolambda:3.6.0'
         classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
@@ -80,17 +80,8 @@ android {
     }
 
     retrolambda {
-        jdk '/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home'
+        jdk '/Library/Java/JavaVirtualMachines/jdk1.8.0_112.jdk/Contents/Home'
     }
-
-    /*productFlavors {
-        playStore {
-
-        }
-        fdroid {
-
-        }
-    }*/
 
     signingConfigs {
         debug {
@@ -103,11 +94,11 @@ android {
 }
 
 ext {
-    SUPPORT_LIBRARY_VERSION = "25.1.0"
-    PLAY_SERVICES_VERSION = "10.0.1"
+    SUPPORT_LIBRARY_VERSION = "25.3.0"
+    PLAY_SERVICES_VERSION = "10.2.0"
     RETROFIT_VERSION = "2.1.0"
     OKHTTP_VERSION = "3.4.1"
-    BUTTERKNIFE_VERSION = "8.4.0"
+    BUTTERKNIFE_VERSION = "8.5.1"
 }
 
 dependencies {
@@ -129,24 +120,25 @@ dependencies {
     compile 'org.altbeacon:android-beacon-library:2.9.1'
 
     // Networking
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
+    compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
+    compile "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_VERSION"
+    compile "com.squareup.okhttp3:okhttp:$OKHTTP_VERSION"
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.squareup.okhttp3:okhttp:3.4.1'
 
     // ReactiveX
-    compile 'io.reactivex:rxjava:1.1.8'
+    compile 'io.reactivex:rxjava:1.2.7'
     compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'com.trello:rxlifecycle:0.6.1'
-    compile 'com.trello:rxlifecycle-components:0.6.1'
+    compile 'com.trello:rxlifecycle:1.0'
+    compile 'com.trello:rxlifecycle-components:1.0'
 
     // Other
     compile 'com.github.tslamic.adn:library:1.1'
     compile 'de.hdodenhof:circleimageview:2.1.0'
 
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.0@aar') {
-        transitive = true;
+    // Fabric
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.7@aar') {
+        transitive = true
     }
 
     // ButterKnife
@@ -157,10 +149,10 @@ dependencies {
     compile 'com.github.kenglxn.QRGen:android:2.2.0'
 
     // Timber
-    compile 'com.jakewharton.timber:timber:4.3.1'
+    compile 'com.jakewharton.timber:timber:4.5.1'
 
     // Time utils
-    compile 'net.danlew:android.joda:2.9.4.1'
+    compile 'net.danlew:android.joda:2.9.7'
 }
 
 apply plugin: 'com.google.gms.google-services'

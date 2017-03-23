@@ -76,6 +76,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     private static final int PERMISSIONS_ACCESS_STORAGE = 100;
 
     private static final String URL_PRIVACY = "http://www.sasabz.it/fileadmin/user_upload/PDFs/POLICY_SITO_WEB_SASA_2015.pdf";
+    private static final String URL_GITHUB = "https://github.com/SASAbus/SASAbus";
 
     /**
      * Report dialog input fields.
@@ -143,6 +144,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
         RelativeLayout relativeLayout3 = (RelativeLayout) findViewById(R.id.about_third);
         RelativeLayout relativeLayout4 = (RelativeLayout) findViewById(R.id.about_fourth);
         RelativeLayout relativeLayout5 = (RelativeLayout) findViewById(R.id.about_fifth);
+        RelativeLayout github = (RelativeLayout) findViewById(R.id.about_github);
 
         status = (TextView) findViewById(R.id.about_traffic_light);
         statusCity = (TextView) findViewById(R.id.about_traffic_light_city);
@@ -154,21 +156,12 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 
         loadStatus();
 
-        if (relativeLayout1 != null) {
-            relativeLayout1.setOnClickListener(this);
-        }
-        if (relativeLayout2 != null) {
-            relativeLayout2.setOnClickListener(this);
-        }
-        if (relativeLayout3 != null) {
-            relativeLayout3.setOnClickListener(this);
-        }
-        if (relativeLayout4 != null) {
-            relativeLayout4.setOnClickListener(this);
-        }
-        if (relativeLayout5 != null) {
-            relativeLayout5.setOnClickListener(this);
-        }
+        relativeLayout1.setOnClickListener(this);
+        relativeLayout2.setOnClickListener(this);
+        relativeLayout3.setOnClickListener(this);
+        relativeLayout4.setOnClickListener(this);
+        relativeLayout5.setOnClickListener(this);
+        github.setOnClickListener(this);
 
         TextView textView = (TextView) findViewById(R.id.about_first_sub);
         if (textView != null) {
@@ -231,11 +224,15 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 Settings.setTrafficLightCity(AboutActivity.this, city.equals("bz") ? "me" : "bz");
 
                 statusCity.setText(String.format(getResources().getString(R.string.about_traffic_light_city), city.equals("bz")
-                                ? getResources().getString(R.string.merano)
-                                : getResources().getString(R.string.bolzano)));
+                        ? getResources().getString(R.string.merano)
+                        : getResources().getString(R.string.bolzano)));
 
                 loadStatus();
 
+                break;
+            case R.id.about_github:
+                AnalyticsHelper.sendEvent(SCREEN_LABEL, "GitHub");
+                mCustomTabsHelper.launchUrl(Uri.parse(URL_GITHUB));
                 break;
         }
     }
