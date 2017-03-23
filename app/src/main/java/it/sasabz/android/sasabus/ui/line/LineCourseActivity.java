@@ -112,7 +112,7 @@ public class LineCourseActivity extends RxAppCompatActivity {
         mCurrentBusStop = intent.getIntExtra(EXTRA_CURRENT_BUS_STOP, -1);
 
         mRefresh.setColorSchemeResources(Config.REFRESH_COLORS);
-        mRefresh.setOnRefreshListener(() -> parsePlanData(false));
+        mRefresh.setOnRefreshListener(this::parsePlanData);
 
         if (savedInstanceState != null) {
             int errorDataVisibility = savedInstanceState.getInt("ERROR_DATA");
@@ -139,7 +139,7 @@ public class LineCourseActivity extends RxAppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);
 
-        parsePlanData(true);
+        parsePlanData();
     }
 
     @Override
@@ -156,13 +156,8 @@ public class LineCourseActivity extends RxAppCompatActivity {
     /**
      * Parses the line course from the plan data. This is used to get the course of a non
      * tracked mVehicle or a mVehicle which will drive in the future.
-     *
-     * @param animate If this data was requested automatically when you start the activity,
-     *                pass {@code false}, else if the user refreshed it pass {@code true}.
-     *                This is done to show {@link RecyclerView} animations the first time the
-     *                data is inserted.
      */
-    private void parsePlanData(boolean animate) {
+    private void parsePlanData() {
         parseFromPlanData(vehicle, mBusStopGroup, mCurrentBusStop, mTripId)
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())
@@ -185,16 +180,18 @@ public class LineCourseActivity extends RxAppCompatActivity {
 
                     @Override
                     public void onNext(List<LineCourse> items) {
-                        onResult(items, animate);
+                        onResult(items);
                     }
                 });
     }
 
-    private void onResult(Collection<LineCourse> lines, boolean animate) {
+    private void onResult(Collection<LineCourse> lines) {
+        boolean isEmpty = mItems.isEmpty();
+
         mItems.clear();
         mItems.addAll(lines);
 
-        if (animate) {
+        if (isEmpty) {
             mAdapter.notifyItemRangeInserted(0, mItems.size());
         } else {
             mAdapter.notifyDataSetChanged();
