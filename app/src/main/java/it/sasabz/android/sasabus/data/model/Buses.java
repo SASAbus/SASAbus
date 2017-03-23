@@ -45,6 +45,11 @@ public final class Buses {
         Vehicle s4x = new Vehicle("MAN", "NL 313", 1, 160, "s4x");
         Vehicle l4x = new Vehicle("MAN", "NG 313", 1, 160, "l4x");
 
+        BUSES.put(444, new Bus(444, u18));
+        BUSES.put(443, new Bus(443, u18));
+        BUSES.put(442, new Bus(442, u18));
+        BUSES.put(441, new Bus(441, u18));
+        BUSES.put(440, new Bus(440, u18));
         BUSES.put(439, new Bus(439, spr));
         BUSES.put(438, new Bus(438, u18));
         BUSES.put(437, new Bus(437, u18));
