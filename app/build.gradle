@@ -46,6 +46,7 @@ repositories {
     maven {
         url 'https://maven.fabric.io/public'
     }
+    maven { url 'https://crashbox.davide.bz/maven/' }
 }
 
 android {
@@ -79,9 +80,9 @@ android {
         jumboMode true
     }
 
-    retrolambda {
-        jdk '/Library/Java/JavaVirtualMachines/jdk1.8.0_112.jdk/Contents/Home'
-    }
+//    retrolambda {
+//        jdk '/Library/Java/JavaVirtualMachines/jdk1.8.0_112.jdk/Contents/Home'
+//    }
 
     signingConfigs {
         debug {
@@ -153,6 +154,9 @@ dependencies {
 
     // Time utils
     compile 'net.danlew:android.joda:2.9.7'
+
+    // CatchSolve
+    compile 'bz.davide.catchsolve.catcher.android:catchsolve-catcher-android:0.0.3'
 }
 
 apply plugin: 'com.google.gms.google-services'
