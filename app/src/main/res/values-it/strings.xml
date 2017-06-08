@@ -232,7 +232,7 @@
     </string>
     <string name="planned_trips">Viaggi previsti</string>
     <string name="bottom_sheet_delayed">%d\' di ritardo</string>
-    <string name="bottom_sheet_early">%d\' prematuro</string>
+    <string name="bottom_sheet_early">%d\' in anticipo</string>
     <string name="bottom_sheet_punctual">Puntuale</string>
     <string name="title_lines">Linee</string>
     <string name="line_current_stop">Adesso: %s</string>
