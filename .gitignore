@@ -40,3 +40,5 @@ proguard/
 
 # Windows clutter
 Thumbs.db
+
+keys.gradle

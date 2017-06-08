@@ -19,6 +19,7 @@ package it.sasabz.android.sasabus;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -65,7 +66,7 @@ public class AppApplication extends Application {
             Fabric.with(this, new Crashlytics());
             Timber.plant(new CrashReportingTree());
 
-            CatchSolve.init(this, Config.CATCH_AND_SOLVE_KEY);
+            CatchSolve.init(this, BuildConfig.CATCH_AND_SOLVE_API_KEY);
         }
 
         // Change the language to the one the user selected in the app settings.

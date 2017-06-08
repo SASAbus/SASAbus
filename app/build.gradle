@@ -30,6 +30,8 @@ buildscript {
     }
 }
 
+apply from: 'keys.gradle'
+
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 apply plugin: 'io.fabric'
@@ -62,6 +64,8 @@ android {
         versionName "3.0.3"
 
         multiDexEnabled true
+
+        buildConfigField "String", "CATCH_AND_SOLVE_API_KEY", "\"${CATCH_AND_SOLVE_API_KEY}\""
     }
 
     buildTypes {
