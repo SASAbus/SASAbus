@@ -133,15 +133,7 @@ public class DepartureActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        try {
-            CatchSolve.init(this);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
         super.onCreate(savedInstanceState);
-
 
         setContentView(R.layout.activity_departure);
         ButterKnife.bind(this);

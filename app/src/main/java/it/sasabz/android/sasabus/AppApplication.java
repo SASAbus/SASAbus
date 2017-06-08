@@ -27,6 +27,7 @@ import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
+import bz.davide.catchsolve.catcher.android.CatchSolve;
 import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 import it.sasabz.android.sasabus.beacon.BeaconHandler;
@@ -63,6 +64,8 @@ public class AppApplication extends Application {
         } else {
             Fabric.with(this, new Crashlytics());
             Timber.plant(new CrashReportingTree());
+
+            CatchSolve.init(this, Config.CATCH_AND_SOLVE_KEY);
         }
 
         // Change the language to the one the user selected in the app settings.

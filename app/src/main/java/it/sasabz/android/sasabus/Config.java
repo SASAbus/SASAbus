@@ -129,4 +129,7 @@ public final class Config {
             "com.davale.sasabus.BUNDLE_EMPTY_STATE_VISIBILITY";
 
     public static final String EXTRA_BUS_STOP_GROUP = "com.davale.sasabus.EXTRA_BUS_STOP_GROUP";
+
+    public static final String CATCH_AND_SOLVE_KEY =
+            "https://4a952ece7496458f8b5f10dde3119fd0:97cda97d4c4a4c608eadfbbc0ce073af@crashbox.davide.bz/1";
 }
