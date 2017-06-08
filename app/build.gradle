@@ -26,32 +26,28 @@ buildscript {
 
     dependencies {
         classpath 'io.fabric.tools:gradle:1.22.1'
-        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.1'
-        classpath 'me.tatarka:gradle-retrolambda:3.6.0'
-        classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
-
-    configurations.classpath.exclude group: 'com.androoid.tools.external.lombok'
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 apply plugin: 'io.fabric'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'com.getkeepsafe.dexcount'
 
 repositories {
     maven {
         url 'https://maven.fabric.io/public'
     }
-    maven { url 'https://crashbox.davide.bz/maven/' }
+
+    maven {
+        url 'https://crashbox.davide.bz/maven/'
+    }
 }
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    buildToolsVersion '25.0.3'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -64,25 +60,17 @@ android {
         targetSdkVersion 25
         versionCode 57
         versionName "3.0.3"
+
+        multiDexEnabled true
     }
 
     buildTypes {
-        debug {
-            ext.enableCrashlytics = false
-        }
         release {
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-    dexOptions {
-        jumboMode true
-    }
-
-//    retrolambda {
-//        jdk '/Library/Java/JavaVirtualMachines/jdk1.8.0_112.jdk/Contents/Home'
-//    }
 
     signingConfigs {
         debug {
@@ -95,8 +83,8 @@ android {
 }
 
 ext {
-    SUPPORT_LIBRARY_VERSION = "25.3.0"
-    PLAY_SERVICES_VERSION = "10.2.0"
+    SUPPORT_LIBRARY_VERSION = "25.3.1"
+    PLAY_SERVICES_VERSION = "10.2.6"
     RETROFIT_VERSION = "2.1.0"
     OKHTTP_VERSION = "3.4.1"
     BUTTERKNIFE_VERSION = "8.5.1"
@@ -144,7 +132,7 @@ dependencies {
 
     // ButterKnife
     compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
-    apt "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
 
     // QR-Code generator
     compile 'com.github.kenglxn.QRGen:android:2.2.0'
