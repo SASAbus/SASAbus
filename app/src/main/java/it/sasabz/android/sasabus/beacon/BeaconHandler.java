@@ -27,6 +27,8 @@ import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.RemoteException;
 
+import com.davale.sasabus.core.util.DeviceUtils;
+
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
@@ -40,7 +42,6 @@ import java.util.Arrays;
 import it.sasabz.android.sasabus.beacon.bus.BusBeaconHandler;
 import it.sasabz.android.sasabus.beacon.busstop.BusStopBeaconHandler;
 import it.sasabz.android.sasabus.beacon.event.EventBeaconHandler;
-import it.sasabz.android.sasabus.util.DeviceUtils;
 import it.sasabz.android.sasabus.util.Utils;
 import timber.log.Timber;
 

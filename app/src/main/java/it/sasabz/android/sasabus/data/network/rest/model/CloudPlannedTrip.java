@@ -17,12 +17,12 @@
 
 package it.sasabz.android.sasabus.data.network.rest.model;
 
+import com.davale.sasabus.core.util.Strings;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 import it.sasabz.android.sasabus.data.realm.user.PlannedTrip;
-import it.sasabz.android.sasabus.util.Strings;
 
 public class CloudPlannedTrip {
 

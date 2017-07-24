@@ -29,8 +29,8 @@ import android.widget.RelativeLayout;
 
 import com.davale.sasabus.core.realm.BusStopRealmHelper;
 import com.davale.sasabus.core.realm.model.BusStop;
+import com.davale.sasabus.core.util.DeviceUtils;
 import com.davale.sasabus.core.vdv.Api;
-import com.davale.sasabus.core.vdv.data.VdvCalendar;
 import com.davale.sasabus.core.vdv.data.VdvException;
 import com.davale.sasabus.core.vdv.model.VdvBusStop;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
@@ -49,7 +49,6 @@ import it.sasabz.android.sasabus.data.network.rest.api.RealtimeApi;
 import it.sasabz.android.sasabus.data.network.rest.model.RealtimeBus;
 import it.sasabz.android.sasabus.data.network.rest.response.RealtimeResponse;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
-import it.sasabz.android.sasabus.util.DeviceUtils;
 import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 import retrofit2.Call;

@@ -40,6 +40,7 @@ import android.widget.ListView;
 
 import com.davale.sasabus.core.realm.BusStopRealmHelper;
 import com.davale.sasabus.core.realm.model.BusStop;
+import com.davale.sasabus.core.util.Strings;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -53,7 +54,6 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.realm.user.FavoriteBusStop;
 import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
-import it.sasabz.android.sasabus.util.Strings;
 import it.sasabz.android.sasabus.util.UIUtils;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.android.schedulers.AndroidSchedulers;

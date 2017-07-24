@@ -48,6 +48,7 @@ import android.widget.TimePicker;
 import com.davale.sasabus.core.model.Departure;
 import com.davale.sasabus.core.realm.BusStopRealmHelper;
 import com.davale.sasabus.core.realm.model.BusStop;
+import com.davale.sasabus.core.util.AnimUtils;
 import com.davale.sasabus.core.vdv.DepartureMonitor;
 import com.davale.sasabus.core.vdv.model.VdvDeparture;
 
@@ -74,7 +75,6 @@ import it.sasabz.android.sasabus.data.network.rest.response.RealtimeResponse;
 import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.ui.widget.RecyclerItemDivider;
-import it.sasabz.android.sasabus.util.AnimUtils;
 import it.sasabz.android.sasabus.util.MapUtils;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observable;

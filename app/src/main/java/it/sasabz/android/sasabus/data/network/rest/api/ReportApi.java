@@ -25,12 +25,13 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 
+import com.davale.sasabus.core.util.DeviceUtils;
+
 import java.util.Map;
 
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.data.model.JsonSerializable;
 import it.sasabz.android.sasabus.data.network.rest.Endpoint;
-import it.sasabz.android.sasabus.util.DeviceUtils;
 import it.sasabz.android.sasabus.util.Utils;
 import okhttp3.RequestBody;
 import retrofit2.http.Multipart;

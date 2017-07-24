@@ -64,6 +64,7 @@ import android.widget.TextView;
 
 import com.davale.sasabus.core.data.Buses;
 import com.davale.sasabus.core.realm.BusStopRealmHelper;
+import com.davale.sasabus.core.util.AnimUtils;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -86,7 +87,6 @@ import it.sasabz.android.sasabus.fcm.FcmService;
 import it.sasabz.android.sasabus.ui.about.AboutActivity;
 import it.sasabz.android.sasabus.ui.widget.NestedSwipeRefreshLayout;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
-import it.sasabz.android.sasabus.util.AnimUtils;
 import it.sasabz.android.sasabus.util.Preconditions;
 import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;

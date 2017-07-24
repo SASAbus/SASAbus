@@ -24,6 +24,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 
+import com.davale.sasabus.core.util.DeviceUtils;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -33,7 +35,6 @@ import java.util.List;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.model.Changelog;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
-import it.sasabz.android.sasabus.util.DeviceUtils;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.recycler.ChangelogAdapter;
 

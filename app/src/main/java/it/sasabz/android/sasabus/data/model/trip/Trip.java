@@ -17,8 +17,9 @@
 
 package it.sasabz.android.sasabus.data.model.trip;
 
+import com.davale.sasabus.core.util.Strings;
+
 import it.sasabz.android.sasabus.data.network.rest.model.CloudTrip;
-import it.sasabz.android.sasabus.util.Strings;
 
 public class Trip {
 

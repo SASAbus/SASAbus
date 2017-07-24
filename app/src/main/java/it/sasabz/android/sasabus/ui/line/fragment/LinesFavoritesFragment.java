@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.davale.sasabus.core.util.DeviceUtils;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
 import java.util.ArrayList;
@@ -40,7 +41,6 @@ import it.sasabz.android.sasabus.data.network.rest.model.Line;
 import it.sasabz.android.sasabus.data.realm.user.FavoriteLine;
 import it.sasabz.android.sasabus.ui.line.LinesActivity;
 import it.sasabz.android.sasabus.ui.line.LinesAllAdapter;
-import it.sasabz.android.sasabus.util.DeviceUtils;
 
 /**
  * Displays all lines which the user added to the favorites. Identical to {@link LinesFragment},

@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.davale.sasabus.core.util.DeviceUtils;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
 import java.util.ArrayList;
@@ -38,7 +39,6 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.network.rest.model.Line;
 import it.sasabz.android.sasabus.ui.line.LinesActivity;
 import it.sasabz.android.sasabus.ui.line.LinesAllAdapter;
-import it.sasabz.android.sasabus.util.DeviceUtils;
 
 /**
  * Displays all lines, no matter if in service or not, in form of a list. Clicking on a line will

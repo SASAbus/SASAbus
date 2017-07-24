@@ -36,6 +36,7 @@ import com.bumptech.glide.Glide;
 import com.davale.sasabus.core.model.Departure;
 import com.davale.sasabus.core.realm.BusStopRealmHelper;
 import com.davale.sasabus.core.realm.model.BusStop;
+import com.davale.sasabus.core.util.Strings;
 import com.google.gson.Gson;
 
 import java.util.List;
