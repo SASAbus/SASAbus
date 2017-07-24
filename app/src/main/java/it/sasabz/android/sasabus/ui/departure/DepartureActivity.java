@@ -17,6 +17,7 @@
 
 package it.sasabz.android.sasabus.ui.departure;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -44,6 +45,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.davale.sasabus.core.model.Departure;
+import com.davale.sasabus.core.realm.BusStopRealmHelper;
+import com.davale.sasabus.core.realm.model.BusStop;
+import com.davale.sasabus.core.vdv.DepartureMonitor;
+import com.davale.sasabus.core.vdv.model.VdvDeparture;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -59,16 +66,12 @@ import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.beacon.BeaconHandler;
 import it.sasabz.android.sasabus.beacon.busstop.BusStopBeaconHandler;
-import it.sasabz.android.sasabus.data.model.Departure;
 import it.sasabz.android.sasabus.data.network.NetUtils;
 import it.sasabz.android.sasabus.data.network.rest.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.RealtimeApi;
 import it.sasabz.android.sasabus.data.network.rest.model.RealtimeBus;
 import it.sasabz.android.sasabus.data.network.rest.response.RealtimeResponse;
 import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
-import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
-import it.sasabz.android.sasabus.data.vdv.DepartureMonitor;
-import it.sasabz.android.sasabus.data.vdv.model.VdvDeparture;
 import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.ui.widget.RecyclerItemDivider;
 import it.sasabz.android.sasabus.util.AnimUtils;
@@ -219,6 +222,7 @@ public class DepartureActivity extends BaseActivity implements View.OnClickListe
         realm.close();
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -476,8 +480,8 @@ public class DepartureActivity extends BaseActivity implements View.OnClickListe
                             loadDelays();
                         } else {
                             for (Departure item : mItems) {
-                                if (item.delay == Departure.OPERATION_RUNNING) {
-                                    item.delay = Departure.NO_DELAY;
+                                if (item.getDelay() == Departure.OPERATION_RUNNING) {
+                                    item.setDelay(Departure.NO_DELAY);
                                 }
                             }
                         }
@@ -541,8 +545,8 @@ public class DepartureActivity extends BaseActivity implements View.OnClickListe
                         Utils.logException(e);
 
                         for (Departure item : mItems) {
-                            if (item.delay == Departure.OPERATION_RUNNING) {
-                                item.delay = Departure.NO_DELAY;
+                            if (item.getDelay() == Departure.OPERATION_RUNNING) {
+                                item.setDelay(Departure.NO_DELAY);
                             }
                         }
 
@@ -555,10 +559,10 @@ public class DepartureActivity extends BaseActivity implements View.OnClickListe
                     public void onNext(RealtimeResponse response) {
                         for (RealtimeBus bus : response.buses) {
                             for (Departure item : mItems) {
-                                if (item.trip == bus.trip) {
-                                    item.delay = bus.delayMin;
-                                    item.vehicle = bus.vehicle;
-                                    item.currentBusStop = bus.busStop;
+                                if (item.getTrip() == bus.trip) {
+                                    item.setDelay(bus.delayMin);
+                                    item.setVehicle(bus.vehicle);
+                                    item.setCurrentBusStop(bus.busStop);
 
                                     break;
                                 }
@@ -566,8 +570,8 @@ public class DepartureActivity extends BaseActivity implements View.OnClickListe
                         }
 
                         for (Departure item : mItems) {
-                            if (item.delay == Departure.OPERATION_RUNNING) {
-                                item.delay = Departure.NO_DELAY;
+                            if (item.getDelay() == Departure.OPERATION_RUNNING) {
+                                item.setDelay(Departure.NO_DELAY);
                             }
                         }
 

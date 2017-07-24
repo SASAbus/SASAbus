@@ -19,6 +19,7 @@ package it.sasabz.android.sasabus.ui.departure;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.SearchManager;
 import android.content.Intent;
@@ -37,6 +38,9 @@ import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.davale.sasabus.core.realm.BusStopRealmHelper;
+import com.davale.sasabus.core.realm.model.BusStop;
+
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -46,7 +50,6 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.data.realm.user.FavoriteBusStop;
 import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
@@ -249,6 +252,7 @@ public class DepartureSearchActivity extends BaseActivity implements AdapterView
      * On Lollipop+ perform a circular animation (a contracting circular mask) when hiding the
      * search panel.
      */
+    @SuppressLint("WrongViewCast")
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void doExitAnim() {
         View searchPanel = findViewById(R.id.search_panel);
@@ -283,7 +287,8 @@ public class DepartureSearchActivity extends BaseActivity implements AdapterView
         shrink.start();
 
         // We also animate out the translucent background at the same time.
-        findViewById(R.id.scrim).animate()
+        findViewById(R.id.scrim)
+                .animate()
                 .alpha(0f)
                 .setDuration(400)
                 .setInterpolator(new FastOutSlowInInterpolator())

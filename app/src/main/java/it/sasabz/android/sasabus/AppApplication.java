@@ -24,6 +24,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
+import com.davale.sasabus.core.realm.BusStopRealmHelper;
+import com.davale.sasabus.core.vdv.data.VdvHandler;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
@@ -34,7 +36,6 @@ import it.sasabz.android.sasabus.beacon.BeaconHandler;
 import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
 import it.sasabz.android.sasabus.data.network.rest.RestClient;
 import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
-import it.sasabz.android.sasabus.data.vdv.data.VdvHandler;
 import it.sasabz.android.sasabus.sync.SyncHelper;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.Settings;

@@ -29,6 +29,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.WorkerThread;
 
+import com.davale.sasabus.core.vdv.PlannedData;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,6 +42,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import it.sasabz.android.sasabus.data.network.NetUtils;
 import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
+import it.sasabz.android.sasabus.data.network.rest.Endpoint;
 import it.sasabz.android.sasabus.data.network.rest.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.BeaconsApi;
 import it.sasabz.android.sasabus.data.network.rest.api.EcoPointsApi;
@@ -48,7 +51,6 @@ import it.sasabz.android.sasabus.data.network.rest.model.ScannedBeacon;
 import it.sasabz.android.sasabus.data.network.rest.response.ValidityResponse;
 import it.sasabz.android.sasabus.data.realm.user.Beacon;
 import it.sasabz.android.sasabus.data.realm.user.EarnedBadge;
-import it.sasabz.android.sasabus.data.vdv.PlannedData;
 import it.sasabz.android.sasabus.util.Preconditions;
 import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
@@ -312,8 +314,8 @@ public class SyncHelper {
         if (shouldDownloadData) {
             Timber.e("Downloading plan data");
 
-            PlannedData.download(mContext)
-                    .subscribe(new Observer<Void>() {
+            PlannedData.download(mContext, Endpoint.API)
+                    .subscribe(new Observer<Integer>() {
                         @Override
                         public void onCompleted() {
 
@@ -325,7 +327,7 @@ public class SyncHelper {
                         }
 
                         @Override
-                        public void onNext(Void aVoid) {
+                        public void onNext(Integer aVoid) {
                             Timber.e("Downloaded plan data");
                         }
                     });

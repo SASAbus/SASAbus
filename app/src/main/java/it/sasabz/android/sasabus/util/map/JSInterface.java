@@ -21,11 +21,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.webkit.JavascriptInterface;
 
+import com.davale.sasabus.core.realm.BusStopRealmHelper;
+import com.davale.sasabus.core.realm.model.BusStop;
+
 import java.io.File;
 
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.ui.bus.BusDetailActivity;
 import it.sasabz.android.sasabus.ui.departure.DepartureActivity;
 import it.sasabz.android.sasabus.ui.line.LineCourseActivity;

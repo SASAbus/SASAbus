@@ -32,9 +32,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.davale.sasabus.core.vdv.PlannedData;
+
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.network.NetUtils;
-import it.sasabz.android.sasabus.data.vdv.PlannedData;
+import it.sasabz.android.sasabus.data.network.rest.Endpoint;
 import it.sasabz.android.sasabus.ui.intro.AppIntro;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
@@ -50,7 +52,7 @@ import timber.log.Timber;
  *
  * @author Alex Lardschneider
  */
-public class IntroFragmentData extends Fragment implements Observer<Void>, View.OnClickListener {
+public class IntroFragmentData extends Fragment implements Observer<Integer>, View.OnClickListener {
 
     private Subscription subscription;
 
@@ -159,7 +161,7 @@ public class IntroFragmentData extends Fragment implements Observer<Void>, View.
     }
 
     @Override
-    public void onNext(Void file) {
+    public void onNext(Integer file) {
     }
 
     @Override
@@ -233,7 +235,7 @@ public class IntroFragmentData extends Fragment implements Observer<Void>, View.
             return;
         }
 
-        subscription = PlannedData.download(getActivity())
+        subscription = PlannedData.download(getActivity(), Endpoint.API)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this);

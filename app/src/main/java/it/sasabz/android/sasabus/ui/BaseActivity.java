@@ -36,10 +36,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.davale.sasabus.core.vdv.PlannedData;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.data.vdv.PlannedData;
 import it.sasabz.android.sasabus.ui.about.AboutActivity;
 import it.sasabz.android.sasabus.ui.departure.DepartureActivity;
 import it.sasabz.android.sasabus.ui.ecopoints.EcoPointsActivity;

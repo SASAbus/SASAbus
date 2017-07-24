@@ -44,12 +44,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.davale.sasabus.core.data.Buses;
+import com.davale.sasabus.core.model.Bus;
+import com.davale.sasabus.core.model.Vehicle;
 
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.data.model.Bus;
-import it.sasabz.android.sasabus.data.model.Buses;
-import it.sasabz.android.sasabus.data.model.Vehicle;
 import it.sasabz.android.sasabus.data.network.rest.api.ReportApi;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.ReportHelper;
@@ -224,18 +224,13 @@ public class BusDetailActivity extends AppCompatActivity {
         if (b != null) {
             Vehicle v = b.getVehicle();
 
-            if (v != null) {
-                mError.setVisibility(View.GONE);
+            mError.setVisibility(View.GONE);
 
-                mManufacturer.setText(v.getManufacturer());
-                mModel.setText(v.getModel());
-                mFuel.setText(v.getFuelString(this));
+            mManufacturer.setText(v.getManufacturer());
+            mModel.setText(v.getModel());
+            mFuel.setText(v.getFuelString(this));
 
-                loadBackdrop(v);
-            } else {
-                mMainContent.setVisibility(View.GONE);
-                mError.setVisibility(View.VISIBLE);
-            }
+            loadBackdrop(v);
         }
     }
 

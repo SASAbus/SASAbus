@@ -27,12 +27,13 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.davale.sasabus.core.model.Departure;
+
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.data.model.Departure;
 import it.sasabz.android.sasabus.ui.line.LineCourseActivity;
 import it.sasabz.android.sasabus.util.UIUtils;
 
@@ -62,35 +63,35 @@ class DeparturesAdapter extends RecyclerView.Adapter<DeparturesAdapter.ViewHolde
     public void onBindViewHolder(DeparturesAdapter.ViewHolder holder, int position) {
         Departure item = mItems.get(position);
 
-        if (item.delay > 3) {
+        if (item.getDelay() > 3) {
             holder.delay.setTextColor(ContextCompat.getColor(mContext, R.color.material_red_500));
-        } else if (item.delay > 0) {
+        } else if (item.getDelay() > 0) {
             holder.delay.setTextColor(ContextCompat.getColor(mContext, R.color.material_amber_700));
         } else {
             holder.delay.setTextColor(ContextCompat.getColor(mContext, R.color.material_green_500));
         }
 
-        if (item.delay == Departure.OPERATION_RUNNING) {
+        if (item.getDelay() == Departure.OPERATION_RUNNING) {
             holder.delay.setText(mContext.getString(R.string.departures_loading));
             holder.delay.setTextColor(ContextCompat.getColor(mContext, R.color.text_tertiary));
-        } else if (item.delay == Departure.NO_DELAY) {
+        } else if (item.getDelay() == Departure.NO_DELAY) {
             holder.delay.setText(mContext.getString(R.string.departures_no_data));
             holder.delay.setTextColor(ContextCompat.getColor(mContext, R.color.text_tertiary));
         } else {
-            if (item.delay > 0) {
-                holder.delay.setText(mContext.getString(R.string.bottom_sheet_delayed, item.delay));
-            } else if (item.delay < 0) {
-                holder.delay.setText(mContext.getString(R.string.bottom_sheet_early, item.delay * -1));
+            if (item.getDelay() > 0) {
+                holder.delay.setText(mContext.getString(R.string.bottom_sheet_delayed, item.getDelay()));
+            } else if (item.getDelay() < 0) {
+                holder.delay.setText(mContext.getString(R.string.bottom_sheet_early, item.getDelay() * -1));
             } else {
                 holder.delay.setText(mContext.getString(R.string.bottom_sheet_punctual));
             }
 
-            holder.delay.setTextColor(UIUtils.getColorForDelay(mContext, item.delay));
+            holder.delay.setTextColor(UIUtils.getColorForDelay(mContext, item.getDelay()));
         }
 
-        holder.line.setText(item.line);
-        holder.destination.setText(item.destination);
-        holder.time.setText(item.time);
+        holder.line.setText(item.getLine());
+        holder.destination.setText(item.getDestination());
+        holder.time.setText(item.getTime());
     }
 
     @Override
@@ -123,8 +124,8 @@ class DeparturesAdapter extends RecyclerView.Adapter<DeparturesAdapter.ViewHolde
 
             Departure item = mItems.get(position);
 
-            Intent intent = LineCourseActivity.intent(v.getContext(), item.trip,
-                    item.busStopGroup, item.currentBusStop, item.vehicle);
+            Intent intent = LineCourseActivity.intent(v.getContext(), item.getTrip(),
+                    item.getBusStopGroup(), item.getCurrentBusStop(), item.getVehicle());
 
             v.getContext().startActivity(intent);
         }

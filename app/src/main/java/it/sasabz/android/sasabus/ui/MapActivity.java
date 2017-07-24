@@ -62,6 +62,9 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.davale.sasabus.core.data.Buses;
+import com.davale.sasabus.core.realm.BusStopRealmHelper;
+
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -70,7 +73,6 @@ import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.data.model.Buses;
 import it.sasabz.android.sasabus.data.model.line.Lines;
 import it.sasabz.android.sasabus.data.network.NetUtils;
 import it.sasabz.android.sasabus.data.network.rest.RestClient;

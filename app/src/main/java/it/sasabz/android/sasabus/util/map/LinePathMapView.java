@@ -23,8 +23,10 @@ import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
+import com.davale.sasabus.core.realm.BusStopRealmHelper;
+import com.davale.sasabus.core.realm.model.BusStop;
+
 import it.sasabz.android.sasabus.data.network.rest.response.PathResponse;
-import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
 
 public class LinePathMapView {
 

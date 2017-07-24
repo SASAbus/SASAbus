@@ -33,6 +33,9 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.bumptech.glide.Glide;
+import com.davale.sasabus.core.model.Departure;
+import com.davale.sasabus.core.realm.BusStopRealmHelper;
+import com.davale.sasabus.core.realm.model.BusStop;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -44,10 +47,8 @@ import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.beacon.ecopoints.badge.InAppBadge;
 import it.sasabz.android.sasabus.beacon.survey.SurveyActivity;
-import it.sasabz.android.sasabus.data.model.Departure;
 import it.sasabz.android.sasabus.data.network.rest.model.Badge;
 import it.sasabz.android.sasabus.data.network.rest.model.CloudTrip;
-import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.ui.NewsActivity;
 import it.sasabz.android.sasabus.ui.departure.DepartureActivity;
 import it.sasabz.android.sasabus.ui.ecopoints.EcoPointsActivity;
@@ -128,18 +129,18 @@ public final class Notifications {
                 Departure stopDetail = departures.get(0);
 
                 expandedView.setViewVisibility(R.id.notification_departure_1, View.VISIBLE);
-                expandedView.setTextViewText(R.id.notification_departure_1_line, stopDetail.line);
-                expandedView.setTextViewText(R.id.notification_departure_1_time, stopDetail.time);
-                expandedView.setTextViewText(R.id.notification_departure_1_last, context.getString(R.string.notification_heading, stopDetail.destination));
+                expandedView.setTextViewText(R.id.notification_departure_1_line, stopDetail.getLine());
+                expandedView.setTextViewText(R.id.notification_departure_1_time, stopDetail.getTime());
+                expandedView.setTextViewText(R.id.notification_departure_1_last, context.getString(R.string.notification_heading, stopDetail.getDestination()));
 
-                if (stopDetail.delay > 3) {
+                if (stopDetail.getDelay() > 3) {
                     expandedView.setTextColor(R.id.notification_departure_1_delay, ContextCompat.getColor(context, R.color.material_red_500));
-                } else if (stopDetail.delay > 0) {
+                } else if (stopDetail.getDelay() > 0) {
                     expandedView.setTextColor(R.id.notification_departure_1_delay, ContextCompat.getColor(context, R.color.material_amber_700));
                 }
 
-                if (stopDetail.delay != Config.BUS_STOP_DETAILS_NO_DELAY) {
-                    expandedView.setTextViewText(R.id.notification_departure_1_delay, stopDetail.delay + "'");
+                if (stopDetail.getDelay() != Config.BUS_STOP_DETAILS_NO_DELAY) {
+                    expandedView.setTextViewText(R.id.notification_departure_1_delay, stopDetail.getDelay() + "'");
                 }
             }
 
@@ -147,18 +148,18 @@ public final class Notifications {
                 Departure stopDetail = departures.get(1);
 
                 expandedView.setViewVisibility(R.id.notification_departure_2, View.VISIBLE);
-                expandedView.setTextViewText(R.id.notification_departure_2_line, stopDetail.line);
-                expandedView.setTextViewText(R.id.notification_departure_2_time, stopDetail.time);
-                expandedView.setTextViewText(R.id.notification_departure_2_last, context.getString(R.string.notification_heading, stopDetail.destination));
+                expandedView.setTextViewText(R.id.notification_departure_2_line, stopDetail.getLine());
+                expandedView.setTextViewText(R.id.notification_departure_2_time, stopDetail.getTime());
+                expandedView.setTextViewText(R.id.notification_departure_2_last, context.getString(R.string.notification_heading, stopDetail.getDestination()));
 
-                if (stopDetail.delay > 3) {
+                if (stopDetail.getDelay() > 3) {
                     expandedView.setTextColor(R.id.notification_departure_2_delay, ContextCompat.getColor(context, R.color.material_red_500));
-                } else if (stopDetail.delay > 0) {
+                } else if (stopDetail.getDelay() > 0) {
                     expandedView.setTextColor(R.id.notification_departure_2_delay, ContextCompat.getColor(context, R.color.material_amber_700));
                 }
 
-                if (stopDetail.delay != Config.BUS_STOP_DETAILS_NO_DELAY) {
-                    expandedView.setTextViewText(R.id.notification_departure_2_delay, stopDetail.delay + "'");
+                if (stopDetail.getDelay() != Config.BUS_STOP_DETAILS_NO_DELAY) {
+                    expandedView.setTextViewText(R.id.notification_departure_2_delay, stopDetail.getDelay() + "'");
                 }
             }
 

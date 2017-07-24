@@ -22,9 +22,10 @@ import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
+import com.davale.sasabus.core.realm.model.SadBusStop;
+
 import java.util.List;
 
-import it.sasabz.android.sasabus.data.realm.busstop.SadBusStop;
 import it.sasabz.android.sasabus.ui.route.RouteMapPickerActivity;
 
 public class RoutePickerMapView {

@@ -38,6 +38,10 @@ apply plugin: 'io.fabric'
 apply plugin: 'com.neenbedankt.android-apt'
 
 repositories {
+    jcenter()
+    mavenCentral()
+    google()
+
     maven {
         url 'https://maven.fabric.io/public'
     }
@@ -68,6 +72,17 @@ android {
         buildConfigField "String", "CATCH_AND_SOLVE_API_KEY", "\"${CATCH_AND_SOLVE_API_KEY}\""
     }
 
+    flavorDimensions "default"
+
+    productFlavors {
+        development {
+            minSdkVersion 21
+        }
+        production {
+            minSdkVersion 16
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
@@ -84,20 +99,24 @@ android {
             storePassword 'android'
         }
     }
+
+    packagingOptions {
+        exclude "lib/mips/librealm-jni.so"
+    }
 }
 
 ext {
-    SUPPORT_LIBRARY_VERSION = "25.3.1"
+    SUPPORT_LIBRARY_VERSION = "25.4.0"
     PLAY_SERVICES_VERSION = "10.2.6"
     RETROFIT_VERSION = "2.1.0"
     OKHTTP_VERSION = "3.4.1"
-    BUTTERKNIFE_VERSION = "8.5.1"
+    BUTTERKNIFE_VERSION = "8.7.0"
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile project(":sasabus-core")
+    implementation project(":sasabus-core")
 
     // UI
     compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
@@ -115,7 +134,7 @@ dependencies {
     compile 'org.altbeacon:android-beacon-library:2.9.1'
 
     // Networking
-    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.github.bumptech.glide:glide:3.8.0'
 
     // ReactiveX
     compile 'com.trello:rxlifecycle:1.0'
