@@ -47,7 +47,6 @@ import it.sasabz.android.sasabus.beacon.survey.SurveyActivity;
 import it.sasabz.android.sasabus.data.model.Departure;
 import it.sasabz.android.sasabus.data.network.rest.model.Badge;
 import it.sasabz.android.sasabus.data.network.rest.model.CloudTrip;
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.ui.NewsActivity;
 import it.sasabz.android.sasabus.ui.departure.DepartureActivity;

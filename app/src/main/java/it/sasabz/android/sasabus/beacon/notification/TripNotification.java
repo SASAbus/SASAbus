@@ -42,7 +42,6 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.beacon.bus.CurrentTrip;
 import it.sasabz.android.sasabus.data.model.BusStop;
 import it.sasabz.android.sasabus.data.model.line.Lines;
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.vdv.model.VdvBusStop;
 import it.sasabz.android.sasabus.ui.MapActivity;
 import it.sasabz.android.sasabus.util.Notifications;

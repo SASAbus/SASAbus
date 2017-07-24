@@ -33,7 +33,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.model.route.RouteRecent;
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.ui.departure.DepartureActivity;
 

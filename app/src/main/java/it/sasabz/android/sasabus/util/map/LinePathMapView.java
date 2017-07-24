@@ -24,7 +24,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
 import it.sasabz.android.sasabus.data.network.rest.response.PathResponse;
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
 
 public class LinePathMapView {

@@ -45,7 +45,6 @@ import io.realm.RealmQuery;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.model.BusStop;
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.realm.busstop.SadBusStop;
 import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;

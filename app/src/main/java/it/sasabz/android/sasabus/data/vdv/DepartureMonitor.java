@@ -24,7 +24,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.vdv.data.VdvCalendar;
 import it.sasabz.android.sasabus.data.vdv.data.VdvTrips;
 import it.sasabz.android.sasabus.data.vdv.model.VdvBusStop;

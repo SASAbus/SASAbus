@@ -25,7 +25,6 @@ import java.io.File;
 
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.ui.bus.BusDetailActivity;
 import it.sasabz.android.sasabus.ui.departure.DepartureActivity;

@@ -79,7 +79,6 @@ import it.sasabz.android.sasabus.data.network.rest.api.TrafficLightApi;
 import it.sasabz.android.sasabus.data.network.rest.model.RealtimeBus;
 import it.sasabz.android.sasabus.data.network.rest.response.RealtimeResponse;
 import it.sasabz.android.sasabus.data.network.rest.response.TrafficLightResponse;
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.fcm.FcmService;
 import it.sasabz.android.sasabus.ui.about.AboutActivity;

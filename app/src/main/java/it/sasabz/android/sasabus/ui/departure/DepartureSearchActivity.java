@@ -46,7 +46,6 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.data.realm.user.FavoriteBusStop;
 import it.sasabz.android.sasabus.ui.BaseActivity;

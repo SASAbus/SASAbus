@@ -19,7 +19,6 @@ package it.sasabz.android.sasabus;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -34,7 +33,6 @@ import io.realm.Realm;
 import it.sasabz.android.sasabus.beacon.BeaconHandler;
 import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
 import it.sasabz.android.sasabus.data.network.rest.RestClient;
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.data.vdv.data.VdvHandler;
 import it.sasabz.android.sasabus.sync.SyncHelper;

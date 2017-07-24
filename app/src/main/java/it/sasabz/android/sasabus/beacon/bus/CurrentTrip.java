@@ -26,7 +26,6 @@ import it.sasabz.android.sasabus.beacon.ecopoints.BadgeHelper;
 import it.sasabz.android.sasabus.beacon.notification.TripNotification;
 import it.sasabz.android.sasabus.data.model.BusStop;
 import it.sasabz.android.sasabus.data.model.JsonSerializable;
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.vdv.Api;
 import it.sasabz.android.sasabus.data.vdv.model.VdvBusStop;
 import timber.log.Timber;

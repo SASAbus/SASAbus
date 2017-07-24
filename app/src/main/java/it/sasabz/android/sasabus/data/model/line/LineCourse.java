@@ -20,7 +20,6 @@ package it.sasabz.android.sasabus.data.model.line;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
 
 public class LineCourse implements Parcelable {

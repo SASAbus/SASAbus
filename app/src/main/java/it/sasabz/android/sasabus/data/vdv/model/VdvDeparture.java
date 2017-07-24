@@ -19,7 +19,6 @@ package it.sasabz.android.sasabus.data.vdv.model;
 
 import it.sasabz.android.sasabus.data.model.Departure;
 import it.sasabz.android.sasabus.data.model.line.Lines;
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
 import it.sasabz.android.sasabus.data.vdv.Api;
 
