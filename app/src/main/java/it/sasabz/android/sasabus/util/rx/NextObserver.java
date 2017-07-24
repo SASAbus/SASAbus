@@ -20,7 +20,7 @@ package it.sasabz.android.sasabus.util.rx;
 import it.sasabz.android.sasabus.util.Utils;
 import rx.Observer;
 
-public abstract class NextObserver<T> implements Observer<T> {
+public class NextObserver<T> implements Observer<T> {
 
     @Override
     public void onCompleted() {

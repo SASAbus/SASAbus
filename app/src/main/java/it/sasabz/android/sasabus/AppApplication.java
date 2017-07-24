@@ -40,6 +40,7 @@ import it.sasabz.android.sasabus.sync.SyncHelper;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
+import it.sasabz.android.sasabus.util.rx.NextObserver;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -97,7 +98,7 @@ public class AppApplication extends Application {
         // Load plan data
         VdvHandler.load(this)
                 .subscribeOn(Schedulers.io())
-                .subscribe();
+                .subscribe(new NextObserver<>());
 
         //noinspection CodeBlock2Expr
         mApiClient = new GoogleApiClient.Builder(this)

@@ -54,33 +54,33 @@
         <!-- Nav drawer activities -->
 
         <activity
-            android:name="ui.MapActivity"
+            android:name=".ui.MapActivity"
             android:label="@string/title_map"
             android:launchMode="singleTop"/>
 
         <activity
-            android:name="ui.line.LinesActivity"
+            android:name=".ui.line.LinesActivity"
             android:label="@string/title_lines"
             android:launchMode="singleTop"/>
 
         <activity
-            android:name="ui.route.RouteActivity"
+            android:name=".ui.route.RouteActivity"
             android:label="@string/title_route"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustNothing"/>
 
         <activity
-            android:name="ui.TimetableActivity"
+            android:name=".ui.TimetableActivity"
             android:label="@string/title_timetables"
             android:launchMode="singleTop"/>
 
         <activity
-            android:name="ui.NewsActivity"
+            android:name=".ui.NewsActivity"
             android:label="@string/title_news"
             android:launchMode="singleTop"/>
 
         <activity
-            android:name="ui.parking.ParkingActivity"
+            android:name=".ui.parking.ParkingActivity"
             android:label="@string/title_parking"
             android:launchMode="singleTop"/>
 
@@ -88,7 +88,7 @@
         <!-- Intro activity -->
 
         <activity
-            android:name="ui.intro.Intro"
+            android:name=".ui.intro.Intro"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.Intro">
 
@@ -103,7 +103,7 @@
         </activity>
 
         <activity
-            android:name="ui.intro.data.IntroData"
+            android:name=".ui.intro.data.IntroData"
             android:theme="@style/AppTheme.Intro"/>
 
 
@@ -129,25 +129,25 @@
         <!-- Credits/Settings/Changelog -->
 
         <activity
-            android:name="ui.about.AboutActivity"
+            android:name=".ui.about.AboutActivity"
             android:label="@string/title_about"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.About"/>
 
         <activity
-            android:name="ui.about.CreditsActivity"
+            android:name=".ui.about.CreditsActivity"
             android:label="@string/title_credits"
             android:parentActivityName="ui.about.AboutActivity"
             android:theme="@style/AppTheme.Normal"/>
 
         <activity
-            android:name="ui.about.ChangelogActivity"
+            android:name=".ui.about.ChangelogActivity"
             android:label="@string/title_changelog"
             android:parentActivityName="ui.about.AboutActivity"
             android:theme="@style/AppTheme.Normal"/>
 
         <activity
-            android:name="ui.PreferenceActivity"
+            android:name=".ui.PreferenceActivity"
             android:label="@string/title_settings"
             android:theme="@style/AppTheme.Settings"/>
 
@@ -155,20 +155,20 @@
         <!-- Route -->
 
         <activity
-            android:name="ui.route.RouteMapPickerActivity"
+            android:name=".ui.route.RouteMapPickerActivity"
             android:label="@string/title_pick_bus_stops"
             android:parentActivityName="ui.route.RouteActivity"
             android:theme="@style/AppTheme.Normal"/>
 
         <activity
-            android:name="ui.route.RouteResultActivity"
+            android:name=".ui.route.RouteResultActivity"
             android:label="@string/title_route_results"
             android:launchMode="singleTop"
             android:parentActivityName="ui.route.RouteActivity"
             android:theme="@style/AppTheme.Green"/>
 
         <activity
-            android:name="ui.route.SearchActivity"
+            android:name=".ui.route.SearchActivity"
             android:exported="false"
             android:label="@string/title_search"
             android:launchMode="singleTop"
@@ -236,18 +236,18 @@
         <!-- Lines -->
 
         <activity
-            android:name="ui.line.LineDetailsActivity"
+            android:name=".ui.line.LineDetailsActivity"
             android:label="@string/title_line_details"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.Indigo"/>
 
         <activity
-            android:name="ui.line.LineCourseActivity"
+            android:name=".ui.line.LineCourseActivity"
             android:label="@string/title_course_details"
             android:theme="@style/AppTheme.Teal"/>
 
         <activity
-            android:name="ui.line.LinePathActivity"
+            android:name=".ui.line.LinePathActivity"
             android:label="@string/title_line_path"
             android:parentActivityName="ui.line.LineDetailsActivity"
             android:theme="@style/AppTheme.Indigo"/>
@@ -256,7 +256,7 @@
         <!-- Parking -->
 
         <activity
-            android:name="ui.parking.ParkingDetailActivity"
+            android:name=".ui.parking.ParkingDetailActivity"
             android:parentActivityName="ui.parking.ParkingActivity"
             android:theme="@style/AppTheme.Parking"/>
 
@@ -264,19 +264,19 @@
         <!-- Bus -->
 
         <activity
-            android:name="ui.bus.BusDetailActivity"
+            android:name=".ui.bus.BusDetailActivity"
             android:theme="@style/AppTheme.Bus"/>
 
 
         <!-- Survey -->
 
         <activity
-            android:name="beacon.survey.SurveyActivity"
+            android:name=".beacon.survey.SurveyActivity"
             android:label="@string/title_survey"
             android:theme="@style/AppTheme.Teal"/>
 
         <activity
-            android:name="beacon.survey.SurveyExitActivity"
+            android:name=".beacon.survey.SurveyExitActivity"
             android:autoRemoveFromRecents="true"
             android:theme="@android:style/Theme.NoDisplay"/>
 
@@ -284,7 +284,7 @@
         <!-- Widget -->
 
         <activity
-            android:name="ui.parking.ParkingConfigureActivity"
+            android:name=".ui.parking.ParkingConfigureActivity"
             android:theme="@style/Theme.WidgetActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
@@ -324,22 +324,22 @@
             android:enabled="true"
             android:exported="false"/>
 
-        <service android:name="sync.SyncService"/>
+        <service android:name=".sync.SyncService"/>
 
         <service
-            android:name="sync.SyncJobService"
+            android:name=".sync.SyncJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
 
 
         <!-- GCM Services -->
 
-        <service android:name="fcm.FcmService">
+        <service android:name=".fcm.FcmService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
 
-        <service android:name="fcm.InstanceIdService">
+        <service android:name=".fcm.InstanceIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
@@ -356,16 +356,16 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name="receiver.NotificationReceiver"/>
+        <receiver android:name=".receiver.NotificationReceiver"/>
 
-        <receiver android:name="receiver.BluetoothReceiver">
+        <receiver android:name=".receiver.BluetoothReceiver">
             <intent-filter>
                 <action android:name="android.bluetooth.adapter.action.STATE_CHANGED"/>
             </intent-filter>
         </receiver>
 
         <receiver
-            android:name="receiver.BootReceiver"
+            android:name=".receiver.BootReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
@@ -389,7 +389,7 @@
         </receiver>
 
         <receiver
-            android:name="receiver.LocationReceiver"
+            android:name=".receiver.LocationReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -397,7 +397,7 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name="appwidget.NewsWidgetProvider">
+        <receiver android:name=".appwidget.NewsWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
@@ -407,7 +407,7 @@
                 android:resource="@xml/widget_provider_news"/>
         </receiver>
 
-        <receiver android:name="appwidget.ParkingWidgetProvider">
+        <receiver android:name=".appwidget.ParkingWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
