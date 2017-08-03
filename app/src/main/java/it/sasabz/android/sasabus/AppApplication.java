@@ -24,21 +24,23 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
+import com.davale.sasabus.core.realm.BusStopRealmHelper;
+import com.davale.sasabus.core.vdv.data.VdvHandler;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
+import bz.davide.catchsolve.catcher.android.CatchSolve;
 import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 import it.sasabz.android.sasabus.beacon.BeaconHandler;
 import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
 import it.sasabz.android.sasabus.data.network.rest.RestClient;
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
-import it.sasabz.android.sasabus.data.vdv.data.VdvHandler;
 import it.sasabz.android.sasabus.sync.SyncHelper;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
+import it.sasabz.android.sasabus.util.rx.NextObserver;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -63,6 +65,8 @@ public class AppApplication extends Application {
         } else {
             Fabric.with(this, new Crashlytics());
             Timber.plant(new CrashReportingTree());
+
+            CatchSolve.init(this, BuildConfig.CATCH_AND_SOLVE_API_KEY);
         }
 
         // Change the language to the one the user selected in the app settings.
@@ -94,7 +98,7 @@ public class AppApplication extends Application {
         // Load plan data
         VdvHandler.load(this)
                 .subscribeOn(Schedulers.io())
-                .subscribe();
+                .subscribe(new NextObserver<>());
 
         //noinspection CodeBlock2Expr
         mApiClient = new GoogleApiClient.Builder(this)

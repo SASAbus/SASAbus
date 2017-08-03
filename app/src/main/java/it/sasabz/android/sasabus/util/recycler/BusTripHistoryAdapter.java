@@ -23,6 +23,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.davale.sasabus.core.vdv.Api;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +34,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.model.ExecutedTrip;
-import it.sasabz.android.sasabus.data.vdv.Api;
 
 /**
  * @author Alex Lardschneider

@@ -19,6 +19,10 @@ package it.sasabz.android.sasabus.beacon.bus;
 
 import android.content.Context;
 
+import com.davale.sasabus.core.realm.BusStopRealmHelper;
+import com.davale.sasabus.core.vdv.Api;
+import com.davale.sasabus.core.vdv.model.VdvBusStop;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +30,6 @@ import it.sasabz.android.sasabus.beacon.ecopoints.BadgeHelper;
 import it.sasabz.android.sasabus.beacon.notification.TripNotification;
 import it.sasabz.android.sasabus.data.model.BusStop;
 import it.sasabz.android.sasabus.data.model.JsonSerializable;
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
-import it.sasabz.android.sasabus.data.vdv.Api;
-import it.sasabz.android.sasabus.data.vdv.model.VdvBusStop;
 import timber.log.Timber;
 
 public class CurrentTrip implements JsonSerializable {

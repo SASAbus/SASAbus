@@ -24,14 +24,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.webkit.WebView;
 
+import com.davale.sasabus.core.realm.BusStopRealmHelper;
+import com.davale.sasabus.core.realm.model.SadBusStop;
+
 import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.model.BusStop;
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
-import it.sasabz.android.sasabus.data.realm.busstop.SadBusStop;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.map.RoutePickerMapView;
 import rx.android.schedulers.AndroidSchedulers;

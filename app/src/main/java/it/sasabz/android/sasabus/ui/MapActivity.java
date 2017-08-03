@@ -62,6 +62,10 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.davale.sasabus.core.data.Buses;
+import com.davale.sasabus.core.realm.BusStopRealmHelper;
+import com.davale.sasabus.core.util.AnimUtils;
+
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -70,7 +74,6 @@ import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.data.model.Buses;
 import it.sasabz.android.sasabus.data.model.line.Lines;
 import it.sasabz.android.sasabus.data.network.NetUtils;
 import it.sasabz.android.sasabus.data.network.rest.RestClient;
@@ -79,13 +82,11 @@ import it.sasabz.android.sasabus.data.network.rest.api.TrafficLightApi;
 import it.sasabz.android.sasabus.data.network.rest.model.RealtimeBus;
 import it.sasabz.android.sasabus.data.network.rest.response.RealtimeResponse;
 import it.sasabz.android.sasabus.data.network.rest.response.TrafficLightResponse;
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.fcm.FcmService;
 import it.sasabz.android.sasabus.ui.about.AboutActivity;
 import it.sasabz.android.sasabus.ui.widget.NestedSwipeRefreshLayout;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
-import it.sasabz.android.sasabus.util.AnimUtils;
 import it.sasabz.android.sasabus.util.Preconditions;
 import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
@@ -209,6 +210,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
     private boolean mFilterOpen;
 
     private RealtimeMapView mapView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

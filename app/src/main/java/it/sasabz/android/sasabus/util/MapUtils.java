@@ -18,9 +18,11 @@
 package it.sasabz.android.sasabus.util;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.location.Location;
 
+import com.davale.sasabus.core.util.DeviceUtils;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
@@ -35,6 +37,7 @@ public final class MapUtils {
 
     // ======================================== VARIOUS ============================================
 
+    @SuppressLint("MissingPermission")
     public static Location getLastKnownLocation(Activity activity) {
         if (!DeviceUtils.hasPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION)) {
             Timber.e("Missing location permission");
@@ -47,7 +50,6 @@ public final class MapUtils {
             return null;
         }
 
-        //noinspection MissingPermission
         return LocationServices.FusedLocationApi.getLastLocation(client);
     }
 

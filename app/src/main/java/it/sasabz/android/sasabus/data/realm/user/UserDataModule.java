@@ -33,6 +33,6 @@ import io.realm.annotations.RealmModule;
         FilterLine.class,
         PlannedTrip.class,
         RecentRoute.class,
-})
+}, library = true)
 public class UserDataModule {
 }

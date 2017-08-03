@@ -24,6 +24,7 @@ import android.os.Build;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
+import com.davale.sasabus.core.util.DeviceUtils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 

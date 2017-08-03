@@ -33,6 +33,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 
+import com.davale.sasabus.core.realm.BusStopRealmHelper;
+import com.davale.sasabus.core.vdv.Api;
+import com.davale.sasabus.core.vdv.model.VdvBusStop;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import java.io.IOException;
@@ -52,10 +55,7 @@ import it.sasabz.android.sasabus.data.network.rest.api.RealtimeApi;
 import it.sasabz.android.sasabus.data.network.rest.model.Line;
 import it.sasabz.android.sasabus.data.network.rest.model.RealtimeBus;
 import it.sasabz.android.sasabus.data.network.rest.response.RealtimeResponse;
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
-import it.sasabz.android.sasabus.data.vdv.Api;
-import it.sasabz.android.sasabus.data.vdv.model.VdvBusStop;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.recycler.LineDetailsAdapter;

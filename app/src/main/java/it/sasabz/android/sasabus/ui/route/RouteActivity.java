@@ -17,6 +17,7 @@
 
 package it.sasabz.android.sasabus.ui.route;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -45,6 +46,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.davale.sasabus.core.realm.BusStopRealmHelper;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -62,7 +65,6 @@ import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.model.BusStop;
 import it.sasabz.android.sasabus.data.model.route.RouteRecent;
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.data.realm.user.RecentRoute;
 import it.sasabz.android.sasabus.ui.BaseActivity;
@@ -117,6 +119,7 @@ public class RouteActivity extends BaseActivity implements View.OnClickListener,
 
     private Realm mRealm;
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

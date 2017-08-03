@@ -23,6 +23,8 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.util.Pair;
 
+import com.davale.sasabus.core.realm.BusStopRealmHelper;
+
 import org.altbeacon.beacon.Beacon;
 
 import java.util.Arrays;
@@ -48,7 +50,6 @@ import it.sasabz.android.sasabus.data.network.rest.api.RealtimeApi;
 import it.sasabz.android.sasabus.data.network.rest.model.CloudTrip;
 import it.sasabz.android.sasabus.data.network.rest.model.RealtimeBus;
 import it.sasabz.android.sasabus.data.network.rest.response.RealtimeResponse;
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.util.HashUtils;
 import it.sasabz.android.sasabus.util.IllegalTripException;

@@ -22,6 +22,11 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v4.util.Pair;
 
+import com.davale.sasabus.core.model.Departure;
+import com.davale.sasabus.core.realm.BusStopRealmHelper;
+import com.davale.sasabus.core.vdv.DepartureMonitor;
+import com.davale.sasabus.core.vdv.model.VdvDeparture;
+
 import org.altbeacon.beacon.Beacon;
 
 import java.util.ArrayList;
@@ -39,15 +44,11 @@ import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
 import it.sasabz.android.sasabus.beacon.bus.BusBeaconHandler;
 import it.sasabz.android.sasabus.beacon.ecopoints.BadgeHelper;
 import it.sasabz.android.sasabus.data.model.BusStop;
-import it.sasabz.android.sasabus.data.model.Departure;
 import it.sasabz.android.sasabus.data.network.rest.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.RealtimeApi;
 import it.sasabz.android.sasabus.data.network.rest.model.RealtimeBus;
 import it.sasabz.android.sasabus.data.network.rest.response.RealtimeResponse;
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
 import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
-import it.sasabz.android.sasabus.data.vdv.DepartureMonitor;
-import it.sasabz.android.sasabus.data.vdv.model.VdvDeparture;
 import it.sasabz.android.sasabus.util.Notifications;
 import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
@@ -252,7 +253,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
             return;
         }
 
-        it.sasabz.android.sasabus.data.realm.busstop.BusStop busStop =
+        com.davale.sasabus.core.realm.model.BusStop busStop =
                 BusStopRealmHelper.getBusStopOrNull(major);
 
         if (busStop != null) {
@@ -329,7 +330,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
         Collections.sort(beacons, (lhs, rhs) -> (int) (lhs.distance - rhs.distance));
 
         for (BusStopBeacon beacon : beacons) {
-            it.sasabz.android.sasabus.data.realm.busstop.BusStop busStop = BusStopRealmHelper
+            com.davale.sasabus.core.realm.model.BusStop busStop = BusStopRealmHelper
                     .getBusStopOrNull(beacon.id);
 
             if (busStop != null) {
@@ -341,7 +342,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
 
                 Timber.e("Notification station beacon %s", beacon.id);
 
-                Collection<VdvDeparture> vdvDepartures = new DepartureMonitor()
+                Collection<VdvDeparture> vdvDepartures = new DepartureMonitor(mContext)
                         .atBusStop(beacon.id)
                         .includePastDepartures(180)
                         .maxElements(2)
@@ -351,7 +352,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
 
                 for (VdvDeparture vdvDeparture : vdvDepartures) {
                     Departure departure = vdvDeparture.asDeparture(beacon.id);
-                    departure.delay = Departure.NO_DELAY;
+                    departure.setDelay(Departure.NO_DELAY);
                     departures.add(departure);
                 }
 
@@ -378,9 +379,9 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
 
                                 for (RealtimeBus bus : list) {
                                     for (Departure item : departures) {
-                                        if (item.trip == bus.trip) {
-                                            item.delay = bus.delayMin;
-                                            item.vehicle = bus.vehicle;
+                                        if (item.getTrip() == bus.trip) {
+                                            item.setDelay(bus.delayMin);
+                                            item.setVehicle(bus.vehicle);
 
                                             break;
                                         }

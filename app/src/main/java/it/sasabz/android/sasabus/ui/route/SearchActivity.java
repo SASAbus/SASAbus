@@ -19,6 +19,7 @@ package it.sasabz.android.sasabus.ui.route;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.SearchManager;
 import android.content.Intent;
@@ -37,6 +38,10 @@ import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.davale.sasabus.core.realm.BusStopRealmHelper;
+import com.davale.sasabus.core.realm.model.SadBusStop;
+import com.davale.sasabus.core.util.Strings;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,11 +50,8 @@ import io.realm.RealmQuery;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.model.BusStop;
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
-import it.sasabz.android.sasabus.data.realm.busstop.SadBusStop;
 import it.sasabz.android.sasabus.ui.BaseActivity;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
-import it.sasabz.android.sasabus.util.Strings;
 import it.sasabz.android.sasabus.util.Utils;
 import it.sasabz.android.sasabus.util.list.BusStopPickerAdapter;
 import rx.android.schedulers.AndroidSchedulers;
@@ -242,6 +244,7 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
      * On Lollipop+ perform a circular animation (a contracting circular mask) when hiding the
      * search panel.
      */
+    @SuppressLint("WrongViewCast")
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void doExitAnim() {
         View searchPanel = findViewById(R.id.search_panel);
@@ -270,7 +273,8 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
         shrink.start();
 
         // We also animate out the translucent background at the same time.
-        findViewById(R.id.scrim).animate()
+        findViewById(R.id.scrim)
+                .animate()
                 .alpha(0f)
                 .setDuration(400)
                 .setInterpolator(new FastOutSlowInInterpolator())

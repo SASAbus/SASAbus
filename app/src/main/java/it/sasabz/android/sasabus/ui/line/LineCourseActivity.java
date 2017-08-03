@@ -27,6 +27,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.davale.sasabus.core.realm.BusStopRealmHelper;
+import com.davale.sasabus.core.realm.model.BusStop;
+import com.davale.sasabus.core.util.DeviceUtils;
+import com.davale.sasabus.core.vdv.Api;
+import com.davale.sasabus.core.vdv.data.VdvException;
+import com.davale.sasabus.core.vdv.model.VdvBusStop;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import java.util.ArrayList;
@@ -42,13 +48,7 @@ import it.sasabz.android.sasabus.data.network.rest.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.RealtimeApi;
 import it.sasabz.android.sasabus.data.network.rest.model.RealtimeBus;
 import it.sasabz.android.sasabus.data.network.rest.response.RealtimeResponse;
-import it.sasabz.android.sasabus.data.realm.BusStopRealmHelper;
-import it.sasabz.android.sasabus.data.realm.busstop.BusStop;
-import it.sasabz.android.sasabus.data.vdv.Api;
-import it.sasabz.android.sasabus.data.vdv.data.VdvCalendar;
-import it.sasabz.android.sasabus.data.vdv.model.VdvBusStop;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
-import it.sasabz.android.sasabus.util.DeviceUtils;
 import it.sasabz.android.sasabus.util.Settings;
 import it.sasabz.android.sasabus.util.Utils;
 import retrofit2.Call;
@@ -251,7 +251,7 @@ public class LineCourseActivity extends RxAppCompatActivity {
             if (!Api.todayExists(this)) {
                 Settings.markDataUpdateAvailable(LineCourseActivity.this, true);
 
-                throw new VdvCalendar.VdvCalendarException(ERROR_DATA);
+                throw new VdvException(ERROR_DATA);
             }
 
             if (vehicle != 0) {

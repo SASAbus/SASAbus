@@ -21,7 +21,8 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import it.sasabz.android.sasabus.data.realm.busstop.SadBusStop;
+import com.davale.sasabus.core.realm.model.SadBusStop;
+
 import it.sasabz.android.sasabus.util.Utils;
 
 /**
@@ -129,7 +130,7 @@ public class BusStop implements Parcelable {
         group = in.readInt();
     }
 
-    public BusStop(it.sasabz.android.sasabus.data.realm.busstop.BusStop busStop) {
+    public BusStop(com.davale.sasabus.core.realm.model.BusStop busStop) {
         id = busStop.getId();
         nameDe = busStop.getNameDe();
         nameIt = busStop.getNameIt();
