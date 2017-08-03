@@ -211,6 +211,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
     private RealtimeMapView mapView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
