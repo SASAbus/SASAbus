@@ -137,13 +137,13 @@
         <activity
             android:name=".ui.about.CreditsActivity"
             android:label="@string/title_credits"
-            android:parentActivityName="ui.about.AboutActivity"
+            android:parentActivityName=".ui.about.AboutActivity"
             android:theme="@style/AppTheme.Normal"/>
 
         <activity
             android:name=".ui.about.ChangelogActivity"
             android:label="@string/title_changelog"
-            android:parentActivityName="ui.about.AboutActivity"
+            android:parentActivityName=".ui.about.AboutActivity"
             android:theme="@style/AppTheme.Normal"/>
 
         <activity
@@ -157,14 +157,14 @@
         <activity
             android:name=".ui.route.RouteMapPickerActivity"
             android:label="@string/title_pick_bus_stops"
-            android:parentActivityName="ui.route.RouteActivity"
+            android:parentActivityName=".ui.route.RouteActivity"
             android:theme="@style/AppTheme.Normal"/>
 
         <activity
             android:name=".ui.route.RouteResultActivity"
             android:label="@string/title_route_results"
             android:launchMode="singleTop"
-            android:parentActivityName="ui.route.RouteActivity"
+            android:parentActivityName=".ui.route.RouteActivity"
             android:theme="@style/AppTheme.Green"/>
 
         <activity
@@ -249,7 +249,7 @@
         <activity
             android:name=".ui.line.LinePathActivity"
             android:label="@string/title_line_path"
-            android:parentActivityName="ui.line.LineDetailsActivity"
+            android:parentActivityName=".ui.line.LineDetailsActivity"
             android:theme="@style/AppTheme.Indigo"/>
 
 
@@ -257,7 +257,7 @@
 
         <activity
             android:name=".ui.parking.ParkingDetailActivity"
-            android:parentActivityName="ui.parking.ParkingActivity"
+            android:parentActivityName=".ui.parking.ParkingActivity"
             android:theme="@style/AppTheme.Parking"/>
 
 

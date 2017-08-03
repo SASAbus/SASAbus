@@ -342,7 +342,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
 
                 Timber.e("Notification station beacon %s", beacon.id);
 
-                Collection<VdvDeparture> vdvDepartures = new DepartureMonitor()
+                Collection<VdvDeparture> vdvDepartures = new DepartureMonitor(mContext)
                         .atBusStop(beacon.id)
                         .includePastDepartures(180)
                         .maxElements(2)

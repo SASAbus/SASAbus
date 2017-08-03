@@ -606,7 +606,7 @@ public class DepartureActivity extends BaseActivity implements View.OnClickListe
         return Observable.fromCallable(() -> {
             List<Departure> items = new ArrayList<>();
 
-            Collection<VdvDeparture> departures = new DepartureMonitor()
+            Collection<VdvDeparture> departures = new DepartureMonitor(DepartureActivity.this)
                     .atBusStopFamily(family)
                     .at(mCalendar.getTime())
                     .collect();
