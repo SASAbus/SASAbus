@@ -477,14 +477,16 @@ public final class Settings {
      * @param context Context to be used to edit the {@link SharedPreferences}.
      */
     public static boolean shouldShowChangelog(Context context) {
-        if (wasUpgrade) {
+        return false;
+
+        /*if (wasUpgrade) {
             wasUpgrade = false;
 
             return PreferenceManager.getDefaultSharedPreferences(context)
                     .getBoolean(PREF_SHOULD_SHOW_CHANGELOG, true);
         }
 
-        return false;
+        return false;*/
     }
 
     /**
