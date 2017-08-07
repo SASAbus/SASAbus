@@ -26,13 +26,13 @@ import io.realm.annotations.RealmModule;
  * @author Alex Lardschneider
  */
 @RealmModule(classes = {
-        Beacon.class,
         EarnedBadge.class,
         FavoriteBusStop.class,
         FavoriteLine.class,
         FilterLine.class,
         PlannedTrip.class,
         RecentRoute.class,
+        TelemetryBeacon.class
 }, library = true)
 public class UserDataModule {
 }

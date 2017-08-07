@@ -36,7 +36,7 @@ public class BootReceiver extends BroadcastReceiver {
         if ("android.intent.action.BOOT_COMPLETED".equals(intent.getAction())) {
 
             // Schedule sync at night.
-            SyncHelper.scheduleSync(context);
+            SyncHelper.Companion.scheduleSync(context);
         }
     }
 }

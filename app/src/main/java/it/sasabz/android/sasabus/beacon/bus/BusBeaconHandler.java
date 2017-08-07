@@ -45,7 +45,7 @@ import it.sasabz.android.sasabus.beacon.notification.TripNotification;
 import it.sasabz.android.sasabus.data.model.BusStop;
 import it.sasabz.android.sasabus.data.model.line.Lines;
 import it.sasabz.android.sasabus.data.network.NetUtils;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.RealtimeApi;
 import it.sasabz.android.sasabus.data.network.rest.model.CloudTrip;
 import it.sasabz.android.sasabus.data.network.rest.model.RealtimeBus;
@@ -213,8 +213,6 @@ public final class BusBeaconHandler implements IBeaconHandler {
 
             mBeaconMap.put(major, busBeacon);
 
-            UserRealmHelper.addBeacon(beacon, it.sasabz.android.sasabus.data.realm.user.Beacon.TYPE_BUS);
-
             Timber.e("Added beacon %s", major);
 
             if (NetUtils.isOnline(mContext) && beacon.getDistance() <= MAX_BEACON_DISTANCE) {
@@ -267,7 +265,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
         beacon.setOriginPending(true);
         beacon.retry();
 
-        RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
+        RealtimeApi realtimeApi = RestClient.INSTANCE.getADAPTER().create(RealtimeApi.class);
         realtimeApi.vehicleRx(beacon.id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
@@ -492,7 +490,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
 
         beacon.setCurrentTripPending(true);
 
-        RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
+        RealtimeApi realtimeApi = RestClient.INSTANCE.getADAPTER().create(RealtimeApi.class);
         realtimeApi.vehicleRx(beacon.id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
@@ -559,7 +557,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
         BusBeacon beacon = currentTrip.beacon;
         beacon.updateLastDelayFetch();
 
-        RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
+        RealtimeApi realtimeApi = RestClient.INSTANCE.getADAPTER().create(RealtimeApi.class);
         realtimeApi.vehicleRx(currentTrip.getId())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<RealtimeResponse>() {
@@ -596,7 +594,7 @@ public final class BusBeaconHandler implements IBeaconHandler {
     private void getStopStation(BusBeacon beacon) {
         Timber.e("getStopStation %s", beacon.id);
 
-        RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
+        RealtimeApi realtimeApi = RestClient.INSTANCE.getADAPTER().create(RealtimeApi.class);
         realtimeApi.vehicleRx(beacon.id)
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(new Observer<RealtimeResponse>() {

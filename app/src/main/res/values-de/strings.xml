@@ -440,5 +440,7 @@
     <string name="empty_state_departures_select_title">Wähle eine Haltestelle vom obigen Suchfeld</string>
     <string name="search_no_results">Keine Ergebnisse</string>
     <string name="title_departure">Abfahrten</string>
+    <string name="about_github_title">SASAbus auf GitHub</string>
+    <string name="about_github_subtitle">Trage bei der Entwicklung von SASAbus bei.</string>
 
 </resources>

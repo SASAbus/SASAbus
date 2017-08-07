@@ -21,6 +21,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
+import com.davale.sasabus.core.util.NtpDate;
+import com.polidea.rxandroidble.RxBleDevice;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -33,14 +36,15 @@ import io.realm.RealmConfiguration;
 import io.realm.RealmMigration;
 import io.realm.RealmSchema;
 import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
+import it.sasabz.android.sasabus.beacon.telemetry.BeaconCharacteristics;
 import it.sasabz.android.sasabus.data.model.line.Lines;
 import it.sasabz.android.sasabus.data.network.rest.model.CloudTrip;
-import it.sasabz.android.sasabus.data.realm.user.Beacon;
 import it.sasabz.android.sasabus.data.realm.user.EarnedBadge;
 import it.sasabz.android.sasabus.data.realm.user.FavoriteBusStop;
 import it.sasabz.android.sasabus.data.realm.user.FavoriteLine;
 import it.sasabz.android.sasabus.data.realm.user.FilterLine;
 import it.sasabz.android.sasabus.data.realm.user.RecentRoute;
+import it.sasabz.android.sasabus.data.realm.user.TelemetryBeacon;
 import it.sasabz.android.sasabus.data.realm.user.UserDataModule;
 import it.sasabz.android.sasabus.sync.TripSyncHelper;
 import it.sasabz.android.sasabus.util.Utils;
@@ -54,7 +58,7 @@ public final class UserRealmHelper {
     /**
      * Version should not be in YY MM DD Rev. format as it makes upgrading harder.
      */
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 3;
     private static final String DB_NAME = "default.realm";
 
     @SuppressLint("StaticFieldLeak")
@@ -94,6 +98,24 @@ public final class UserRealmHelper {
                 schema.remove("Trip");
                 schema.remove("TripToDelete");
                 schema.remove("Survey");
+
+                oldVersion++;
+            }
+
+            if (oldVersion == 2) {
+                schema.remove("Beacon");
+
+                // Add the new TelemetryBeacon
+                schema.create("TelemetryBeacon")
+                        .addField("macAddress", String.class)
+                        .addField("major", int.class)
+                        .addField("minor", int.class)
+                        .addField("battery", int.class)
+                        .addField("sysId", String.class)
+                        .addField("firmware", String.class)
+                        .addField("hardware", String.class)
+                        .addField("recordedAt", long.class)
+                        .addField("uuid", String.class);
 
                 oldVersion++;
             }
@@ -363,34 +385,6 @@ public final class UserRealmHelper {
     }
 
 
-    // ======================================= BEACONS =============================================
-
-    public static void addBeacon(org.altbeacon.beacon.Beacon beacon, String type) {
-        Realm realm = Realm.getDefaultInstance();
-
-        int major = beacon.getId2().toInt();
-        int minor = beacon.getId3().toInt();
-
-        if (major == 1 && minor != 1) {
-            major = beacon.getId3().toInt();
-            minor = beacon.getId2().toInt();
-        }
-
-        realm.beginTransaction();
-
-        Beacon realmObject = realm.createObject(Beacon.class);
-        realmObject.setType(type);
-        realmObject.setMajor(major);
-        realmObject.setMinor(minor);
-        realmObject.setTimeStamp((int) (System.currentTimeMillis() / 1000));
-
-        realm.commitTransaction();
-        realm.close();
-
-        Timber.w("Added beacon " + major + " to realm");
-    }
-
-
     // ======================================= BADGES ==============================================
 
     public static boolean hasEarnedBadge(int badgeId) {
@@ -415,6 +409,33 @@ public final class UserRealmHelper {
 
         realm.commitTransaction();
 
+        realm.close();
+    }
+
+
+    // ====================================== TELEMETRY ============================================
+
+    public static void saveTelemetryBeacon(RxBleDevice device, BeaconCharacteristics beacon) {
+        Timber.e("Saving telemetry beacon %s", beacon.getMajor());
+
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+
+        TelemetryBeacon realmObject = realm.createObject(TelemetryBeacon.class);
+
+        realmObject.setUuid(beacon.getUuid());
+        realmObject.setMajor(beacon.getMajor());
+        realmObject.setMinor(beacon.getMinor());
+
+        realmObject.setBattery(beacon.getBattery());
+        realmObject.setSysId(beacon.getSysId());
+        realmObject.setFirmware(beacon.getFirmware());
+        realmObject.setHardware(beacon.getHardware());
+        realmObject.setMacAddress(device.getMacAddress());
+
+        realmObject.setRecordedAt(NtpDate.now());
+
+        realm.commitTransaction();
         realm.close();
     }
 }

@@ -42,7 +42,7 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.network.NetUtils;
 import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
 import it.sasabz.android.sasabus.data.network.rest.Endpoint;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.EcoPointsApi;
 import it.sasabz.android.sasabus.data.network.rest.model.LeaderboardPlayer;
 import it.sasabz.android.sasabus.data.network.rest.model.Profile;
@@ -137,7 +137,7 @@ public class ProfileFragment extends RxFragment implements View.OnClickListener 
             return;
         }
 
-        EcoPointsApi ecoPointsApi = RestClient.ADAPTER.create(EcoPointsApi.class);
+        EcoPointsApi ecoPointsApi = RestClient.INSTANCE.getADAPTER().create(EcoPointsApi.class);
         ecoPointsApi.getProfile()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -184,7 +184,7 @@ public class ProfileFragment extends RxFragment implements View.OnClickListener 
         mItems.clear();
         mAdapter.notifyDataSetChanged();
 
-        EcoPointsApi ecoPointsApi = RestClient.ADAPTER.create(EcoPointsApi.class);
+        EcoPointsApi ecoPointsApi = RestClient.INSTANCE.getADAPTER().create(EcoPointsApi.class);
         ecoPointsApi.getLeaderboard(1)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

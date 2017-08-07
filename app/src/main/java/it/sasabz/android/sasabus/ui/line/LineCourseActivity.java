@@ -44,7 +44,7 @@ import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.model.line.LineCourse;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.RealtimeApi;
 import it.sasabz.android.sasabus.data.network.rest.model.RealtimeBus;
 import it.sasabz.android.sasabus.data.network.rest.response.RealtimeResponse;
@@ -257,7 +257,7 @@ public class LineCourseActivity extends RxAppCompatActivity {
             if (vehicle != 0) {
                 Timber.w("Getting bus position for %s", vehicle);
 
-                RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
+                RealtimeApi realtimeApi = RestClient.INSTANCE.getADAPTER().create(RealtimeApi.class);
                 Call<RealtimeResponse> call = realtimeApi.vehicle(vehicle);
                 Response<RealtimeResponse> response = call.execute();
 

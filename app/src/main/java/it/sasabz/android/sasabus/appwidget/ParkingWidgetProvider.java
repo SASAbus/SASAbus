@@ -24,7 +24,7 @@ import android.widget.RemoteViews;
 
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.model.Parking;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.ParkingApi;
 import it.sasabz.android.sasabus.data.network.rest.response.ParkingResponse;
 import it.sasabz.android.sasabus.util.Settings;
@@ -49,7 +49,7 @@ public class ParkingWidgetProvider extends AppWidgetProvider {
 
             if (id == 0) return;
 
-            ParkingApi parkingApi = RestClient.ADAPTER.create(ParkingApi.class);
+            ParkingApi parkingApi = RestClient.INSTANCE.getADAPTER().create(ParkingApi.class);
             parkingApi.getParking(id)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())

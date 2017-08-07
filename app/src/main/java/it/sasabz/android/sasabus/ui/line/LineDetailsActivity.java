@@ -49,7 +49,7 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.model.line.LineDetail;
 import it.sasabz.android.sasabus.data.model.line.Lines;
 import it.sasabz.android.sasabus.data.network.NetUtils;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.LinesApi;
 import it.sasabz.android.sasabus.data.network.rest.api.RealtimeApi;
 import it.sasabz.android.sasabus.data.network.rest.model.Line;
@@ -286,7 +286,7 @@ public class LineDetailsActivity extends RxAppCompatActivity implements OnClickL
                 subscriber.onCompleted();
             });
         } else {
-            LinesApi linesApi = RestClient.ADAPTER.create(LinesApi.class);
+            LinesApi linesApi = RestClient.INSTANCE.getADAPTER().create(LinesApi.class);
 
             return linesApi.line(lineId)
                     .map(linesAllResponse -> {
@@ -330,7 +330,7 @@ public class LineDetailsActivity extends RxAppCompatActivity implements OnClickL
             }
 
             try {
-                RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
+                RealtimeApi realtimeApi = RestClient.INSTANCE.getADAPTER().create(RealtimeApi.class);
                 Response<RealtimeResponse> response = realtimeApi.line(line).execute();
 
                 if (response.body() != null) {

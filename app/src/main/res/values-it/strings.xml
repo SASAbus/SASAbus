@@ -436,5 +436,7 @@
     <string name="empty_state_departures_select_title">Scegli una fermata dal campo di sopra</string>
     <string name="search_no_results">Nessun risultati</string>
     <string name="title_departure">Partenze</string>
+    <string name="about_github_title">SASAbus su GitHub</string>
+    <string name="about_github_subtitle">Contribuire a SASAbus su GitHub</string>
 
 </resources>

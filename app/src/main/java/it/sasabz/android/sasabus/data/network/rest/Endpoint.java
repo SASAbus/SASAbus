@@ -80,6 +80,8 @@ public final class Endpoint {
     public static final String VALIDITY_DATA = "validity/data/{date}";
     public static final String VALIDITY_TIMETABLES = "validity/timetables/{date}";
 
+    public static final String TELEMETRY_BEACON = "telemetry/beacon";
+
     public static final String CLOUD_TRIPS = "sync/trips";
 
     private Endpoint() {

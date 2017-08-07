@@ -21,7 +21,7 @@ import android.content.Context;
 
 import java.util.List;
 
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.CloudApi;
 import it.sasabz.android.sasabus.data.network.rest.model.Badge;
 import it.sasabz.android.sasabus.data.network.rest.model.CloudTrip;
@@ -54,7 +54,7 @@ public final class TripSyncHelper {
     public static boolean upload(Context context, List<CloudTrip> trips, Scheduler scheduler) {
         Timber.w("Uploading " + trips.size() + " trips");
 
-        CloudApi cloudApi = RestClient.ADAPTER.create(CloudApi.class);
+        CloudApi cloudApi = RestClient.INSTANCE.getADAPTER().create(CloudApi.class);
         cloudApi.uploadTrips(trips)
                 .subscribeOn(scheduler)
                 .subscribe(new Observer<TripUploadResponse>() {

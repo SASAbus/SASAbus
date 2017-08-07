@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.model.line.Lines;
 import it.sasabz.android.sasabus.data.network.rest.Endpoint;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.ValidityApi;
 import it.sasabz.android.sasabus.data.network.rest.response.ValidityResponse;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
@@ -173,7 +173,7 @@ public class TimetableActivity extends BaseActivity implements Observer<Integer>
 
         String date = Settings.getTimetableDate(this);
 
-        ValidityApi validityApi = RestClient.ADAPTER.create(ValidityApi.class);
+        ValidityApi validityApi = RestClient.INSTANCE.getADAPTER().create(ValidityApi.class);
         validityApi.timetables(date)
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())

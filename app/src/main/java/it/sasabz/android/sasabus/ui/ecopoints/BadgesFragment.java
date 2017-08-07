@@ -37,7 +37,7 @@ import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.network.NetUtils;
 import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.EcoPointsApi;
 import it.sasabz.android.sasabus.data.network.rest.model.Badge;
 import it.sasabz.android.sasabus.data.network.rest.response.BadgesResponse;
@@ -127,7 +127,7 @@ public class BadgesFragment extends RxFragment implements View.OnClickListener {
         nextBadges.clear();
         nextBadgeAdapter.notifyDataSetChanged();
 
-        EcoPointsApi ecoPointsApi = RestClient.ADAPTER.create(EcoPointsApi.class);
+        EcoPointsApi ecoPointsApi = RestClient.INSTANCE.getADAPTER().create(EcoPointsApi.class);
         ecoPointsApi.getNextBadges()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -164,7 +164,7 @@ public class BadgesFragment extends RxFragment implements View.OnClickListener {
         earnedBadges.clear();
         earnedBadgeAdapter.notifyDataSetChanged();
 
-        EcoPointsApi ecoPointsApi = RestClient.ADAPTER.create(EcoPointsApi.class);
+        EcoPointsApi ecoPointsApi = RestClient.INSTANCE.getADAPTER().create(EcoPointsApi.class);
         ecoPointsApi.getEarnedBadges()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

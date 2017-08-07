@@ -140,7 +140,7 @@ public final class Notifications {
                     expandedView.setTextColor(R.id.notification_departure_1_delay, ContextCompat.getColor(context, R.color.material_amber_700));
                 }
 
-                if (stopDetail.getDelay() != Config.BUS_STOP_DETAILS_NO_DELAY) {
+                if (stopDetail.getDelay() != Departure.NO_DELAY) {
                     expandedView.setTextViewText(R.id.notification_departure_1_delay, stopDetail.getDelay() + "'");
                 }
             }
@@ -159,7 +159,7 @@ public final class Notifications {
                     expandedView.setTextColor(R.id.notification_departure_2_delay, ContextCompat.getColor(context, R.color.material_amber_700));
                 }
 
-                if (stopDetail.getDelay() != Config.BUS_STOP_DETAILS_NO_DELAY) {
+                if (stopDetail.getDelay() != Departure.NO_DELAY) {
                     expandedView.setTextViewText(R.id.notification_departure_2_delay, stopDetail.getDelay() + "'");
                 }
             }

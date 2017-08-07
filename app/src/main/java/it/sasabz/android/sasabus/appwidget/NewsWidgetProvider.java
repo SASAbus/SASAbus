@@ -25,7 +25,7 @@ import android.widget.RemoteViews;
 
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.model.News;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.NewsApi;
 import it.sasabz.android.sasabus.data.network.rest.response.NewsResponse;
 import it.sasabz.android.sasabus.util.Utils;
@@ -45,7 +45,7 @@ public class NewsWidgetProvider extends AppWidgetProvider {
         for (int widgetId : appWidgetIds) {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_news);
 
-            NewsApi newsApi = RestClient.ADAPTER.create(NewsApi.class);
+            NewsApi newsApi = RestClient.INSTANCE.getADAPTER().create(NewsApi.class);
             newsApi.getNews()
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())

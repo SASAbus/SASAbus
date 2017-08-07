@@ -115,3 +115,10 @@
 -keepclassmembers class * {
     @android.webkit.JavascriptInterface <methods>;
 }
+
+
+# Other
+-dontwarn javax.management.**
+-dontwarn javax.xml.**
+-dontwarn org.apache.**
+-dontwarn org.slf4j.**

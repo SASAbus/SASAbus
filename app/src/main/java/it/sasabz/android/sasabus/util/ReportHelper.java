@@ -38,7 +38,7 @@ import android.widget.TextView;
 import java.io.File;
 
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.ReportApi;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -80,7 +80,7 @@ public final class ReportHelper {
         barProgressDialog.setCancelable(false);
         barProgressDialog.show();
 
-        ReportApi reportApi = RestClient.ADAPTER.create(ReportApi.class);
+        ReportApi reportApi = RestClient.INSTANCE.getADAPTER().create(ReportApi.class);
         ReportApi.ReportBody body = new ReportApi.ReportBody(mActivity, email, message, vehicle);
 
         Observable<Void> observable;
