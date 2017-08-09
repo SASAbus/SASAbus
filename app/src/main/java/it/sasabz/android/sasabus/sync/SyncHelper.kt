@@ -240,6 +240,8 @@ class SyncHelper internal constructor(private val mContext: Context, private val
 
         var shouldDownloadData = false
 
+        // TODO: Check if planned data update works
+
         // Check if plan data exists. If not, we should immediately download it, else check if an
         // update is available and download it.
         if (!PlannedData.planDataExists(mContext)) {
@@ -247,7 +249,7 @@ class SyncHelper internal constructor(private val mContext: Context, private val
 
             shouldDownloadData = true
         } else {
-            val date = Settings.getDataDate(mContext)
+            val date = PlannedData.getDataDate(mContext)
 
             val validityApi = RestClient.ADAPTER!!.create(ValidityApi::class.java)
             val response = validityApi.data(date).execute()
@@ -256,7 +258,7 @@ class SyncHelper internal constructor(private val mContext: Context, private val
                 if (!response.body().isValid) {
                     Timber.e("Plan data update available")
 
-                    Settings.markDataUpdateAvailable(mContext, true)
+                    PlannedData.setUpdateAvailable(mContext, true)
 
                     shouldDownloadData = true
                 } else {

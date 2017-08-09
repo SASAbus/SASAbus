@@ -24,6 +24,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.davale.sasabus.core.vdv.PlannedData;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -193,7 +195,6 @@ public class TimetableActivity extends BaseActivity implements Observer<Integer>
                     public void onNext(ValidityResponse validityResponse) {
                         if (!validityResponse.isValid) {
                             Timber.e("Timetable update available");
-                            Settings.markDataUpdateAvailable(TimetableActivity.this, true);
 
                             mSnackbar = Snackbar.make(getMainContent(), R.string.timetable_update_text, Snackbar.LENGTH_INDEFINITE);
                             mSnackbar.setActionTextColor(ContextCompat.getColor(TimetableActivity.this, R.color.snackbar_action_text));

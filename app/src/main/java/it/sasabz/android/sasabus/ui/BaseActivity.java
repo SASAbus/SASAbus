@@ -131,7 +131,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Naviga
             finish();
 
             return;
-        } else if (Settings.isDataUpdateAvailable(this) || !PlannedData.planDataExists(this)) {
+        } else if (PlannedData.isUpdateAvailable(this) || !PlannedData.planDataExists(this)) {
             Intent intent = new Intent(this, IntroData.class);
             startActivity(intent);
 

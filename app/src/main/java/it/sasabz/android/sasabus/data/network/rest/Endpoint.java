@@ -77,7 +77,7 @@ public final class Endpoint {
     public static final String LINES_FILTER = "lines/line/{lines}";
     public static final String LINES = "lines/line/{id}";
 
-    public static final String VALIDITY_DATA = "validity/data/{date}";
+    public static final String VALIDITY_DATA = "validity/{unix}";
     public static final String VALIDITY_TIMETABLES = "validity/timetables/{date}";
 
     public static final String TELEMETRY_BEACON = "telemetry/beacon";

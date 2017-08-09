@@ -106,10 +106,6 @@ public final class Settings {
 
     private static final String PREF_SHOULD_SHOW_CHANGELOG = "pref_should_show_changelog";
 
-    private static final String PREF_DATA_UPDATE_AVAILABLE = "pref_data_update_available";
-
-    private static final String PREF_DATA_DATE = "pref_data_date";
-
     private static final String PREF_TIMETABLE_DATE = "pref_timetable_date";
 
     private static final String PREF_NEWS_PUSH_ENABLED = "pref_news_push_enabled";
@@ -342,17 +338,6 @@ public final class Settings {
     // ===================================== DATE & TIMETABLES =====================================
 
     /**
-     * Returns the date when the plan data has been downloaded. This is done to check if there are
-     * new plan data updates available depending on when the user downloaded it last.
-     *
-     * @param context Context to be used to access the {@link SharedPreferences}.
-     * @return a String with the date in form {@code YYYYMMDD}.
-     */
-    public static String getDataDate(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_DATA_DATE, "19700101");
-    }
-
-    /**
      * Returns the date when the timetables have been downloaded. This is done to check if there are
      * new timetable updates available depending on when the user downloaded them last.
      *
@@ -361,18 +346,6 @@ public final class Settings {
      */
     public static String getTimetableDate(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_TIMETABLE_DATE, "19700101");
-    }
-
-    /**
-     * Sets the date when the plan data has been downloaded.
-     *
-     * @param context Context to be used to edit the {@link SharedPreferences}.
-     */
-    public static void setDataDate(Context context) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyMMdd", Locale.ITALY);
-
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        sp.edit().putString(PREF_DATA_DATE, format.format(new Date())).apply();
     }
 
     /**
@@ -427,27 +400,6 @@ public final class Settings {
 
             setCurrentAppVersion(context);
         }
-    }
-
-    /**
-     * Mark {@code newValue value} if a data update is available.
-     *
-     * @param context Context to be used to edit the {@link SharedPreferences}.
-     */
-    public static void markDataUpdateAvailable(Context context, boolean newValue) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        sp.edit().putBoolean(PREF_DATA_UPDATE_AVAILABLE, newValue).apply();
-    }
-
-    /**
-     * Check if a data update is available.
-     *
-     * @param context Context to be used to lookup the {@link SharedPreferences}.
-     * @return {@code true} if an upgrade has happened, {@code false} otherwise.
-     */
-    public static boolean isDataUpdateAvailable(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREF_DATA_UPDATE_AVAILABLE, false);
     }
 
     /**
