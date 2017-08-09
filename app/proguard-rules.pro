@@ -80,6 +80,9 @@
 -keepclassmembers class it.sasabz.android.sasabus.data.network.rest.model.** { <fields>; }
 -keepclassmembers class it.sasabz.android.sasabus.data.network.rest.response.** { <fields>; }
 
+-keepclassmembers class it.sasabz.android.sasabus.data.network.model.** { <fields>; }
+-keepclassmembers class it.sasabz.android.sasabus.data.network.response.** { <fields>; }
+
 -keep class it.sasabz.android.sasabus.data.model.JsonSerializable { *; }
 -keep class * implements it.sasabz.android.sasabus.data.model.JsonSerializable { <fields>; }
 
