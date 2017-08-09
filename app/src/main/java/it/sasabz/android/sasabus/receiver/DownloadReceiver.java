@@ -85,6 +85,7 @@ public class DownloadReceiver extends BroadcastReceiver {
         }
     }
 
+
     private Observable<Void> extractZipObservable() {
         return Observable.create(subscriber -> {
             try {

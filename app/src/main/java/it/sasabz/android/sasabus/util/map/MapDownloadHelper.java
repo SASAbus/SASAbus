@@ -45,28 +45,18 @@ public class MapDownloadHelper {
 
     private final WebView webView;
 
+    private DownloadReceiver mReceiver;
+
     public static boolean mapExists;
 
-    static File getRootFolder(Context context) {
-        if (rootFolder == null) {
-            File sdcardFilesDir = context.getExternalFilesDir(null);
 
-            rootFolder = new File(sdcardFilesDir, "osm-tiles");
-
-            if (!rootFolder.exists()) {
-                rootFolder.mkdirs();
-            }
-        }
-
-        return rootFolder;
-    }
-
-    MapDownloadHelper(Context context, WebView webView, RealtimeMapView mapView) {
+    MapDownloadHelper(Context context, WebView webView) {
         this.context = context;
         this.webView = webView;
 
         getRootFolder(context);
     }
+
 
     void checkForMap() {
         IOUtils.deleteOldMapZipFiles(rootFolder);
@@ -120,7 +110,29 @@ public class MapDownloadHelper {
 
         Timber.e("Download id is: " + downloadId);
 
-        context.registerReceiver(new DownloadReceiver(downloadId, destination, webView),
+        mReceiver = new DownloadReceiver(downloadId, destination, webView);
+
+        context.registerReceiver(mReceiver,
                 new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+    }
+
+    public void stop() {
+        if (mReceiver != null) {
+            context.unregisterReceiver(mReceiver);
+        }
+    }
+
+    static File getRootFolder(Context context) {
+        if (rootFolder == null) {
+            File sdcardFilesDir = context.getExternalFilesDir(null);
+
+            rootFolder = new File(sdcardFilesDir, "osm-tiles");
+
+            if (!rootFolder.exists()) {
+                rootFolder.mkdirs();
+            }
+        }
+
+        return rootFolder;
     }
 }

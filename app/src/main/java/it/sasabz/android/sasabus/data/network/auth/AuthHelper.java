@@ -29,6 +29,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 
+import com.davale.sasabus.core.crypto.jwt.Claims;
+import com.davale.sasabus.core.crypto.jwt.Jws;
+import com.davale.sasabus.core.crypto.jwt.Jwts;
+import com.davale.sasabus.core.crypto.jwt.SignatureException;
+
 import java.io.DataInputStream;
 import java.io.InputStream;
 import java.security.KeyFactory;
@@ -36,10 +41,6 @@ import java.security.PublicKey;
 import java.security.spec.KeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
-import it.sasabz.android.sasabus.data.network.auth.jjwt.Claims;
-import it.sasabz.android.sasabus.data.network.auth.jjwt.Jws;
-import it.sasabz.android.sasabus.data.network.auth.jjwt.Jwts;
-import it.sasabz.android.sasabus.data.network.auth.jjwt.SignatureException;
 import it.sasabz.android.sasabus.ui.ecopoints.LoginActivity;
 import retrofit2.adapter.rxjava.HttpException;
 import timber.log.Timber;
