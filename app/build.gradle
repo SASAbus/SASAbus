@@ -69,8 +69,8 @@ android {
         applicationId "it.sasabz.android.sasabus"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 60
-        versionName "3.0.5"
+        versionCode 61
+        versionName "3.0.6"
 
         multiDexEnabled true
 
