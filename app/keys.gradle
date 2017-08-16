@@ -1,0 +1,4 @@
+ext {
+    // TODO: Add your own Catch & Solve API key here
+    CATCH_AND_SOLVE_API_KEY = "xxxxxx"
+}
