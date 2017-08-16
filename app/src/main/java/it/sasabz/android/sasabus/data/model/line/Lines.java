@@ -46,6 +46,7 @@ public final class Lines {
         ORDER.add(1011);
         ORDER.add(1012);
         ORDER.add(1014);
+        ORDER.add(1018);
         ORDER.add(110);
         ORDER.add(111);
         ORDER.add(112);
@@ -109,6 +110,7 @@ public final class Lines {
             1011,
             1012,
             1014,
+            1018,
             110,
             111,
             112,
@@ -155,6 +157,7 @@ public final class Lines {
                 "11",
                 "12",
                 "14",
+                "18",
                 "110",
                 "111",
                 "112",
@@ -198,6 +201,7 @@ public final class Lines {
             "F8C300", // 1011  11 BZ
             "69406E", // 1012  12 BZ
             "00923F", // 1014  14 BZ
+            "F8C300", // 1018  18 BZ
             "000000", //  110 110 BZ
             "000000", //  111 111 BZ
             "000000", //  112 112 BZ
@@ -250,50 +254,52 @@ public final class Lines {
                 return lineColors[13];
             case 1014:
                 return lineColors[14];
-            case 110:
+            case 1018:
                 return lineColors[15];
-            case 111:
+            case 110:
                 return lineColors[16];
-            case 112:
+            case 111:
                 return lineColors[17];
-            case 116:
+            case 112:
                 return lineColors[18];
-            case 117:
+            case 116:
                 return lineColors[19];
-            case 1153:
+            case 117:
                 return lineColors[20];
-            case 183:
+            case 1153:
                 return lineColors[21];
-            case 201:
+            case 183:
                 return lineColors[22];
-            case 202:
+            case 201:
                 return lineColors[23];
-            case 211:
+            case 202:
                 return lineColors[24];
-            case 212:
+            case 211:
                 return lineColors[25];
-            case 213:
+            case 212:
                 return lineColors[26];
-            case 214:
+            case 213:
                 return lineColors[27];
-            case 215:
+            case 214:
                 return lineColors[28];
-            case 221:
+            case 215:
                 return lineColors[29];
-            case 222:
+            case 221:
                 return lineColors[30];
-            case 1:
+            case 222:
                 return lineColors[31];
-            case 2:
+            case 1:
                 return lineColors[32];
-            case 3:
+            case 2:
                 return lineColors[33];
-            case 4:
+            case 3:
                 return lineColors[34];
-            case 6:
+            case 4:
                 return lineColors[35];
-            case 146:
+            case 6:
                 return lineColors[36];
+            case 146:
+                return lineColors[37];
             default:
                 Timber.e("Unknown line id " + id);
                 return "FF9800";
@@ -317,6 +323,7 @@ public final class Lines {
             "BZ_11",
             "BZ_12",
             "BZ_14",
+            "BZ_18",
             "BZ_110",
             "BZ_111",
             "BZ_112",
@@ -346,48 +353,6 @@ public final class Lines {
     };
 
     public static final int[] notTracked = {
-            223,
-            224,
-            225,
-            248
-    };
-
-    public static final int[] allLines = {
-            1001,
-            1003,
-            1005,
-            1006,
-            1071,
-            1072,
-            1008,
-            1009,
-            1101,
-            1102,
-            1011,
-            1012,
-            1014,
-            110,
-            111,
-            112,
-            116,
-            117,
-            1153,
-            183,
-            201,
-            202,
-            1,
-            2,
-            3,
-            4,
-            6,
-            146,
-            211,
-            212,
-            213,
-            214,
-            215,
-            221,
-            222,
             223,
             224,
             225,
