@@ -157,7 +157,7 @@ class TimetableActivity : BaseActivity() {
 
         for (delete in toDelete) {
             Timber.i("Deleting '%s'...", delete.name)
-            if (delete.delete()) {
+            if (!delete.delete()) {
                 Timber.e("Deletion of '%s' failed", delete.name)
             }
         }
