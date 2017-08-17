@@ -325,8 +325,7 @@
 
     <string name="timetable_download">Downloading timetables…</string>
     <string name="timetable_extract">Extracting timetables…</string>
-    <string name="timetable_map_bolzano">Route network of Bolzano</string>
-    <string name="timetable_map_merano">Route network of Merano</string>
+    <string name="timetable_map">Route network</string>
     <string name="timetable_open">Open timetable</string>
     <string name="timetable_update_text">New timetables available</string>
     <string name="timetable_update_action">Load</string>
@@ -686,5 +685,6 @@
     <string name="register_weak_password_positive">Yes</string>
     <string name="register_password_no_match">Passwords don\'t match</string>
     <string name="register_password_repeat">Repeat password</string>
+    <string name="timetable_timetables_bolzano" />
 
 </resources>

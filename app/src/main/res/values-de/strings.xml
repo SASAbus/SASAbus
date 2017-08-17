@@ -156,8 +156,7 @@
     <string name="line_format">Linie %s</string>
     <string name="snackbar_timetable_error">Fahrpläne konnten nicht heruntergeladen werden</string>
     <string name="timetable_download">Fahrpläne werden heruntergeladen…</string>
-    <string name="timetable_map_bolzano">Streckennetz Bozen</string>
-    <string name="timetable_map_merano">Streckennetz Meran</string>
+    <string name="timetable_map">Streckennetz</string>
     <string name="title_timetables">Fahrpläne</string>
     <string name="timetable_open">Fahrplan öffnen</string>
     <string name="timetable_update_action">Laden</string>
@@ -442,5 +441,6 @@
     <string name="title_departure">Abfahrten</string>
     <string name="about_github_title">SASAbus auf GitHub</string>
     <string name="about_github_subtitle">Trage bei der Entwicklung von SASAbus bei.</string>
+    <string name="timetable_timetables_bolzano" />
 
 </resources>
