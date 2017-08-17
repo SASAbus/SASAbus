@@ -57,8 +57,7 @@ class JSInterface {
 
     @JavascriptInterface
     public void onVehicleClick(int vehicle) {
-        Intent intent = new Intent(mContext, BusDetailActivity.class);
-        intent.putExtra(Config.EXTRA_VEHICLE, vehicle);
+        Intent intent = BusDetailActivity.intent(mContext, vehicle);
         mContext.startActivity(intent);
     }
 

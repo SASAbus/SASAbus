@@ -225,8 +225,7 @@ public class LineDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             LineDetail rowItem = mItems.get(position);
 
             if (rowItem.getAdditionalData() == null) {
-                Intent intent = new Intent(mContext, BusDetailActivity.class);
-                intent.putExtra(Config.EXTRA_VEHICLE, rowItem.getVehicle());
+                Intent intent = BusDetailActivity.intent(mContext, rowItem.getVehicle());
                 mContext.startActivity(intent);
             }
 

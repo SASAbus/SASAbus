@@ -17,6 +17,7 @@
 
 package it.sasabz.android.sasabus.ui.bus;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ import com.davale.sasabus.core.model.Vehicle;
 
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.ui.line.LineCourseActivity;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
 import it.sasabz.android.sasabus.util.Utils;
 
@@ -109,5 +111,12 @@ public class BusDetailActivity extends AppCompatActivity {
 
             loadBackdrop(v);
         }
+    }
+
+
+    public static Intent intent(Context context, int vehicle) {
+        Intent intent = new Intent(context, BusDetailActivity.class);
+        intent.putExtra(Config.EXTRA_VEHICLE, vehicle);
+        return intent;
     }
 }
