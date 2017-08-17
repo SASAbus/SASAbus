@@ -84,6 +84,10 @@ public final class Endpoint {
 
     public static final String CLOUD_TRIPS = "sync/trips";
 
+    public static final String TIMETABLE_LIST = "timetables/sasa";
+    public static final String TIMETABLE_PDF = "timetables/";
+
+
     private Endpoint() {
     }
 }

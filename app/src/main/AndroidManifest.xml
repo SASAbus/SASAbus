@@ -17,9 +17,9 @@
   -->
 
 <manifest
-    package="it.sasabz.android.sasabus"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="it.sasabz.android.sasabus">
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -75,7 +75,7 @@
             android:windowSoftInputMode="adjustNothing"/>
 
         <activity
-            android:name=".ui.TimetableActivity"
+            android:name=".timetable.TimetableActivity"
             android:label="@string/title_timetables"
             android:launchMode="singleTop"/>
 

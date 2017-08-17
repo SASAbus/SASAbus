@@ -441,6 +441,6 @@
     <string name="title_departure">Abfahrten</string>
     <string name="about_github_title">SASAbus auf GitHub</string>
     <string name="about_github_subtitle">Trage bei der Entwicklung von SASAbus bei.</string>
-    <string name="timetable_timetables_bolzano" />
+    <string name="timetable_validity_format">Gültig vom %1$s bis zum %2$s</string>
 
 </resources>

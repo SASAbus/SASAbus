@@ -40,6 +40,7 @@ import com.davale.sasabus.core.vdv.PlannedData;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import it.sasabz.android.sasabus.R;
+import it.sasabz.android.sasabus.timetable.TimetableActivity;
 import it.sasabz.android.sasabus.ui.about.AboutActivity;
 import it.sasabz.android.sasabus.ui.departure.DepartureActivity;
 import it.sasabz.android.sasabus.ui.ecopoints.EcoPointsActivity;
@@ -91,7 +92,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Naviga
     //protected static final int NAVDRAWER_ITEM_BUS_STOPS = R.id.nav_stations;
     protected static final int NAVDRAWER_ITEM_ROUTE = R.id.nav_route;
     protected static final int NAVDRAWER_ITEM_ECO_POINTS = R.id.nav_eco_points;
-    static final int NAVDRAWER_ITEM_TIMETABLES = R.id.nav_timetables;
+    protected static final int NAVDRAWER_ITEM_TIMETABLES = R.id.nav_timetables;
     static final int NAVDRAWER_ITEM_NEWS = R.id.nav_news;
     protected static final int NAVDRAWER_ITEM_PARKING = R.id.nav_parking;
     protected static final int NAVDRAWER_ITEM_INVALID = -1;

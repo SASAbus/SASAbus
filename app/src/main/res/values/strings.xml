@@ -329,6 +329,7 @@
     <string name="timetable_open">Open timetable</string>
     <string name="timetable_update_text">New timetables available</string>
     <string name="timetable_update_action">Load</string>
+    <string name="timetable_validity_format">Valid from %1$s till %2$s</string>
 
 
     <!-- =============================== SURVEY =============================== -->
@@ -685,6 +686,5 @@
     <string name="register_weak_password_positive">Yes</string>
     <string name="register_password_no_match">Passwords don\'t match</string>
     <string name="register_password_repeat">Repeat password</string>
-    <string name="timetable_timetables_bolzano" />
 
 </resources>

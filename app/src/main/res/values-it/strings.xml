@@ -437,6 +437,6 @@
     <string name="title_departure">Partenze</string>
     <string name="about_github_title">SASAbus su GitHub</string>
     <string name="about_github_subtitle">Contribuire a SASAbus su GitHub</string>
-    <string name="timetable_timetables_bolzano" />
+    <string name="timetable_validity_format">Valido dal %1$s al %2$s</string>
 
 </resources>
