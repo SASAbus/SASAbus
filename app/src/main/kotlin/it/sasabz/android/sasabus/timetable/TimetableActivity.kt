@@ -145,7 +145,7 @@ class TimetableActivity : BaseActivity() {
 
         for (timetable in files) {
             val found = response.timetables
-                    .map { String.format(FILE_SCHEMA, it.line, it.validFrom, it.validTo).replace("/", "_") }
+                    .map { String.format(FILE_SCHEMA, it.title, it.validFrom, it.validTo).replace("/", "_") }
                     .any { timetable.name == it }
 
             if (!found) {
@@ -265,6 +265,6 @@ class TimetableActivity : BaseActivity() {
 
     companion object {
 
-        val FILE_SCHEMA = "LINE_%s_FROM_%s_TO_%s.pdf"
+        val FILE_SCHEMA = "TIMETABLE_%s_FROM_%s_TO_%s.pdf"
     }
 }

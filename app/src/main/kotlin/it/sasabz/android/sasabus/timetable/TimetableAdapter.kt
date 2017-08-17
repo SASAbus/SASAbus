@@ -34,7 +34,7 @@ internal class TimetableAdapter(private val mContext: Context, private val mItem
             val validity = mContext.getString(R.string.timetable_validity_format,
                     item.validFrom, item.validTo)
 
-            list_timetable_line.text = mContext.getString(R.string.line_format, item.line)
+            list_timetable_line.text = item.title
             list_timetable_munic.text = city
 
             list_timetable_validity.text = validity
@@ -48,7 +48,7 @@ internal class TimetableAdapter(private val mContext: Context, private val mItem
 
             val root = com.davale.sasabus.core.util.IOUtils.getTimetablesDir(mContext)
             val name = String.format(TimetableActivity.FILE_SCHEMA,
-                    item.line, item.validFrom, item.validTo).replace("/", "_")
+                    item.title, item.validFrom, item.validTo).replace("/", "_")
 
             val fullFile = File(root, name)
 

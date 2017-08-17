@@ -166,7 +166,7 @@ public class LineCourseActivity extends RxAppCompatActivity {
     }
 
     /**
-     * Parses the line course from the plan data. This is used to get the course of a non
+     * Parses the title course from the plan data. This is used to get the course of a non
      * tracked vehicle or a vehicle which will drive in the future.
      */
     private void parsePlanData() {

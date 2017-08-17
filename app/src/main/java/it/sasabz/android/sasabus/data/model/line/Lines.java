@@ -301,7 +301,7 @@ public final class Lines {
             case 146:
                 return lineColors[37];
             default:
-                Timber.e("Unknown line id " + id);
+                Timber.e("Unknown title id " + id);
                 return "FF9800";
         }
     }

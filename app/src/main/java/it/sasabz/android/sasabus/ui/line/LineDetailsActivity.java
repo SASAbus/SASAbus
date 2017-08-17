@@ -68,11 +68,11 @@ import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
- * Displays information about this line and all the vehicles currently driving this line.
+ * Displays information about this title and all the vehicles currently driving this title.
  * <p>
- * The list consists of a card at the top with information about this line, e.g. origin, destination
- * and days where this line drives. The other cards hold the vehicles which currently drive this
- * line, including their destination and delay.
+ * The list consists of a card at the top with information about this title, e.g. origin, destination
+ * and days where this title drives. The other cards hold the vehicles which currently drive this
+ * title, including their destination and delay.
  *
  * @author Alex Lardschneider
  * @author David Dejori

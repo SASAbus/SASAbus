@@ -46,7 +46,7 @@ public class Leg {
         @SerializedName("vehicle")
         public String vehicle;
 
-        @SerializedName("line")
+        @SerializedName("title")
         public String line;
 
         @SerializedName("legend")

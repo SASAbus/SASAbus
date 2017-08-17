@@ -47,7 +47,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Holds all the line fragments.
+ * Holds all the title fragments.
  *
  * @author Alex Lardschneider
  * @author David Dejori

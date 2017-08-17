@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 class Timetable {
 
-    var line: String? = null
+    var title: String? = null
     var city: String? = null
     var name: String = ""
 
