@@ -160,7 +160,7 @@ public final class AuthHelper {
                 .getString(PREF_USER_ID, null);
     }
 
-    @SuppressLint("CommitPrefEdits")
+    @SuppressLint("ApplySharedPref")
     private static void setUserId(Context context, String userId) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         sp.edit().putString(PREF_USER_ID, userId).commit();
@@ -172,7 +172,7 @@ public final class AuthHelper {
                 .getString(PREF_AUTH_TOKEN, null);
     }
 
-    @SuppressLint("CommitPrefEdits")
+    @SuppressLint("ApplySharedPref")
     private static void setAuthToken(Context context, String token) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         sp.edit().putString(PREF_AUTH_TOKEN, token).commit();
