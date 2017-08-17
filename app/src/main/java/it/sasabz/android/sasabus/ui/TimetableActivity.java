@@ -173,17 +173,14 @@ public class TimetableActivity extends BaseActivity implements Observer<Integer>
         Collections.addAll(mItems, lines);
         mAdapter.notifyDataSetChanged();
 
-        String date = Settings.getTimetableDate(this);
-
         ValidityApi validityApi = RestClient.INSTANCE.getADAPTER().create(ValidityApi.class);
-        validityApi.timetables(date)
+        validityApi.timetables(Settings.getTimetableDate(this))
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ValidityResponse>() {
                     @Override
                     public void onCompleted() {
-
                     }
 
                     @Override
