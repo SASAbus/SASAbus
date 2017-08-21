@@ -27,6 +27,7 @@ import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.RemoteException;
 
+import com.davale.sasabus.beacon.telemetry.TelemetryBeaconHandler;
 import com.davale.sasabus.core.util.DeviceUtils;
 
 import org.altbeacon.beacon.BeaconConsumer;
@@ -66,6 +67,8 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
     private BusBeaconHandler mBusBeaconHandler;
     private BusStopBeaconHandler mBusStopBeaconHandler;
     private EventBeaconHandler mEventBeaconHandler;
+
+    private TelemetryBeaconHandler mTelemetry;
 
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private RegionBootstrap mBootstrap;
@@ -132,6 +135,10 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
     public void didEnterRegion(Region region) {
         Timber.e("didEnterRegion() %s", region.getUniqueId());
 
+        if (mTelemetry != null) {
+            mTelemetry.start();
+        }
+
         try {
             if (region.getUniqueId().equals(BusBeaconHandler.IDENTIFIER)) {
                 mBeaconManager.startRangingBeaconsInRegion(mRegionBus);
@@ -154,6 +161,10 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
     @Override
     public void didExitRegion(Region region) {
         Timber.e("didExitRegion() %s", region.getUniqueId());
+
+        if (mTelemetry != null) {
+            mTelemetry.stop();
+        }
 
         try {
             if (region.getUniqueId().equals(BusBeaconHandler.IDENTIFIER)) {
@@ -229,6 +240,8 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
         mBusStopBeaconHandler = BusStopBeaconHandler.getInstance(mContext);
         mEventBeaconHandler = EventBeaconHandler.getInstance(mContext);
 
+        mTelemetry = TelemetryBeaconHandler.getInstance(mContext);
+
         mBeaconManager = BeaconManager.getInstanceForApplication(mContext);
         mBeaconManager.setRegionStatePeristenceEnabled(false);
         mBeaconManager.getBeaconParsers().add(new BeaconParser()
@@ -260,6 +273,10 @@ public final class BeaconHandler implements BeaconConsumer, BootstrapNotifier {
 
         if (!isListening) {
             Timber.e("Not listening, call to stop() will be ignored");
+        }
+
+        if (mTelemetry != null) {
+            mTelemetry.stop();
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {

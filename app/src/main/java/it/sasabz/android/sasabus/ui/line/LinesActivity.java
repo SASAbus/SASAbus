@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.network.NetUtils;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.LinesApi;
 import it.sasabz.android.sasabus.data.network.rest.model.Line;
 import it.sasabz.android.sasabus.data.network.rest.response.LinesAllResponse;
@@ -47,7 +47,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Holds all the line fragments.
+ * Holds all the title fragments.
  *
  * @author Alex Lardschneider
  * @author David Dejori
@@ -187,7 +187,7 @@ public class LinesActivity extends BaseActivity {
             return;
         }
 
-        LinesApi linesApi = RestClient.ADAPTER.create(LinesApi.class);
+        LinesApi linesApi = RestClient.INSTANCE.getADAPTER().create(LinesApi.class);
         linesApi.allLines()
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())

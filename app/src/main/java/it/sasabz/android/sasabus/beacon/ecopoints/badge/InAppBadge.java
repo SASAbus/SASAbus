@@ -23,7 +23,7 @@ import android.support.annotation.StringRes;
 import io.realm.Realm;
 import it.sasabz.android.sasabus.beacon.Beacon;
 import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.EcoPointsApi;
 import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.data.realm.user.EarnedBadge;
@@ -54,7 +54,7 @@ public abstract class InAppBadge {
     public void complete() {
         UserRealmHelper.setEarnedBadge(id);
 
-        EcoPointsApi api = RestClient.ADAPTER.create(EcoPointsApi.class);
+        EcoPointsApi api = RestClient.INSTANCE.getADAPTER().create(EcoPointsApi.class);
         api.sendBadge(id)
                 .subscribeOn(Schedulers.io())
                 .subscribe(new NextObserver<Void>() {

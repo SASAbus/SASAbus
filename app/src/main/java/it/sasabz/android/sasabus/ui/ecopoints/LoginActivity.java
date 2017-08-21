@@ -43,7 +43,7 @@ import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.network.NetUtils;
 import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.UserApi;
 import it.sasabz.android.sasabus.data.network.rest.response.LoginResponse;
 import it.sasabz.android.sasabus.fcm.FcmSettings;
@@ -177,7 +177,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             return;
         }
 
-        UserApi api = RestClient.ADAPTER.create(UserApi.class);
+        UserApi api = RestClient.INSTANCE.getADAPTER().create(UserApi.class);
 
         if (verify) {
             verify = false;

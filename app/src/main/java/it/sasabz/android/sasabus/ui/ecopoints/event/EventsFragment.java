@@ -42,7 +42,7 @@ import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.network.NetUtils;
 import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.EventsApi;
 import it.sasabz.android.sasabus.data.network.rest.model.Event;
 import it.sasabz.android.sasabus.data.network.rest.model.EventPoint;
@@ -197,7 +197,7 @@ public class EventsFragment extends RxFragment {
 
         mRefresh.setRefreshing(true);
 
-        EventsApi eventsApi = RestClient.ADAPTER.create(EventsApi.class);
+        EventsApi eventsApi = RestClient.INSTANCE.getADAPTER().create(EventsApi.class);
         eventsApi.getEvents()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

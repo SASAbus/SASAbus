@@ -237,6 +237,7 @@ public class IntroFragmentData extends Fragment implements Observer<Integer>, Vi
 
         subscription = PlannedData.download(getActivity(), Endpoint.API)
                 .subscribeOn(Schedulers.io())
+                .onBackpressureLatest()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this);
     }

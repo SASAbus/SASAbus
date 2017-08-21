@@ -33,7 +33,7 @@ import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.model.Parking;
 import it.sasabz.android.sasabus.data.network.NetUtils;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.ParkingApi;
 import it.sasabz.android.sasabus.data.network.rest.response.ParkingResponse;
 import it.sasabz.android.sasabus.ui.BaseActivity;
@@ -137,7 +137,7 @@ public class ParkingActivity extends BaseActivity {
 
         mRefresh.setRefreshing(true);
 
-        ParkingApi parkingApi = RestClient.ADAPTER.create(ParkingApi.class);
+        ParkingApi parkingApi = RestClient.INSTANCE.getADAPTER().create(ParkingApi.class);
         parkingApi.getParking()
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())

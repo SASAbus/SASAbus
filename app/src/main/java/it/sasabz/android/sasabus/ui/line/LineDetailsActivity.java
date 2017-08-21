@@ -49,7 +49,7 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.model.line.LineDetail;
 import it.sasabz.android.sasabus.data.model.line.Lines;
 import it.sasabz.android.sasabus.data.network.NetUtils;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.LinesApi;
 import it.sasabz.android.sasabus.data.network.rest.api.RealtimeApi;
 import it.sasabz.android.sasabus.data.network.rest.model.Line;
@@ -68,11 +68,11 @@ import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
- * Displays information about this line and all the vehicles currently driving this line.
+ * Displays information about this title and all the vehicles currently driving this title.
  * <p>
- * The list consists of a card at the top with information about this line, e.g. origin, destination
- * and days where this line drives. The other cards hold the vehicles which currently drive this
- * line, including their destination and delay.
+ * The list consists of a card at the top with information about this title, e.g. origin, destination
+ * and days where this title drives. The other cards hold the vehicles which currently drive this
+ * title, including their destination and delay.
  *
  * @author Alex Lardschneider
  * @author David Dejori
@@ -228,7 +228,7 @@ public class LineDetailsActivity extends RxAppCompatActivity implements OnClickL
     private void parseData(int lineId, int busId) {
         if (!NetUtils.isOnline(this) && line == null) {
             mItems.clear();
-            mItems.add(new LineDetail(null, 0, null, null, "nointernet", 0, false));
+            mItems.add(new LineDetail(null, 0, null, null, "nointernet", 0, false, 0, 0));
 
             mAdapter.notifyDataSetChanged();
 
@@ -282,11 +282,11 @@ public class LineDetailsActivity extends RxAppCompatActivity implements OnClickL
                         getDateString(line.getDays()) + '#' +
                         line.getInfo();
 
-                subscriber.onNext(new LineDetail(null, 0, null, null, data, 0, false));
+                subscriber.onNext(new LineDetail(null, 0, null, null, data, 0, false, 0, 0));
                 subscriber.onCompleted();
             });
         } else {
-            LinesApi linesApi = RestClient.ADAPTER.create(LinesApi.class);
+            LinesApi linesApi = RestClient.INSTANCE.getADAPTER().create(LinesApi.class);
 
             return linesApi.line(lineId)
                     .map(linesAllResponse -> {
@@ -300,11 +300,11 @@ public class LineDetailsActivity extends RxAppCompatActivity implements OnClickL
                                     getDateString(line.getDays()) + '#' +
                                     line.getInfo();
 
-                            return new LineDetail(null, 0, null, null, data, 0, false);
+                            return new LineDetail(null, 0, null, null, data, 0, false, 0, 0);
                         }
 
                         mErrorGeneral = true;
-                        return new LineDetail(null, 0, null, null, "error", 0, false);
+                        return new LineDetail(null, 0, null, null, "error", 0, false, 0, 0);
                     });
         }
     }
@@ -314,7 +314,7 @@ public class LineDetailsActivity extends RxAppCompatActivity implements OnClickL
             List<LineDetail> items = new ArrayList<>();
 
             if (contains(lineId)) {
-                items.add(new LineDetail(null, 0, null, null, "track", 0, false));
+                items.add(new LineDetail(null, 0, null, null, "track", 0, false, 0, 0));
 
                 subscriber.onNext(items);
                 subscriber.onCompleted();
@@ -322,7 +322,7 @@ public class LineDetailsActivity extends RxAppCompatActivity implements OnClickL
             }
 
             if (!NetUtils.isOnline(LineDetailsActivity.this) && LineDetailsActivity.this.line != null) {
-                items.add(new LineDetail(null, 0, null, null, "nointernet", 0, false));
+                items.add(new LineDetail(null, 0, null, null, "nointernet", 0, false, 0, 0));
 
                 subscriber.onNext(items);
                 subscriber.onCompleted();
@@ -330,7 +330,7 @@ public class LineDetailsActivity extends RxAppCompatActivity implements OnClickL
             }
 
             try {
-                RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
+                RealtimeApi realtimeApi = RestClient.INSTANCE.getADAPTER().create(RealtimeApi.class);
                 Response<RealtimeResponse> response = realtimeApi.line(line).execute();
 
                 if (response.body() != null) {
@@ -343,25 +343,25 @@ public class LineDetailsActivity extends RxAppCompatActivity implements OnClickL
 
                         List<VdvBusStop> path = Api.getTrip(bus.trip).calcTimedPath();
 
-                        if (path != null && !path.isEmpty()) {
+                        if (!path.isEmpty()) {
                             String lastTime = path.get(path.size() - 1).getTime();
 
                             String stationName = BusStopRealmHelper.getName(bus.busStop);
 
                             items.add(new LineDetail(stationName, bus.delayMin, lastStationName,
-                                    lastTime, null, bus.vehicle, busId == bus.trip));
+                                    lastTime, null, bus.vehicle, busId == bus.trip, bus.trip, bus.busStop));
                         } else {
-                            items.add(new LineDetail(null, 0, null, null, "error", 0, false));
+                            items.add(new LineDetail(null, 0, null, null, "error", 0, false, 0, 0));
                             mErrorGeneral = true;
                         }
                     }
                 } else if (!mErrorGeneral) {
-                    items.add(new LineDetail(null, 0, null, null, "error", 0, false));
+                    items.add(new LineDetail(null, 0, null, null, "error", 0, false, 0, 0));
                     mErrorGeneral = true;
                 }
             } catch (IOException e) {
                 if (!mErrorGeneral) {
-                    items.add(new LineDetail(null, 0, null, null, "error", 0, false));
+                    items.add(new LineDetail(null, 0, null, null, "error", 0, false, 0, 0));
                     mErrorGeneral = true;
                 }
             }
@@ -401,11 +401,11 @@ public class LineDetailsActivity extends RxAppCompatActivity implements OnClickL
             case 1:
                 return getString(R.string.sunday_long);
             case 5:
-                return getString(R.string.monday_long) + " - " + getString(R.string.friday_long);
+                return getString(R.string.monday_long) + " – " + getString(R.string.friday_long);
             case 6:
-                return getString(R.string.monday_long) + " - " + getString(R.string.saturday_long);
+                return getString(R.string.monday_long) + " – " + getString(R.string.saturday_long);
             case 7:
-                return getString(R.string.monday_long) + " - " + getString(R.string.sunday_long);
+                return getString(R.string.monday_long) + " – " + getString(R.string.sunday_long);
             default:
                 Timber.e("Unknown day: " + date);
                 return "Unknown";

@@ -21,8 +21,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.CoordinatorLayout
@@ -30,32 +30,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbar"
+        <include layout="@layout/include_toolbar"/>
+
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/MenuOverlay">
+            android:layout_marginTop="?attr/actionBarSize">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/MenuOverlay"
-                app:layout_scrollFlags="scroll|enterAlways|snap"/>
+            <include layout="@layout/include_error_wifi"/>
+            <include layout="@layout/include_error_general"/>
 
-        </android.support.design.widget.AppBarLayout>
+        </FrameLayout>
 
-        <android.support.v7.widget.RecyclerView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/recycler"
-            android:layout_height="match_parent"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/refresh"
             android:layout_width="match_parent"
-            android:clipToPadding="false"
-            android:paddingTop="@dimen/recycler_padding"
-            android:paddingBottom="@dimen/recycler_padding"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize">
+
+            <android.support.v7.widget.RecyclerView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="@dimen/recycler_padding"
+                android:paddingTop="@dimen/recycler_padding"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 

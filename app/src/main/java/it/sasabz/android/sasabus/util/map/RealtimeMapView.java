@@ -34,6 +34,9 @@ public class RealtimeMapView {
 
     private final WebView webView;
 
+    private MapDownloadHelper mMapDownloadHelper;
+
+
     public RealtimeMapView(Context context, WebView webView) {
         this.webView = webView;
         this.webView.setWebChromeClient(new WebChromeClient() {
@@ -48,11 +51,14 @@ public class RealtimeMapView {
         this.webView.getSettings().setDomStorageEnabled(true);
 
         JSInterface bridge = new JSInterface(context);
-        new MapDownloadHelper(context, webView, this).checkForMap();
+
+        mMapDownloadHelper = new MapDownloadHelper(context, webView);
+        mMapDownloadHelper.checkForMap();
 
         this.webView.addJavascriptInterface(bridge, "Android");
         this.webView.loadUrl("file:///android_asset/map/realtime.html");
     }
+
 
     public void setMarkers(RealtimeResponse realtimeResponse, List<Integer> filterList) {
         StringBuilder data = new StringBuilder();
@@ -104,5 +110,11 @@ public class RealtimeMapView {
 
     public void goToBus(int bus) {
         webView.loadUrl("javascript:filterMarkers(" + bus + ");");
+    }
+
+    public void stop() {
+        if (mMapDownloadHelper != null) {
+            mMapDownloadHelper.stop();
+        }
     }
 }

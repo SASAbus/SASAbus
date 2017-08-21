@@ -68,7 +68,7 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.beacon.BeaconHandler;
 import it.sasabz.android.sasabus.beacon.busstop.BusStopBeaconHandler;
 import it.sasabz.android.sasabus.data.network.NetUtils;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.RealtimeApi;
 import it.sasabz.android.sasabus.data.network.rest.model.RealtimeBus;
 import it.sasabz.android.sasabus.data.network.rest.response.RealtimeResponse;
@@ -529,7 +529,7 @@ public class DepartureActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void loadDelays() {
-        RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
+        RealtimeApi realtimeApi = RestClient.INSTANCE.getADAPTER().create(RealtimeApi.class);
         realtimeApi.delaysRx()
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())

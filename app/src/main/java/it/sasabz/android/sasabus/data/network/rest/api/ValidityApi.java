@@ -27,7 +27,7 @@ import rx.Observable;
 public interface ValidityApi {
 
     @GET(Endpoint.VALIDITY_DATA)
-    Call<ValidityResponse> data(@Path("date") String date);
+    Call<ValidityResponse> data(@Path("unix") int date);
 
     @GET(Endpoint.VALIDITY_TIMETABLES)
     Observable<ValidityResponse> timetables(@Path("date") String date);

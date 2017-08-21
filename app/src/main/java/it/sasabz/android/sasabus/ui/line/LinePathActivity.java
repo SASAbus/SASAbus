@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.network.NetUtils;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.PathsApi;
 import it.sasabz.android.sasabus.data.network.rest.response.PathResponse;
 import it.sasabz.android.sasabus.ui.widget.NestedSwipeRefreshLayout;
@@ -112,7 +112,7 @@ public class LinePathActivity extends RxAppCompatActivity {
 
         mRefresh.setRefreshing(true);
 
-        PathsApi pathsApi = RestClient.ADAPTER.create(PathsApi.class);
+        PathsApi pathsApi = RestClient.INSTANCE.getADAPTER().create(PathsApi.class);
         pathsApi.getPath(mLineId)
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())

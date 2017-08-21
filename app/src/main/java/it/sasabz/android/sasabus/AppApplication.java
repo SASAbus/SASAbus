@@ -34,7 +34,7 @@ import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 import it.sasabz.android.sasabus.beacon.BeaconHandler;
 import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.realm.UserRealmHelper;
 import it.sasabz.android.sasabus.sync.SyncHelper;
 import it.sasabz.android.sasabus.util.AnalyticsHelper;
@@ -79,7 +79,7 @@ public class AppApplication extends Application {
         AnalyticsHelper.prepareAnalytics(this);
 
         // Initialize the rest adapter which is used throughout the app.
-        RestClient.init(this);
+        RestClient.INSTANCE.init(this);
 
         // Initialize realms.
         Realm.init(this);
@@ -90,7 +90,7 @@ public class AppApplication extends Application {
         AuthHelper.init(this);
 
         // Schedules the daily trip/plan data sync.
-        SyncHelper.scheduleSync(this);
+        SyncHelper.Companion.scheduleSync(this);
 
         // Check if the user upgraded the app and perform various operation if necessary.
         Settings.checkUpgrade(this);

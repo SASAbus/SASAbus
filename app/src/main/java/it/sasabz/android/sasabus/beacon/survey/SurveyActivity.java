@@ -47,7 +47,7 @@ import io.realm.Realm;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.network.NetUtils;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.SurveyApi;
 import it.sasabz.android.sasabus.data.network.rest.model.CloudTrip;
 import it.sasabz.android.sasabus.util.ReportHelper;
@@ -184,7 +184,7 @@ public class SurveyActivity extends AppCompatActivity {
         progress.setCancelable(false);
         progress.show();
 
-        SurveyApi surveyApi = RestClient.ADAPTER.create(SurveyApi.class);
+        SurveyApi surveyApi = RestClient.INSTANCE.getADAPTER().create(SurveyApi.class);
         surveyApi.send(reportBody)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

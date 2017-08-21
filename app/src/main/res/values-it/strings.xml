@@ -152,8 +152,7 @@
     <string name="line_format">Linea %s</string>
     <string name="snackbar_timetable_error">Impossibile scaricare gli orari</string>
     <string name="timetable_download">Scarico orari…</string>
-    <string name="timetable_map_bolzano">Rete Bolzano</string>
-    <string name="timetable_map_merano">Rete Merano</string>
+    <string name="timetable_map">Rete</string>
     <string name="title_timetables">Orari</string>
     <string name="timetable_open">Apri orario</string>
     <string name="timetable_update_action">Scarica</string>
@@ -436,5 +435,8 @@
     <string name="empty_state_departures_select_title">Scegli una fermata dal campo di sopra</string>
     <string name="search_no_results">Nessun risultati</string>
     <string name="title_departure">Partenze</string>
+    <string name="about_github_title">SASAbus su GitHub</string>
+    <string name="about_github_subtitle">Contribuire a SASAbus su GitHub</string>
+    <string name="timetable_validity_format">Valido dal %1$s al %2$s</string>
 
 </resources>

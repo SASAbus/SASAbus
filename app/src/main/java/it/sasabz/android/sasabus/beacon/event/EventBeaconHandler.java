@@ -35,7 +35,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import it.sasabz.android.sasabus.beacon.IBeaconHandler;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.EventsApi;
 import it.sasabz.android.sasabus.data.network.rest.response.EventBeaconResponse;
 import it.sasabz.android.sasabus.ui.ecopoints.event.EventDetailsActivity;
@@ -79,7 +79,7 @@ public final class EventBeaconHandler implements IBeaconHandler {
     private EventBeaconHandler(Context context) {
         mContext = context.getApplicationContext();
 
-        EVENTS_API = RestClient.ADAPTER.create(EventsApi.class);
+        EVENTS_API = RestClient.INSTANCE.getADAPTER().create(EventsApi.class);
     }
 
     public static EventBeaconHandler getInstance(Context context) {

@@ -45,7 +45,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.network.NetUtils;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.UserApi;
 import it.sasabz.android.sasabus.data.network.rest.response.RegisterResponse;
 import it.sasabz.android.sasabus.fcm.FcmSettings;
@@ -257,7 +257,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         UserApi.RegisterBody body = new UserApi.RegisterBody(email, name,
                 password, FcmSettings.getGcmToken(this), birthdateSeconds, male.isChecked());
 
-        UserApi api = RestClient.ADAPTER.create(UserApi.class);
+        UserApi api = RestClient.INSTANCE.getADAPTER().create(UserApi.class);
         api.register(body)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

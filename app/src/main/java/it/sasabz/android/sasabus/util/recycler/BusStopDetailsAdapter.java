@@ -28,6 +28,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.davale.sasabus.core.model.Departure;
 import com.davale.sasabus.core.realm.BusStopRealmHelper;
 
 import java.util.Calendar;
@@ -127,7 +128,7 @@ public class BusStopDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             bus.lineCard.setVisibility(View.VISIBLE);
 
-            if (item.getDelay() == Config.BUS_STOP_DETAILS_OPERATION_RUNNING) {
+            if (item.getDelay() == Departure.OPERATION_RUNNING) {
                 setVisibilityIfNeeded(bus.delayProgress, View.VISIBLE);
                 setVisibilityIfNeeded(bus.delay, View.GONE);
             } else {
@@ -143,7 +144,7 @@ public class BusStopDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 bus.delay.setTextColor(ContextCompat.getColor(mContext, R.color.material_green_500));
             }
 
-            if (item.getDelay() == Config.BUS_STOP_DETAILS_NO_DELAY) {
+            if (item.getDelay() == Departure.NO_DELAY) {
                 bus.delay.setText("");
             } else {
                 bus.delay.setText(item.getDelay() + "'");

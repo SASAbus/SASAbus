@@ -25,6 +25,7 @@ import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.davale.sasabus.core.util.DeviceUtils;
+import com.davale.sasabus.core.vdv.data.VdvException;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
@@ -151,6 +152,10 @@ public final class Utils {
                 if (t instanceof JSONException && t.getMessage().contains("shutdown")) return;
                 if (t instanceof JSONException && t.getMessage().contains("Socket closed")) return;
                 if (t instanceof JSONException && t.getMessage().contains("<html><head>")) return;
+
+                if (t instanceof VdvException && t.getMessage()
+                        .equals("Planned data does not exist, skipping loading")) return;
+
             }
 
             Crashlytics.getInstance().core.logException(t);

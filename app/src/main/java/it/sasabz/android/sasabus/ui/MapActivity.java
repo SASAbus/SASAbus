@@ -76,7 +76,7 @@ import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.model.line.Lines;
 import it.sasabz.android.sasabus.data.network.NetUtils;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.RealtimeApi;
 import it.sasabz.android.sasabus.data.network.rest.api.TrafficLightApi;
 import it.sasabz.android.sasabus.data.network.rest.model.RealtimeBus;
@@ -448,7 +448,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
             mIsRefreshing = true;
             mRefresh.setRefreshing(true);
 
-            RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
+            RealtimeApi realtimeApi = RestClient.INSTANCE.getADAPTER().create(RealtimeApi.class);
             realtimeApi.get()
                     .compose(bindToLifecycle())
                     .subscribeOn(Schedulers.newThread())
@@ -474,7 +474,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this);
 
-            TrafficLightApi trafficLightApi = RestClient.ADAPTER.create(TrafficLightApi.class);
+            TrafficLightApi trafficLightApi = RestClient.INSTANCE.getADAPTER().create(TrafficLightApi.class);
             trafficLightApi.trafficLight(Settings.getTrafficLightCity(MapActivity.this))
                     .compose(bindToLifecycle())
                     .subscribeOn(Schedulers.newThread())

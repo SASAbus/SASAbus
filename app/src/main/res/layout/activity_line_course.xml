@@ -18,9 +18,9 @@
   -->
 
 <android.support.design.widget.CoordinatorLayout
-    android:id="@+id/main_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -28,8 +28,8 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:elevation="4dp"
         android:background="?attr/colorPrimary"
+        android:elevation="4dp"
         android:theme="@style/ToolbarOverlay"
         app:popupTheme="@style/MenuOverlay"/>
 
@@ -39,7 +39,9 @@
         android:layout_marginTop="?attr/actionBarSize">
 
         <include layout="@layout/include_error_data"/>
+
         <include layout="@layout/include_error_wifi"/>
+
         <include layout="@layout/include_error_general"/>
 
         <android.support.v4.widget.SwipeRefreshLayout
@@ -56,6 +58,15 @@
                 android:paddingTop="6dp"/>
 
         </android.support.v4.widget.SwipeRefreshLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/line_course_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_info_outline_white_24dp"
+            app:fabSize="normal"/>
 
     </FrameLayout>
 

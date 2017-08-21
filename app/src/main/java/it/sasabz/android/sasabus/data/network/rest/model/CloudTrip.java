@@ -101,7 +101,7 @@ public class  CloudTrip {
     public String toString() {
         return "CloudTrip{" +
                 "hash='" + hash + '\'' +
-                ", line=" + line +
+                ", title=" + line +
                 ", variant=" + variant +
                 ", trip=" + trip +
                 ", vehicle=" + vehicle +

@@ -45,7 +45,7 @@ import com.bumptech.glide.Glide;
 
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.ReportApi;
 import it.sasabz.android.sasabus.data.network.rest.api.TrafficLightApi;
 import it.sasabz.android.sasabus.data.network.rest.response.TrafficLightResponse;
@@ -182,7 +182,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     private void loadStatus() {
         status.setText(getResources().getString(R.string.about_traffic_light_loading));
 
-        TrafficLightApi api = RestClient.ADAPTER.create(TrafficLightApi.class);
+        TrafficLightApi api = RestClient.INSTANCE.getADAPTER().create(TrafficLightApi.class);
         api.trafficLight(Settings.getTrafficLightCity(AboutActivity.this).toLowerCase())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

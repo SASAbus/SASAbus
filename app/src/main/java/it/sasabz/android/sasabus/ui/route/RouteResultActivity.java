@@ -40,7 +40,7 @@ import it.sasabz.android.sasabus.data.model.BusStop;
 import it.sasabz.android.sasabus.data.model.route.RouteLeg;
 import it.sasabz.android.sasabus.data.model.route.RouteResult;
 import it.sasabz.android.sasabus.data.network.NetUtils;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.RouteApi;
 import it.sasabz.android.sasabus.data.network.rest.model.Leg;
 import it.sasabz.android.sasabus.data.network.rest.model.Route;
@@ -180,7 +180,7 @@ public class RouteResultActivity extends RxAppCompatActivity {
 
         mRefresh.setRefreshing(true);
 
-        RouteApi routeApi = RestClient.ADAPTER.create(RouteApi.class);
+        RouteApi routeApi = RestClient.INSTANCE.getADAPTER().create(RouteApi.class);
         routeApi.route(from, to, date, time, walk, results)
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.newThread())

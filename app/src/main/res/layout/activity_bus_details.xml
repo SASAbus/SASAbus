@@ -245,21 +245,6 @@
 
                     </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/bus_details_report"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="8dp"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:padding="8dp"
-                        android:text="@string/bus_report"
-                        android:textColor="@color/text_tertiary"
-                        android:textSize="12sp"/>
-
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>

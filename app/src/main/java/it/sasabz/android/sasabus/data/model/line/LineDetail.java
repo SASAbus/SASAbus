@@ -28,9 +28,11 @@ public class LineDetail implements Parcelable {
     private final String additionalData;
     private final int vehicle;
     private final boolean color;
+    private final int tripId;
+    private final int currentBusStop;
 
     public LineDetail(String currentStation, int delay, String lastStation, String lastTime,
-                      String additionalData, int vehicle, boolean color) {
+                      String additionalData, int vehicle, boolean color, int tripId, int currentBusStop) {
 
         this.currentStation = currentStation;
         this.delay = delay;
@@ -39,6 +41,8 @@ public class LineDetail implements Parcelable {
         this.additionalData = additionalData;
         this.vehicle = vehicle;
         this.color = color;
+        this.tripId = tripId;
+        this.currentBusStop = currentBusStop;
     }
 
     private LineDetail(Parcel in) {
@@ -49,6 +53,8 @@ public class LineDetail implements Parcelable {
         additionalData = in.readString();
         vehicle = in.readInt();
         color = in.readByte() != 0;
+        tripId = in.readInt();
+        currentBusStop = in.readInt();
     }
 
     @Override
@@ -64,6 +70,8 @@ public class LineDetail implements Parcelable {
         dest.writeString(lastTime);
         dest.writeString(additionalData);
         dest.writeInt(vehicle);
+        dest.writeInt(tripId);
+        dest.writeInt(currentBusStop);
 
         dest.writeByte((byte) (color ? 1 : 0));
     }
@@ -94,6 +102,14 @@ public class LineDetail implements Parcelable {
 
     public boolean isColor() {
         return color;
+    }
+
+    public int getTripId() {
+        return tripId;
+    }
+
+    public int getCurrentBusStop() {
+        return currentBusStop;
     }
 
     public static final Parcelable.Creator<LineDetail> CREATOR = new Parcelable.Creator<LineDetail>() {

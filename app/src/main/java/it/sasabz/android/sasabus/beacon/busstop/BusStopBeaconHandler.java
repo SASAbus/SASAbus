@@ -44,7 +44,7 @@ import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
 import it.sasabz.android.sasabus.beacon.bus.BusBeaconHandler;
 import it.sasabz.android.sasabus.beacon.ecopoints.BadgeHelper;
 import it.sasabz.android.sasabus.data.model.BusStop;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.RealtimeApi;
 import it.sasabz.android.sasabus.data.network.rest.model.RealtimeBus;
 import it.sasabz.android.sasabus.data.network.rest.response.RealtimeResponse;
@@ -236,9 +236,6 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
             mBeaconMap.put(major, new BusStopBeacon(major));
 
             Timber.e("Added beacon %s", major);
-
-            UserRealmHelper.addBeacon(beacon,
-                    it.sasabz.android.sasabus.data.realm.user.Beacon.TYPE_BUS_STOP);
         }
     }
 
@@ -356,7 +353,7 @@ public final class BusStopBeaconHandler implements IBeaconHandler {
                     departures.add(departure);
                 }
 
-                RealtimeApi realtimeApi = RestClient.ADAPTER.create(RealtimeApi.class);
+                RealtimeApi realtimeApi = RestClient.INSTANCE.getADAPTER().create(RealtimeApi.class);
                 realtimeApi.delaysRx()
                         .subscribeOn(Schedulers.newThread())
                         .subscribe(new Observer<RealtimeResponse>() {

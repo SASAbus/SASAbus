@@ -60,7 +60,7 @@ import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.network.NetUtils;
 import it.sasabz.android.sasabus.data.network.auth.AuthHelper;
 import it.sasabz.android.sasabus.data.network.rest.Endpoint;
-import it.sasabz.android.sasabus.data.network.rest.RestClient;
+import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.EcoPointsApi;
 import it.sasabz.android.sasabus.data.network.rest.api.UserApi;
 import it.sasabz.android.sasabus.data.network.rest.model.Profile;
@@ -246,7 +246,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         progressDialog.setMessage(getString(R.string.dialog_logging_out));
         progressDialog.show();
 
-        UserApi api = RestClient.ADAPTER.create(UserApi.class);
+        UserApi api = RestClient.INSTANCE.getADAPTER().create(UserApi.class);
         api.logout(FcmSettings.getGcmToken(this))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -291,7 +291,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         progressDialog.setMessage(getString(R.string.dialog_logging_out));
         progressDialog.show();
 
-        UserApi api = RestClient.ADAPTER.create(UserApi.class);
+        UserApi api = RestClient.INSTANCE.getADAPTER().create(UserApi.class);
         api.logoutAll()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -342,7 +342,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     progressDialog.setMessage(getString(R.string.dialog_deleting_account));
                     progressDialog.show();
 
-                    UserApi api = RestClient.ADAPTER.create(UserApi.class);
+                    UserApi api = RestClient.INSTANCE.getADAPTER().create(UserApi.class);
                     api.delete()
                             .subscribeOn(Schedulers.newThread())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -472,7 +472,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             progressDialog.setMessage(getString(R.string.dialog_change_password_changing));
             progressDialog.show();
 
-            UserApi api = RestClient.ADAPTER.create(UserApi.class);
+            UserApi api = RestClient.INSTANCE.getADAPTER().create(UserApi.class);
             api.changePassword(oldPassword, newPassword1, FcmSettings.getGcmToken(this))
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -646,7 +646,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
             String imageUrl = mItems.get(position);
 
-            EcoPointsApi api = RestClient.ADAPTER.create(EcoPointsApi.class);
+            EcoPointsApi api = RestClient.INSTANCE.getADAPTER().create(EcoPointsApi.class);
             api.upload(imageUrl)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -694,7 +694,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         dialog.show();
 
-        EcoPointsApi api = RestClient.ADAPTER.create(EcoPointsApi.class);
+        EcoPointsApi api = RestClient.INSTANCE.getADAPTER().create(EcoPointsApi.class);
         api.getProfilePictures()
                 .subscribeOn(Schedulers.newThread())
                 .map(response -> {
@@ -749,7 +749,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         progressDialog.setMessage(getString(R.string.dialog_change_profile_picture_changing));
         progressDialog.show();
 
-        EcoPointsApi api = RestClient.ADAPTER.create(EcoPointsApi.class);
+        EcoPointsApi api = RestClient.INSTANCE.getADAPTER().create(EcoPointsApi.class);
         api.upload(image)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -80,6 +80,9 @@
 -keepclassmembers class it.sasabz.android.sasabus.data.network.rest.model.** { <fields>; }
 -keepclassmembers class it.sasabz.android.sasabus.data.network.rest.response.** { <fields>; }
 
+-keepclassmembers class it.sasabz.android.sasabus.data.network.model.** { <fields>; }
+-keepclassmembers class it.sasabz.android.sasabus.data.network.response.** { <fields>; }
+
 -keep class it.sasabz.android.sasabus.data.model.JsonSerializable { *; }
 -keep class * implements it.sasabz.android.sasabus.data.model.JsonSerializable { <fields>; }
 
@@ -115,3 +118,10 @@
 -keepclassmembers class * {
     @android.webkit.JavascriptInterface <methods>;
 }
+
+
+# Other
+-dontwarn javax.management.**
+-dontwarn javax.xml.**
+-dontwarn org.apache.**
+-dontwarn org.slf4j.**

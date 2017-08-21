@@ -64,7 +64,7 @@ public final class HashUtils {
         int year = start.get(Calendar.YEAR);
 
         // Use the origin and destination bus stops to differentiate a trip which drives the same
-        // line and trip as another one, but starts and ends at different bus stops (e.g. even though
+        // title and trip as another one, but starts and ends at different bus stops (e.g. even though
         // a trip from stazione to ospedale might have the same trip id on the same day, the trip
         // from Stazione to Piazza Walther must have a different hash than a trip from Piazza Vittoria
         // to Via Sorrento).

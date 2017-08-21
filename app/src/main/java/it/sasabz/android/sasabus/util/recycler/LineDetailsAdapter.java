@@ -27,6 +27,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.davale.sasabus.core.realm.BusStopRealmHelper;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +40,7 @@ import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.model.line.LineDetail;
 import it.sasabz.android.sasabus.ui.bus.BusDetailActivity;
+import it.sasabz.android.sasabus.ui.line.LineCourseActivity;
 
 /**
  * @author Alex Lardschneider
@@ -181,7 +184,7 @@ public class LineDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
-    final class ViewHolderBus extends RecyclerView.ViewHolder implements View.OnClickListener {
+    final class ViewHolderBus extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         @BindView(R.id.list_lines_detail_current_name) TextView currentName;
         @BindView(R.id.list_lines_detail_current_time) TextView currentTime;
@@ -198,6 +201,7 @@ public class LineDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ButterKnife.bind(this, view);
 
             lineCard.setOnClickListener(this);
+            lineCard.setOnLongClickListener(this);
         }
 
         @Override
@@ -208,10 +212,24 @@ public class LineDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             LineDetail rowItem = mItems.get(position);
 
             if (rowItem.getAdditionalData() == null) {
-                Intent intent = new Intent(mContext, BusDetailActivity.class);
-                intent.putExtra(Config.EXTRA_VEHICLE, rowItem.getVehicle());
+                mContext.startActivity(LineCourseActivity.intent(mContext, rowItem.getTripId(),
+                        0, rowItem.getCurrentBusStop(), rowItem.getVehicle()));
+            }
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            int position = getLayoutPosition();
+            if (position == RecyclerView.NO_POSITION) return false;
+
+            LineDetail rowItem = mItems.get(position);
+
+            if (rowItem.getAdditionalData() == null) {
+                Intent intent = BusDetailActivity.intent(mContext, rowItem.getVehicle());
                 mContext.startActivity(intent);
             }
+
+            return true;
         }
     }
 

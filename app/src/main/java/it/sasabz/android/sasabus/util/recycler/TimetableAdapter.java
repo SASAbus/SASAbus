@@ -56,26 +56,23 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        if (mItems.get(position).equals("BZ_MAP")) {
-            viewHolder.line.setText(R.string.timetable_map_bolzano);
-            viewHolder.munic.setText("");
-        } else if (mItems.get(position).equals("ME_MAP")) {
-            viewHolder.line.setText(R.string.timetable_map_merano);
-            viewHolder.munic.setText("");
-        } else {
-            String[] array = mItems.get(position).split("_");
-
-            if (array.length != 2) {
-                viewHolder.line.setText("");
-                viewHolder.munic.setText("");
-                return;
-            }
-
-            String munic = array[0];
-            munic = munic.equals("BZ") ? mContext.getString(R.string.bolzano) : mContext.getString(R.string.merano);
-
-            viewHolder.line.setText(mContext.getString(R.string.line_format, array[1]));
-            viewHolder.munic.setText(munic);
+        switch (mItems.get(position)) {
+            case "BZ_MAP":
+                viewHolder.line.setText(R.string.timetable_map);
+                viewHolder.munic.setText(R.string.bolzano);
+                break;
+            case "ME_MAP":
+                viewHolder.line.setText(R.string.timetable_map);
+                viewHolder.munic.setText(R.string.merano);
+                break;
+            case "BZ_TIMETABLES":
+                viewHolder.line.setText(R.string.title_timetables);
+                viewHolder.munic.setText(R.string.bolzano);
+                break;
+            case "ME_TIMETABLES":
+                viewHolder.line.setText(R.string.title_timetables);
+                viewHolder.munic.setText(R.string.merano);
+                break;
         }
     }
 
