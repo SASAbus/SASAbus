@@ -50,6 +50,8 @@ import timber.log.Timber;
  *
  * @author Alex Lardschneider
  */
+
+// TODO: Check if we really need all the included leaflet files
 public class AppApplication extends Application {
 
     private GoogleApiClient mApiClient;

@@ -32,7 +32,7 @@ public final class Endpoint {
     public static final String REALTIME = "realtime";
     public static final String REALTIME_VEHICLE = "realtime/vehicle/{id}";
     public static final String REALTIME_DELAYS = "realtime/delays";
-    public static final String REALTIME_LINE = "realtime/title/{id}";
+    public static final String REALTIME_LINE = "realtime/line/{id}";
     public static final String REALTIME_TRIP = "realtime/trip/{id}";
 
     public static final String NEWS = "news";

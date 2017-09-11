@@ -1,4 +1,4 @@
 ext {
     // TODO: Add your own Catch & Solve API key here
-    CATCH_AND_SOLVE_API_KEY = "xxxxxx"
+    CATCH_AND_SOLVE_API_KEY = "https://4a952ece7496458f8b5f10dde3119fd0:97cda97d4c4a4c608eadfbbc0ce073af@crashbox.davide.bz/1"
 }
