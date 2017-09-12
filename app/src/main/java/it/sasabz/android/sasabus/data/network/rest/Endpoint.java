@@ -74,8 +74,8 @@ public final class Endpoint {
 
     public static final String LINES_ALL = "lines";
     public static final String LINES_HYDROGEN = "realtime/h2";
-    public static final String LINES_FILTER = "lines/title/{lines}";
-    public static final String LINES = "lines/title/{id}";
+    public static final String LINES_FILTER = "lines/line/{lines}";
+    public static final String LINES = "lines/line/{id}";
 
     public static final String VALIDITY_DATA = "validity/{unix}";
     public static final String VALIDITY_TIMETABLES = "validity/timetables/{date}";
