@@ -21,6 +21,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
+import com.davale.sasabus.core.data.Lines;
 import com.davale.sasabus.core.util.NtpDate;
 import com.polidea.rxandroidble.RxBleDevice;
 
@@ -37,7 +38,6 @@ import io.realm.RealmMigration;
 import io.realm.RealmSchema;
 import it.sasabz.android.sasabus.beacon.bus.BusBeacon;
 import it.sasabz.android.sasabus.beacon.telemetry.BeaconCharacteristics;
-import it.sasabz.android.sasabus.data.model.line.Lines;
 import it.sasabz.android.sasabus.data.network.rest.model.CloudTrip;
 import it.sasabz.android.sasabus.data.realm.user.EarnedBadge;
 import it.sasabz.android.sasabus.data.realm.user.FavoriteBusStop;
@@ -376,8 +376,8 @@ public final class UserRealmHelper {
         if (lines.isEmpty()) {
             lines.add(100001);
 
-            for (int i = 2; i < Lines.checkBoxesId.length; i++) {
-                lines.add(Lines.checkBoxesId[i]);
+            for (int i = 2; i < Lines.FILTER_CHECKBOX_IDS.length; i++) {
+                lines.add(Lines.FILTER_CHECKBOX_IDS[i]);
             }
         }
 

@@ -33,6 +33,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 
+import com.davale.sasabus.core.data.Lines;
 import com.davale.sasabus.core.realm.BusStopRealmHelper;
 import com.davale.sasabus.core.vdv.Api;
 import com.davale.sasabus.core.vdv.model.VdvBusStop;
@@ -47,7 +48,6 @@ import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.data.model.line.LineDetail;
-import it.sasabz.android.sasabus.data.model.line.Lines;
 import it.sasabz.android.sasabus.data.network.NetUtils;
 import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.LinesApi;
@@ -387,7 +387,7 @@ public class LineDetailsActivity extends RxAppCompatActivity implements OnClickL
     }
 
     private static boolean contains(int v) {
-        for (int e : Lines.notTracked) {
+        for (int e : Lines.LINE_DETAILS_NOT_TRACKED) {
             if (e == v) {
                 return true;
             }
