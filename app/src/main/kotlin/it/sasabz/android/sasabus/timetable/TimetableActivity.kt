@@ -229,7 +229,7 @@ class TimetableActivity : BaseActivity() {
             val request = Request.Builder().url(url).build()
             val response = client.newCall(request).execute()
 
-            val body = response.body()
+            val body = response.body()!!
             val contentLength = body.contentLength()
             val source = body.source()
 

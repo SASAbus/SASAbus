@@ -34,6 +34,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.davale.sasabus.core.data.Lines;
 import com.davale.sasabus.core.realm.BusStopRealmHelper;
 import com.davale.sasabus.core.vdv.model.VdvBusStop;
 
@@ -44,7 +45,6 @@ import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
 import it.sasabz.android.sasabus.beacon.bus.CurrentTrip;
 import it.sasabz.android.sasabus.data.model.BusStop;
-import it.sasabz.android.sasabus.data.model.line.Lines;
 import it.sasabz.android.sasabus.ui.MapActivity;
 import it.sasabz.android.sasabus.util.Notifications;
 import it.sasabz.android.sasabus.util.UIUtils;

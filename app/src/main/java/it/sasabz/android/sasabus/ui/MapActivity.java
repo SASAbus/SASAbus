@@ -63,6 +63,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.davale.sasabus.core.data.Buses;
+import com.davale.sasabus.core.data.Lines;
 import com.davale.sasabus.core.realm.BusStopRealmHelper;
 import com.davale.sasabus.core.util.AnimUtils;
 
@@ -74,7 +75,6 @@ import butterknife.ButterKnife;
 import it.sasabz.android.sasabus.BuildConfig;
 import it.sasabz.android.sasabus.Config;
 import it.sasabz.android.sasabus.R;
-import it.sasabz.android.sasabus.data.model.line.Lines;
 import it.sasabz.android.sasabus.data.network.NetUtils;
 import it.sasabz.android.sasabus.data.network.RestClient;
 import it.sasabz.android.sasabus.data.network.rest.api.RealtimeApi;
@@ -143,11 +143,11 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
     /**
      * Various views for the filter.
      */
-    private FloatingActionButton mFabFilterTop;
-    private FloatingActionButton mFabFilterBottom;
-    private FloatingActionButton mFabFilterBg;
-    private ScrollView mFilterScrollView;
-    private RelativeLayout mFilterBackground;
+    // private FloatingActionButton mFabFilterTop;
+    // private FloatingActionButton mFabFilterBottom;
+    // private FloatingActionButton mFabFilterBg;
+    // private ScrollView mFilterScrollView;
+    // private RelativeLayout mFilterBackground;
 
     /**
      * Snackbars to show updates like missing internet connection or general error
@@ -207,7 +207,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
      * Indicates if the filter is currently open so different actions can be started on back press,
      * like close the filter when it is open or exit/navigate up when it is closed.
      */
-    private boolean mFilterOpen;
+    // private boolean mFilterOpen;
 
     private RealtimeMapView mapView;
 
@@ -233,7 +233,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
             setupRating();
         }
 
-        setupFilter();
+        // setupFilter();
 
         mAutoRefresh = Settings.isMapAutoEnabled(this);
         mRefreshInterval = Settings.getMapAutoInterval(this);
@@ -243,11 +243,11 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
         if (savedInstanceState != null) {
 
             //noinspection ResourceType
-            mFilterBackground.setVisibility(savedInstanceState.getInt("FILTER_BACKGROUND"));
+            // mFilterBackground.setVisibility(savedInstanceState.getInt("FILTER_BACKGROUND"));
             //noinspection ResourceType
-            mFilterScrollView.setVisibility(savedInstanceState.getInt("FILTER_SCROLL"));
+            // mFilterScrollView.setVisibility(savedInstanceState.getInt("FILTER_SCROLL"));
             //noinspection ResourceType
-            mFabFilterTop.setVisibility(savedInstanceState.getInt("FAB_TOP"));
+            // mFabFilterTop.setVisibility(savedInstanceState.getInt("FAB_TOP"));
 
             mBusBeaconId = savedInstanceState.getInt("MARKER");
 
@@ -259,7 +259,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
             }
         }
 
-        WebView webView = (WebView) findViewById(R.id.webview);
+        WebView webView = findViewById(R.id.webview);
         mapView = new RealtimeMapView(this, webView);
 
         parseData();
@@ -330,13 +330,13 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
         switch (v.getId()) {
             case R.id.map_filter_fab_2:
             case R.id.filter_background:
-                closeFilter();
+                // closeFilter();
                 break;
             case R.id.map_filter_fab_1:
-                openFilter();
+                // openFilter();
                 break;
             default:
-                filterItemClick(v);
+                // filterItemClick(v);
                 break;
         }
     }
@@ -364,7 +364,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if (mFilterBackground != null) {
+        /*if (mFilterBackground != null) {
             outState.putInt("FILTER_BACKGROUND", mFilterBackground.getVisibility());
         }
 
@@ -374,7 +374,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
         if (mFabFilterTop != null) {
             outState.putInt("FAB_TOP", mFabFilterTop.getVisibility());
-        }
+        }*/
 
         outState.putParcelableArrayList("BUS_DATA", mBusData);
 
@@ -491,9 +491,9 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
                         @Override
                         public void onNext(TrafficLightResponse trafficLightResponse) {
-                            mFabFilterTop.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#" + trafficLightResponse.color)));
-                            mFabFilterBottom.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#" + trafficLightResponse.color)));
-                            mFabFilterBg.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#" + trafficLightResponse.color)));
+                            // mFabFilterTop.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#" + trafficLightResponse.color)));
+                            // mFabFilterBottom.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#" + trafficLightResponse.color)));
+                            // mFabFilterBg.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#" + trafficLightResponse.color)));
                         }
                     });
         }
@@ -525,7 +525,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
         mErrorSnackbar = Snackbar.make(getMainContent(), message, Snackbar.LENGTH_INDEFINITE);
 
         View snackbarView = mErrorSnackbar.getView();
-        TextView textView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+        TextView textView = snackbarView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(ContextCompat.getColor(this, R.color.white));
 
         runOnUiThread(() -> {
@@ -546,7 +546,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
         mInternetSnackbar = Snackbar.make(getMainContent(), R.string.error_wifi, Snackbar.LENGTH_INDEFINITE);
 
         View snackbarView = mInternetSnackbar.getView();
-        TextView textView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+        TextView textView = snackbarView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(ContextCompat.getColor(this, R.color.white));
 
         runOnUiThread(() -> {
@@ -586,9 +586,9 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
                 mInfoSnackbar.setAction(R.string.map_snackbar_update, v -> {
                     try {
                         mInfoSnackbar.dismiss();
-                        mFabFilterBg.setTranslationY(0);
-                        mFabFilterBottom.setTranslationY(0);
-                        mFabFilterTop.setTranslationY(0);
+                        // mFabFilterBg.setTranslationY(0);
+                        // mFabFilterBottom.setTranslationY(0);
+                        // mFabFilterTop.setTranslationY(0);
 
                         startActivity(new Intent(Intent.ACTION_VIEW,
                                 Uri.parse("market://details?id=it.sasabz.android.sasabus")));
@@ -607,9 +607,9 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
                 mInfoSnackbar.setAction(R.string.map_snackbar_view, v -> {
                     try {
                         mInfoSnackbar.dismiss();
-                        mFabFilterBg.setTranslationY(0);
-                        mFabFilterBottom.setTranslationY(0);
-                        mFabFilterTop.setTranslationY(0);
+                        // mFabFilterBg.setTranslationY(0);
+                        // mFabFilterBottom.setTranslationY(0);
+                        // mFabFilterTop.setTranslationY(0);
 
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(response.link)));
                     } catch (ActivityNotFoundException e) {
@@ -620,7 +620,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
         }
 
         View snackbarView = mInfoSnackbar.getView();
-        TextView textView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+        TextView textView = snackbarView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setMaxLines(5);
         textView.setTextColor(ContextCompat.getColor(this, R.color.white));
 
@@ -652,15 +652,15 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
      * we cannot generate this layout by using XML, but we have to create all views programmatically
      * depending on the amount of lines.
      */
-    private void setupFilter() {
+    /*private void setupFilter() {
         mFilter.addAll(UserRealmHelper.getFilter());
 
-        mFabFilterTop = (FloatingActionButton) findViewById(R.id.map_filter_fab_2);
-        mFabFilterBottom = (FloatingActionButton) findViewById(R.id.map_filter_fab_1);
-        mFabFilterBg = (FloatingActionButton) findViewById(R.id.map_filter_fab_bg);
+        mFabFilterTop = findViewById(R.id.map_filter_fab_2);
+        mFabFilterBottom = findViewById(R.id.map_filter_fab_1);
+        mFabFilterBg = findViewById(R.id.map_filter_fab_bg);
 
-        mFilterBackground = (RelativeLayout) findViewById(R.id.filter_background);
-        mFilterScrollView = (ScrollView) findViewById(R.id.filter_scroll);
+        mFilterBackground = findViewById(R.id.filter_background);
+        mFilterScrollView = findViewById(R.id.filter_scroll);
 
         mFabFilterTop.setOnClickListener(this);
         mFabFilterBottom.setOnClickListener(this);
@@ -678,7 +678,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
         linearLayout.setLayoutParams(layoutParams);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
-        for (int i = 0; i < Lines.checkBoxesId.length; i++) {
+        for (int i = 0; i < Lines.FILTER_CHECKBOX_IDS.length; i++) {
             RelativeLayout rl = new RelativeLayout(this);
             rl.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
@@ -692,25 +692,27 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
             cb.setGravity(Gravity.CENTER);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                cb.setButtonTintList(ColorStateList.valueOf(Color.parseColor('#' + Lines.lineColors[i])));
+                cb.setButtonTintList(
+                        ColorStateList.valueOf(
+                                Color.parseColor('#' + Lines.getColorForId(i))));
             }
 
-            if (mFilter.contains(Lines.checkBoxesId[i])) {
+            if (mFilter.contains(Lines.FILTER_CHECKBOX_IDS[i])) {
                 cb.setChecked(true);
             }
 
-            cb.setId(Lines.checkBoxesId[i] * 100);
+            cb.setId(Lines.FILTER_CHECKBOX_IDS[i] * 100);
             cb.setOnClickListener(this);
 
             RelativeLayout.LayoutParams
                     textParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            textParams.addRule(RelativeLayout.LEFT_OF, Lines.checkBoxesId[i] * 100);
+            textParams.addRule(RelativeLayout.LEFT_OF, Lines.FILTER_CHECKBOX_IDS[i] * 100);
             textParams.addRule(RelativeLayout.CENTER_VERTICAL);
             textParams.rightMargin = (int) getResources().getDimension(R.dimen.dimen_10);
 
             TextView tv = new TextView(this);
             tv.setLayoutParams(textParams);
-            tv.setText(Lines.getNames(this)[i]);
+            tv.setText(Lines.lidToName(i));
             tv.setTextColor(ContextCompat.getColor(this, R.color.marker_popup_text_primary));
 
             rl.addView(cb);
@@ -721,14 +723,14 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
         mFilterScrollView.addView(linearLayout);
 
-    }
+    }*/
 
     /**
      * Opens the filter. This method animates the fab by rotating
      * the two buttons and fading them. A third fab is used to prevent alpha errors.
      * Also fades in the white content scrim.
      */
-    private void openFilter() {
+    /*private void openFilter() {
         hideSnackbar();
 
         mFilterBackground.setVisibility(View.VISIBLE);
@@ -775,7 +777,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
      * the two buttons and fading them. A third fab is used to prevent alpha errors.
      * Also fades out the white content scrim.
      */
-    private void closeFilter() {
+    /*private void closeFilter() {
         if (!mFilterOpen) return;
 
         Animator
@@ -833,97 +835,97 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
      *
      * @param v the {@link CheckBox} which has been clicked.
      */
-    private void filterItemClick(View v) {
+    /*private void filterItemClick(View v) {
         if (v instanceof CheckBox) {
-            for (int i = 0; i < Lines.checkBoxesId.length; i++) {
-                if (Lines.checkBoxesId[i] * 100 == v.getId()) {
+            for (int i = 0; i < Lines.FILTER_CHECKBOX_IDS.length; i++) {
+                if (Lines.FILTER_CHECKBOX_IDS[i] * 100 == v.getId()) {
                     /*
                      * User clicked on the all checkbox, set the all checkbox to checked and disable
                      * if so users cannot uncheck it, add all the buses to the active filter
-                     */
+                     *
                     if (i == 0) {
                         if (((Checkable) v).isChecked()) {
                             v.setClickable(false);
                         }
 
-                        findViewById(Lines.checkBoxesId[1] * 100).setClickable(true);
+                        findViewById(Lines.FILTER_CHECKBOX_IDS[1] * 100).setClickable(true);
 
-                        ((Checkable) findViewById(Lines.checkBoxesId[1] * 100)).setChecked(false);
+                        ((Checkable) findViewById(Lines.FILTER_CHECKBOX_IDS[1] * 100)).setChecked(false);
 
                         mFilter.clear();
-                        for (int j = 2; j < Lines.checkBoxesId.length; j++) {
-                            mFilter.add(Lines.checkBoxesId[j]);
-                            ((Checkable) findViewById(Lines.checkBoxesId[j] * 100)).setChecked(true);
+                        for (int j = 2; j < Lines.FILTER_CHECKBOX_IDS.length; j++) {
+                            mFilter.add(Lines.FILTER_CHECKBOX_IDS[j]);
+                            ((Checkable) findViewById(Lines.FILTER_CHECKBOX_IDS[j] * 100)).setChecked(true);
                         }
 
-                        mFilter.add(Lines.checkBoxesId[0]);
+                        mFilter.add(Lines.FILTER_CHECKBOX_IDS[0]);
                     } else if (i == 1) {
                         /*
                          * User clicked on the none checkbox, set it to active and disable it, set
                          * the all checkbox to clickable again and remove all the buses from the
                          * active filter
-                         */
+                         *
                         if (((Checkable) v).isChecked()) {
                             v.setClickable(false);
                         }
 
-                        findViewById(Lines.checkBoxesId[0] * 100).setClickable(true);
+                        findViewById(Lines.FILTER_CHECKBOX_IDS[0] * 100).setClickable(true);
 
-                        ((Checkable) findViewById(Lines.checkBoxesId[0] * 100)).setChecked(false);
+                        ((Checkable) findViewById(Lines.FILTER_CHECKBOX_IDS[0] * 100)).setChecked(false);
 
                         mFilter.clear();
-                        for (int j = 2; j < Lines.checkBoxesId.length; j++) {
-                            ((Checkable) findViewById(Lines.checkBoxesId[j] * 100)).setChecked(false);
+                        for (int j = 2; j < Lines.FILTER_CHECKBOX_IDS.length; j++) {
+                            ((Checkable) findViewById(Lines.FILTER_CHECKBOX_IDS[j] * 100)).setChecked(false);
                         }
 
-                        mFilter.add(Lines.checkBoxesId[1]);
+                        mFilter.add(Lines.FILTER_CHECKBOX_IDS[1]);
                     } else {
-                        ((Checkable) findViewById(Lines.checkBoxesId[1] * 100)).setChecked(false);
+                        ((Checkable) findViewById(Lines.FILTER_CHECKBOX_IDS[1] * 100)).setChecked(false);
 
                         if (((Checkable) v).isChecked()) {
-                            mFilter.add(Lines.checkBoxesId[i]);
+                            mFilter.add(Lines.FILTER_CHECKBOX_IDS[i]);
 
-                            findViewById(Lines.checkBoxesId[1] * 100).setClickable(true);
-                            ((Checkable) findViewById(Lines.checkBoxesId[1] * 100)).setChecked(false);
+                            findViewById(Lines.FILTER_CHECKBOX_IDS[1] * 100).setClickable(true);
+                            ((Checkable) findViewById(Lines.FILTER_CHECKBOX_IDS[1] * 100)).setChecked(false);
 
                             for (int j = 0; j < mFilter.size(); j++) {
-                                if (mFilter.get(j) == Lines.checkBoxesId[1]) {
+                                if (mFilter.get(j) == Lines.FILTER_CHECKBOX_IDS[1]) {
                                     mFilter.remove(j);
                                     break;
                                 }
                             }
 
                             boolean allChecked = true;
-                            for (int j = 4; j < Lines.checkBoxesId.length; j++) {
-                                if (!((Checkable) findViewById(Lines.checkBoxesId[j] * 100)).isChecked()) {
+                            for (int j = 2; j < Lines.FILTER_CHECKBOX_IDS.length; j++) {
+                                if (!((Checkable) findViewById(Lines.FILTER_CHECKBOX_IDS[j] * 100)).isChecked()) {
                                     allChecked = false;
                                     break;
                                 }
                             }
 
                             if (allChecked) {
-                                ((Checkable) findViewById(Lines.checkBoxesId[0] * 100)).setChecked(true);
-                                mFilter.add(Lines.checkBoxesId[0]);
+                                ((Checkable) findViewById(Lines.FILTER_CHECKBOX_IDS[0] * 100)).setChecked(true);
+                                mFilter.add(Lines.FILTER_CHECKBOX_IDS[0]);
                             }
                         } else {
-                            findViewById(Lines.checkBoxesId[0] * 100).setClickable(true);
-                            ((Checkable) findViewById(Lines.checkBoxesId[0] * 100)).setChecked(false);
+                            findViewById(Lines.FILTER_CHECKBOX_IDS[0] * 100).setClickable(true);
+                            ((Checkable) findViewById(Lines.FILTER_CHECKBOX_IDS[0] * 100)).setChecked(false);
 
                             boolean noneChecked = true;
-                            for (int j = 2; j < Lines.checkBoxesId.length; j++) {
-                                if (((Checkable) findViewById(Lines.checkBoxesId[j] * 100)).isChecked()) {
+                            for (int j = 2; j < Lines.FILTER_CHECKBOX_IDS.length; j++) {
+                                if (((Checkable) findViewById(Lines.FILTER_CHECKBOX_IDS[j] * 100)).isChecked()) {
                                     noneChecked = false;
                                     break;
                                 }
                             }
 
                             if (noneChecked) {
-                                ((Checkable) findViewById(Lines.checkBoxesId[1] * 100)).setChecked(true);
-                                mFilter.add(Lines.checkBoxesId[1]);
+                                ((Checkable) findViewById(Lines.FILTER_CHECKBOX_IDS[1] * 100)).setChecked(true);
+                                mFilter.add(Lines.FILTER_CHECKBOX_IDS[1]);
                             }
 
                             for (int j = mFilter.size() - 1; j >= 0; j--) {
-                                if (mFilter.get(j) == Lines.checkBoxesId[i]) {
+                                if (mFilter.get(j) == Lines.FILTER_CHECKBOX_IDS[i]) {
                                     mFilter.remove(j);
                                     break;
                                 }
@@ -937,7 +939,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
 
             mapView.filter(mFilter);
         }
-    }
+    }*/
 
     /**
      * Sets up the rating {@link android.support.v7.widget.CardView}. If the user has started
@@ -947,10 +949,10 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
         Settings.incrementStartupCount(this);
 
         if (Settings.canAskForRating(this) && Settings.getStartupCount(this) >= 20) {
-            FrameLayout rating = (FrameLayout) findViewById(R.id.rating_popup);
-            TextView title = (TextView) findViewById(R.id.rating_title);
-            Button positive = (Button) findViewById(R.id.rating_positive);
-            Button negative = (Button) findViewById(R.id.rating_negative);
+            FrameLayout rating = findViewById(R.id.rating_popup);
+            TextView title = findViewById(R.id.rating_title);
+            Button positive = findViewById(R.id.rating_positive);
+            Button negative = findViewById(R.id.rating_negative);
 
             ViewCompat.setAlpha(rating, 0);
             rating.setVisibility(View.VISIBLE);
@@ -1057,7 +1059,7 @@ public class MapActivity extends BaseActivity implements View.OnClickListener,
             AlertDialog dialog = builder.create();
             dialog.show();
 
-            TextView messageView = (TextView) dialog.findViewById(android.R.id.message);
+            TextView messageView = dialog.findViewById(android.R.id.message);
             if (messageView != null) {
                 // makes the embedded links in the text clickable, if there are any
                 messageView.setMovementMethod(LinkMovementMethod.getInstance());
