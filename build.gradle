@@ -27,11 +27,7 @@ buildscript {
     }
 
     dependencies {
-<<<<<<< HEAD
-        classpath 'com.android.tools.build:gradle:3.0.0-beta5'
-=======
         classpath 'com.android.tools.build:gradle:3.0.1'
->>>>>>> master
         classpath 'com.google.gms:google-services:3.0.0'
         classpath "io.realm:realm-gradle-plugin:3.5.0"
 
