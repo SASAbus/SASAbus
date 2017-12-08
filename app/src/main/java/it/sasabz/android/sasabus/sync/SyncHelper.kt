@@ -255,7 +255,7 @@ class SyncHelper internal constructor(private val mContext: Context, private val
             val response = validityApi.data(date).execute()
 
             if (response.body() != null) {
-                if (!response.body().isValid) {
+                if (!response.body()!!.isValid) {
                     Timber.e("Plan data update available")
 
                     PlannedData.setUpdateAvailable(mContext, true)
@@ -266,7 +266,7 @@ class SyncHelper internal constructor(private val mContext: Context, private val
                 }
             } else {
                 val body = response.errorBody()
-                Timber.e("Error while checking for plan data update: %s", body.string())
+                Timber.e("Error while checking for plan data update: %s", body?.string())
             }
         }
 
