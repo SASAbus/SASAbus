@@ -238,40 +238,7 @@ class SyncHelper internal constructor(private val mContext: Context, private val
     private fun doPlanDataSync(): Boolean {
         Timber.e("Starting plan data sync")
 
-        var shouldDownloadData = false
-
-        // TODO: Check if planned data update works
-
-        // Check if plan data exists. If not, we should immediately download it, else check if an
-        // update is available and download it.
-        if (!PlannedData.planDataExists(mContext)) {
-            Timber.e("Plan data does not exist")
-
-            shouldDownloadData = true
-        } else {
-            val date = PlannedData.getDataDate(mContext)
-
-            val validityApi = RestClient.ADAPTER!!.create(ValidityApi::class.java)
-            val response = validityApi.data(date).execute()
-
-            if (response.body() != null) {
-                if (!response.body()!!.isValid) {
-                    Timber.e("Plan data update available")
-
-                    PlannedData.setUpdateAvailable(mContext, true)
-
-                    shouldDownloadData = true
-                } else {
-                    Timber.e("No plan data update available")
-                }
-            } else {
-                val body = response.errorBody()
-                Timber.e("Error while checking for plan data update: %s", body?.string())
-            }
-        }
-
-        // Plan data does not exist or an update is available, download it now.
-        if (shouldDownloadData) {
+        PlannedData.checkIfDataValid(mContext, Endpoint.API_VALIDITY, onUpdate = {
             Timber.e("Downloading plan data")
 
             PlannedData.download(mContext, Endpoint.API)
@@ -288,9 +255,9 @@ class SyncHelper internal constructor(private val mContext: Context, private val
                             Timber.e("Downloaded plan data")
                         }
                     })
-        }
+        })
 
-        return shouldDownloadData
+        return true
     }
 
     companion object {

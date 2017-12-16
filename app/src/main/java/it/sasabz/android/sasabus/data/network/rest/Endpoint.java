@@ -28,6 +28,7 @@ import it.sasabz.android.sasabus.data.network.NetUtils;
 public final class Endpoint {
 
     public static final String API = NetUtils.HOST + "/v1/";
+    public static final String API_VALIDITY = "http://realtimetest.opensasa.info/";
 
     public static final String REALTIME = "realtime";
     public static final String REALTIME_VEHICLE = "realtime/vehicle/{id}";
